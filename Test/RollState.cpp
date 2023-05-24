@@ -46,7 +46,7 @@ PlayerState* RollState::handle_event(Player& player)
 void RollState::update(Player& player)
 {
 	rollingTime++;
-	if (rollingTime > 40) return;
+	if (rollingTime > 35) return;
 	if(dirX!=0&&dirY!=0){
 		player.SetX(player.GetX() + dirX * player.GetVelocity() * 0.015);
 		player.SetY(player.GetY() + dirY * player.GetVelocity() * 0.015);
