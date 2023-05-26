@@ -12,6 +12,7 @@ public:
 	virtual void handle_event();
 	virtual void update();
 	virtual void SetImage(int state);
-	virtual void change_frame();
+	virtual void SetDirection();
 };
 
+double GetFrameTime();

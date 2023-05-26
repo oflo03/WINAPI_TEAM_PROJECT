@@ -20,30 +20,26 @@ class Player
 {
 protected:
 	Animation animation[6];
-	int frame;
+	CImage hand;
+	float frame;
 	Vector2D<float> pos;
 	Vector2D<float> dir;
 	int direction;
-	bool isFront;
 	PlayerState* state;
 	int velocity;
-	int horizonDir;
 public:
-	Player(float x, float y) : pos(x,y) , dir(0,0), frame(0), direction(FRONT), isFront(true), horizonDir(0),state(nullptr),  velocity(300) {}
-	Player() : pos(400, 300), dir(0, 0), frame(0), direction(FRONT), isFront(true), horizonDir(0), state(nullptr), velocity(300) {}
+	Player(float x, float y) : pos(x,y) , dir(0,0), frame(0), direction(FRONT),state(nullptr),  velocity(300) {}
+	Player() : pos(400, 300), dir(0, 0), frame(0), direction(FRONT), state(nullptr), velocity(300) {}
 	virtual void draw_character(HDC mDC) = 0;
 	virtual void handle_event() = 0;
 	virtual void update() = 0;
-	virtual void change_frame() = 0;
 	virtual void SetImage(int state) = 0;
+	virtual void SetDirection() = 0;
 	void DestroyImage() { for (int i = 0; i < 6; i++) animation[i].resource.Destroy(); }
-	bool& set_virtical() { return isFront; }
-	int& set_horizon() { return horizonDir; }
 	void SetPos(Vector2D<float> temp) { pos = temp; }
 	Vector2D<float> GetPos() { return pos; }
 	void SetDir(Vector2D<float> temp) { dir = temp; }
 	Vector2D<float> GetDir() { return dir; }
 	double GetVelocity() { return velocity; };
-	int GetDirection() { return direction; }
+	void SetDirection(int direction) { this->direction=direction; }
 };
-

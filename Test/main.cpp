@@ -1,7 +1,6 @@
 #include<tchar.h>
 #include<cmath>
 #include"Marin.h"
-double frame_time;
 
 HINSTANCE g_hinst;
 LPCTSTR IpszClass = L"Window Class Name";
@@ -41,10 +40,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevinstance, LPSTR lpszCmdPa
 	return Message.wParam;
 }
 
-
-
-SYSTEMTIME current_time;
-
 LRESULT WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 {
 	PAINTSTRUCT ps;
@@ -54,7 +49,6 @@ LRESULT WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 	{
 	case WM_CREATE:
 		GetClientRect(hWnd, &screen);
-		GetSystemTime(&current_time);
 		SetTimer(hWnd, 1, 10, NULL);
 		SetTimer(hWnd, 2, 100, NULL);
 		player = new Marin;
@@ -71,11 +65,6 @@ LRESULT WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 		DeleteObject(hBitmap);
 		DeleteDC(mDC);
 		EndPaint(hWnd, &ps);
-		SYSTEMTIME temp;
-	
-		GetSystemTime(&temp);
-		frame_time = temp.wSecond - current_time.wSecond;
-		current_time.wSecond += frame_time;
 		break;
 	}
 	case WM_TIMER:
@@ -83,9 +72,6 @@ LRESULT WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 			player->handle_event();
 			player->update();
 			InvalidateRect(hWnd, NULL, false);
-		}
-		else if (wParam == 2) {
-			player->change_frame();
 		}
 		break;
 	case WM_DESTROY:
