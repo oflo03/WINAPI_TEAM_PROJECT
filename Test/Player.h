@@ -1,7 +1,7 @@
 #pragma once
 #include<vector>
 #include<cmath>
-#include <atlImage.h>
+#include"Animation.h"
 #include"State.h"
 
 class PlayerState;
@@ -14,13 +14,6 @@ enum STATE
 enum DIRECTION
 {
 	FRONT,FRONT_RIGHT,FRONT_LEFT, BACK,BACK_RIGHT,BACK_LEFT
-};
-
-struct Animation
-{
-	CImage resource;
-	RECT size;
-	int frame;
 };
 
 class Player
