@@ -38,8 +38,8 @@ Marin::~Marin()
 
 void Marin::draw_character(HDC mDC)
 {
-	double yDest = y - (animation[direction].size.bottom - 20)*2;
-	animation[direction].resource.Draw(mDC, x, yDest, animation[direction].size.right*2, animation[direction].size.bottom*2,
+	double yDest = y - 20 - (animation[direction].size.bottom - 20)*2;
+	animation[direction].resource.Draw(mDC, x- animation[direction].size.right, yDest, animation[direction].size.right*2, animation[direction].size.bottom*2,
 		frame * animation[direction].size.right, 0, animation[direction].size.right, animation[direction].size.bottom
 	);
 }

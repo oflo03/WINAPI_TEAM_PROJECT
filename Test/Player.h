@@ -1,6 +1,6 @@
 #pragma once
+#include"Vector2D.h"
 #include<vector>
-#include<cmath>
 #include"Animation.h"
 #include"State.h"
 

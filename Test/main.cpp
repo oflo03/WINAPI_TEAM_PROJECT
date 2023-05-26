@@ -1,4 +1,5 @@
 #include<tchar.h>
+#include<cmath>
 #include"Marin.h"
 double frame_time;
 
@@ -6,7 +7,6 @@ HINSTANCE g_hinst;
 LPCTSTR IpszClass = L"Window Class Name";
 LPCTSTR IpszWindowName = L"¸â¸ðÀå";
 RECT screen;
-
 LRESULT WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam);
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevinstance, LPSTR lpszCmdParam, int nCmdShow)
@@ -72,6 +72,7 @@ LRESULT WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 		DeleteDC(mDC);
 		EndPaint(hWnd, &ps);
 		SYSTEMTIME temp;
+	
 		GetSystemTime(&temp);
 		frame_time = temp.wSecond - current_time.wSecond;
 		current_time.wSecond += frame_time;

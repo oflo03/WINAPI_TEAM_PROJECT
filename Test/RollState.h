@@ -14,5 +14,6 @@ public:
     virtual void update(Player& player);
     virtual void enter(Player& player);
     virtual void exit(Player& player);
+ 
 };
 
