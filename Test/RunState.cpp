@@ -8,49 +8,48 @@ RunState::~RunState()
 
 PlayerState* RunState::handle_event(Player& player)
 {
+	float dirX=0, dirY = 0;
 	bool isMove = false;
 	if (GetAsyncKeyState('D')) {
 		player.set_horizon() = 1;
-		player.SetDirX(1);
+		dirX = 1;
 		isMove = true;
 	}
 	else if (GetAsyncKeyState('A')) {
 		player.set_horizon() = -1;
-		player.SetDirX(-1);
+		dirX = -1;
 		isMove = true;
 	}
-	else player.SetDirX(0);
+	else dirX = 0;
 	if (GetAsyncKeyState('W')) {
-		player.SetDirY(-1);
+		dirY = -1;
 		player.set_virtical() = false;
 		if (!GetAsyncKeyState('A') && !GetAsyncKeyState('D'))
 			player.set_horizon() = 0;
 		isMove = true;
 	}
 	else if (GetAsyncKeyState('S')) {
-		player.SetDirY(1);
+		dirY = 1;
 		if (!GetAsyncKeyState('A') && !GetAsyncKeyState('D'))
 			player.set_horizon() = 0;
 		player.set_virtical() = true;
 		isMove = true;
 	}
-	else player.SetDirY(0);
+	else dirY = 0;
 	if (GetAsyncKeyState(VK_RBUTTON) & 0x8000) {
-		int x = player.GetDirX();
-		int y = player.GetDirY();
-		player.SetDirX(0);
-		player.SetDirY(0);
-		return new RollState(x,y);
+		player.SetDir(Vector2D<float>(0,0));
+		return new RollState(dirX,dirY);
 	}
-	if (isMove)
+	if (isMove) {
+		player.SetDir(Vector2D<float>(dirX, dirY));
 		return nullptr;
+	}
 	return new IdleState();
 }
 
 void RunState::update(Player& player)
 {
-	player.SetX(player.GetX() + player.GetDirX() * player.GetVelocity() * 0.01);
-	player.SetY(player.GetY() + player.GetDirY() * player.GetVelocity() * 0.01);
+	player.SetPos(player.GetPos() + player.GetDir() * player.GetVelocity() * 0.01f);
 }
 
 void RunState::enter(Player& player)

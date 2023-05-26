@@ -1,5 +1,5 @@
 #pragma once
-#include <atlImage.h>
+#include"Animation.h"
 
 class Bullet
 {

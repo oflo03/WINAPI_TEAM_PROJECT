@@ -11,32 +11,34 @@ PlayerState* RollState::handle_event(Player& player)
 	if (rollingTime == 60)
 		return new IdleState;
 	else if(rollingTime>40){
+		float dirX = 0, dirY = 0;
 		bool isMove = false;
 		if (GetAsyncKeyState('D')) {
 			player.set_horizon() = 1;
-			player.SetDirX(1);
+			dirX = 1;
 			isMove = true;
 		}
 		else if (GetAsyncKeyState('A')) {
 			player.set_horizon() = -1;
-			player.SetDirX(-1);
+			dirX = -1;
 			isMove = true;
 		}
 		if (GetAsyncKeyState('W')) {
 			player.set_virtical() = false;
-			player.SetDirY(-1);
+			dirY = -1;
 			if (!GetAsyncKeyState('A') && !GetAsyncKeyState('D'))
 				player.set_horizon() = 0;
 			isMove = true;
 		}
 		else if (GetAsyncKeyState('S')) {
 			player.set_virtical() = true;
-			player.SetDirY(1);
+			dirY = 1;
 			if (!GetAsyncKeyState('A') && !GetAsyncKeyState('D'))
 				player.set_horizon() = 0;
 			isMove = true;
 		}
 		if (isMove) {
+			player.SetDir(Vector2D<float>(dirX, dirY));
 			return new RunState();
 		}
 	}
@@ -47,13 +49,11 @@ void RollState::update(Player& player)
 {
 	rollingTime++;
 	if (rollingTime > 35) return;
-	if(dirX!=0&&dirY!=0){
-		player.SetX(player.GetX() + dirX * player.GetVelocity() * 0.015);
-		player.SetY(player.GetY() + dirY * player.GetVelocity() * 0.015);
+	if(dir.GetLenth()==1){
+		player.SetPos(player.GetPos() + dir * player.GetVelocity() * 0.02f);
 	}
 	else {
-		player.SetX(player.GetX() + dirX * player.GetVelocity() * 0.02);
-		player.SetY(player.GetY() + dirY * player.GetVelocity() * 0.02);
+		player.SetPos(player.GetPos() + dir * player.GetVelocity() * 0.015f);
 	}
 }
 

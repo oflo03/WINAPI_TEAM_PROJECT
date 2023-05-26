@@ -5,10 +5,9 @@ class RollState :
 {
 private:
     int rollingTime;
-    int dirX;
-    int dirY;
+    Vector2D<float> dir;
 public:
-    RollState(int dirX,int dirY): dirX(dirX),dirY(dirY) { rollingTime = 0; }
+    RollState(float dirX,float dirY): dir(dirX,dirY) { rollingTime = 0; }
     virtual ~RollState();
     virtual PlayerState* handle_event(Player& player);
     virtual void update(Player& player);

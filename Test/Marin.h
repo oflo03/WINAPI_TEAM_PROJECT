@@ -5,7 +5,7 @@ class Marin :
     public Player
 {
 public:
-	Marin(double x, double y);
+	Marin(float x, float y);
 	Marin();
 	virtual ~Marin();
 	virtual void draw_character(HDC mDC);

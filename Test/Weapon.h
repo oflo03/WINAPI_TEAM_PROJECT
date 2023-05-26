@@ -5,9 +5,9 @@ class Weapon
 	: public Item
 {
 protected:
-	const int maxAmmo;
-	const int damage;
-	const int bulletType;
+	int maxAmmo;
+	int damage;
+	int bulletType;
 	double angle;
 public:
 	Weapon(int ma, int dmg) :maxAmmo(ma), damage(dmg) {}

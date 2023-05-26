@@ -1,31 +1,15 @@
 #include "Marin.h"
-#include"IdleState.h"
+#include "IdleState.h"
 
-Marin::Marin(double x, double y)
+Marin::Marin(float x, float y) : Player(x,y)
 {
-	this->x = x;
-	this->y = y;
-	this->direction = FRONT;
-	this->frame = 0;
-	this->isFront = true;
-	this->horizonDir = 0;
-	this->state = new IdleState;
-	this->velocity = 300;
-	dirX = dirY= 0;
+	state = new IdleState;
 	SetImage(STATE_IDLE);
 }
 
-Marin::Marin()
+Marin::Marin() : Player()
 {
-	this->x = 400;
-	this->y = 300;
-	this->direction = FRONT;
-	this->frame = 0;
-	this->isFront = true;
-	this->horizonDir = 0;
-	this->velocity = 300;
-	dirX = dirY = 0;
-	this->state = new IdleState;
+	state = new IdleState;
 	SetImage(STATE_IDLE);
 }
 
@@ -38,8 +22,8 @@ Marin::~Marin()
 
 void Marin::draw_character(HDC mDC)
 {
-	double yDest = y - 20 - (animation[direction].size.bottom - 20)*2;
-	animation[direction].resource.Draw(mDC, x- animation[direction].size.right, yDest, animation[direction].size.right*2, animation[direction].size.bottom*2,
+	float yDest = pos.y - 20 - (animation[direction].size.bottom - 20)*4;
+	animation[direction].resource.Draw(mDC, pos.x- animation[direction].size.right, yDest, animation[direction].size.right*4, animation[direction].size.bottom*4,
 		frame * animation[direction].size.right, 0, animation[direction].size.right, animation[direction].size.bottom
 	);
 }
