@@ -133,6 +133,7 @@
     <ClCompile Include="IdleState.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Marin.cpp" />
+    <ClCompile Include="Pistol.cpp" />
     <ClCompile Include="RollState.cpp" />
     <ClCompile Include="RunState.cpp" />
   </ItemGroup>
@@ -143,6 +144,7 @@
     <ClInclude Include="IdleState.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="Marin.h" />
+    <ClInclude Include="Pistol.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="RollState.h" />
     <ClInclude Include="RunState.h" />

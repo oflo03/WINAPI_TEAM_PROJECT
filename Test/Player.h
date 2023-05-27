@@ -3,6 +3,7 @@
 #include"Vector2D.h"
 #include"Animation.h"
 #include"State.h"
+#include"Weapon.h"
 
 class PlayerState;
 
@@ -13,7 +14,7 @@ enum STATE
 
 enum DIRECTION
 {
-	FRONT,FRONT_RIGHT,FRONT_LEFT, BACK,BACK_RIGHT,BACK_LEFT
+	FRONT, FRONT_RIGHT, FRONT_LEFT, BACK, BACK_RIGHT, BACK_LEFT
 };
 
 class Player
@@ -27,8 +28,10 @@ protected:
 	int direction;
 	PlayerState* state;
 	int velocity;
+	std::vector<Weapon*> myWeapons;
+	Weapon* seletedWeapon;
 public:
-	Player(float x, float y) : pos(x,y) , dir(0,0), frame(0), direction(FRONT),state(nullptr),  velocity(300) {}
+	Player(float x, float y) : pos(x, y), dir(0, 0), frame(0), direction(FRONT), state(nullptr), velocity(300) {}
 	Player() : pos(400, 300), dir(0, 0), frame(0), direction(FRONT), state(nullptr), velocity(300) {}
 	virtual void draw_character(HDC mDC) = 0;
 	virtual void handle_event() = 0;
@@ -41,5 +44,6 @@ public:
 	void SetDir(Vector2D<float> temp) { dir = temp; }
 	Vector2D<float> GetDir() { return dir; }
 	double GetVelocity() { return velocity; };
-	void SetDirection(int direction) { this->direction=direction; }
+	void SetDirection(int direction) { this->direction = direction; }
+	void SetWeapon(int type) { if (myWeapons[type]->GetCurAmmo() > 0)this->seletedWeapon = myWeapons[type]; }
 };

@@ -26,7 +26,7 @@ void Bullet::SetImage(int type)
 
 void Bullet::draw_bullet(HDC mDC)
 {
-	animation.resource.Draw(mDC, pos.x - animation.size.right, pos.y - animation.size.bottom, animation.size.right * 2, animation.size.bottom * 2,
+	animation.resource.Draw(mDC, pos.x - animation.size.right, pos.y - (animation.size.bottom - 20) * 2 - animation.size.bottom, animation.size.right * 2, animation.size.bottom * 2,
 		(int)frame * animation.size.right, 0, animation.size.right, animation.size.bottom
 	);
 }
