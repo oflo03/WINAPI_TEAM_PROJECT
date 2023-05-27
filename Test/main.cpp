@@ -47,7 +47,7 @@ LRESULT WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 	PAINTSTRUCT ps;
 	HDC hDC;
 	static Player* player;
-	static Bullet* bullet_test;
+	static std::vector<Bullet*> bullets;
 	switch (iMessage)
 	{
 	case WM_CREATE:
@@ -55,7 +55,9 @@ LRESULT WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 		SetTimer(hWnd, 1, 10, NULL);
 		SetTimer(hWnd, 2, 100, NULL);
 		player = new Marin;
-		bullet_test = new Bullet(RIFLE, 100, 100, 1, 1);
+		bullets.emplace_back(new Bullet(PISTOL, 100, 100, 0, 0)); // 총알 추가 예시 3개
+		bullets.emplace_back(new Bullet(RIFLE, 200, 100, 0, 0));
+		bullets.emplace_back(new Bullet(SHOTGUN, 300, 100, 0, 0));
 		break;
 	case WM_PAINT:
 	{
@@ -65,7 +67,8 @@ LRESULT WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 		SelectObject(mDC, hBitmap);
 		FillRect(mDC, &screen, (HBRUSH)GetStockObject(WHITE_BRUSH));
 		player->draw_character(mDC);
-		bullet_test->draw_bullet(mDC);
+		for (auto& b : bullets)
+			b->draw_bullet(mDC);
 		BitBlt(hDC, 0, 0, screen.right, screen.bottom, mDC, 0, 0, SRCCOPY);
 		DeleteObject(hBitmap);
 		DeleteDC(mDC);
@@ -76,7 +79,8 @@ LRESULT WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 		if (wParam == 1) {
 			player->handle_event();
 			player->update();
-			bullet_test->update();
+			for (auto& b : bullets)
+				b->update();
 			InvalidateRect(hWnd, NULL, false);
 		}
 		break;
