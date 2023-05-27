@@ -6,8 +6,7 @@ class Pistol
 {
 public:
 	Pistol();
-	virtual void draw_weapon(HDC mDC);
+	virtual void draw_weapon(HDC mDC, const Vector2D<int>& center);
 	virtual void update();
-	virtual void SetImage();
 	virtual void attack();
 };

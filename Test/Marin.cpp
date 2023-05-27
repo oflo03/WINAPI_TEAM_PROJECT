@@ -1,6 +1,7 @@
 #include "IdleState.h"
 #include"RollState.h"
 #include "Marin.h"
+#include"Sword.h"
 #include"Pistol.h"
 
 extern double frame_time;
@@ -10,7 +11,7 @@ Marin::Marin(float x, float y) : Player(x, y)
 	state = new IdleState;
 	hand.Load(L"hand.png");
 	SetImage(STATE_IDLE);
-	myWeapons.emplace_back(new Pistol);
+	myWeapons.emplace_back(new Sword(10));
 	myWeapons.emplace_back(new Pistol);
 	myWeapons.emplace_back(new Pistol);
 	myWeapons.emplace_back(new Pistol);
@@ -23,7 +24,7 @@ Marin::Marin() : Player()
 	state = new IdleState;
 	hand.Load(L"hand.png");
 	SetImage(STATE_IDLE);
-	myWeapons.emplace_back(new Pistol);
+	myWeapons.emplace_back(new Sword(10));
 	myWeapons.emplace_back(new Pistol);
 	myWeapons.emplace_back(new Pistol);
 	myWeapons.emplace_back(new Pistol);
@@ -49,10 +50,12 @@ void Marin::draw_character(HDC mDC)
 			(int)frame * animation[direction].size.right, 0, animation[direction].size.right, animation[direction].size.bottom
 		);
 		if (dynamic_cast<RollState*>(state) == nullptr)
+			myWeapons[selectedWeapon]->draw_weapon(mDC, Vector2D<int>(pos.x,pos.y));
 			hand.Draw(mDC, pos.x - hand.GetWidth(), pos.y - hand.GetHeight(), hand.GetWidth() * 2, hand.GetHeight() * 2);
 	}
 	else {
 		if (dynamic_cast<RollState*>(state) == nullptr)
+			myWeapons[selectedWeapon]->draw_weapon(mDC, Vector2D<int>(pos.x, pos.y));
 			hand.Draw(mDC, pos.x - hand.GetWidth(), pos.y - hand.GetHeight(), hand.GetWidth() * 2, hand.GetHeight() * 2);
 		animation[direction].resource.Draw(mDC, pos.x - animation[direction].size.right, yDest - 20, animation[direction].size.right * 2, animation[direction].size.bottom * 2,
 			(int)frame * animation[direction].size.right, 0, animation[direction].size.right, animation[direction].size.bottom

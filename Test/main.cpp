@@ -93,8 +93,8 @@ LRESULT WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 		SelectObject(mDC, hBitmap);
 		FillRect(mDC, &screen, (HBRUSH)GetStockObject(WHITE_BRUSH));
 		player->draw_character(mDC);
-		BitBlt(hDC, 0, 0, screen.right, screen.bottom, mDC, 0, 0, SRCCOPY);
-		//StretchBlt(hDC, 0, 0, screen.right, screen.bottom, mDC, 0, 0, screen.right / 4, screen.bottom / 4, SRCCOPY);
+		//BitBlt(hDC, 0, 0, screen.right, screen.bottom, mDC, 0, 0, SRCCOPY);
+		StretchBlt(hDC, 0, 0, screen.right, screen.bottom, mDC, 0, 0, screen.right / 4, screen.bottom / 4, SRCCOPY);
 		DeleteObject(hBitmap);
 		DeleteDC(mDC);
 		EndPaint(hWnd, &ps);

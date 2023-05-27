@@ -9,9 +9,9 @@ public:
 	Sword(int cooltime) :Weapon(), coolTime(cooltime){
 		curAmmo = 1;
 		damage = 20;
-		resource.Load(L"Item_Weapon_Sword.png");
+		resource.Load(L"sword.png");
 	}
-	virtual void draw_weapon(HDC mDC);
+	virtual void draw_weapon(HDC mDC, const Vector2D<int>& center);
 	virtual void update();
-	virtual void Attack();
+	virtual void attack();
 };

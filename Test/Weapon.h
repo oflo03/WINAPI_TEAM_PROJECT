@@ -14,7 +14,7 @@ public:
 	~Weapon() {
 		resource.Destroy();
 	}
-	virtual void draw_weapon(HDC mDC) = 0;
+	virtual void draw_weapon(HDC mDC,const Vector2D<int>& center) = 0;
 	virtual void update() = 0;
 	virtual void attack() = 0;
 	int GetCurAmmo() { return curAmmo; }
