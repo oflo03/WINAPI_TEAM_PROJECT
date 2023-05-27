@@ -32,7 +32,17 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevinstance, LPSTR lpszCmdPa
 	WndClass.hIconSm = LoadIcon(NULL, IDI_APPLICATION);
 	RegisterClassExW(&WndClass);
 
-	hWnd = CreateWindow(IpszClass, IpszWindowName, WS_OVERLAPPEDWINDOW, 0, 0, 900, 700, NULL, (HMENU)NULL, hInstance, NULL);
+	HMONITOR hMonitor = MonitorFromWindow(NULL, MONITOR_DEFAULTTOPRIMARY);
+	MONITORINFO monitorInfo;
+	monitorInfo.cbSize = sizeof(MONITORINFO);
+	GetMonitorInfo(hMonitor, &monitorInfo);
+
+	hWnd = CreateWindow(IpszClass, IpszWindowName, WS_POPUP,
+		monitorInfo.rcMonitor.left, monitorInfo.rcMonitor.top,
+		monitorInfo.rcMonitor.right - monitorInfo.rcMonitor.left,
+		monitorInfo.rcMonitor.bottom - monitorInfo.rcMonitor.top,
+		NULL, (HMENU)NULL, hInstance, NULL);
+
 	ShowWindow(hWnd, nCmdShow);
 	UpdateWindow(hWnd);
 
@@ -84,14 +94,15 @@ LRESULT WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 	case WM_PAINT:
 	{
 		hDC = BeginPaint(hWnd, &ps);
-		HBITMAP hBitmap = CreateCompatibleBitmap(hDC, 1280, 720);
+		HBITMAP hBitmap = CreateCompatibleBitmap(hDC, screen.right, screen.bottom);
 		HDC mDC = CreateCompatibleDC(hDC);
 		SelectObject(mDC, hBitmap);
 		FillRect(mDC, &screen, (HBRUSH)GetStockObject(WHITE_BRUSH));
 		player->draw_character(mDC);
 		for (auto& b : bullets)
 			b->draw_bullet(mDC);
-		BitBlt(hDC, 0, 0, screen.right, screen.bottom, mDC, 0, 0, SRCCOPY);
+		//BitBlt(hDC, 0, 0, screen.right, screen.bottom, mDC, 0, 0, SRCCOPY);
+		StretchBlt(hDC, 0, 0, screen.right, screen.bottom, mDC, 0, 0, screen.right / 4, screen.bottom / 4, SRCCOPY);
 		DeleteObject(hBitmap);
 		DeleteDC(mDC);
 		EndPaint(hWnd, &ps);
