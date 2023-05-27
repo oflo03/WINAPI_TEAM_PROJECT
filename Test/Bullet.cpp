@@ -1,27 +1,25 @@
 #include"Bullet.h"
 
+extern double frame_time;
+
 void Bullet::SetImage(int type)
 {
 	switch (type)
 	{
 	case 1:
 		this->animation.resource.Load(L"Bullet_Pistol.png");
-		this->animation.frame = 4;
-		this->animation.size = { 0,0,16,16 };
 		break;
 	case 2:
 		this->animation.resource.Load(L"Bullet_Rifle.png");
-		this->animation.frame = 4;
-		this->animation.size = { 0,0,16,16 };
 		break;
 	case 3:
 		this->animation.resource.Load(L"Bullet_Shotgun.png");
-		this->animation.frame = 4;
-		this->animation.size = { 0,0,16,16 };
 		break;
 	default:
 		break;
 	}
+	this->animation.frame = 4;
+	this->animation.size = { 0,0,animation.resource.GetWidth() / animation.frame,animation.resource.GetHeight() };
 }
 
 void Bullet::draw_bullet(HDC mDC)
@@ -34,6 +32,6 @@ void Bullet::draw_bullet(HDC mDC)
 void Bullet::update()
 {
 	pos += dir;
-	frame = (frame + GetFrameTime() * 2 * animation.frame);
+	frame = (frame + frame_time*2 * animation.frame);
 	if (frame >= animation.frame) frame = 0;
 }

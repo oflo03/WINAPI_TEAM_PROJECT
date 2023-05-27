@@ -1,5 +1,5 @@
 #pragma once
-#include"Frame.h"
+#include <atlImage.h>
 
 struct Animation
 {

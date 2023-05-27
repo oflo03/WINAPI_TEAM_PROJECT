@@ -1,8 +1,9 @@
 #include<tchar.h>
-#include<cmath>
 #include"Marin.h"
 #include"Item.h"
 #include"Bullet.h"
+
+double frame_time;
 
 HINSTANCE g_hinst;
 LPCTSTR IpszClass = L"Window Class Name";
@@ -42,6 +43,28 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevinstance, LPSTR lpszCmdPa
 	return Message.wParam;
 }
 
+double GetFrameTime()
+{
+	static LARGE_INTEGER frequency;
+	static BOOL initialized = FALSE;
+	static LARGE_INTEGER prevTime;
+
+	if (!initialized)
+	{
+		QueryPerformanceFrequency(&frequency);
+		QueryPerformanceCounter(&prevTime);
+		initialized = TRUE;
+	}
+
+	LARGE_INTEGER currentTime;
+	QueryPerformanceCounter(&currentTime);
+
+	double frameTime = static_cast<double>(currentTime.QuadPart - prevTime.QuadPart) / frequency.QuadPart;
+	prevTime = currentTime;
+
+	return frameTime;
+}
+
 LRESULT WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 {
 	PAINTSTRUCT ps;
@@ -53,7 +76,6 @@ LRESULT WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 	case WM_CREATE:
 		GetClientRect(hWnd, &screen);
 		SetTimer(hWnd, 1, 10, NULL);
-		SetTimer(hWnd, 2, 100, NULL);
 		player = new Marin;
 		bullets.emplace_back(new Bullet(PISTOL, 100, 100, 0, 0)); // 총알 추가 예시 3개
 		bullets.emplace_back(new Bullet(RIFLE, 200, 100, 0, 0));
@@ -77,6 +99,7 @@ LRESULT WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 	}
 	case WM_TIMER:
 		if (wParam == 1) {
+			frame_time=GetFrameTime();
 			player->handle_event();
 			player->update();
 			for (auto& b : bullets)

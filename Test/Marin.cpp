@@ -2,6 +2,8 @@
 #include"RollState.h"
 #include "Marin.h"
 
+extern double frame_time;
+
 Marin::Marin(float x, float y) : Player(x, y)
 {
 	state = new IdleState;
@@ -73,7 +75,7 @@ void Marin::handle_event()
 void Marin::update()
 {
 	state->update(*this);
-	frame = (frame + GetFrameTime() * 2 * animation[direction].frame);
+	frame = (frame + frame_time * 2 * animation[direction].frame);
 	if (frame >= animation[direction].frame) frame = 0;
 }
 

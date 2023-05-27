@@ -33,12 +33,15 @@
     <ClCompile Include="Bullet.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+<<<<<<< Updated upstream
     <ClCompile Include="Frame.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Pistol.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+=======
+>>>>>>> Stashed changes
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="State.h">
@@ -71,11 +74,14 @@
     <ClInclude Include="Animation.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+<<<<<<< Updated upstream
     <ClInclude Include="Frame.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Pistol.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+=======
+>>>>>>> Stashed changes
   </ItemGroup>
 </Project>
