@@ -1,6 +1,8 @@
 #include<tchar.h>
 #include<cmath>
 #include"Marin.h"
+#include"Item.h"
+#include"Bullet.h"
 
 HINSTANCE g_hinst;
 LPCTSTR IpszClass = L"Window Class Name";
@@ -45,6 +47,7 @@ LRESULT WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 	PAINTSTRUCT ps;
 	HDC hDC;
 	static Player* player;
+	static Bullet* bullet_test;
 	switch (iMessage)
 	{
 	case WM_CREATE:
@@ -52,6 +55,7 @@ LRESULT WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 		SetTimer(hWnd, 1, 10, NULL);
 		SetTimer(hWnd, 2, 100, NULL);
 		player = new Marin;
+		bullet_test = new Bullet(RIFLE, 100, 100, 1, 1);
 		break;
 	case WM_PAINT:
 	{
@@ -61,6 +65,7 @@ LRESULT WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 		SelectObject(mDC, hBitmap);
 		FillRect(mDC, &screen, (HBRUSH)GetStockObject(WHITE_BRUSH));
 		player->draw_character(mDC);
+		bullet_test->draw_bullet(mDC);
 		BitBlt(hDC, 0, 0, screen.right, screen.bottom, mDC, 0, 0, SRCCOPY);
 		DeleteObject(hBitmap);
 		DeleteDC(mDC);
@@ -71,6 +76,7 @@ LRESULT WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 		if (wParam == 1) {
 			player->handle_event();
 			player->update();
+			bullet_test->update();
 			InvalidateRect(hWnd, NULL, false);
 		}
 		break;

@@ -26,18 +26,14 @@ void Bullet::SetImage(int type)
 
 void Bullet::draw_bullet(HDC mDC)
 {
-	animation.resource.Draw(mDC, x - (animation.size.right), y - (animation.size.bottom), animation.size.right * 2, animation.size.bottom * 2,
-		frame * animation.size.right, 0, animation.size.right, animation.size.bottom
+	animation.resource.Draw(mDC, pos.x - animation.size.right, pos.y - animation.size.bottom, animation.size.right * 2, animation.size.bottom * 2,
+		(int)frame * animation.size.right, 0, animation.size.right, animation.size.bottom
 	);
 }
 
 void Bullet::update()
 {
-	x += dirX;
-	y += dirY;
-}
-
-void Bullet::change_frame()
-{
-	frame = (frame + 1) % animation.frame;
+	pos += dir;
+	frame = (frame + GetFrameTime() * 2 * animation.frame);
+	if (frame >= animation.frame) frame = 0;
 }

@@ -14,5 +14,3 @@ public:
 	virtual void SetImage(int state);
 	virtual void SetDirection();
 };
-
-double GetFrameTime();
