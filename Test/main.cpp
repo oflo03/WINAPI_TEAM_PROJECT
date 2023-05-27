@@ -1,7 +1,5 @@
 #include<tchar.h>
 #include"Marin.h"
-#include"Item.h"
-#include"Bullet.h"
 
 double frame_time;
 
@@ -80,16 +78,12 @@ LRESULT WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 	PAINTSTRUCT ps;
 	HDC hDC;
 	static Player* player;
-	static std::vector<Bullet*> bullets;
 	switch (iMessage)
 	{
 	case WM_CREATE:
 		GetClientRect(hWnd, &screen);
 		SetTimer(hWnd, 1, 10, NULL);
 		player = new Marin;
-		bullets.emplace_back(new Bullet(PISTOL, 100, 100, 0, 0)); // 총알 추가 예시 3개
-		bullets.emplace_back(new Bullet(RIFLE, 200, 100, 0, 0));
-		bullets.emplace_back(new Bullet(SHOTGUN, 300, 100, 0, 0));
 		break;
 	case WM_PAINT:
 	{
@@ -99,10 +93,8 @@ LRESULT WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 		SelectObject(mDC, hBitmap);
 		FillRect(mDC, &screen, (HBRUSH)GetStockObject(WHITE_BRUSH));
 		player->draw_character(mDC);
-		for (auto& b : bullets)
-			b->draw_bullet(mDC);
-		//BitBlt(hDC, 0, 0, screen.right, screen.bottom, mDC, 0, 0, SRCCOPY);
-		StretchBlt(hDC, 0, 0, screen.right, screen.bottom, mDC, 0, 0, screen.right / 4, screen.bottom / 4, SRCCOPY);
+		BitBlt(hDC, 0, 0, screen.right, screen.bottom, mDC, 0, 0, SRCCOPY);
+		//StretchBlt(hDC, 0, 0, screen.right, screen.bottom, mDC, 0, 0, screen.right / 4, screen.bottom / 4, SRCCOPY);
 		DeleteObject(hBitmap);
 		DeleteDC(mDC);
 		EndPaint(hWnd, &ps);
@@ -113,9 +105,12 @@ LRESULT WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 			frame_time=GetFrameTime();
 			player->handle_event();
 			player->update();
-			for (auto& b : bullets)
-				b->update();
 			InvalidateRect(hWnd, NULL, false);
+		}
+		break;
+	case WM_KEYDOWN:
+		if (wParam == VK_ESCAPE) {
+			PostQuitMessage(0);
 		}
 		break;
 	case WM_DESTROY:

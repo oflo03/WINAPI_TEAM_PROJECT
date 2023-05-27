@@ -2,6 +2,8 @@
 #include"IdleState.h"
 #include"RollState.h"
 
+extern double frame_time;
+
 RunState::~RunState()
 {
 }
@@ -70,7 +72,12 @@ PlayerState* RunState::handle_event(Player& player)
 
 void RunState::update(Player& player)
 {
-	player.SetPos(player.GetPos() + player.GetDir() * player.GetVelocity() * 0.01f);
+	if (player.GetDir().GetLenth() == 1) {
+		player.SetPos(player.GetPos() + player.GetDir() * player.GetVelocity() * frame_time);
+	}
+	else {
+		player.SetPos(player.GetPos() + player.GetDir() * (sqrt(2) / 2) * player.GetVelocity() * frame_time);
+	}
 }
 
 void RunState::enter(Player& player)

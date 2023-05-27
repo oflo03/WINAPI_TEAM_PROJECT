@@ -1,6 +1,7 @@
 #include "IdleState.h"
 #include"RollState.h"
 #include "Marin.h"
+#include"Pistol.h"
 
 extern double frame_time;
 
@@ -15,7 +16,6 @@ Marin::Marin(float x, float y) : Player(x, y)
 	myWeapons.emplace_back(new Pistol);
 	myWeapons.emplace_back(new Pistol);
 	myWeapons.emplace_back(new Pistol);
-	seletedWeapon = myWeapons[SWORD];
 }
 
 Marin::Marin() : Player()
@@ -29,21 +29,23 @@ Marin::Marin() : Player()
 	myWeapons.emplace_back(new Pistol);
 	myWeapons.emplace_back(new Pistol);
 	myWeapons.emplace_back(new Pistol);
-	seletedWeapon = myWeapons[SWORD];
 }
 
 Marin::~Marin()
 {
 	for (int j = 0; j < 6; j++)
 		animation[j].resource.Destroy();
+	for (int i = 0; i < myWeapons.size(); i++)
+		delete myWeapons[i];
 	delete state;
+
 }
 
 void Marin::draw_character(HDC mDC)
 {
 	float yDest = pos.y - (animation[direction].size.bottom - 20) * 2;
 	if (direction == FRONT || direction == FRONT_RIGHT || direction == FRONT_LEFT) {
-		animation[direction].resource.Draw(mDC, pos.x - animation[direction].size.right, yDest - animation[direction].size.bottom, animation[direction].size.right * 2, animation[direction].size.bottom * 2,
+		animation[direction].resource.Draw(mDC, pos.x - animation[direction].size.right, yDest - 20, animation[direction].size.right * 2, animation[direction].size.bottom * 2,
 			(int)frame * animation[direction].size.right, 0, animation[direction].size.right, animation[direction].size.bottom
 		);
 		if (dynamic_cast<RollState*>(state) == nullptr)
@@ -52,7 +54,7 @@ void Marin::draw_character(HDC mDC)
 	else {
 		if (dynamic_cast<RollState*>(state) == nullptr)
 			hand.Draw(mDC, pos.x - hand.GetWidth(), pos.y - hand.GetHeight(), hand.GetWidth() * 2, hand.GetHeight() * 2);
-		animation[direction].resource.Draw(mDC, pos.x - animation[direction].size.right, yDest - animation[direction].size.bottom, animation[direction].size.right * 2, animation[direction].size.bottom * 2,
+		animation[direction].resource.Draw(mDC, pos.x - animation[direction].size.right, yDest - 20, animation[direction].size.right * 2, animation[direction].size.bottom * 2,
 			(int)frame * animation[direction].size.right, 0, animation[direction].size.right, animation[direction].size.bottom
 		);
 	}
@@ -128,7 +130,7 @@ void Marin::SetDirection()
 {
 	POINT mPos;
 	GetCursorPos(&mPos);
-	float angle = std::atan2(mPos.y - (pos.y + 20), mPos.x - pos.x) * (180.0f / M_PI);
+	float angle = std::atan2(mPos.y - (pos.y ), mPos.x - pos.x) * (180.0f / M_PI);
 	if (angle >= 0 && angle <= 60) direction = FRONT_RIGHT;
 	else if (angle >= 60 && angle <= 120) direction = FRONT;
 	else if (angle >= 120 && angle <= 180) direction = FRONT_LEFT;

@@ -9,5 +9,5 @@ public:
 	virtual void draw_weapon(HDC mDC);
 	virtual void update();
 	virtual void SetImage();
-	virtual void fire_weapon();
+	virtual void attack();
 };

@@ -135,6 +135,7 @@
     <ClCompile Include="Pistol.cpp" />
     <ClCompile Include="RollState.cpp" />
     <ClCompile Include="RunState.cpp" />
+    <ClCompile Include="Sword.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
@@ -147,6 +148,7 @@
     <ClInclude Include="RollState.h" />
     <ClInclude Include="RunState.h" />
     <ClInclude Include="State.h" />
+    <ClInclude Include="Sword.h" />
     <ClInclude Include="Weapon.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

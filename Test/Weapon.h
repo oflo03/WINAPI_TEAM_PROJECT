@@ -7,15 +7,15 @@ class Weapon
 protected:
 	int curAmmo;
 	int maxAmmo;
-	int type;
+	int damage;
 	double angle;
 public:
-	Weapon(int ma, int dmg, int type) :maxAmmo(ma), curAmmo(0), type(type), angle(0) {}
+	Weapon() :maxAmmo(0), damage(0),curAmmo(0), angle(0) {}
+	~Weapon() {
+		resource.Destroy();
+	}
 	virtual void draw_weapon(HDC mDC) = 0;
 	virtual void update() = 0;
-	virtual void SetImage() = 0;
-	virtual void fire_weapon() = 0;
+	virtual void attack() = 0;
 	int GetCurAmmo() { return curAmmo; }
 };
-
-#include"Pistol.h"

@@ -18,7 +18,7 @@ void Pistol::SetImage()
 {
 	this->resource.Load(L"Item_Weapon_Pistol.png");
 }
-void Pistol::fire_weapon()
+void Pistol::attack()
 {
 
 }

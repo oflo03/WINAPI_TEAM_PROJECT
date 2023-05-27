@@ -1,13 +1,17 @@
-#include "Item.h"
+#include "Weapon.h"
 #include"Player.h"
 
-class Sword : public Item
+class Sword : public Weapon
 {
 private:
 	int coolTime;
 public:
-	Sword(int cooltime) : coolTime(cooltime){
+	Sword(int cooltime) :Weapon(), coolTime(cooltime){
+		curAmmo = 1;
+		damage = 20;
 		resource.Load(L"Item_Weapon_Sword.png");
 	}
-	void Attack();
+	virtual void draw_weapon(HDC mDC);
+	virtual void update();
+	virtual void Attack();
 };

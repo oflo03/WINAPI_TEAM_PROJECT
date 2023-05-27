@@ -2,6 +2,8 @@
 #include"IdleState.h"
 #include"RunState.h"
 
+extern double frame_time;
+
 RollState::~RollState()
 {
 }
@@ -18,10 +20,10 @@ void RollState::update(Player& player)
 	rollingTime++;
 	if (rollingTime > 25) return;
 	if(dir.GetLenth()==1){
-		player.SetPos(player.GetPos() + dir * player.GetVelocity() * 0.02f);
+		player.SetPos(player.GetPos() + dir * player.GetVelocity()*3 * frame_time);
 	}
 	else {
-		player.SetPos(player.GetPos() + dir * player.GetVelocity() * 0.015f);
+		player.SetPos(player.GetPos() + dir * (sqrt(2) / 2) * player.GetVelocity()*3 * frame_time);
 	}
 }
 
