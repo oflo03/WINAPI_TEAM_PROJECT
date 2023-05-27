@@ -108,7 +108,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalOptions>/verbose %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>msimg32.lib %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -128,14 +128,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="IdleState.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Marin.cpp" />
     <ClCompile Include="RollState.cpp" />
     <ClCompile Include="RunState.cpp" />
-    <ClCompile Include="Sword.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Animation.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="IdleState.h" />
     <ClInclude Include="Item.h" />
@@ -144,8 +145,6 @@
     <ClInclude Include="RollState.h" />
     <ClInclude Include="RunState.h" />
     <ClInclude Include="State.h" />
-    <ClInclude Include="Sword.h" />
-    <ClInclude Include="Vector2D.h" />
     <ClInclude Include="Weapon.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -24,7 +24,7 @@ double GetFrameTime()
 	return frameTime;
 }
 
-Marin::Marin(float x, float y) : Player(x,y)
+Marin::Marin(float x, float y) : Player(x, y)
 {
 	state = new IdleState;
 	hand.Load(L"hand.png");
@@ -47,13 +47,13 @@ Marin::~Marin()
 
 void Marin::draw_character(HDC mDC)
 {
-	float yDest = pos.y - (animation[direction].size.bottom - 20)*2;
-	if(direction== FRONT|| direction == FRONT_RIGHT|| direction == FRONT_LEFT){
-		animation[direction].resource.Draw(mDC, pos.x - animation[direction].size.right, yDest- animation[direction].size.bottom, animation[direction].size.right * 2, animation[direction].size.bottom * 2,
+	float yDest = pos.y - (animation[direction].size.bottom - 20) * 2;
+	if (direction == FRONT || direction == FRONT_RIGHT || direction == FRONT_LEFT) {
+		animation[direction].resource.Draw(mDC, pos.x - animation[direction].size.right, yDest - animation[direction].size.bottom, animation[direction].size.right * 2, animation[direction].size.bottom * 2,
 			(int)frame * animation[direction].size.right, 0, animation[direction].size.right, animation[direction].size.bottom
 		);
 		if (dynamic_cast<RollState*>(state) == nullptr)
-			hand.Draw(mDC, pos.x- hand.GetWidth(), pos.y- hand.GetHeight(), hand.GetWidth() * 2, hand.GetHeight() * 2);
+			hand.Draw(mDC, pos.x - hand.GetWidth(), pos.y - hand.GetHeight(), hand.GetWidth() * 2, hand.GetHeight() * 2);
 	}
 	else {
 		if (dynamic_cast<RollState*>(state) == nullptr)
@@ -82,7 +82,7 @@ void Marin::update()
 {
 
 	state->update(*this);
-	frame = (frame + GetFrameTime()*2* animation[direction].frame);
+	frame = (frame + GetFrameTime() * 2 * animation[direction].frame);
 	if (frame >= animation[direction].frame) frame = 0;
 }
 
@@ -143,4 +143,3 @@ void Marin::SetDirection()
 	else if (angle >= -120 && angle <= -60) direction = BACK;
 	else if (angle >= -60 && angle < 0) direction = BACK_RIGHT;
 }
-
