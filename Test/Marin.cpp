@@ -7,6 +7,13 @@ Marin::Marin(float x, float y) : Player(x, y)
 	state = new IdleState;
 	hand.Load(L"hand.png");
 	SetImage(STATE_IDLE);
+	myWeapons.emplace_back(new Pistol);
+	myWeapons.emplace_back(new Pistol);
+	myWeapons.emplace_back(new Pistol);
+	myWeapons.emplace_back(new Pistol);
+	myWeapons.emplace_back(new Pistol);
+	myWeapons.emplace_back(new Pistol);
+	seletedWeapon = myWeapons[SWORD];
 }
 
 Marin::Marin() : Player()
@@ -20,6 +27,7 @@ Marin::Marin() : Player()
 	myWeapons.emplace_back(new Pistol);
 	myWeapons.emplace_back(new Pistol);
 	myWeapons.emplace_back(new Pistol);
+	seletedWeapon = myWeapons[SWORD];
 }
 
 Marin::~Marin()
