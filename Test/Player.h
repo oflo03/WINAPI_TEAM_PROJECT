@@ -24,6 +24,7 @@ protected:
 	CImage hand;
 	float frame;
 	Vector2D<float> pos;
+	Vector2D<float> handPos;
 	Vector2D<float> dir;
 	int direction;
 	PlayerState* state;

@@ -11,7 +11,7 @@ public:
 		damage = 20;
 		resource.Load(L"sword.png");
 	}
-	virtual void draw_weapon(HDC mDC, const Vector2D<int>& center);
+	virtual void draw_weapon(HDC mDC, const Vector2D<float>& center);
 	virtual void update();
 	virtual void attack();
 };
