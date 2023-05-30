@@ -16,8 +16,9 @@ protected:
 	int angle;
 	int coolTime;
 	int curTime;
+	CImage reverseResource;
 public:
-	Weapon() :maxAmmo(0), damage(0),curAmmo(0), angle(0),coolTime(0),curTime(0) {}
+	Weapon() :maxAmmo(0), damage(0), curAmmo(0), angle(0), coolTime(0), curTime(0) {}
 	~Weapon() {
 		resource.Destroy();
 	}
@@ -29,7 +30,11 @@ public:
 		POINT mPos;
 		GetCursorPos(&mPos);
 		angle = std::atan2(mPos.y - (center.y), mPos.x - center.x) * (180.0f / M_PI) * -1;
-
+		float temp = angle;
+		if (angle >= 90)
+			angle = angle - 180;
+		else if (angle <= -90)
+			angle = angle + 180;
 		int width = resource.GetWidth();
 		int height = resource.GetHeight();
 		CImage rotatedImage;
@@ -38,14 +43,17 @@ public:
 			for (int x = 0; x < width; x++) {
 				Vector2D<float> rotatedPos = (Vector2D<float>(x - width / 2, y - height / 2)).Rotate(angle) + Vector2D<float>(width / 2, height / 2);
 				if (rotatedPos.x >= 0 && rotatedPos.x < width && rotatedPos.y >= 0 && rotatedPos.y < height) {
-					BYTE* srcPixel = (BYTE*)resource.GetPixelAddress(rotatedPos.x, rotatedPos.y);
+					BYTE* srcPixel;
+					if (angle == temp)
+						srcPixel = (BYTE*)resource.GetPixelAddress(rotatedPos.x, rotatedPos.y);
+					else
+						srcPixel = (BYTE*)reverseResource.GetPixelAddress(rotatedPos.x, rotatedPos.y);
 					BYTE* destPixel = (BYTE*)rotatedImage.GetPixelAddress(x, y);
 					memcpy(destPixel, srcPixel, sizeof(BYTE) * 4);
 				}
 			}
 		}
-		rotatedImage.TransparentBlt(mDC, center.x - resource.GetWidth(), center.y - resource.GetHeight(),
-			resource.GetWidth() * 2, resource.GetHeight() * 2, RGB(0, 0, 0));
+		rotatedImage.TransparentBlt(mDC, center.x - width, center.y - height, width * 2, height * 2, RGB(0, 0, 0));
 		rotatedImage.Destroy();
 	}
 };

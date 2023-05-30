@@ -46,18 +46,16 @@ Marin::~Marin()
 void Marin::draw_character(HDC mDC)
 {
 	handPos = pos;
-	switch (direction)
+	if (abs(angle) < 90)
 	{
-	case FRONT_RIGHT:
-	case FRONT:
-	case BACK_RIGHT:
+		
 		handPos.x += 18;
 		handPos.y += 8;
-		break;
-	default:
+	}
+	else
+	{
 		handPos.x -= 17;
 		handPos.y += 8;
-		break;
 	}
 	for (auto& B : myBullets)
 		B->draw_bullet(mDC);
@@ -156,23 +154,23 @@ void Marin::SetDirection()
 {
 	POINT mPos;
 	GetCursorPos(&mPos);
-	float angle = std::atan2(mPos.y - (pos.y), mPos.x - pos.x) * (180.0f / M_PI);
-	if (angle >= -30 && angle <= 70) {
+	angle = std::atan2(mPos.y - (pos.y), mPos.x - pos.x) * (180.0f / M_PI);
+	if (angle >= -20 && angle <= 60) {
 		direction = FRONT_RIGHT;
 	}
-	else if (angle > 70 && angle <= 110) {
+	else if (angle > 60 && angle <= 120) {
 		direction = FRONT;
 	}
-	else if (angle >= 110 && angle <= 180 || angle > -180 && angle < -150) {
+	else if (angle >= 120 && angle <= 180 || angle > -180 && angle < -160) {
 		direction = FRONT_LEFT;
 	}
-	else if (angle >= -150 && angle <= -110) {
+	else if (angle >= -160 && angle <= -120) {
 		direction = BACK_LEFT;
 	}
-	else if (angle >= -110 && angle <= -70) {
+	else if (angle >= -120 && angle <= -60) {
 		direction = BACK;
 	}
-	else if (angle >= -70 && angle < -30) {
+	else if (angle >= -60 && angle < -20) {
 		direction = BACK_RIGHT;
 	}
 }
