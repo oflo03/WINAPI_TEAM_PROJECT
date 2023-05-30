@@ -15,7 +15,7 @@ public:
 		resource.Destroy();
 	}
 	virtual void update() = 0;
-	virtual void attack() = 0;
+	virtual void attack(const Vector2D<float>& center) = 0;
 	int GetCurAmmo() { return curAmmo; }
 	void draw_weapon(HDC mDC, const Vector2D<float>& center)
 	{

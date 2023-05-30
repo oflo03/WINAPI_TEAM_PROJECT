@@ -13,5 +13,5 @@ public:
 		resource.Load(L"Item_Weapon_Sword.png");
 	}
 	virtual void update();
-	virtual void attack();
+	virtual void attack(const Vector2D<float>& center);
 };

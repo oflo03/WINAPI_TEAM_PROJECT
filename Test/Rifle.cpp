@@ -4,7 +4,7 @@ void Rifle::update()
 {
 
 }
-void Rifle::attack()
+void Rifle::attack(const Vector2D<float>& center)
 {
 
 }

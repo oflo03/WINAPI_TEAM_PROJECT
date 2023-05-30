@@ -4,7 +4,7 @@ void Pistol::update()
 {
 
 }
-void Pistol::attack()
+void Pistol::attack(const Vector2D<float>& center)
 {
 
 }
