@@ -31,6 +31,8 @@ PlayerState* RunState::handle_event(Player& player)
 	}
 	else dirY = 0;
 	player.SetDirection();
+	if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
+		player.attack();
 	if (GetAsyncKeyState(VK_RBUTTON) & 0x8000) {
 		if (dirX == 1 && dirY == 0)
 			player.SetDirection(FRONT_RIGHT);

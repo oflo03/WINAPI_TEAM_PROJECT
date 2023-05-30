@@ -78,6 +78,8 @@ void Marin::draw_character(HDC mDC)
 			(int)frame * animation[direction].size.right, 0, animation[direction].size.right, animation[direction].size.bottom
 		);
 	}
+	for (auto& B : myBullets)
+		B->draw_bullet(mDC);
 }
 
 void Marin::handle_event()
@@ -99,6 +101,8 @@ void Marin::update()
 	state->update(*this);
 	frame = (frame + frame_time * 2 * animation[direction].frame);
 	if (frame >= animation[direction].frame) frame = 0;
+	for (auto& B : myBullets)
+		B->update();
 }
 
 void Marin::SetImage(int state)

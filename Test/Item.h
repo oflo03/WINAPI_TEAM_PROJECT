@@ -1,6 +1,7 @@
 #pragma once
 #include <atlImage.h>
 #include"Vector2D.h"
+#include<vector>
 
 enum ID // 아이템 추가할 때 여기 ID명 작성
 {

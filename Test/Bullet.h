@@ -15,7 +15,7 @@ protected:
 	int type;
 public:
 	int GetDamage() { return damage; }
-	Bullet(int type, int x, int y, int dx, int dy) :type(type), pos(x, y), dir(dx, dy),
+	Bullet(int type, Vector2D<float> pos, Vector2D<float> dir) :type(type), pos(pos), dir(dir),
 		damage(BulletDamage[type]), frame(0) { SetImage(type); }
 	void SetImage(int type);
 	void draw_bullet(HDC mDC);

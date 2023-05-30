@@ -41,6 +41,8 @@ PlayerState* IdleState::handle_event(Player& player)
 	if (GetAsyncKeyState('6') & 0x8000)
 		player.SetWeapon(GRENADE);
 	player.SetDirection();
+	if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
+		player.attack();
 	if (isMove) {
 		player.SetDir(Vector2D<float>(dirX, dirY));
 		return new RunState();

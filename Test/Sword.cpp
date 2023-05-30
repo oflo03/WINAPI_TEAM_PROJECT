@@ -4,6 +4,6 @@ void Sword::update()
 {
 }
 
-void Sword::attack(const Vector2D<float>& center)
+void Sword::attack(std::vector<Bullet*>& bullets, const Vector2D<float>& center)
 {
 }

@@ -1,5 +1,6 @@
 #pragma once
 #include"Item.h"
+#include"Bullet.h"
 
 class Weapon
 	: public Item
@@ -15,7 +16,7 @@ public:
 		resource.Destroy();
 	}
 	virtual void update() = 0;
-	virtual void attack(const Vector2D<float>& center) = 0;
+	virtual void attack(std::vector<Bullet*>& bullets, const Vector2D<float>& center) = 0;
 	int GetCurAmmo() { return curAmmo; }
 	void draw_weapon(HDC mDC, const Vector2D<float>& center)
 	{
