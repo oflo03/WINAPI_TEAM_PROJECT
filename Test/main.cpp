@@ -1,5 +1,10 @@
 #include<tchar.h>
 #include"Marin.h"
+#include<random>
+
+std::random_device rd;
+std::default_random_engine dre(rd());
+std::uniform_int_distribution<int> uid(1, 10000);
 
 double frame_time;
 

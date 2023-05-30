@@ -3,8 +3,6 @@
 
 class Rifle :public Weapon
 {
-private:
-	int coolTime;
 public:
 	Rifle() :Weapon() {
 		coolTime = cooltime[RIFLE];

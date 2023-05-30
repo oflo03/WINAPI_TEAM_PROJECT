@@ -59,6 +59,8 @@ void Marin::draw_character(HDC mDC)
 		handPos.y += 8;
 		break;
 	}
+	for (auto& B : myBullets)
+		B->draw_bullet(mDC);
 	float yDest = pos.y - (animation[direction].size.bottom - 20) * 2;
 	if (direction == FRONT || direction == FRONT_RIGHT || direction == FRONT_LEFT) {
 		animation[direction].resource.Draw(mDC, pos.x - animation[direction].size.right, yDest - 20, animation[direction].size.right * 2, animation[direction].size.bottom * 2,
@@ -78,8 +80,6 @@ void Marin::draw_character(HDC mDC)
 			(int)frame * animation[direction].size.right, 0, animation[direction].size.right, animation[direction].size.bottom
 		);
 	}
-	for (auto& B : myBullets)
-		B->draw_bullet(mDC);
 }
 
 void Marin::handle_event()
@@ -101,6 +101,8 @@ void Marin::update()
 	state->update(*this);
 	frame = (frame + frame_time * 2 * animation[direction].frame);
 	if (frame >= animation[direction].frame) frame = 0;
+	for (auto& W : myWeapons)
+		W->update();
 	for (auto& B : myBullets)
 		B->update();
 }
@@ -154,14 +156,14 @@ void Marin::SetDirection()
 {
 	POINT mPos;
 	GetCursorPos(&mPos);
-	float angle = std::atan2(mPos.y - (pos.y ), mPos.x - pos.x) * (180.0f / M_PI);
+	float angle = std::atan2(mPos.y - (pos.y), mPos.x - pos.x) * (180.0f / M_PI);
 	if (angle >= -30 && angle <= 70) {
 		direction = FRONT_RIGHT;
 	}
 	else if (angle > 70 && angle <= 110) {
 		direction = FRONT;
 	}
-	else if (angle >= 110 && angle <= 180||angle>-180&&angle<-150) {
+	else if (angle >= 110 && angle <= 180 || angle > -180 && angle < -150) {
 		direction = FRONT_LEFT;
 	}
 	else if (angle >= -150 && angle <= -110) {

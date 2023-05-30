@@ -1,6 +1,10 @@
 #pragma once
 #include"Item.h"
 #include"Bullet.h"
+#include<random>
+
+extern std::default_random_engine dre;
+extern std::uniform_int_distribution<int> uid;
 
 class Weapon
 	: public Item
@@ -10,8 +14,10 @@ protected:
 	int maxAmmo;
 	int damage;
 	int angle;
+	int coolTime;
+	int curTime;
 public:
-	Weapon() :maxAmmo(0), damage(0),curAmmo(0), angle(0) {}
+	Weapon() :maxAmmo(0), damage(0),curAmmo(0), angle(0),coolTime(0),curTime(0) {}
 	~Weapon() {
 		resource.Destroy();
 	}

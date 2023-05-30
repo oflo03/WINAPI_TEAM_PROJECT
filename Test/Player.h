@@ -41,7 +41,7 @@ public:
 	virtual void update() = 0;
 	virtual void SetImage(int state) = 0;
 	virtual void SetDirection() = 0;
-	virtual void attack() { myWeapons[selectedWeapon]->attack(myBullets,pos); };
+	virtual void attack() { myWeapons[selectedWeapon]->attack(myBullets,handPos); };
 	void DestroyImage() { for (int i = 0; i < 6; i++) animation[i].resource.Destroy(); }
 	void SetPos(Vector2D<float> temp) { pos = temp; }
 	Vector2D<float> GetPos() { return pos; }
