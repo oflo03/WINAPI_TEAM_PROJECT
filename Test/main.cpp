@@ -107,11 +107,18 @@ LRESULT WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 	}
 	case WM_TIMER:
 		if (wParam == 1) {
-			frame_time=GetFrameTime();
+			frame_time = GetFrameTime();
 			player->handle_event();
 			player->update();
 			InvalidateRect(hWnd, NULL, false);
 		}
+		break;
+	case WM_MOUSEWHEEL:
+		if (!player->GetIfRoll())
+			if (GET_WHEEL_DELTA_WPARAM(wParam) > 0)
+				player->SetWeaponUp();
+			else
+				player->SetWeaponDown();
 		break;
 	case WM_KEYDOWN:
 		if (wParam == VK_ESCAPE) {

@@ -49,6 +49,9 @@ public:
 	void SetDir(Vector2D<float> temp) { dir = temp; }
 	Vector2D<float> GetDir() { return dir; }
 	double GetVelocity() { return velocity; };
+	bool GetIfRoll();
 	void SetDirection(int direction) { this->direction = direction; }
 	void SetWeapon(int type) { if (myWeapons[type]->GetCurAmmo() > 0)this->selectedWeapon = type; }
+	void SetWeaponUp() { do selectedWeapon += 5, selectedWeapon %= 6; while (myWeapons[selectedWeapon]->GetCurAmmo() == 0); }
+	void SetWeaponDown() { do selectedWeapon += 1, selectedWeapon %= 6; while (myWeapons[selectedWeapon]->GetCurAmmo() == 0); }
 };

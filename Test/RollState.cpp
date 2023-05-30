@@ -36,3 +36,7 @@ void RollState::exit(Player& player)
 {
 	player.DestroyImage();
 }
+
+
+
+bool Player::GetIfRoll() { return (dynamic_cast<RollState*>(state) != nullptr); };
