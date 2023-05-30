@@ -14,8 +14,31 @@ public:
 	~Weapon() {
 		resource.Destroy();
 	}
-	virtual void draw_weapon(HDC mDC,const Vector2D<float>& center) = 0;
 	virtual void update() = 0;
 	virtual void attack() = 0;
 	int GetCurAmmo() { return curAmmo; }
+	void draw_weapon(HDC mDC, const Vector2D<float>& center)
+	{
+		POINT mPos;
+		GetCursorPos(&mPos);
+		angle = std::atan2(mPos.y - (center.y), mPos.x - center.x) * (180.0f / M_PI) * -1;
+
+		int width = resource.GetWidth();
+		int height = resource.GetHeight();
+		CImage rotatedImage;
+		rotatedImage.Create(width, height, 32);
+		for (int y = 0; y < height; y++) {
+			for (int x = 0; x < width; x++) {
+				Vector2D<float> rotatedPos = (Vector2D<float>(x - width / 2, y - height / 2)).Rotate(angle) + Vector2D<float>(width / 2, height / 2);
+				if (rotatedPos.x >= 0 && rotatedPos.x < width && rotatedPos.y >= 0 && rotatedPos.y < height) {
+					BYTE* srcPixel = (BYTE*)resource.GetPixelAddress(rotatedPos.x, rotatedPos.y);
+					BYTE* destPixel = (BYTE*)rotatedImage.GetPixelAddress(x, y);
+					memcpy(destPixel, srcPixel, sizeof(BYTE) * 4);
+				}
+			}
+		}
+		rotatedImage.TransparentBlt(mDC, center.x - resource.GetWidth(), center.y - resource.GetHeight(),
+			resource.GetWidth() * 2, resource.GetHeight() * 2, RGB(0, 0, 0));
+		rotatedImage.Destroy();
+	}
 };

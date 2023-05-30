@@ -25,6 +25,12 @@
     <ClCompile Include="Sword.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Rifle.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h">
@@ -61,6 +67,15 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Sword.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector2D.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Rifle.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

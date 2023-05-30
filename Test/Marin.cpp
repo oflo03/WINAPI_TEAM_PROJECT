@@ -3,6 +3,7 @@
 #include "Marin.h"
 #include"Sword.h"
 #include"Pistol.h"
+#include"Rifle.h"
 
 extern double frame_time;
 
@@ -11,12 +12,12 @@ Marin::Marin(float x, float y) : Player(x, y)
 	state = new IdleState;
 	hand.Load(L"hand.png");
 	SetImage(STATE_IDLE);
-	myWeapons.emplace_back(new Sword(10));
+	myWeapons.emplace_back(new Sword);
 	myWeapons.emplace_back(new Pistol);
-	myWeapons.emplace_back(new Pistol);
-	myWeapons.emplace_back(new Pistol);
-	myWeapons.emplace_back(new Pistol);
-	myWeapons.emplace_back(new Pistol);
+	myWeapons.emplace_back(new Rifle);
+	myWeapons.emplace_back(new Rifle);
+	myWeapons.emplace_back(new Rifle);
+	myWeapons.emplace_back(new Rifle);
 }
 
 Marin::Marin() : Player()
@@ -24,12 +25,12 @@ Marin::Marin() : Player()
 	state = new IdleState;
 	hand.Load(L"hand.png");
 	SetImage(STATE_IDLE);
-	myWeapons.emplace_back(new Sword(10));
+	myWeapons.emplace_back(new Sword);
 	myWeapons.emplace_back(new Pistol);
-	myWeapons.emplace_back(new Pistol);
-	myWeapons.emplace_back(new Pistol);
-	myWeapons.emplace_back(new Pistol);
-	myWeapons.emplace_back(new Pistol);
+	myWeapons.emplace_back(new Rifle);
+	myWeapons.emplace_back(new Rifle);
+	myWeapons.emplace_back(new Rifle);
+	myWeapons.emplace_back(new Rifle);
 }
 
 Marin::~Marin()

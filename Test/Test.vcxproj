@@ -104,6 +104,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -129,10 +130,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="IdleState.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Marin.cpp" />
     <ClCompile Include="Pistol.cpp" />
+    <ClCompile Include="Rifle.cpp" />
     <ClCompile Include="RollState.cpp" />
     <ClCompile Include="RunState.cpp" />
     <ClCompile Include="Sword.cpp" />
@@ -140,15 +143,18 @@
   <ItemGroup>
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Bullet.h" />
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="IdleState.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="Marin.h" />
     <ClInclude Include="Pistol.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Rifle.h" />
     <ClInclude Include="RollState.h" />
     <ClInclude Include="RunState.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="Sword.h" />
+    <ClInclude Include="Vector2D.h" />
     <ClInclude Include="Weapon.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

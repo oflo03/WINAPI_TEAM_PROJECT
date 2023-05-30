@@ -6,12 +6,12 @@ class Sword : public Weapon
 private:
 	int coolTime;
 public:
-	Sword(int cooltime) :Weapon(), coolTime(cooltime){
+	Sword() :Weapon() {
+		coolTime = cooltime[SWORD];
 		curAmmo = 1;
 		damage = 20;
-		resource.Load(L"sword.png");
+		resource.Load(L"Item_Weapon_Sword.png");
 	}
-	virtual void draw_weapon(HDC mDC, const Vector2D<float>& center);
 	virtual void update();
 	virtual void attack();
 };

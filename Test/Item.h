@@ -13,6 +13,8 @@ enum ID // 아이템 추가할 때 여기 ID명 작성
 
 };
 
+const int cooltime[]{ 10,10,10,10,10,10 };
+
 class Item
 {
 protected:
