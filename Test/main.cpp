@@ -105,7 +105,6 @@ LRESULT WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 			frame_time = GetFrameTime();
 			stateStack.back()->handle_events();
 			stateStack.back()->update();
-			ColliderUpdate();
 			InvalidateRect(hWnd, NULL, false);
 		}
 		break;

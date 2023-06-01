@@ -17,3 +17,10 @@ void Collider::collision()
 				if ((this->pos - other->pos).GetLenth() <= this->size + other->size)
 					collisionMsg.emplace(Vector2D<int>(0, 0));
 }
+
+void ColliderUpdate()
+{
+	for (auto& c : COLL)
+		c->collision();
+
+}

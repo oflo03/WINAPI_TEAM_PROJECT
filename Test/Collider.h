@@ -1,5 +1,4 @@
 #pragma once
-#include<Windows.h>
 #include<vector>
 #include<queue>
 #include"Vector2D.h"
@@ -24,10 +23,3 @@ public:
 };
 
 std::vector<Collider*> COLL;
-
-void rigidUpdate()
-{
-	for (auto& c : COLL)
-		c->collision();
-
-}

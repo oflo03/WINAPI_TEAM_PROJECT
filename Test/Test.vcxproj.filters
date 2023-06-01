@@ -1,120 +1,116 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Bullet.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Collider.cpp" />
     <ClCompile Include="IdleState.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>Player</Filter>
     </ClCompile>
     <ClCompile Include="Marin.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Pistol.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>Player</Filter>
     </ClCompile>
     <ClCompile Include="RollState.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>Player</Filter>
     </ClCompile>
     <ClCompile Include="RunState.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>Player</Filter>
     </ClCompile>
-    <ClCompile Include="Sword.cpp">
-      <Filter>소스 파일</Filter>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>Weapon</Filter>
     </ClCompile>
-    <ClCompile Include="Enemy.cpp">
-      <Filter>소스 파일</Filter>
+    <ClCompile Include="Pistol.cpp">
+      <Filter>Weapon</Filter>
     </ClCompile>
     <ClCompile Include="Rifle.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="LogoState.cpp">
-      <Filter>framework</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayState.cpp">
-      <Filter>framework</Filter>
-    </ClCompile>
-    <ClCompile Include="game_framework.cpp">
-      <Filter>framework</Filter>
+      <Filter>Weapon</Filter>
     </ClCompile>
     <ClCompile Include="Shotgun.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Sword.cpp">
+      <Filter>Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="game_framework.cpp">
+      <Filter>Game framework</Filter>
+    </ClCompile>
+    <ClCompile Include="LogoState.cpp">
+      <Filter>Game framework</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayState.cpp">
+      <Filter>Game framework</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Animation.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Bullet.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
+    <ClInclude Include="Vector2D.h" />
+    <ClInclude Include="Collider.h" />
     <ClInclude Include="IdleState.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Item.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>Player</Filter>
     </ClInclude>
     <ClInclude Include="Marin.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Pistol.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>Player</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>Player</Filter>
     </ClInclude>
     <ClInclude Include="RollState.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>Player</Filter>
     </ClInclude>
     <ClInclude Include="RunState.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>Player</Filter>
     </ClInclude>
-    <ClInclude Include="State.h">
-      <Filter>헤더 파일</Filter>
+    <ClInclude Include="Bullet.h">
+      <Filter>Weapon</Filter>
     </ClInclude>
-    <ClInclude Include="Weapon.h">
-      <Filter>헤더 파일</Filter>
+    <ClInclude Include="Item.h">
+      <Filter>Weapon</Filter>
     </ClInclude>
-    <ClInclude Include="Sword.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Vector2D.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Enemy.h">
-      <Filter>헤더 파일</Filter>
+    <ClInclude Include="Pistol.h">
+      <Filter>Weapon</Filter>
     </ClInclude>
     <ClInclude Include="Rifle.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="game_framework.h">
-      <Filter>framework</Filter>
-    </ClInclude>
-    <ClInclude Include="LogoState.h">
-      <Filter>framework</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayState.h">
-      <Filter>framework</Filter>
-    </ClInclude>
-    <ClInclude Include="Rigidbody.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>Weapon</Filter>
     </ClInclude>
     <ClInclude Include="Shotgun.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="Sword.h">
+      <Filter>Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="game_framework.h">
+      <Filter>Game framework</Filter>
+    </ClInclude>
+    <ClInclude Include="LogoState.h">
+      <Filter>Game framework</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayState.h">
+      <Filter>Game framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Weapon.h">
+      <Filter>Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.h" />
+    <ClInclude Include="Enemy.h">
+      <Filter>Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="State.h">
+      <Filter>Player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="헤더 파일">
-      <UniqueIdentifier>{6ce7adf3-3c63-4f7e-9659-34fd62c70ea6}</UniqueIdentifier>
+    <Filter Include="Player">
+      <UniqueIdentifier>{160d79aa-d9b0-448e-aa36-ae90c5f127fc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일">
-      <UniqueIdentifier>{3076526c-832f-4c75-b319-1d55f76131b9}</UniqueIdentifier>
+    <Filter Include="Weapon">
+      <UniqueIdentifier>{3a0eb8dc-9583-4554-8019-5a488d1f631e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="framework">
-      <UniqueIdentifier>{a4855654-539d-418a-a22a-34ab9f435b45}</UniqueIdentifier>
+    <Filter Include="Game framework">
+      <UniqueIdentifier>{24e5ab0a-3fd0-42f6-80ec-e9ff5617d445}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Enemy">
+      <UniqueIdentifier>{853410b3-5585-4ddd-af16-ba95101f5360}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -1,11 +1,12 @@
 #include "PlayState.h"
+//#include"Collider.h"
 
 extern HDC mDC;
 
 std::random_device rd;
 std::default_random_engine dre(rd());
 std::uniform_int_distribution<int> uid(1, 10000);
-
+void ColliderUpdate();
 PlayState::PlayState() : GameState(),player(new Marin)
 {
 
@@ -19,6 +20,7 @@ PlayState::~PlayState()
 void PlayState::update()
 {
 	player->update();
+	ColliderUpdate();
 }
 
 void PlayState::handle_events()

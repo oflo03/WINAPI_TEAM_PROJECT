@@ -31,7 +31,7 @@ void Bullet::draw_bullet(HDC mDC)
 
 void Bullet::update()
 {
-	pos += dir;
+	pos += dir*2;
 	frame = (frame + frame_time*2 * animation.frame);
 	if (frame >= animation.frame) frame = 0;
 }
