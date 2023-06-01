@@ -1,5 +1,4 @@
 #include "PlayState.h"
-//#include"Collider.h"
 
 extern HDC mDC;
 
@@ -13,6 +12,7 @@ std::queue<Vector2D<int>> collisionMsg;
 std::vector<Collider*> COLL;
 
 CImage map;
+bool lookRange;
 
 PlayState::PlayState() : GameState(), player(new Marin)
 {
@@ -45,4 +45,7 @@ void PlayState::draw()
 {
 	map.Draw(mDC, 0, 0, 1080, 1080);
 	player->draw_character(mDC);
+	if (lookRange)
+		for (auto& C : COLL)
+			C->draw_range(mDC);
 }

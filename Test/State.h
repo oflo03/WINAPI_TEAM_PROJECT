@@ -13,3 +13,4 @@ public:
 	virtual void update(Player& player) = 0;
 };
 
+extern bool lookRange;

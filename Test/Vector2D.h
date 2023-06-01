@@ -8,7 +8,7 @@ public:
 	struct { T x, y; };
 
 	Vector2D() {}
-	Vector2D(const T& x,const T& y) : x(x),y(y) {}
+	Vector2D(const T& x, const T& y) : x(x), y(y) {}
 	Vector2D(const Vector2D<T>& other) : x(other.x), y(other.y) {}
 	~Vector2D() {}
 	Vector2D<T>& operator=(const Vector2D<T>& other) {
@@ -23,12 +23,12 @@ public:
 		return Vector2D<T>(x - other.x, y - other.y);
 	}
 	Vector2D<T> operator*(const T& s) const {
-		return Vector2D<T>(x*s, y*s);
+		return Vector2D<T>(x * s, y * s);
 	}
 	Vector2D<T> operator/(const T& s) const {
 		return Vector2D<T>(x / s, y / s);
 	}
-	Vector2D<T> operator-()  {
+	Vector2D<T> operator-() {
 		return Vector2D<T>(-x, -y);
 	}
 	Vector2D<T>& operator+=(const Vector2D<T>& other) {
@@ -52,12 +52,15 @@ public:
 		return lenth;
 	}
 	Vector2D<T> Rotate(const T& angle) {
-		*this = Vector2D<T>(x * std::cos(angle*M_PI/180) - y * std::sin(angle * M_PI / 180),
+		*this = Vector2D<T>(x * std::cos(angle * M_PI / 180) - y * std::sin(angle * M_PI / 180),
 			x * std::sin(angle * M_PI / 180) + y * std::cos(angle * M_PI / 180));
 		return *this;
 	}
 	Vector2D<T> Normalize() {
 		return *this /= GetLenth();
+	}
+	bool operator<=(const Vector2D<T>& other) {
+		return (abs(x) <= abs(other.x) && abs(y) <= abs(other.y));
 	}
 	T Dot(const Vector2D<T>& other) const {
 		T result = (x * other.x) + (y * other.y);
