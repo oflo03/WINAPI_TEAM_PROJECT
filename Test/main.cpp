@@ -1,6 +1,7 @@
 #include<tchar.h>
 #include"Marin.h"
 #include<random>
+#include"Collider.h"
 
 std::random_device rd;
 std::default_random_engine dre(rd());
@@ -110,6 +111,7 @@ LRESULT WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 			frame_time = GetFrameTime();
 			player->handle_event();
 			player->update();
+			ColliderUpdate();
 			InvalidateRect(hWnd, NULL, false);
 		}
 		break;
