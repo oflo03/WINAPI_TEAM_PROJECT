@@ -58,3 +58,61 @@ public:
 		rotatedImage.Destroy();
 	}
 };
+
+class Sword : public Weapon
+{
+public:
+	Sword() :Weapon() {
+		coolTime = cooltime[SWORD];
+		curAmmo = 1;
+		damage = 20;
+		resource.Load(L"Item_Weapon_Sword.png");
+		reverseResource.Load(L"Item_Weapon_Sword_Reverse.png");
+	}
+	virtual void update();
+	virtual void attack(std::vector<Bullet*>& bullets, const Vector2D<float>& center);
+};
+
+class Pistol :public Weapon
+{
+private:
+public:
+	Pistol() :Weapon() {
+		coolTime = cooltime[PISTOL];
+		curAmmo = 10;
+		damage = 20;
+		resource.Load(L"Item_Weapon_Pistol.png");
+		reverseResource.Load(L"Item_Weapon_Pistol_Reverse.png");
+		effect.Load(L"shot.png");
+	}
+	virtual void update();
+	virtual void attack(std::vector<Bullet*>& bullets, const Vector2D<float>& center);
+};
+
+class Rifle :public Weapon
+{
+public:
+	Rifle() :Weapon() {
+		coolTime = cooltime[RIFLE];
+		curAmmo = 10;
+		damage = 20;
+		resource.Load(L"Item_Weapon_Rifle.png");
+		reverseResource.Load(L"Item_Weapon_Rifle_Reverse.png");
+	}
+	virtual void update();
+	virtual void attack(std::vector<Bullet*>& bullets, const Vector2D<float>& center);
+};
+
+class Shotgun :public Weapon
+{
+public:
+	Shotgun() :Weapon() {
+		coolTime = cooltime[SHOTGUN];
+		curAmmo = 10;
+		damage = 20;
+		resource.Load(L"Item_Weapon_Shotgun.png");
+		reverseResource.Load(L"Item_Weapon_Shotgun_Reverse.png");
+	}
+	virtual void update();
+	virtual void attack(std::vector<Bullet*>& bullets, const Vector2D<float>& center);
+};
