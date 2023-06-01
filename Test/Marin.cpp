@@ -1,10 +1,6 @@
 #include "IdleState.h"
 #include"RollState.h"
 #include "Marin.h"
-#include"Sword.h"
-#include"Pistol.h"
-#include"Rifle.h"
-#include"Shotgun.h"
 
 extern double frame_time;
 
