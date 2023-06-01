@@ -8,7 +8,7 @@ std::uniform_int_distribution<int> uid(1, 10000);
 
 void ColliderUpdate();
 
-std::queue<Vector2D<int>> collisionMsg;
+std::queue<Vector2D<Master*>> collisionMsg;
 std::vector<Collider*> COLL;
 
 CImage map;
@@ -43,7 +43,7 @@ void PlayState::handle_events()
 
 void PlayState::draw()
 {
-	map.Draw(mDC, 0, 0, 1080, 1080);
+	map.Draw(mDC, 0, 28, 1024, 1024);
 	player->draw_character(mDC);
 	if (lookRange)
 		for (auto& C : COLL)

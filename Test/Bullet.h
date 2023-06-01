@@ -1,10 +1,12 @@
 #pragma once
 #include"Animation.h"
 #include"Vector2D.h"
+#include"Master.h"
 
 const int BulletDamage[]{ 0,10,7,4 };
 
 class Bullet
+	:public Master
 {
 protected:
 	Animation animation;
@@ -15,9 +17,9 @@ protected:
 	int type;
 public:
 	int GetDamage() { return damage; }
-	Bullet(int type, Vector2D<float> pos, Vector2D<float> dir) :type(type), pos(pos), dir(dir),
-		damage(BulletDamage[type]), frame(0) { SetImage(type); }
+	Bullet(int type, Vector2D<float> pos, Vector2D<float> dir);
 	void SetImage(int type);
 	void draw_bullet(HDC mDC);
 	void update();
+	virtual void handle_collision(int damage);
 };
