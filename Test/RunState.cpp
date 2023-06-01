@@ -55,15 +55,15 @@ PlayerState* RunState::handle_event(Player& player)
 	}
 	if (GetAsyncKeyState('1') & 0x8000)
 		player.SetWeapon(SWORD);
-	if (GetAsyncKeyState('2') & 0x8000)
+	else if (GetAsyncKeyState('2') & 0x8000)
 		player.SetWeapon(PISTOL);
-	if (GetAsyncKeyState('3') & 0x8000)
+	else if (GetAsyncKeyState('3') & 0x8000)
 		player.SetWeapon(RIFLE);
-	if (GetAsyncKeyState('4') & 0x8000)
+	else if (GetAsyncKeyState('4') & 0x8000)
 		player.SetWeapon(SHOTGUN);
-	if (GetAsyncKeyState('5') & 0x8000)
+	else if (GetAsyncKeyState('5') & 0x8000)
 		player.SetWeapon(ROCKET);
-	if (GetAsyncKeyState('6') & 0x8000)
+	else if (GetAsyncKeyState('6') & 0x8000)
 		player.SetWeapon(GRENADE);
 	if (isMove) {
 		player.SetDir(Vector2D<float>(dirX, dirY));

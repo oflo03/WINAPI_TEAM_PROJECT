@@ -1,13 +1,9 @@
-#include<tchar.h>
-#include"Marin.h"
-#include<random>
-#include"Collider.h"
-
-std::random_device rd;
-std::default_random_engine dre(rd());
-std::uniform_int_distribution<int> uid(1, 10000);
+#include "game_framework.h"
+#include"LogoState.h"
 
 double frame_time;
+extern std::vector<GameState*> stateStack;
+HDC mDC;
 
 HINSTANCE g_hinst;
 LPCTSTR IpszClass = L"Window Class Name";
@@ -60,7 +56,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevinstance, LPSTR lpszCmdPa
 double GetFrameTime()
 {
 	static LARGE_INTEGER frequency;
-	static BOOL initialized = FALSE;
+	static bool initialized = false;
 	static LARGE_INTEGER prevTime;
 
 	if (!initialized)
@@ -83,22 +79,20 @@ LRESULT WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 {
 	PAINTSTRUCT ps;
 	HDC hDC;
-	static Player* player;
 	switch (iMessage)
 	{
 	case WM_CREATE:
 		GetClientRect(hWnd, &screen);
+		start_game(new LogoState());
 		SetTimer(hWnd, 1, 10, NULL);
-		player = new Marin;
 		break;
 	case WM_PAINT:
 	{
 		hDC = BeginPaint(hWnd, &ps);
 		HBITMAP hBitmap = CreateCompatibleBitmap(hDC, screen.right, screen.bottom);
-		HDC mDC = CreateCompatibleDC(hDC);
+		mDC = CreateCompatibleDC(hDC);
 		SelectObject(mDC, hBitmap);
-		FillRect(mDC, &screen, (HBRUSH)GetStockObject(WHITE_BRUSH));
-		player->draw_character(mDC);
+		stateStack.back()->draw();
 		BitBlt(hDC, 0, 0, screen.right, screen.bottom, mDC, 0, 0, SRCCOPY);
 		//StretchBlt(hDC, 0, 0, screen.right, screen.bottom, mDC, 0, 0, screen.right / 4, screen.bottom / 4, SRCCOPY);
 		DeleteObject(hBitmap);
@@ -109,25 +103,16 @@ LRESULT WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 	case WM_TIMER:
 		if (wParam == 1) {
 			frame_time = GetFrameTime();
-			player->handle_event();
-			player->update();
+			stateStack.back()->handle_events();
+			stateStack.back()->update();
 			ColliderUpdate();
 			InvalidateRect(hWnd, NULL, false);
 		}
 		break;
 	case WM_MOUSEWHEEL:
-		if (!player->GetIfRoll())
-			if (GET_WHEEL_DELTA_WPARAM(wParam) > 0)
-				player->SetWeaponUp();
-			else
-				player->SetWeaponDown();
-		break;
-	case WM_KEYDOWN:
-		if (wParam == VK_ESCAPE) {
-			PostQuitMessage(0);
-		}
 		break;
 	case WM_DESTROY:
+		end_game();
 		PostQuitMessage(0);
 		break;
 	default:

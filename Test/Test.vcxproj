@@ -131,25 +131,38 @@
   <ItemGroup>
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="game_framework.cpp" />
     <ClCompile Include="IdleState.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Marin.cpp" />
     <ClCompile Include="Pistol.cpp" />
+    <ClCompile Include="PlayState.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="Rifle.cpp" />
     <ClCompile Include="RollState.cpp" />
     <ClCompile Include="RunState.cpp" />
     <ClCompile Include="Shotgun.cpp" />
     <ClCompile Include="Sword.cpp" />
+    <ClCompile Include="LogoState.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="game_framework.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="IdleState.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="Marin.h" />
     <ClInclude Include="Pistol.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayState.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="Rifle.h" />
     <ClInclude Include="Rigidbody.h" />
     <ClInclude Include="RollState.h" />
@@ -157,6 +170,9 @@
     <ClInclude Include="Shotgun.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="Sword.h" />
+    <ClInclude Include="LogoState.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="Vector2D.h" />
     <ClInclude Include="Weapon.h" />
   </ItemGroup>

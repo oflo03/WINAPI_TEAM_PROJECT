@@ -31,6 +31,15 @@
     <ClCompile Include="Rifle.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="LogoState.cpp">
+      <Filter>framework</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayState.cpp">
+      <Filter>framework</Filter>
+    </ClCompile>
+    <ClCompile Include="game_framework.cpp">
+      <Filter>framework</Filter>
+    </ClCompile>
     <ClCompile Include="Shotgun.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -81,6 +90,15 @@
     <ClInclude Include="Rifle.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="game_framework.h">
+      <Filter>framework</Filter>
+    </ClInclude>
+    <ClInclude Include="LogoState.h">
+      <Filter>framework</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayState.h">
+      <Filter>framework</Filter>
+    </ClInclude>
     <ClInclude Include="Rigidbody.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -94,6 +112,9 @@
     </Filter>
     <Filter Include="소스 파일">
       <UniqueIdentifier>{3076526c-832f-4c75-b319-1d55f76131b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="framework">
+      <UniqueIdentifier>{a4855654-539d-418a-a22a-34ab9f435b45}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
