@@ -25,6 +25,7 @@ public:
 	}
 	virtual void update() = 0;
 	virtual void attack(std::vector<Bullet*>& bullets, const Vector2D<float>& center) = 0;
+	void SetCurTime(int t) { curTime = t; }
 	int GetCurAmmo() { return curAmmo; }
 	void draw_weapon(HDC mDC, const Vector2D<float>& center)
 	{

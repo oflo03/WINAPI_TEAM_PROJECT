@@ -3,12 +3,13 @@
 #include<queue>
 #include"Vector2D.h"
 
+
 enum shapetype
 {
 	point, rect, circle
 };
 
-std::queue<Vector2D<int>> collisionMsg;
+class Master;
 
 class Collider
 {
@@ -17,9 +18,10 @@ protected:
 	int size;
 	int shape;
 	int layer;
-
+	Master* owner;
 public:
-	void collision();
+	void detection();
 };
 
-std::vector<Collider*> COLL;
+extern std::queue<Vector2D<int>> collisionMsg;
+extern std::vector<Collider*> COLL;

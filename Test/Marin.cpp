@@ -171,3 +171,8 @@ void Marin::SetDirection()
 		direction = BACK_RIGHT;
 	}
 }
+
+void Marin::handle_collision(int damage)
+{
+
+}

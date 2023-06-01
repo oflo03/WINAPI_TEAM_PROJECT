@@ -5,6 +5,7 @@
 #include"State.h"
 #include"Bullet.h"
 #include"Weapon.h"
+#include"Master.h"
 
 class PlayerState;
 
@@ -19,6 +20,7 @@ enum DIRECTION
 };
 
 class Player
+	:public Master
 {
 protected:
 	Animation animation[6];
@@ -51,7 +53,8 @@ public:
 	double GetVelocity() { return velocity; };
 	bool GetIfRoll();
 	void SetDirection(int direction) { this->direction = direction; }
-	void SetWeapon(int type) { if (myWeapons[type]->GetCurAmmo() > 0)this->selectedWeapon = type; }
+	void SetWeaponTime(int t){ myWeapons[selectedWeapon]->SetCurTime(t); }
+	void SetWeapon(int type) { if (myWeapons[type]->GetCurAmmo() > 0)selectedWeapon = type, myWeapons[selectedWeapon]->SetCurTime(10); }
 	void SetWeaponUp() { do selectedWeapon += 5, selectedWeapon %= 6; while (myWeapons[selectedWeapon]->GetCurAmmo() == 0); }
 	void SetWeaponDown() { do selectedWeapon += 1, selectedWeapon %= 6; while (myWeapons[selectedWeapon]->GetCurAmmo() == 0); }
 };

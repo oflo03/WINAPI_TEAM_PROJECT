@@ -1,6 +1,6 @@
 #include"Collider.h"
 
-void Collider::collision()
+void Collider::detection()
 {
 	for (auto& other : COLL)
 		if (this->shape == 1)
@@ -21,6 +21,6 @@ void Collider::collision()
 void ColliderUpdate()
 {
 	for (auto& c : COLL)
-		c->collision();
+		c->detection();
 
 }

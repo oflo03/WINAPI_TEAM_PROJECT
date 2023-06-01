@@ -11,7 +11,10 @@ RollState::~RollState()
 PlayerState* RollState::handle_event(Player& player)
 {
 	if (rollingTime == 31)
+	{
+		player.SetWeaponTime(10);
 		return new IdleState;
+	}
 	return nullptr;
 }
 

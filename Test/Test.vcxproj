@@ -157,6 +157,7 @@
     <ClInclude Include="IdleState.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="Marin.h" />
+    <ClInclude Include="Master.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayState.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
