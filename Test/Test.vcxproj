@@ -138,6 +138,7 @@
     <ClCompile Include="Rifle.cpp" />
     <ClCompile Include="RollState.cpp" />
     <ClCompile Include="RunState.cpp" />
+    <ClCompile Include="Shotgun.cpp" />
     <ClCompile Include="Sword.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -150,8 +151,10 @@
     <ClInclude Include="Pistol.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Rifle.h" />
+    <ClInclude Include="Rigidbody.h" />
     <ClInclude Include="RollState.h" />
     <ClInclude Include="RunState.h" />
+    <ClInclude Include="Shotgun.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="Sword.h" />
     <ClInclude Include="Vector2D.h" />

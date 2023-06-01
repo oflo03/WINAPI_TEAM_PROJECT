@@ -4,6 +4,7 @@
 #include"Sword.h"
 #include"Pistol.h"
 #include"Rifle.h"
+#include"Shotgun.h"
 
 extern double frame_time;
 
@@ -15,9 +16,9 @@ Marin::Marin(float x, float y) : Player(x, y)
 	myWeapons.emplace_back(new Sword);
 	myWeapons.emplace_back(new Pistol);
 	myWeapons.emplace_back(new Rifle);
-	myWeapons.emplace_back(new Rifle);
-	myWeapons.emplace_back(new Rifle);
-	myWeapons.emplace_back(new Rifle);
+	myWeapons.emplace_back(new Shotgun);
+	myWeapons.emplace_back(new Shotgun);
+	myWeapons.emplace_back(new Shotgun);
 }
 
 Marin::Marin() : Player()
@@ -28,9 +29,9 @@ Marin::Marin() : Player()
 	myWeapons.emplace_back(new Sword);
 	myWeapons.emplace_back(new Pistol);
 	myWeapons.emplace_back(new Rifle);
-	myWeapons.emplace_back(new Rifle);
-	myWeapons.emplace_back(new Rifle);
-	myWeapons.emplace_back(new Rifle);
+	myWeapons.emplace_back(new Shotgun);
+	myWeapons.emplace_back(new Shotgun);
+	myWeapons.emplace_back(new Shotgun);
 }
 
 Marin::~Marin()

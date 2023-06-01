@@ -31,6 +31,9 @@
     <ClCompile Include="Rifle.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Shotgun.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h">
@@ -76,6 +79,12 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Rifle.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Rigidbody.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Shotgun.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

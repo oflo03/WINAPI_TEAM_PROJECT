@@ -14,7 +14,7 @@ enum ID // 아이템 추가할 때 여기 ID명 작성
 
 };
 
-const int cooltime[]{ 10,10,7,10,10,10 };
+const int cooltime[]{ 50,15,7,30,10,10 };
 
 class Item
 {
