@@ -28,17 +28,17 @@ PlayerState* IdleState::handle_event(Player& player)
 		dirY = 1;
 		isMove = true;
 	}
-	if (GetAsyncKeyState('1') & 0x8000)
+	if (GetAsyncKeyState('1') & 0x8000 && player.GetWeapon() != SWORD)
 		player.SetWeapon(SWORD);
-	if (GetAsyncKeyState('2') & 0x8000)
+	if (GetAsyncKeyState('2') & 0x8000 && player.GetWeapon() != PISTOL)
 		player.SetWeapon(PISTOL);
-	if (GetAsyncKeyState('3') & 0x8000)
+	if (GetAsyncKeyState('3') & 0x8000 && player.GetWeapon() != RIFLE)
 		player.SetWeapon(RIFLE);
-	if (GetAsyncKeyState('4') & 0x8000)
+	if (GetAsyncKeyState('4') & 0x8000 && player.GetWeapon() != SHOTGUN)
 		player.SetWeapon(SHOTGUN);
-	if (GetAsyncKeyState('5') & 0x8000)
+	if (GetAsyncKeyState('5') & 0x8000 && player.GetWeapon() != ROCKET)
 		player.SetWeapon(ROCKET);
-	if (GetAsyncKeyState('6') & 0x8000)
+	if (GetAsyncKeyState('6') & 0x8000 && player.GetWeapon() != GRENADE)
 		player.SetWeapon(GRENADE);
 	player.SetDirection();
 	if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)

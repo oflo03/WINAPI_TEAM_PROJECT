@@ -53,17 +53,17 @@ PlayerState* RunState::handle_event(Player& player)
 		player.SetDir(Vector2D<float>(0,0));
 		return new RollState(dirX,dirY);
 	}
-	if (GetAsyncKeyState('1') & 0x8000)
+	if (GetAsyncKeyState('1') & 0x8000 && player.GetWeapon() != SWORD)
 		player.SetWeapon(SWORD);
-	else if (GetAsyncKeyState('2') & 0x8000)
+	if (GetAsyncKeyState('2') & 0x8000 && player.GetWeapon() != PISTOL)
 		player.SetWeapon(PISTOL);
-	else if (GetAsyncKeyState('3') & 0x8000)
+	if (GetAsyncKeyState('3') & 0x8000 && player.GetWeapon() != RIFLE)
 		player.SetWeapon(RIFLE);
-	else if (GetAsyncKeyState('4') & 0x8000)
+	if (GetAsyncKeyState('4') & 0x8000 && player.GetWeapon() != SHOTGUN)
 		player.SetWeapon(SHOTGUN);
-	else if (GetAsyncKeyState('5') & 0x8000)
+	if (GetAsyncKeyState('5') & 0x8000 && player.GetWeapon() != ROCKET)
 		player.SetWeapon(ROCKET);
-	else if (GetAsyncKeyState('6') & 0x8000)
+	if (GetAsyncKeyState('6') & 0x8000 && player.GetWeapon() != GRENADE)
 		player.SetWeapon(GRENADE);
 	if (isMove) {
 		player.SetDir(Vector2D<float>(dirX, dirY));
