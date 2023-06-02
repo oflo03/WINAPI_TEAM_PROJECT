@@ -6,7 +6,7 @@ extern RECT screen;
 
 LogoState::LogoState() :GameState()
 {
-	logo.Load(L"tuk_credit.png");
+	logo.Load(L"main_logo.png");
 	logoTime = 0;
 }
 
