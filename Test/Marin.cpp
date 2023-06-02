@@ -9,6 +9,11 @@ Marin::Marin(float x, float y) : Player(x, y)
 	state = new IdleState;
 	hand.Load(L"hand.png");
 	SetImage(STATE_IDLE);
+	col = new Collider(Vector2D<float>(animation[direction].size.right, animation[direction].size.bottom));
+	col->owner = this;
+	col->layer = player;
+	col->pos = pos;
+	COLL.emplace_back(col);
 	myWeapons.emplace_back(new Sword);
 	myWeapons.emplace_back(new Pistol);
 	myWeapons.emplace_back(new Rifle);
@@ -22,6 +27,11 @@ Marin::Marin() : Player()
 	state = new IdleState;
 	hand.Load(L"hand.png");
 	SetImage(STATE_IDLE);
+	col = new Collider(Vector2D<float>(animation[direction].size.right, animation[direction].size.bottom));
+	col->owner = this;
+	col->layer = player;
+	col->pos = pos;
+	COLL.emplace_back(col);
 	myWeapons.emplace_back(new Sword);
 	myWeapons.emplace_back(new Pistol);
 	myWeapons.emplace_back(new Rifle);
@@ -100,6 +110,7 @@ void Marin::update()
 		W->update();
 	for (auto& B : myBullets)
 		B->update();
+	col->pos = pos;
 }
 
 void Marin::SetImage(int state)

@@ -78,6 +78,7 @@
       <Filter>Player</Filter>
     </ClInclude>
     <ClInclude Include="Master.h" />
+    <ClInclude Include="Tilemap.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Player">
