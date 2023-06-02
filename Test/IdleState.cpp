@@ -28,9 +28,6 @@ PlayerState* IdleState::handle_event(Player& player)
 		dirY = 1;
 		isMove = true;
 	}
-	if (GetAsyncKeyState('X')) {
-		lookRange = lookRange ? false : true;
-	}
 	if (GetAsyncKeyState('1') & 0x8000 && player.GetWeapon() != SWORD)
 		player.SetWeapon(SWORD);
 	if (GetAsyncKeyState('2') & 0x8000 && player.GetWeapon() != PISTOL)

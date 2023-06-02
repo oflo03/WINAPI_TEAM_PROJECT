@@ -19,5 +19,5 @@ const int cooltime[]{ 50,15,7,30,10,10 };
 class Item
 {
 protected:
-	CImage resource;
+	CImage resource[2];
 };

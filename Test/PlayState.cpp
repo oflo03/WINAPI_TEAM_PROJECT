@@ -36,6 +36,9 @@ void PlayState::handle_events()
 		PostQuitMessage(0);
 		return;
 	}
+	else if (GetAsyncKeyState('X') & 0x8000) {
+		lookRange = !lookRange;
+	}
 	player->handle_event();
 }
 

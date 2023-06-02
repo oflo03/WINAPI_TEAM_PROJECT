@@ -17,7 +17,7 @@ LogoState::~LogoState()
 
 void LogoState::update()
 {
-	if (logoTime > 1.0) {
+	if (logoTime > 1.5) {
 		logoTime = 0;
 		change_state(new PlayState());
 	}

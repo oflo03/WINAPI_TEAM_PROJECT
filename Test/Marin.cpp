@@ -104,7 +104,9 @@ void Marin::handle_event()
 void Marin::update()
 {
 	state->update(*this);
-	frame = (frame + frame_time * 2 * animation[direction].frame);
+	if(dynamic_cast<RollState*>(state) == nullptr)
+		frame = (frame + frame_time * animation[direction].frame);
+	else frame = (frame + frame_time *2* animation[direction].frame);
 	if (frame >= animation[direction].frame) frame = 0;
 	for (auto& W : myWeapons)
 		W->update();

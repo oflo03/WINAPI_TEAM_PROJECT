@@ -12,6 +12,8 @@ void Pistol::update()
 {
 	if (curTime)
 		--curTime;
+	if (shotTime)
+		shotTime--;
 }
 void Pistol::attack(std::vector<Bullet*>& bullets, const Vector2D<float>& hand)
 {
@@ -24,6 +26,7 @@ void Pistol::attack(std::vector<Bullet*>& bullets, const Vector2D<float>& hand)
 		t.Rotate(uid(dre) % 11 - 5);
 		bullets.emplace_back(new Bullet(PISTOL, hand + Vector2D<float>(t.x * 30, t.y * 30 - 10), t * 10));
 		curTime = coolTime;
+		shotTime = 10;
 	}
 
 }
@@ -33,7 +36,10 @@ void Rifle::update()
 {
 	if (curTime)
 		--curTime;
+	if (shotTime)
+		shotTime--;
 }
+
 void Rifle::attack(std::vector<Bullet*>& bullets, const Vector2D<float>& hand)
 {
 	if (!curTime)
@@ -45,6 +51,7 @@ void Rifle::attack(std::vector<Bullet*>& bullets, const Vector2D<float>& hand)
 		t.Rotate(uid(dre) % 15 - 7);
 		bullets.emplace_back(new Bullet(RIFLE, hand + Vector2D<float>(t.x * 30, t.y * 30 - 10), t * 10));
 		curTime = coolTime;
+		shotTime = 5;
 	}
 }
 
@@ -53,6 +60,8 @@ void Shotgun::update()
 {
 	if (curTime)
 		--curTime;
+	if (shotTime)
+		shotTime--;
 }
 void Shotgun::attack(std::vector<Bullet*>& bullets, const Vector2D<float>& hand)
 {
@@ -69,5 +78,6 @@ void Shotgun::attack(std::vector<Bullet*>& bullets, const Vector2D<float>& hand)
 			t.Rotate(5);
 		}
 		curTime = coolTime;
+		shotTime = 7;
 	}
 }

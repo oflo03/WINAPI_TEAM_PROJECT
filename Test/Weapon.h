@@ -16,12 +16,15 @@ protected:
 	int angle;
 	int coolTime;
 	int curTime;
-	CImage reverseResource;
-	CImage effect;
+	int shotTime;
+	CImage reverseResource[2];
 public:
-	Weapon() :maxAmmo(0), damage(0), curAmmo(0), angle(0), coolTime(0), curTime(0) {}
+	Weapon() :maxAmmo(0), damage(0), curAmmo(0), angle(0), coolTime(0), curTime(0) ,shotTime(0){}
 	~Weapon() {
-		resource.Destroy();
+		for (int i = 0; i < 2; i++) {
+			resource[i].Destroy();
+			reverseResource[i].Destroy();
+		}
 	}
 	virtual void update() = 0;
 	virtual void attack(std::vector<Bullet*>& bullets, const Vector2D<float>& center) = 0;
@@ -33,12 +36,13 @@ public:
 		GetCursorPos(&mPos);
 		angle = std::atan2(mPos.y - (center.y), mPos.x - center.x) * (180.0f / M_PI) * -1;
 		float temp = angle;
+		bool isShot = shotTime != 0;
 		if (angle >= 90)
 			angle = angle - 180;
 		else if (angle <= -90)
 			angle = angle + 180;
-		int width = resource.GetWidth();
-		int height = resource.GetHeight();
+		int width = resource[isShot].GetWidth();
+		int height = resource[isShot].GetHeight();
 		CImage rotatedImage;
 		rotatedImage.Create(width, height, 32);
 		for (int y = 0; y < height; y++) {
@@ -47,9 +51,9 @@ public:
 				if (rotatedPos.x >= 0 && rotatedPos.x < width && rotatedPos.y >= 0 && rotatedPos.y < height) {
 					BYTE* srcPixel;
 					if (angle == temp)
-						srcPixel = (BYTE*)resource.GetPixelAddress(rotatedPos.x, rotatedPos.y);
+						srcPixel = (BYTE*)resource[isShot].GetPixelAddress(rotatedPos.x, rotatedPos.y);
 					else
-						srcPixel = (BYTE*)reverseResource.GetPixelAddress(rotatedPos.x, rotatedPos.y);
+						srcPixel = (BYTE*)reverseResource[isShot].GetPixelAddress(rotatedPos.x, rotatedPos.y);
 					BYTE* destPixel = (BYTE*)rotatedImage.GetPixelAddress(x, y);
 					memcpy(destPixel, srcPixel, sizeof(BYTE) * 4);
 				}
@@ -67,8 +71,10 @@ public:
 		coolTime = cooltime[SWORD];
 		curAmmo = 1;
 		damage = 20;
-		resource.Load(L"Item_Weapon_Sword.png");
-		reverseResource.Load(L"Item_Weapon_Sword_Reverse.png");
+		resource[0].Load(L"Item_Weapon_Sword.png");
+		reverseResource[0].Load(L"Item_Weapon_Sword_Reverse.png");
+		resource[1].Load(L"Item_Weapon_Sword.png");
+		reverseResource[1].Load(L"Item_Weapon_Sword_Reverse.png");
 	}
 	virtual void update();
 	virtual void attack(std::vector<Bullet*>& bullets, const Vector2D<float>& center);
@@ -82,9 +88,10 @@ public:
 		coolTime = cooltime[PISTOL];
 		curAmmo = 10;
 		damage = 20;
-		resource.Load(L"Item_Weapon_Pistol.png");
-		reverseResource.Load(L"Item_Weapon_Pistol_Reverse.png");
-		effect.Load(L"shot.png");
+		resource[0].Load(L"Item_Weapon_Pistol.png");
+		reverseResource[0].Load(L"Item_Weapon_Pistol_Reverse.png");
+		resource[1].Load(L"Item_Weapon_Pistol2.png");
+		reverseResource[1].Load(L"Item_Weapon_Pistol_Reverse2.png");
 	}
 	virtual void update();
 	virtual void attack(std::vector<Bullet*>& bullets, const Vector2D<float>& center);
@@ -97,8 +104,10 @@ public:
 		coolTime = cooltime[RIFLE];
 		curAmmo = 10;
 		damage = 20;
-		resource.Load(L"Item_Weapon_Rifle.png");
-		reverseResource.Load(L"Item_Weapon_Rifle_Reverse.png");
+		resource[0].Load(L"Item_Weapon_Rifle.png");
+		reverseResource[0].Load(L"Item_Weapon_Rifle_Reverse.png");
+		resource[1].Load(L"Item_Weapon_Rifle2.png");
+		reverseResource[1].Load(L"Item_Weapon_Rifle_Reverse2.png");
 	}
 	virtual void update();
 	virtual void attack(std::vector<Bullet*>& bullets, const Vector2D<float>& center);
@@ -111,8 +120,10 @@ public:
 		coolTime = cooltime[SHOTGUN];
 		curAmmo = 10;
 		damage = 20;
-		resource.Load(L"Item_Weapon_Shotgun.png");
-		reverseResource.Load(L"Item_Weapon_Shotgun_Reverse.png");
+		resource[0].Load(L"Item_Weapon_Shotgun.png");
+		reverseResource[0].Load(L"Item_Weapon_Shotgun_Reverse.png");
+		resource[1].Load(L"Item_Weapon_Shotgun2.png");
+		reverseResource[1].Load(L"Item_Weapon_Shotgun_Reverse2.png");
 	}
 	virtual void update();
 	virtual void attack(std::vector<Bullet*>& bullets, const Vector2D<float>& center);

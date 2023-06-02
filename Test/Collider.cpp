@@ -2,14 +2,15 @@
 
 void Collider::detection()
 {
-	for (auto& other : COLL)
+	for (auto& other : COLL) {
+		if (this == other) continue;
 		if (this->shape == 1)
 			if (other->shape == 1)
 				if (this->pos - other->pos <= this->size + other->size)
-					collisionMsg.emplace(Vector2D<Master*>(this->owner, other->owner)); else;
+					collisionMsg.emplace(Vector2D<Master*>(this->owner, other->owner));
 			else if (other->shape == 2)
 				if (((this->pos - other->pos) - (((this->pos - other->pos).Normalize() * other->size.x))) <= this->size)
-					collisionMsg.emplace(Vector2D<Master*>(this->owner, other->owner)); else;
+					collisionMsg.emplace(Vector2D<Master*>(this->owner, other->owner));
 			else;
 		else if (this->shape == 2)
 			if (other->shape == 1)
@@ -18,6 +19,7 @@ void Collider::detection()
 			else if (other->shape == 2)
 				if ((this->pos - other->pos).GetLenth() <= this->size.x + other->size.x)
 					collisionMsg.emplace(Vector2D<Master*>(this->owner, other->owner));
+	}
 }
 
 HBRUSH GREENB = CreateSolidBrush(RGB(0, 255, 0));

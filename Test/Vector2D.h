@@ -7,7 +7,7 @@ class Vector2D {
 public:
 	struct { T x, y; };
 
-	Vector2D() {}
+	Vector2D() { x = y = 0; }
 	Vector2D(const T& x, const T& y) : x(x), y(y) {}
 	Vector2D(const Vector2D<T>& other) : x(other.x), y(other.y) {}
 	~Vector2D() {}
