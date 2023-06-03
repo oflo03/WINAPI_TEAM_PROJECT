@@ -7,11 +7,10 @@ void Collider::detection()
 		if (this->shape == 1)
 			if (other->shape == 1)
 				if (this->pos - other->pos <= this->size + other->size)
-					collisionMsg.emplace(Vector2D<Master*>(this->owner, other->owner));
+					collisionMsg.emplace(Vector2D<Master*>(this->owner, other->owner)); else;
 			else if (other->shape == 2)
 				if (((this->pos - other->pos) - (((this->pos - other->pos).Normalize() * other->size.x))) <= this->size)
-					collisionMsg.emplace(Vector2D<Master*>(this->owner, other->owner));
-			else;
+					collisionMsg.emplace(Vector2D<Master*>(this->owner, other->owner)); else; else;
 		else if (this->shape == 2)
 			if (other->shape == 1)
 				if (((this->pos - other->pos) - (((this->pos - other->pos).Normalize() * this->size.x))) <= other->size)
@@ -42,5 +41,4 @@ void ColliderUpdate()
 {
 	for (auto& c : COLL)
 		c->detection();
-
 }
