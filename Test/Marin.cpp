@@ -101,6 +101,7 @@ void Marin::handle_event()
 
 void Marin::update()
 {
+	lastPos = pos;
 	state->update(*this);
 	if(dynamic_cast<RollState*>(state) == nullptr)
 		frame = (frame + frame_time * animation[direction].frame);
@@ -183,5 +184,12 @@ void Marin::SetDirection()
 
 void Marin::handle_collision(int otherLayer)
 {
-
+	switch (otherLayer)
+	{
+	case wall:
+		pos = lastPos;
+		break;
+	default:
+		break;
+	}
 }

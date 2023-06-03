@@ -28,6 +28,7 @@ protected:
 	float frame;
 	float angle;
 	Vector2D<float> pos;
+	Vector2D<float> lastPos;
 	Vector2D<float> handPos;
 	Vector2D<float> dir;
 	int direction;
