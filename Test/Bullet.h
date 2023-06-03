@@ -15,6 +15,7 @@ protected:
 	Vector2D<float> dir;
 	int damage;
 	int type;
+	int velocity;
 public:
 	int GetDamage() { return damage; }
 	Bullet(int type, Vector2D<float> pos, Vector2D<float> dir);

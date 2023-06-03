@@ -26,6 +26,9 @@ void Bullet::SetImage(int type)
 	case 3:
 		this->animation.resource.Load(L"Bullet_Shotgun.png");
 		break;
+	case 4:
+		this->animation.resource.Load(L"enemy_bullet.png");
+		break;
 	default:
 		break;
 	}

@@ -19,21 +19,21 @@
       <Filter>Weapon</Filter>
     </ClCompile>
     <ClCompile Include="game_framework.cpp">
-      <Filter>Game framework</Filter>
+      <Filter>Game Framework</Filter>
     </ClCompile>
     <ClCompile Include="LogoState.cpp">
-      <Filter>Game framework</Filter>
+      <Filter>Game Framework</Filter>
     </ClCompile>
     <ClCompile Include="PlayState.cpp">
-      <Filter>Game framework</Filter>
-    </ClCompile>
-    <ClCompile Include="Enemy.cpp">
-      <Filter>Enemy</Filter>
+      <Filter>Game Framework</Filter>
     </ClCompile>
     <ClCompile Include="Weapon.cpp">
       <Filter>Weapon</Filter>
     </ClCompile>
     <ClCompile Include="Tilemap.cpp" />
+    <ClCompile Include="PistolMan.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Vector2D.h" />
@@ -60,13 +60,13 @@
       <Filter>Weapon</Filter>
     </ClInclude>
     <ClInclude Include="game_framework.h">
-      <Filter>Game framework</Filter>
+      <Filter>Game Framework</Filter>
     </ClInclude>
     <ClInclude Include="LogoState.h">
-      <Filter>Game framework</Filter>
+      <Filter>Game Framework</Filter>
     </ClInclude>
     <ClInclude Include="PlayState.h">
-      <Filter>Game framework</Filter>
+      <Filter>Game Framework</Filter>
     </ClInclude>
     <ClInclude Include="Weapon.h">
       <Filter>Weapon</Filter>
@@ -80,6 +80,9 @@
     </ClInclude>
     <ClInclude Include="Master.h" />
     <ClInclude Include="Tilemap.h" />
+    <ClInclude Include="PistolMan.h">
+      <Filter>Enemy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Player">
@@ -88,11 +91,11 @@
     <Filter Include="Weapon">
       <UniqueIdentifier>{3a0eb8dc-9583-4554-8019-5a488d1f631e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game framework">
-      <UniqueIdentifier>{24e5ab0a-3fd0-42f6-80ec-e9ff5617d445}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Enemy">
       <UniqueIdentifier>{853410b3-5585-4ddd-af16-ba95101f5360}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game Framework">
+      <UniqueIdentifier>{24e5ab0a-3fd0-42f6-80ec-e9ff5617d445}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
