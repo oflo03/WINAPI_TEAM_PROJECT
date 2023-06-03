@@ -16,6 +16,7 @@ enum layertype
 };
 
 class Master;
+class CollisionMessage;
 
 struct Collider
 {
@@ -31,5 +32,5 @@ struct Collider
 	void draw_range(HDC mDC);
 };
 
-extern std::queue<Vector2D<Master*>> collisionMsg;
+extern std::queue<CollisionMessage> collisionMsg;
 extern std::vector<Collider*> COLL;

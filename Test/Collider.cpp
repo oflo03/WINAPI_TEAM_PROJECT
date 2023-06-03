@@ -18,17 +18,17 @@ void Collider::detection()
 		if (this->shape == 1)
 			if (other->shape == 1)
 				if (this->pos - other->pos <= this->size + other->size)
-					collisionMsg.emplace(Vector2D<Master*>(this->owner, other->owner)); else;
+					collisionMsg.emplace(CollisionMessage(this->owner, other->layer)); else;
 			else if (other->shape == 2)
 				if (((this->pos - other->pos) - (((this->pos - other->pos).Normalize() * other->size.x))) <= this->size)
-					collisionMsg.emplace(Vector2D<Master*>(this->owner, other->owner)); else; else;
+					collisionMsg.emplace(CollisionMessage(this->owner, other->layer)); else; else;
 		else if (this->shape == 2)
 			if (other->shape == 1)
 				if (((this->pos - other->pos) - (((this->pos - other->pos).Normalize() * this->size.x))) <= other->size)
-					collisionMsg.emplace(Vector2D<Master*>(this->owner, other->owner)); else;
+					collisionMsg.emplace(CollisionMessage(this->owner, other->layer)); else;
 			else if (other->shape == 2)
 				if ((this->pos - other->pos).GetLenth() <= this->size.x + other->size.x)
-					collisionMsg.emplace(Vector2D<Master*>(this->owner, other->owner));
+					collisionMsg.emplace(CollisionMessage(this->owner,other->layer));
 	}
 }
 
@@ -50,12 +50,12 @@ void Collider::draw_range(HDC mDC)
 
 void ColliderUpdate()
 {
-	for (auto& c : COLL)			// 面倒 眉农
+	for (auto& c : COLL)
 		c->detection();
-	Vector2D<Master*> msg;
-	while (!collisionMsg.empty())	// 皋技瘤 傈何 贸府
+	CollisionMessage msg;
+	while (!collisionMsg.empty())
 	{
 		msg = collisionMsg.front();
-		msg.x->handle_collision(msg.y);
+		msg.collided->handle_collision(msg.otherLayer);
 	}
 }

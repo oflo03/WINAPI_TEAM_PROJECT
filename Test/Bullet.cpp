@@ -48,7 +48,7 @@ void Bullet::update()
 	col->pos = pos;
 }
 
-void Bullet::handle_collision(Master* other)
+void Bullet::handle_collision(int otherLayer)
 {
 
 }

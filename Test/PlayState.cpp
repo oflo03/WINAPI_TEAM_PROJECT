@@ -8,7 +8,7 @@ std::uniform_int_distribution<int> uid(1, 10000);
 
 void ColliderUpdate();
 
-std::queue<Vector2D<Master*>> collisionMsg;
+std::queue<CollisionMessage> collisionMsg;
 std::vector<Collider*> COLL;
 
 CImage map;

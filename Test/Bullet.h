@@ -21,5 +21,5 @@ public:
 	void SetImage(int type);
 	void draw_bullet(HDC mDC);
 	void update();
-	virtual void handle_collision(Master* other);
+	virtual void handle_collision(int otherLayer);
 };
