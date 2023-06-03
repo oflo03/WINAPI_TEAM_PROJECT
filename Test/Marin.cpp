@@ -185,7 +185,7 @@ void Marin::SetDirection()
 	}
 }
 
-void Marin::handle_collision(int damage)
+void Marin::handle_collision(Master* other)
 {
 
 }
