@@ -11,6 +11,7 @@ bool collisionable[6][6]
 };
 
 std::queue<CollisionMessage> collisionMsg;
+std::unordered_set<Master*> deleteSet;
 
 void Collider::detection()
 {
@@ -30,7 +31,7 @@ void Collider::detection()
 					collisionMsg.emplace(CollisionMessage(this->owner, other->layer)); else;
 			else if (other->shape == 2)
 				if ((this->pos - other->pos).GetLenth() <= this->size.x + other->size.x)
-					collisionMsg.emplace(CollisionMessage(this->owner,other->layer));
+					collisionMsg.emplace(CollisionMessage(this->owner, other->layer));
 	}
 }
 
@@ -54,10 +55,28 @@ void ColliderUpdate()
 {
 	for (auto& c : COLL)
 		c->detection();
+
 	CollisionMessage msg;
 	while (!collisionMsg.empty())
 	{
 		msg = collisionMsg.front();
-		msg.collided->handle_collision(msg.otherLayer);
+		collisionMsg.pop();
+		if (msg.collided)
+			msg.collided->handle_collision(msg.otherLayer);
+	}
+
+	Master* temp;
+	while (!deleteSet.empty())
+	{
+		temp = *deleteSet.begin();
+		deleteSet.erase(deleteSet.begin());
+		for (auto i = COLL.begin(); i != COLL.end(); ++i)
+			if (COLL[i - COLL.begin()] == temp->col)
+			{
+				COLL.erase(i);
+				break;
+			}
+		delete temp->col;
+		delete temp;
 	}
 }

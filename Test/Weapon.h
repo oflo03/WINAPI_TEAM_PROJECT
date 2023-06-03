@@ -5,6 +5,7 @@
 
 extern std::default_random_engine dre;
 extern std::uniform_int_distribution<int> uid;
+extern std::vector<Bullet*> Bullets;
 
 class Weapon
 	: public Item
@@ -19,7 +20,7 @@ protected:
 	int shotTime;
 	CImage reverseResource[2];
 public:
-	Weapon() :maxAmmo(0), damage(0), curAmmo(0), angle(0), coolTime(0), curTime(0) ,shotTime(0){}
+	Weapon() :maxAmmo(0), damage(0), curAmmo(0), angle(0), coolTime(0), curTime(0), shotTime(0) {}
 	~Weapon() {
 		for (int i = 0; i < 2; i++) {
 			resource[i].Destroy();
@@ -27,7 +28,7 @@ public:
 		}
 	}
 	virtual void update() = 0;
-	virtual void attack(std::vector<Bullet*>& bullets, const Vector2D<float>& center) = 0;
+	virtual void attack(const Vector2D<float>& center) = 0;
 	void SetCurTime(int t) { curTime = t; }
 	int GetCurAmmo() { return curAmmo; }
 	void draw_weapon(HDC mDC, const Vector2D<float>& center)
@@ -77,7 +78,7 @@ public:
 		reverseResource[1].Load(L"Item_Weapon_Sword_Reverse.png");
 	}
 	virtual void update();
-	virtual void attack(std::vector<Bullet*>& bullets, const Vector2D<float>& center);
+	virtual void attack(const Vector2D<float>& center);
 };
 
 class Pistol :public Weapon
@@ -94,7 +95,7 @@ public:
 		reverseResource[1].Load(L"Item_Weapon_Pistol_Reverse2.png");
 	}
 	virtual void update();
-	virtual void attack(std::vector<Bullet*>& bullets, const Vector2D<float>& center);
+	virtual void attack(const Vector2D<float>& center);
 };
 
 class Rifle :public Weapon
@@ -110,7 +111,7 @@ public:
 		reverseResource[1].Load(L"Item_Weapon_Rifle_Reverse2.png");
 	}
 	virtual void update();
-	virtual void attack(std::vector<Bullet*>& bullets, const Vector2D<float>& center);
+	virtual void attack(const Vector2D<float>& center);
 };
 
 class Shotgun :public Weapon
@@ -126,5 +127,5 @@ public:
 		reverseResource[1].Load(L"Item_Weapon_Shotgun_Reverse2.png");
 	}
 	virtual void update();
-	virtual void attack(std::vector<Bullet*>& bullets, const Vector2D<float>& center);
+	virtual void attack(const Vector2D<float>& center);
 };

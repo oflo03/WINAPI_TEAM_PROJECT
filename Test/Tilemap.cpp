@@ -3,17 +3,16 @@
 int SelectedMap;
 
 #define MapNum 1
-#define MapWidth 10
-#define MapHeight 10
+#define MapWidth 9
+#define MapHeight 9
 
-#define TileWidth 32
-#define PrintTileWidth (TileWidth * 2)
-#define PTW PrintTileWidth
-
-#define TileHeight 32
-#define PrintTileHeight (TileHeight * 2)
-#define PTH PrintTileHeight
+#define TileSize 32
+#define PrintTileSize (TileSize * 2)
+#define PTS PrintTileSize
 #define TilePos Maps[SelectedMap][i][j].tilePos
+
+#define GrassTileNum 8
+#define WallTileNum 16
 
 Tile Maps[MapNum][MapHeight][MapWidth];
 
@@ -25,7 +24,11 @@ void LoadTileMap()
 	for (int m = 0; m < MapNum; ++m)
 		for (int i = 0; i < MapHeight; ++i)
 			for (int j = 0; j < MapWidth; ++j)
+			{
 				mapFile >> Maps[m][i][j];
+				if (Maps[m][i][j].type == wall_t)
+					Maps[m][i][j].col->pos = Vector2D<float>(j * PTS + TileSize, i * PTS + TileSize);
+			}
 	SelectedMap = 0;
 }
 
@@ -36,12 +39,12 @@ void PrintMap(HDC mDC)
 			switch (Maps[SelectedMap][i][j].type)
 			{
 			case grass:
-				grassImage.StretchBlt(mDC, i * PTW, j * PTH, PTW, PTH,
-					TilePos % MapWidth * TileWidth, TilePos / MapWidth * TileHeight, TileWidth, TileHeight, SRCCOPY);
+				grassImage.TransparentBlt(mDC, j * PTS, i * PTS, PTS, PTS,
+					TilePos % GrassTileNum * TileSize, TilePos / GrassTileNum * TileSize, TileSize, TileSize, RGB(255, 255, 255));
 				break;
 			case wall_t:
-				wallImage.StretchBlt(mDC, i * PTW, j * PTH, PTW, PTH,
-					TilePos % MapWidth * TileWidth, TilePos / MapWidth * TileHeight, TileWidth, TileHeight, SRCCOPY);
+				wallImage.TransparentBlt(mDC, j * PTS, i * PTS, PTS, PTS,
+					TilePos % WallTileNum * TileSize, TilePos / WallTileNum * TileSize, TileSize, TileSize, RGB(255, 255, 255));
 				break;
 			default:
 				break;
@@ -50,6 +53,13 @@ void PrintMap(HDC mDC)
 std::ifstream& operator>>(std::ifstream& is, Tile& tile)
 {
 	is >> tile.type, is >> tile.tilePos;
+	if (tile.type == wall_t)
+	{
+		tile.col = new Collider(Vector2D<float>(TileSize, TileSize));
+		tile.col->owner = &tile;
+		tile.col->layer = wall;
+		COLL.emplace_back(tile.col);
+	}
 	return is;
 }
 

@@ -64,8 +64,6 @@ void Marin::draw_character(HDC mDC)
 		handPos.x -= 17;
 		handPos.y += 8;
 	}
-	for (auto& B : myBullets)
-		B->draw_bullet(mDC);
 	float yDest = pos.y - (animation[direction].size.bottom - 20) * 2;
 	if (direction == FRONT || direction == FRONT_RIGHT || direction == FRONT_LEFT) {
 		animation[direction].resource.Draw(mDC, pos.x - animation[direction].size.right, yDest - 20, animation[direction].size.right * 2, animation[direction].size.bottom * 2,
@@ -110,8 +108,6 @@ void Marin::update()
 	if (frame >= animation[direction].frame) frame = 0;
 	for (auto& W : myWeapons)
 		W->update();
-	for (auto& B : myBullets)
-		B->update();
 	col->pos = pos;
 }
 
