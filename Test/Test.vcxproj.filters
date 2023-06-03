@@ -33,6 +33,7 @@
     <ClCompile Include="Weapon.cpp">
       <Filter>Weapon</Filter>
     </ClCompile>
+    <ClCompile Include="Tilemap.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Vector2D.h" />

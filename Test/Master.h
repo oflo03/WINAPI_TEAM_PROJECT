@@ -4,5 +4,5 @@
 struct Master
 {
 	Collider* col;
-	virtual void handle_collision(int damage) = 0;
+	virtual void handle_collision(Master* other) = 0;
 };
