@@ -10,6 +10,8 @@ bool collisionable[6][6]
 	1,1,0,0,0,0
 };
 
+std::queue<CollisionMessage> collisionMsg;
+
 void Collider::detection()
 {
 	for (auto& other : COLL) {
