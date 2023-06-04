@@ -7,9 +7,11 @@ std::default_random_engine dre(rd());
 std::uniform_int_distribution<int> uid(1, 10000);
 
 void ColliderUpdate();
+void LoadTileMap();
+void PrintMap(HDC mDC);
 
-std::queue<Vector2D<Master*>> collisionMsg;
 std::vector<Collider*> COLL;
+std::vector<Bullet*> Bullets;
 
 CImage map;
 bool lookRange;
@@ -17,6 +19,7 @@ bool lookRange;
 PlayState::PlayState() : GameState(), player(new Marin)
 {
 	map.Load(L"testmap.png");
+	LoadTileMap();
 }
 
 PlayState::~PlayState()
@@ -27,6 +30,8 @@ PlayState::~PlayState()
 void PlayState::update()
 {
 	player->update();
+	for (auto& B : Bullets)
+		B->update();
 	ColliderUpdate();
 }
 
@@ -46,8 +51,10 @@ void PlayState::handle_events()
 
 void PlayState::draw()
 {
-	map.Draw(mDC, 0, 28, 1024, 1024);
+	PrintMap(mDC);
 	player->draw_character(mDC);
+	for (auto& B : Bullets)
+		B->draw_bullet(mDC);
 	if (lookRange)
 		for (auto& C : COLL)
 			C->draw_range(mDC);

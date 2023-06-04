@@ -28,6 +28,7 @@ protected:
 	float frame;
 	float angle;
 	Vector2D<float> pos;
+	Vector2D<float> lastPos;
 	Vector2D<float> handPos;
 	Vector2D<float> dir;
 	int direction;
@@ -35,7 +36,6 @@ protected:
 	int velocity;
 	int selectedWeapon;
 	std::vector<Weapon*> myWeapons;
-	std::vector<Bullet*> myBullets;
 public:
 	Player(float x, float y) : pos(x, y), dir(0, 0), frame(0), angle(90), direction(FRONT), state(nullptr), selectedWeapon(SWORD), velocity(200) {}
 	Player() : pos(400, 300), dir(0, 0), frame(0), angle(90), direction(FRONT), state(nullptr), selectedWeapon(SWORD), velocity(200) {}
@@ -45,7 +45,7 @@ public:
 	virtual void update() = 0;
 	virtual void SetImage(int state) = 0;
 	virtual void SetDirection() = 0;
-	virtual void attack() { myWeapons[selectedWeapon]->attack(myBullets, handPos); };
+	virtual void attack() { myWeapons[selectedWeapon]->attack(handPos); };
 	void DestroyImage() { for (int i = 0; i < 6; i++) animation[i].resource.Destroy(); }
 	void SetPos(Vector2D<float> temp) { pos = temp; }
 	Vector2D<float> GetPos() { return pos; }

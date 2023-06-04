@@ -2,6 +2,7 @@
 #include<Windows.h>
 #include<vector>
 #include<queue>
+#include<unordered_set>
 #include"Vector2D.h"
 
 
@@ -31,5 +32,5 @@ struct Collider
 	void draw_range(HDC mDC);
 };
 
-extern std::queue<Vector2D<Master*>> collisionMsg;
+extern std::unordered_set<Master*> deleteSet;
 extern std::vector<Collider*> COLL;

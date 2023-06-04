@@ -10,7 +10,7 @@ RunState::~RunState()
 
 PlayerState* RunState::handle_event(Player& player)
 {
-	float dirX=0, dirY = 0;
+	float dirX = 0, dirY = 0;
 	bool isMove = false;
 	if (GetAsyncKeyState('D')) {
 		dirX = 1;
@@ -33,10 +33,10 @@ PlayerState* RunState::handle_event(Player& player)
 	player.SetDirection();
 	if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
 		player.attack();
-	if (GetAsyncKeyState(VK_RBUTTON) & 0x8000) {
+	if (GetAsyncKeyState(VK_RBUTTON) & 1) {
 		if (dirX == 1 && dirY == 0)
 			player.SetDirection(FRONT_RIGHT);
-		else if(dirX == 1 && dirY == 1)
+		else if (dirX == 1 && dirY == 1)
 			player.SetDirection(FRONT_RIGHT);
 		else if (dirX == 0 && dirY == 1)
 			player.SetDirection(FRONT);
@@ -50,8 +50,8 @@ PlayerState* RunState::handle_event(Player& player)
 			player.SetDirection(BACK);
 		else if (dirX == 1 && dirY == -1)
 			player.SetDirection(BACK_RIGHT);
-		player.SetDir(Vector2D<float>(0,0));
-		return new RollState(dirX,dirY);
+		player.SetDir(Vector2D<float>(0, 0));
+		return new RollState(dirX, dirY);
 	}
 	if (GetAsyncKeyState('1') & 0x8000 && player.GetWeapon() != SWORD)
 		player.SetWeapon(SWORD);

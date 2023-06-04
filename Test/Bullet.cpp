@@ -1,6 +1,7 @@
 #include"Bullet.h"
 
 extern double frame_time;
+extern std::vector<Bullet*> Bullets;
 
 Bullet::Bullet(int type, Vector2D<float> pos, Vector2D<float> dir) :
 	type(type), pos(pos), dir(dir), damage(BulletDamage[type]), frame(0)
@@ -38,7 +39,7 @@ void Bullet::SetImage(int type)
 
 void Bullet::draw_bullet(HDC mDC)
 {
-	animation.resource.Draw(mDC, pos.x - animation.size.right, pos.y  - animation.size.bottom, animation.size.right * 2, animation.size.bottom * 2,
+	animation.resource.Draw(mDC, pos.x - animation.size.right, pos.y - animation.size.bottom, animation.size.right * 2, animation.size.bottom * 2,
 		(int)frame * animation.size.right, 0, animation.size.right, animation.size.bottom
 	);
 }
@@ -51,7 +52,20 @@ void Bullet::update()
 	col->pos = pos;
 }
 
-void Bullet::handle_collision(Master* other)
+void Bullet::handle_collision(int otherLayer)
 {
-
+	switch (otherLayer)
+	{
+	case wall:
+		for (auto i = Bullets.begin(); i != Bullets.end(); ++i)
+			if (Bullets[i - Bullets.begin()] == this)
+			{
+				Bullets.erase(i);
+				break;
+			}
+		deleteSet.insert(this);
+		break;
+	default:
+		break;
+	}
 }
