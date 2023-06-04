@@ -7,3 +7,13 @@ struct Animation
 	RECT size;
 	int frame;
 };
+
+enum STATE
+{
+	STATE_IDLE, STATE_RUN, STATE_ROLL
+};
+
+enum DIRECTION
+{
+	FRONT, FRONT_RIGHT, FRONT_LEFT, BACK, BACK_RIGHT, BACK_LEFT
+};

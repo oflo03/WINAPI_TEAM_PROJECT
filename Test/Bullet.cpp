@@ -22,12 +22,17 @@ Bullet::Bullet(int type, Vector2D<float> pos, Vector2D<float> dir) :
 	angle= std::atan2(dir.y, dir.x) * (180.0f / M_PI)*-1;
 }
 
+
+Bullet::~Bullet() {
+	animation.resource.Destroy();
+}
+
 void Bullet::SetImage(int type)
 {
 	switch (type)
 	{
 	case 1:
-		this->animation.resource.Load(L"enemy_bullet.png");
+		this->animation.resource.Load(L"Bullet_Pistol.png");
 		break;
 	case 2:
 		this->animation.resource.Load(L"Bullet_Rifle.png");
@@ -96,7 +101,7 @@ void Bullet::handle_collision(int otherLayer)
 				Bullets.erase(i);
 				break;
 			}
-		deleteSet.insert(this);
+		this->col->isInvalid = true;
 		break;
 	default:
 		break;

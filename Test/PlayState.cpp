@@ -10,7 +10,7 @@ void ColliderUpdate();
 void LoadTileMap();
 void PrintMap(HDC mDC);
 
-std::vector<Collider*> COLL;
+std::vector<std::unique_ptr<Collider>> COLL;
 std::vector<Bullet*> Bullets;
 
 CImage map;
@@ -56,6 +56,6 @@ void PlayState::draw()
 		B->draw_bullet(mDC);
 	player->draw_character(mDC);
 	if (lookRange)
-		for (auto& C : COLL)
-			C->draw_range(mDC);
+		for (auto& c : COLL)
+			c->draw_range(mDC);
 }

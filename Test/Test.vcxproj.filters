@@ -2,7 +2,6 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Collider.cpp" />
     <ClCompile Include="IdleState.cpp">
       <Filter>Player</Filter>
     </ClCompile>
@@ -30,14 +29,17 @@
     <ClCompile Include="Weapon.cpp">
       <Filter>Weapon</Filter>
     </ClCompile>
-    <ClCompile Include="Tilemap.cpp" />
     <ClCompile Include="PistolMan.cpp">
       <Filter>Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="Tilemap.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Collider.cpp">
+      <Filter>Colider</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Vector2D.h" />
-    <ClInclude Include="Collider.h" />
     <ClInclude Include="IdleState.h">
       <Filter>Player</Filter>
     </ClInclude>
@@ -71,17 +73,32 @@
     <ClInclude Include="Weapon.h">
       <Filter>Weapon</Filter>
     </ClInclude>
-    <ClInclude Include="Animation.h" />
     <ClInclude Include="Enemy.h">
       <Filter>Enemy</Filter>
     </ClInclude>
     <ClInclude Include="State.h">
       <Filter>Player</Filter>
     </ClInclude>
-    <ClInclude Include="Master.h" />
-    <ClInclude Include="Tilemap.h" />
     <ClInclude Include="PistolMan.h">
       <Filter>Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Tilemap.h">
+      <Filter>Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Collider.h">
+      <Filter>Colider</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector2D.h">
+      <Filter>Else</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>Else</Filter>
+    </ClInclude>
+    <ClInclude Include="Controller.h">
+      <Filter>Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="Master.h">
+      <Filter>Else</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -96,6 +113,18 @@
     </Filter>
     <Filter Include="Game Framework">
       <UniqueIdentifier>{24e5ab0a-3fd0-42f6-80ec-e9ff5617d445}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Map">
+      <UniqueIdentifier>{a6bf3bd6-d0d0-4102-87e4-3c1e63c270eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Colider">
+      <UniqueIdentifier>{5e10a98c-de83-45fd-aea6-71f6c918ffbf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Else">
+      <UniqueIdentifier>{33c173a7-87da-4e35-b8b5-a5e71ba141b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Controller">
+      <UniqueIdentifier>{c977a0e0-de7b-458a-81dd-0eab38b7265f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

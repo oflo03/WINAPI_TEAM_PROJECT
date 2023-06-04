@@ -20,6 +20,7 @@ protected:
 public:
 	int GetDamage() { return damage; }
 	Bullet(int type, Vector2D<float> pos, Vector2D<float> dir);
+	~Bullet();
 	void SetImage(int type);
 	void draw_bullet(HDC mDC);
 	void update();

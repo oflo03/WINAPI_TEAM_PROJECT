@@ -1,3 +1,4 @@
+#include"Collider.h"
 #include"Master.h"
 
 bool collisionable[6][6]
@@ -11,12 +12,12 @@ bool collisionable[6][6]
 };
 
 std::queue<CollisionMessage> collisionMsg;
-std::unordered_set<Master*> deleteSet;
+
 
 void Collider::detection()
 {
 	for (auto& other : COLL) {
-		if (this == other) continue;
+		if (this == other.get()) continue;
 		if (!collisionable[this->layer][other->layer]) continue;
 		if (this->shape == 1)
 			if (other->shape == 1)
@@ -55,28 +56,12 @@ void ColliderUpdate()
 {
 	for (auto& c : COLL)
 		c->detection();
-
-	CollisionMessage msg;
 	while (!collisionMsg.empty())
-	{
-		msg = collisionMsg.front();
+	{	
+		if(collisionMsg.front().collided)
+			collisionMsg.front().collided->handle_collision(collisionMsg.front().otherLayer);
 		collisionMsg.pop();
-		if (msg.collided)
-			msg.collided->handle_collision(msg.otherLayer);
 	}
 
-	Master* temp;
-	while (!deleteSet.empty())
-	{
-		temp = *deleteSet.begin();
-		deleteSet.erase(deleteSet.begin());
-		for (auto i = COLL.begin(); i != COLL.end(); ++i)
-			if (COLL[i - COLL.begin()] == temp->col)
-			{
-				COLL.erase(i);
-				break;
-			}
-		delete temp->col;
-		delete temp;
-	}
+	COLL.erase(std::remove_if(COLL.begin(), COLL.end(), [](const std::unique_ptr<Collider>& col) {return col->isInvalid; }), COLL.end());
 }

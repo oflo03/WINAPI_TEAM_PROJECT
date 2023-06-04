@@ -2,9 +2,8 @@
 #include<Windows.h>
 #include<vector>
 #include<queue>
-#include<unordered_set>
 #include"Vector2D.h"
-
+#include <memory>
 
 enum shapetype
 {
@@ -25,12 +24,12 @@ struct Collider
 	int shape;
 	int layer;
 	Master* owner;
-	Collider() : size(0, 0), shape(point) { }
-	Collider(float rad) : size(rad, rad), shape(circle) { }
-	Collider(Vector2D<float> size) : size(size), shape(rect) { }
+	bool isInvalid;
+	Collider() : size(0, 0), shape(point),isInvalid(false) { }
+	Collider(float rad) : size(rad, rad), shape(circle), isInvalid(false) { }
+	Collider(Vector2D<float> size) : size(size), shape(rect), isInvalid(false) { }
 	void detection();
 	void draw_range(HDC mDC);
 };
 
-extern std::unordered_set<Master*> deleteSet;
-extern std::vector<Collider*> COLL;
+extern std::vector<std::unique_ptr<Collider>> COLL;

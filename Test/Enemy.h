@@ -19,11 +19,13 @@ protected:
 	Vector2D<float> dir;
 	int direction;
 	PlayerState* state;
-	double velocity;
+	float velocity;
+	float attackRange;
 public:
 	Enemy(float x, float y) : pos(x, y), dir(0, 0), frame(0), angle(90), direction(FRONT), state(nullptr), velocity(200) {}
 	Enemy() : pos(screen.right/2, screen.bottom/2), dir(0, 0), frame(0), angle(90), direction(FRONT), state(nullptr), velocity(200) {}
 	Enemy(const Enemy& other) : pos(other.pos.x, other.pos.y), dir(0, 0), frame(0), angle(90), direction(FRONT), state(nullptr), velocity(200) {}
+	virtual ~Enemy() {}
 	virtual void draw_character(HDC mDC) = 0;
 	virtual void handle_event() = 0;
 	virtual void update() = 0;
