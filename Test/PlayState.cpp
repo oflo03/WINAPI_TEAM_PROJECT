@@ -52,9 +52,9 @@ void PlayState::handle_events()
 void PlayState::draw()
 {
 	PrintMap(mDC);
-	player->draw_character(mDC);
 	for (auto& B : Bullets)
 		B->draw_bullet(mDC);
+	player->draw_character(mDC);
 	if (lookRange)
 		for (auto& C : COLL)
 			C->draw_range(mDC);

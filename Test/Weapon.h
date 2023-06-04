@@ -31,8 +31,7 @@ public:
 	virtual void attack(const Vector2D<float>& center) = 0;
 	void SetCurTime(int t) { curTime = t; }
 	int GetCurAmmo() { return curAmmo; }
-	void draw_weapon(HDC mDC, const Vector2D<float>& center)
-	{
+	virtual void draw_weapon(HDC mDC, const Vector2D<float>& center) {
 		POINT mPos;
 		GetCursorPos(&mPos);
 		angle = std::atan2(mPos.y - (center.y), mPos.x - center.x) * (180.0f / M_PI) * -1;
@@ -67,18 +66,26 @@ public:
 
 class Sword : public Weapon
 {
+private:
+	Animation slash;
+	float frame;
 public:
 	Sword() :Weapon() {
 		coolTime = cooltime[SWORD];
 		curAmmo = 1;
 		damage = 20;
+		frame = 0;
 		resource[0].Load(L"Item_Weapon_Sword.png");
 		reverseResource[0].Load(L"Item_Weapon_Sword_Reverse.png");
 		resource[1].Load(L"Item_Weapon_Sword.png");
 		reverseResource[1].Load(L"Item_Weapon_Sword_Reverse.png");
+		slash.resource.Load(L"sword_attack.png");
+		slash.frame = 8;
+		slash.size = { 0,0,slash.resource.GetWidth() / slash.frame ,slash.resource.GetHeight() };
 	}
 	virtual void update();
 	virtual void attack(const Vector2D<float>& center);
+	virtual void draw_weapon(HDC mDC, const Vector2D<float>& center);
 };
 
 class Pistol :public Weapon
@@ -112,6 +119,7 @@ public:
 	}
 	virtual void update();
 	virtual void attack(const Vector2D<float>& center);
+
 };
 
 class Shotgun :public Weapon
@@ -128,4 +136,5 @@ public:
 	}
 	virtual void update();
 	virtual void attack(const Vector2D<float>& center);
+
 };

@@ -7,11 +7,19 @@ Bullet::Bullet(int type, Vector2D<float> pos, Vector2D<float> dir) :
 	type(type), pos(pos), dir(dir), damage(BulletDamage[type]), frame(0)
 {
 	SetImage(type);
-	col = new Collider(animation.size.right);
+	col = new Collider(8);
 	col->owner = this;
-	col->layer = playerBullet;
+	if (type == 4) {
+		col->layer = enemyBullet;
+		velocity = 0.5;
+	}
+	else {
+		col->layer = playerBullet;
+		velocity = 1;
+	}
 	col->pos = pos;
 	COLL.emplace_back(col);
+	angle= std::atan2(dir.y, dir.x) * (180.0f / M_PI)*-1;
 }
 
 void Bullet::SetImage(int type)
@@ -19,7 +27,7 @@ void Bullet::SetImage(int type)
 	switch (type)
 	{
 	case 1:
-		this->animation.resource.Load(L"Bullet_Pistol.png");
+		this->animation.resource.Load(L"enemy_bullet.png");
 		break;
 	case 2:
 		this->animation.resource.Load(L"Bullet_Rifle.png");
@@ -34,20 +42,45 @@ void Bullet::SetImage(int type)
 		break;
 	}
 	this->animation.frame = 4;
-	this->animation.size = { 0,0,animation.resource.GetWidth() / animation.frame,animation.resource.GetHeight() };
+	this->animation.size = { 0,0,animation.resource.GetWidth() / 4, animation.resource.GetHeight()};
 }
 
 void Bullet::draw_bullet(HDC mDC)
 {
-	animation.resource.Draw(mDC, pos.x - animation.size.right, pos.y - animation.size.bottom, animation.size.right * 2, animation.size.bottom * 2,
-		(int)frame * animation.size.right, 0, animation.size.right, animation.size.bottom
+	int width = animation.size.right;
+	int height = animation.size.bottom;
+	CImage temp;
+	temp.Create(width, height, 32);
+	CImage rotatedImage;
+	rotatedImage.Create(width, height, 32);
+	for (int y = 0; y < height; y++) {
+		for (int x = 0; x < width; x++) {
+			BYTE* srcPixel=(BYTE*)animation.resource.GetPixelAddress((int)frame *width+ x, y);
+			BYTE* destPixel = (BYTE*)temp.GetPixelAddress(x, y);
+			memcpy(destPixel, srcPixel, sizeof(BYTE) * 4);
+		}
+	}
+	for (int y = 0; y < height; y++) {
+		for (int x = 0; x < width; x++) {
+			Vector2D<float> rotatedPos = (Vector2D<float>(x - width / 2, y - height / 2)).Rotate(angle) + Vector2D<float>(width / 2, height / 2);
+			if (rotatedPos.x >= 0 && rotatedPos.x < width && rotatedPos.y >= 0 && rotatedPos.y < height) {
+				BYTE* srcPixel=(BYTE*)temp.GetPixelAddress(rotatedPos.x, rotatedPos.y);
+				BYTE* destPixel = (BYTE*)rotatedImage.GetPixelAddress(x, y);
+				memcpy(destPixel, srcPixel, sizeof(BYTE) * 4);
+			}
+		}
+	}
+	rotatedImage.TransparentBlt(mDC, pos.x - animation.size.right/2, pos.y - animation.size.bottom/2, animation.size.right, animation.size.bottom,
+		0, 0, animation.size.right, animation.size.bottom,RGB(0,0,0)
 	);
+	rotatedImage.Destroy();
+	temp.Destroy();
 }
 
 void Bullet::update()
 {
-	pos += dir * 2;
-	frame = (frame + frame_time * 2 * animation.frame);
+	pos += dir * velocity;
+	frame = (frame + frame_time * 3 * animation.frame);
 	if (frame >= animation.frame) frame = 0;
 	col->pos = pos;
 }

@@ -3,7 +3,7 @@
 #include"Vector2D.h"
 #include"Master.h"
 
-const int BulletDamage[]{ 0,10,7,4 };
+const int BulletDamage[]{ 0,10,7,4 ,5};
 
 class Bullet
 	:public Master
@@ -15,7 +15,8 @@ protected:
 	Vector2D<float> dir;
 	int damage;
 	int type;
-	int velocity;
+	double velocity;
+	double angle;
 public:
 	int GetDamage() { return damage; }
 	Bullet(int type, Vector2D<float> pos, Vector2D<float> dir);
