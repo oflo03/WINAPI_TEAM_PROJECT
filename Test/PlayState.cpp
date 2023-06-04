@@ -19,17 +19,22 @@ bool lookRange;
 PlayState::PlayState() : GameState(), player(new Marin)
 {
 	map.Load(L"testmap.png");
+	enemy.emplace_back(new PistolMan(300, 400, player));
 	LoadTileMap();
+
 }
 
 PlayState::~PlayState()
 {
 	delete player;
+	enemy.clear();
 }
 
 void PlayState::update()
 {
 	player->update();
+	for (auto& E : enemy)
+		E->update();
 	for (auto& B : Bullets)
 		B->update();
 	ColliderUpdate();
@@ -45,6 +50,8 @@ void PlayState::handle_events()
 		lookRange = !lookRange;
 	}
 	player->handle_event();
+	for (auto& E : enemy)
+		E->handle_event();
 }
 
 
@@ -55,6 +62,8 @@ void PlayState::draw()
 	for (auto& B : Bullets)
 		B->draw_bullet(mDC);
 	player->draw_character(mDC);
+	for (auto& E : enemy)
+		E->draw_character(mDC);
 	if (lookRange)
 		for (auto& c : COLL)
 			c->draw_range(mDC);

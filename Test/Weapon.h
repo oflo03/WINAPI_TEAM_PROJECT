@@ -28,12 +28,10 @@ public:
 		}
 	}
 	virtual void update() = 0;
-	virtual void attack(const Vector2D<float>& center) = 0;
+	virtual void attack(const Vector2D<float>& center, const Vector2D<float>& mPos,int side) = 0;
 	void SetCurTime(int t) { curTime = t; }
 	int GetCurAmmo() { return curAmmo; }
-	virtual void draw_weapon(HDC mDC, const Vector2D<float>& center) {
-		POINT mPos;
-		GetCursorPos(&mPos);
+	virtual void draw_weapon(HDC mDC, const Vector2D<float>& center, const Vector2D<float>& mPos) {
 		angle = std::atan2(mPos.y - (center.y), mPos.x - center.x) * (180.0f / M_PI) * -1;
 		float temp = angle;
 		bool isShot = shotTime != 0;
@@ -84,8 +82,8 @@ public:
 		slash.size = { 0,0,slash.resource.GetWidth() / slash.frame ,slash.resource.GetHeight() };
 	}
 	virtual void update();
-	virtual void attack(const Vector2D<float>& center);
-	virtual void draw_weapon(HDC mDC, const Vector2D<float>& center);
+	virtual void attack(const Vector2D<float>& center, const Vector2D<float>& mPos,int side);
+	virtual void draw_weapon(HDC mDC, const Vector2D<float>& center, const Vector2D<float>& mPos);
 };
 
 class Pistol :public Weapon
@@ -102,7 +100,7 @@ public:
 		reverseResource[1].Load(L"Item_Weapon_Pistol_Reverse2.png");
 	}
 	virtual void update();
-	virtual void attack(const Vector2D<float>& center);
+	virtual void attack(const Vector2D<float>& center, const Vector2D<float>& mPos, int side);
 };
 
 class Rifle :public Weapon
@@ -118,7 +116,7 @@ public:
 		reverseResource[1].Load(L"Item_Weapon_Rifle_Reverse2.png");
 	}
 	virtual void update();
-	virtual void attack(const Vector2D<float>& center);
+	virtual void attack(const Vector2D<float>& center, const Vector2D<float>& mPos, int side);
 
 };
 
@@ -135,6 +133,6 @@ public:
 		reverseResource[1].Load(L"Item_Weapon_Shotgun_Reverse2.png");
 	}
 	virtual void update();
-	virtual void attack(const Vector2D<float>& center);
+	virtual void attack(const Vector2D<float>& center, const Vector2D<float>& mPos, int side);
 
 };

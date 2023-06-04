@@ -11,7 +11,7 @@ void Sword::update()
 		if (frame >= slash.frame) frame = 0;
 	}
 }
-void Sword::attack(const Vector2D<float>& center)
+void Sword::attack(const Vector2D<float>& center, const Vector2D<float>& mPos, int side)
 {
 	if (!curTime) {
 		curTime = coolTime;
@@ -19,7 +19,7 @@ void Sword::attack(const Vector2D<float>& center)
 	}
 }
 
-void Sword::draw_weapon(HDC mDC, const Vector2D<float>& center)
+void Sword::draw_weapon(HDC mDC, const Vector2D<float>& center, const Vector2D<float>& mPos)
 {
 	if (frame == 0.0f) {
 		POINT mPos;
@@ -82,16 +82,14 @@ void Pistol::update()
 	if (shotTime)
 		shotTime--;
 }
-void Pistol::attack(const Vector2D<float>& hand)
+void Pistol::attack(const Vector2D<float>& hand, const Vector2D<float>& mPos, int side)
 {
 	if (!curTime)
 	{
-		POINT mPos;
-		GetCursorPos(&mPos);
 		Vector2D<float> t = Vector2D<float>(mPos.x - hand.x, mPos.y - hand.y);
 		t.Normalize();
 		t.Rotate(uid(dre) % 11 - 5);
-		Bullets.emplace_back(new Bullet(PISTOL, hand + Vector2D<float>(t.x * 30, t.y * 30 - 10), t * 10));
+		Bullets.emplace_back(new Bullet(PISTOL,side, hand + Vector2D<float>(t.x * 30, t.y * 30 - 10), t * 10));
 		curTime = coolTime;
 		shotTime = 10;
 	}
@@ -107,16 +105,14 @@ void Rifle::update()
 		shotTime--;
 }
 
-void Rifle::attack(const Vector2D<float>& hand)
+void Rifle::attack(const Vector2D<float>& hand, const Vector2D<float>& mPos, int side)
 {
 	if (!curTime)
 	{
-		POINT mPos;
-		GetCursorPos(&mPos);
 		Vector2D<float> t = Vector2D<float>(mPos.x - hand.x, mPos.y - hand.y);
 		t /= t.GetLenth();
 		t.Rotate(uid(dre) % 15 - 7);
-		Bullets.emplace_back(new Bullet(RIFLE, hand + Vector2D<float>(t.x * 30, t.y * 30 - 10), t * 10));
+		Bullets.emplace_back(new Bullet(RIFLE, side, hand + Vector2D<float>(t.x * 30, t.y * 30 - 10), t * 10));
 		curTime = coolTime;
 		shotTime = 5;
 	}
@@ -131,18 +127,16 @@ void Shotgun::update()
 	if (shotTime)
 		shotTime--;
 }
-void Shotgun::attack(const Vector2D<float>& hand)
+void Shotgun::attack(const Vector2D<float>& hand, const Vector2D<float>& mPos, int side)
 {
 	if (!curTime)
 	{
-		POINT mPos;
-		GetCursorPos(&mPos);
 		Vector2D<float> t = Vector2D<float>(mPos.x - hand.x, mPos.y - hand.y);
 		t /= t.GetLenth();
 		t.Rotate(-10);
 		for (int i = 0; i < 5; ++i)
 		{
-			Bullets.emplace_back(new Bullet(SHOTGUN, hand + Vector2D<float>(t.x * 30, t.y * 30 - 10), t * 10));
+			Bullets.emplace_back(new Bullet(SHOTGUN, side, hand + Vector2D<float>(t.x * 30, t.y * 30 - 10), t * 10));
 			t.Rotate(5);
 		}
 		curTime = coolTime;

@@ -131,6 +131,9 @@
   <ItemGroup>
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Collider.cpp" />
+    <ClCompile Include="EnemyDamaged.cpp" />
+    <ClCompile Include="EnemyIdle.cpp" />
+    <ClCompile Include="EnemyRun.cpp" />
     <ClCompile Include="game_framework.cpp" />
     <ClCompile Include="IdleState.cpp" />
     <ClCompile Include="main.cpp" />
@@ -153,6 +156,10 @@
     <ClInclude Include="Collider.h" />
     <ClInclude Include="Controller.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EnemyDamaged.h" />
+    <ClInclude Include="EnemyIdle.h" />
+    <ClInclude Include="EnemyRun.h" />
+    <ClInclude Include="EnemyState.h" />
     <ClInclude Include="game_framework.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClInclude>

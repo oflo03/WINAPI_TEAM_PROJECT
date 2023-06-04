@@ -38,8 +38,6 @@ PlayerState* IdleState::handle_event(Player& player)
 		player.SetWeapon(SHOTGUN);
 	if (GetAsyncKeyState('5') & 0x8000 && player.GetWeapon() != ROCKET)
 		player.SetWeapon(ROCKET);
-	if (GetAsyncKeyState('6') & 0x8000 && player.GetWeapon() != GRENADE)
-		player.SetWeapon(GRENADE);
 	player.SetDirection();
 	if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
 		player.attack();

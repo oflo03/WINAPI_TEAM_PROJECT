@@ -9,8 +9,7 @@ private:
     Vector2D<float> handPos;
     Weapon* weapon;
 public:
-    PistolMan(double x, double y);
-    PistolMan(const PistolMan& other);
+    PistolMan(double x, double y, Player* target);
     ~PistolMan();
     virtual void draw_character(HDC mDC);
     virtual void handle_event();
@@ -19,5 +18,6 @@ public:
     virtual void SetDirection();
     virtual void attack();
     virtual void DestroyImage();
+    virtual void handle_collision(int otherLayer);
 };
 

@@ -15,11 +15,12 @@ protected:
 	Vector2D<float> dir;
 	int damage;
 	int type;
+	int side;
 	double velocity;
 	double angle;
 public:
 	int GetDamage() { return damage; }
-	Bullet(int type, Vector2D<float> pos, Vector2D<float> dir);
+	Bullet(int type, int side, Vector2D<float> pos, Vector2D<float> dir);
 	~Bullet();
 	void SetImage(int type);
 	void draw_bullet(HDC mDC);

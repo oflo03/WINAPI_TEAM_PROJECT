@@ -70,13 +70,13 @@ void Marin::draw_character(HDC mDC)
 			(int)frame * animation[direction].size.right, 0, animation[direction].size.right, animation[direction].size.bottom
 		);
 		if (dynamic_cast<RollState*>(state) == nullptr) {
-			myWeapons[selectedWeapon]->draw_weapon(mDC, handPos);
+			myWeapons[selectedWeapon]->draw_weapon(mDC, handPos,mPos);
 			hand.Draw(mDC, handPos.x - hand.GetWidth(), handPos.y - hand.GetHeight(), hand.GetWidth() * 2, hand.GetHeight() * 2);
 		}
 	}
 	else {
 		if (dynamic_cast<RollState*>(state) == nullptr) {
-			myWeapons[selectedWeapon]->draw_weapon(mDC, handPos);
+			myWeapons[selectedWeapon]->draw_weapon(mDC, handPos, mPos);
 			hand.Draw(mDC, handPos.x - hand.GetWidth(), handPos.y - hand.GetHeight(), hand.GetWidth() * 2, hand.GetHeight() * 2);
 		}
 		animation[direction].resource.Draw(mDC, pos.x - animation[direction].size.right, yDest - 20, animation[direction].size.right * 2, animation[direction].size.bottom * 2,
@@ -101,6 +101,10 @@ void Marin::handle_event()
 
 void Marin::update()
 {
+	POINT temp;
+	GetCursorPos(&temp);
+	mPos.x = temp.x;
+	mPos.y = temp.y;
 	lastPos = pos;
 	state->update(*this);
 	if(dynamic_cast<RollState*>(state) == nullptr)
@@ -159,8 +163,6 @@ void Marin::SetImage(int state)
 
 void Marin::SetDirection()
 {
-	POINT mPos;
-	GetCursorPos(&mPos);
 	angle = std::atan2(mPos.y - (pos.y), mPos.x - pos.x) * (180.0f / M_PI);
 	if (angle >= -20 && angle <= 60) {
 		direction = FRONT_RIGHT;
@@ -188,6 +190,7 @@ void Marin::handle_collision(int otherLayer)
 	{
 	case wall:
 		pos = lastPos;
+		col->pos = pos;
 		break;
 	default:
 		break;

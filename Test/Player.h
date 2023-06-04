@@ -21,6 +21,7 @@ protected:
 	Vector2D<float> pos;
 	Vector2D<float> lastPos;
 	Vector2D<float> handPos;
+	Vector2D<float> mPos;
 	Vector2D<float> dir;
 	int direction;
 	PlayerState* state;
@@ -35,16 +36,16 @@ public:
 	virtual void update() = 0;
 	virtual void SetImage(int state) = 0;
 	virtual void SetDirection() = 0;
-	virtual void attack() { myWeapons[selectedWeapon]->attack(handPos); };
+	virtual void attack() { myWeapons[selectedWeapon]->attack(handPos,mPos,playerBullet); };
 	void DestroyImage() { for (int i = 0; i < 6; i++) animation[i].resource.Destroy(); }
 	void SetPos(Vector2D<float> temp) { pos = temp; }
 	Vector2D<float> GetPos() { return pos; }
 	void SetDir(Vector2D<float> temp) { dir = temp; }
 	Vector2D<float> GetDir() { return dir; }
 	double GetVelocity() { return velocity; };
+	void SetDirection(int direction) { this->direction = direction; }
 	bool GetIfRoll();
 	int GetWeapon() { return selectedWeapon; }
-	void SetDirection(int direction) { this->direction = direction; }
 	void SetWeaponTime(int t) { myWeapons[selectedWeapon]->SetCurTime(t); }
 	void SetWeapon(int type) { if (myWeapons[type]->GetCurAmmo() > 0)selectedWeapon = type, myWeapons[selectedWeapon]->SetCurTime(10); }
 	void SetWeaponUp() { do selectedWeapon += 5, selectedWeapon %= 6; while (myWeapons[selectedWeapon]->GetCurAmmo() == 0); }

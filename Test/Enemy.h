@@ -1,14 +1,10 @@
 #pragma once
-
-#include<vector>
-#include"Vector2D.h"
-#include"Animation.h"
-#include"State.h"
-#include"Bullet.h"
-#include"Weapon.h"
+#include"EnemyState.h"
 #include"Master.h"
+#include"Player.h"
 
 extern RECT screen;
+class EnemyState;
 
 class Enemy : public Master
 {
@@ -17,19 +13,30 @@ protected:
 	float angle;
 	Vector2D<float> pos;
 	Vector2D<float> dir;
+	Vector2D<float> lastPos;
 	int direction;
-	PlayerState* state;
+	EnemyState* state;
 	float velocity;
 	float attackRange;
 public:
-	Enemy(float x, float y) : pos(x, y), dir(0, 0), frame(0), angle(90), direction(FRONT), state(nullptr), velocity(200) {}
-	Enemy() : pos(screen.right/2, screen.bottom/2), dir(0, 0), frame(0), angle(90), direction(FRONT), state(nullptr), velocity(200) {}
-	Enemy(const Enemy& other) : pos(other.pos.x, other.pos.y), dir(0, 0), frame(0), angle(90), direction(FRONT), state(nullptr), velocity(200) {}
+	Player* target;
+	Enemy(float x, float y,Player* target) : pos(x, y), dir(0, 0), frame(0), angle(90), direction(FRONT), state(nullptr), velocity(0) ,target(target){}
+	Enemy() : pos(screen.right/2, screen.bottom/2), dir(0, 0), frame(0), angle(90), direction(FRONT), state(nullptr), velocity(0),target(nullptr) {}
 	virtual ~Enemy() {}
 	virtual void draw_character(HDC mDC) = 0;
 	virtual void handle_event() = 0;
 	virtual void update() = 0;
+	virtual void attack()=0;
 	virtual void SetImage(int state) = 0;
 	virtual void SetDirection() = 0;
 	virtual void DestroyImage() = 0;
+	void SetPos(Vector2D<float> temp) { pos = temp; }
+	Vector2D<float> GetPos() { return pos; }
+	void SetDir(Vector2D<float> temp) { dir = temp; }
+	Vector2D<float> GetDir() { return dir; }
+	double GetVelocity() { return velocity; };
+	void SetDirection(int direction) { this->direction = direction; }
+	bool attackable() { 
+		return (target->GetPos()-pos).GetLenth() <= attackRange;
+	}
 };

@@ -3,20 +3,19 @@
 extern double frame_time;
 extern std::vector<Bullet*> Bullets;
 
-Bullet::Bullet(int type, Vector2D<float> pos, Vector2D<float> dir) :
-	type(type), pos(pos), dir(dir), damage(BulletDamage[type]), frame(0)
+Bullet::Bullet(int type,int side, Vector2D<float> pos, Vector2D<float> dir) :
+	type(type), pos(pos), dir(dir), damage(BulletDamage[type]), frame(0) , side(side)
 {
 	SetImage(type);
 	col = new Collider(8);
 	col->owner = this;
-	if (type == 4) {
-		col->layer = enemyBullet;
+	if (side == enemyBullet) {
 		velocity = 0.5;
 	}
 	else {
-		col->layer = playerBullet;
 		velocity = 1;
 	}
+	col->layer = side;
 	col->pos = pos;
 	COLL.emplace_back(col);
 	angle= std::atan2(dir.y, dir.x) * (180.0f / M_PI)*-1;
@@ -29,23 +28,24 @@ Bullet::~Bullet() {
 
 void Bullet::SetImage(int type)
 {
-	switch (type)
-	{
-	case 1:
-		this->animation.resource.Load(L"Bullet_Pistol.png");
-		break;
-	case 2:
-		this->animation.resource.Load(L"Bullet_Rifle.png");
-		break;
-	case 3:
-		this->animation.resource.Load(L"Bullet_Shotgun.png");
-		break;
-	case 4:
-		this->animation.resource.Load(L"enemy_bullet.png");
-		break;
-	default:
-		break;
+	if(side==playerBullet){
+		switch (type)
+		{
+		case 1:
+			this->animation.resource.Load(L"Bullet_Pistol.png");
+			break;
+		case 2:
+			this->animation.resource.Load(L"Bullet_Rifle.png");
+			break;
+		case 3:
+			this->animation.resource.Load(L"Bullet_Shotgun.png");
+			break;
+		default:
+			break;
+		}
 	}
+	else
+		this->animation.resource.Load(L"enemy_bullet.png");
 	this->animation.frame = 4;
 	this->animation.size = { 0,0,animation.resource.GetWidth() / 4, animation.resource.GetHeight()};
 }
@@ -102,6 +102,18 @@ void Bullet::handle_collision(int otherLayer)
 				break;
 			}
 		this->col->isInvalid = true;
+		break;
+	case playerBullet:
+	case enemyBullet:
+		if (otherLayer != type) {
+			for (auto i = Bullets.begin(); i != Bullets.end(); ++i)
+				if (Bullets[i - Bullets.begin()] == this)
+				{
+					Bullets.erase(i);
+					break;
+				}
+			this->col->isInvalid = true;
+		}
 		break;
 	default:
 		break;

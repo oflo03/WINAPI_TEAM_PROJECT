@@ -12,5 +12,3 @@ public:
 	virtual PlayerState* handle_event(Player& player) = 0;
 	virtual void update(Player& player) = 0;
 };
-
-extern bool lookRange;
