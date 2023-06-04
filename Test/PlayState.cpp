@@ -13,12 +13,10 @@ void PrintMap(HDC mDC);
 std::vector<std::unique_ptr<Collider>> COLL;
 std::vector<Bullet*> Bullets;
 
-CImage map;
 bool lookRange;
 
 PlayState::PlayState() : GameState(), player(new Marin)
 {
-	map.Load(L"testmap.png");
 	LoadTileMap();
 }
 

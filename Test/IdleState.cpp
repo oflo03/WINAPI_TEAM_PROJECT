@@ -43,6 +43,7 @@ PlayerState* IdleState::handle_event(Player& player)
 	player.SetDirection();
 	if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
 		player.attack();
+	if (GetAsyncKeyState(VK_RBUTTON) & 1) {}
 	if (isMove) {
 		player.SetDir(Vector2D<float>(dirX, dirY));
 		return new RunState();
