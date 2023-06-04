@@ -3,8 +3,8 @@
 int SelectedMap;
 
 #define MapNum 1
-#define MapWidth 9
-#define MapHeight 9
+#define MapWidth 30
+#define MapHeight 17
 
 #define TileSize 32
 #define PrintTileSize (TileSize * 2)
