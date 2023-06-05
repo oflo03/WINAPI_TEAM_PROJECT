@@ -3,6 +3,7 @@
 #include"Bullet.h"
 #include<random>
 
+
 extern std::default_random_engine dre;
 extern std::uniform_int_distribution<int> uid;
 extern std::vector<Bullet*> Bullets;
@@ -13,14 +14,13 @@ class Weapon
 protected:
 	int curAmmo;
 	int maxAmmo;
-	int damage;
 	int angle;
 	int coolTime;
 	int curTime;
 	int shotTime;
 	CImage reverseResource[2];
 public:
-	Weapon() :maxAmmo(0), damage(0), curAmmo(0), angle(0), coolTime(0), curTime(0), shotTime(0) {}
+	Weapon() :maxAmmo(0), curAmmo(0), angle(0), coolTime(0), curTime(0), shotTime(0) {}
 	~Weapon() {
 		for (int i = 0; i < 2; i++) {
 			resource[i].Destroy();
@@ -29,8 +29,9 @@ public:
 	}
 	virtual void update() = 0;
 	virtual void attack(const Vector2D<float>& center, const Vector2D<float>& mPos,int side) = 0;
+	void ReLoad() { curAmmo = maxAmmo; };
 	void SetCurTime(int t) { curTime = t; }
-	int GetCurAmmo() { return curAmmo; }
+	bool IsRunOut() { return (curAmmo == 0); }
 	virtual void draw_weapon(HDC mDC, const Vector2D<float>& center, const Vector2D<float>& mPos) {
 		angle = std::atan2(mPos.y - (center.y), mPos.x - center.x) * (180.0f / M_PI) * -1;
 		float temp = angle;
@@ -71,7 +72,6 @@ public:
 	Sword() :Weapon() {
 		coolTime = cooltime[SWORD];
 		curAmmo = 1;
-		damage = 20;
 		frame = 0;
 		resource[0].Load(L"Item_Weapon_Sword.png");
 		reverseResource[0].Load(L"Item_Weapon_Sword_Reverse.png");
@@ -80,6 +80,10 @@ public:
 		slash.resource.Load(L"sword_attack.png");
 		slash.frame = 8;
 		slash.size = { 0,0,slash.resource.GetWidth() / slash.frame ,slash.resource.GetHeight() };
+	}
+	~Sword() {
+		Weapon::~Weapon();
+		slash.resource.Destroy();
 	}
 	virtual void update();
 	virtual void attack(const Vector2D<float>& center, const Vector2D<float>& mPos,int side);
@@ -92,8 +96,7 @@ private:
 public:
 	Pistol() :Weapon() {
 		coolTime = cooltime[PISTOL];
-		curAmmo = 10;
-		damage = 20;
+		curAmmo = maxAmmo= 10;
 		resource[0].Load(L"Item_Weapon_Pistol.png");
 		reverseResource[0].Load(L"Item_Weapon_Pistol_Reverse.png");
 		resource[1].Load(L"Item_Weapon_Pistol2.png");
@@ -108,8 +111,7 @@ class Rifle :public Weapon
 public:
 	Rifle() :Weapon() {
 		coolTime = cooltime[RIFLE];
-		curAmmo = 10;
-		damage = 20;
+		curAmmo = maxAmmo = 30;
 		resource[0].Load(L"Item_Weapon_Rifle.png");
 		reverseResource[0].Load(L"Item_Weapon_Rifle_Reverse.png");
 		resource[1].Load(L"Item_Weapon_Rifle2.png");
@@ -117,7 +119,6 @@ public:
 	}
 	virtual void update();
 	virtual void attack(const Vector2D<float>& center, const Vector2D<float>& mPos, int side);
-
 };
 
 class Shotgun :public Weapon
@@ -125,8 +126,7 @@ class Shotgun :public Weapon
 public:
 	Shotgun() :Weapon() {
 		coolTime = cooltime[SHOTGUN];
-		curAmmo = 10;
-		damage = 20;
+		curAmmo = maxAmmo = 5;
 		resource[0].Load(L"Item_Weapon_Shotgun.png");
 		reverseResource[0].Load(L"Item_Weapon_Shotgun_Reverse.png");
 		resource[1].Load(L"Item_Weapon_Shotgun2.png");
@@ -134,5 +134,4 @@ public:
 	}
 	virtual void update();
 	virtual void attack(const Vector2D<float>& center, const Vector2D<float>& mPos, int side);
-
 };

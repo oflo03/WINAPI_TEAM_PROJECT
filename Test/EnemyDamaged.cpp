@@ -22,5 +22,5 @@ EnemyState* EnemyDamaged::handle_event(Enemy& player)
 
 void EnemyDamaged::update(Enemy& player)
 {
-	time=(time + frame_time * 2 * 2);
+	time=(time + frame_time * 10 * 2);
 }

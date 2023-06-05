@@ -10,10 +10,10 @@ Bullet::Bullet(int type,int side, Vector2D<float> pos, Vector2D<float> dir) :
 	col = new Collider(8);
 	col->owner = this;
 	if (side == enemyBullet) {
-		velocity = 0.5;
+		velocity = 1.5;
 	}
 	else {
-		velocity = 1;
+		velocity = 2;
 	}
 	col->layer = side;
 	col->pos = pos;
@@ -103,9 +103,19 @@ void Bullet::handle_collision(int otherLayer)
 			}
 		this->col->isInvalid = true;
 		break;
-	case playerBullet:
-	case enemyBullet:
-		if (otherLayer != type) {
+	case player:
+		if (side == enemyBullet) {
+			for (auto i = Bullets.begin(); i != Bullets.end(); ++i)
+				if (Bullets[i - Bullets.begin()] == this)
+				{
+					Bullets.erase(i);
+					break;
+				}
+			this->col->isInvalid = true;
+		}
+		break;
+	case enemy:
+		if (side ==playerBullet) {
 			for (auto i = Bullets.begin(); i != Bullets.end(); ++i)
 				if (Bullets[i - Bullets.begin()] == this)
 				{

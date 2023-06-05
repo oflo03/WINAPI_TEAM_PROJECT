@@ -17,7 +17,6 @@ bool lookRange;
 
 PlayState::PlayState() : GameState(), player(new Marin)
 {
-	map.Load(L"testmap.png");
 	enemy.emplace_back(new PistolMan(300, 400, player));
 	LoadTileMap();
 
@@ -60,9 +59,9 @@ void PlayState::draw()
 	PrintMap(mDC);
 	for (auto& B : Bullets)
 		B->draw_bullet(mDC);
-	player->draw_character(mDC);
 	for (auto& E : enemy)
 		E->draw_character(mDC);
+	player->draw_character(mDC);
 	if (lookRange)
 		for (auto& c : COLL)
 			c->draw_range(mDC);

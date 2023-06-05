@@ -47,7 +47,7 @@ public:
 	bool GetIfRoll();
 	int GetWeapon() { return selectedWeapon; }
 	void SetWeaponTime(int t) { myWeapons[selectedWeapon]->SetCurTime(t); }
-	void SetWeapon(int type) { if (myWeapons[type]->GetCurAmmo() > 0)selectedWeapon = type, myWeapons[selectedWeapon]->SetCurTime(10); }
-	void SetWeaponUp() { do selectedWeapon += 5, selectedWeapon %= 6; while (myWeapons[selectedWeapon]->GetCurAmmo() == 0); }
-	void SetWeaponDown() { do selectedWeapon += 1, selectedWeapon %= 6; while (myWeapons[selectedWeapon]->GetCurAmmo() == 0); }
+	void SetWeapon(int type) {selectedWeapon = type, myWeapons[selectedWeapon]->SetCurTime(10); }
+	void SetWeaponUp() { do selectedWeapon += 5, selectedWeapon %= 6; while (myWeapons[selectedWeapon]->IsRunOut()); }
+	void SetWeaponDown() { do selectedWeapon += 1, selectedWeapon %= 6; while (myWeapons[selectedWeapon]->IsRunOut()); }
 };

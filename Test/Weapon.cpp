@@ -84,7 +84,7 @@ void Pistol::update()
 }
 void Pistol::attack(const Vector2D<float>& hand, const Vector2D<float>& mPos, int side)
 {
-	if (!curTime)
+	if (!curTime&&curAmmo>0)
 	{
 		Vector2D<float> t = Vector2D<float>(mPos.x - hand.x, mPos.y - hand.y);
 		t.Normalize();
@@ -92,10 +92,10 @@ void Pistol::attack(const Vector2D<float>& hand, const Vector2D<float>& mPos, in
 		Bullets.emplace_back(new Bullet(PISTOL,side, hand + Vector2D<float>(t.x * 30, t.y * 30 - 10), t * 10));
 		curTime = coolTime;
 		shotTime = 10;
+		curAmmo--;
 	}
 
 }
-
 
 void Rifle::update()
 {
@@ -107,7 +107,7 @@ void Rifle::update()
 
 void Rifle::attack(const Vector2D<float>& hand, const Vector2D<float>& mPos, int side)
 {
-	if (!curTime)
+	if (!curTime&&curAmmo > 0)
 	{
 		Vector2D<float> t = Vector2D<float>(mPos.x - hand.x, mPos.y - hand.y);
 		t /= t.GetLenth();
@@ -115,10 +115,9 @@ void Rifle::attack(const Vector2D<float>& hand, const Vector2D<float>& mPos, int
 		Bullets.emplace_back(new Bullet(RIFLE, side, hand + Vector2D<float>(t.x * 30, t.y * 30 - 10), t * 10));
 		curTime = coolTime;
 		shotTime = 5;
+		curAmmo--;
 	}
 }
-
-
 
 void Shotgun::update()
 {
@@ -129,7 +128,7 @@ void Shotgun::update()
 }
 void Shotgun::attack(const Vector2D<float>& hand, const Vector2D<float>& mPos, int side)
 {
-	if (!curTime)
+	if (!curTime&& curAmmo > 0)
 	{
 		Vector2D<float> t = Vector2D<float>(mPos.x - hand.x, mPos.y - hand.y);
 		t /= t.GetLenth();
@@ -141,5 +140,6 @@ void Shotgun::attack(const Vector2D<float>& hand, const Vector2D<float>& mPos, i
 		}
 		curTime = coolTime;
 		shotTime = 7;
+		curAmmo--;
 	}
 }
