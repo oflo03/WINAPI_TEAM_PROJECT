@@ -30,6 +30,7 @@ PlayState::~PlayState()
 
 void PlayState::update()
 {
+	player->col->layer = 1;
 	player->update();
 	for (auto& E : enemy)
 		E->update();

@@ -32,4 +32,5 @@ struct Collider
 	void draw_range(HDC mDC);
 };
 
+bool isWallCollision(Vector2D<float> pos, Vector2D<float> size);
 extern std::vector<std::unique_ptr<Collider>> COLL;

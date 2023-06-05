@@ -20,6 +20,7 @@ PlayerState* RollState::handle_event(Player& player)
 
 void RollState::update(Player& player)
 {
+	player.col->layer = rolled_player;
 	rollingTime++;
 	if (rollingTime > 25) return;
 	if(dir.GetLenth()==1){
