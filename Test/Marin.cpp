@@ -195,6 +195,7 @@ void Marin::handle_collision(int otherLayer)
 			pos.x = lastPos.x;
 		else
 			pos = lastPos;
+		lastPos = pos;
 		col->pos = pos;
 		break;
 	default:
