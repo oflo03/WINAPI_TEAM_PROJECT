@@ -95,17 +95,9 @@ void Bullet::handle_collision(int otherLayer)
 	switch (otherLayer)
 	{
 	case wall:
-		for (auto i = Bullets.begin(); i != Bullets.end(); ++i)
-			if (Bullets[i - Bullets.begin()] == this)
-			{
-				Bullets.erase(i);
-				break;
-			}
-		this->col->isInvalid = true;
-		break;
-	case playerBullet:
-	case enemyBullet:
-		if (otherLayer != type) {
+	case player:
+	case enemy:
+		if (otherLayer != side) {
 			for (auto i = Bullets.begin(); i != Bullets.end(); ++i)
 				if (Bullets[i - Bullets.begin()] == this)
 				{

@@ -55,7 +55,7 @@ void Marin::draw_character(HDC mDC)
 	handPos = pos;
 	if (abs(angle) < 90)
 	{
-		
+
 		handPos.x += 18;
 		handPos.y += 8;
 	}
@@ -70,7 +70,7 @@ void Marin::draw_character(HDC mDC)
 			(int)frame * animation[direction].size.right, 0, animation[direction].size.right, animation[direction].size.bottom
 		);
 		if (dynamic_cast<RollState*>(state) == nullptr) {
-			myWeapons[selectedWeapon]->draw_weapon(mDC, handPos,mPos);
+			myWeapons[selectedWeapon]->draw_weapon(mDC, handPos, mPos);
 			hand.Draw(mDC, handPos.x - hand.GetWidth(), handPos.y - hand.GetHeight(), hand.GetWidth() * 2, hand.GetHeight() * 2);
 		}
 	}
@@ -107,9 +107,9 @@ void Marin::update()
 	mPos.y = temp.y;
 	lastPos = pos;
 	state->update(*this);
-	if(dynamic_cast<RollState*>(state) == nullptr)
+	if (dynamic_cast<RollState*>(state) == nullptr)
 		frame = (frame + frame_time * animation[direction].frame);
-	else frame = (frame + frame_time *2* animation[direction].frame);
+	else frame = (frame + frame_time * 2 * animation[direction].frame);
 	if (frame >= animation[direction].frame) frame = 0;
 	for (auto& W : myWeapons)
 		W->update();
@@ -189,7 +189,12 @@ void Marin::handle_collision(int otherLayer)
 	switch (otherLayer)
 	{
 	case wall:
-		pos = lastPos;
+		if (!isWallCollision(Vector2D<float>(pos.x, lastPos.y), col->size))
+			pos.y = lastPos.y;
+		else if (!isWallCollision(Vector2D<float>(lastPos.x, pos.y), col->size))
+			pos.x = lastPos.x;
+		else
+			pos = lastPos;
 		col->pos = pos;
 		break;
 	default:

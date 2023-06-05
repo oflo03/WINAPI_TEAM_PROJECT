@@ -17,7 +17,6 @@ bool lookRange;
 
 PlayState::PlayState() : GameState(), player(new Marin)
 {
-	map.Load(L"testmap.png");
 	enemy.emplace_back(new PistolMan(300, 400, player));
 	LoadTileMap();
 
@@ -31,6 +30,7 @@ PlayState::~PlayState()
 
 void PlayState::update()
 {
+	player->col->layer = 1;
 	player->update();
 	for (auto& E : enemy)
 		E->update();
