@@ -96,7 +96,7 @@ private:
 public:
 	Pistol() :Weapon() {
 		coolTime = cooltime[PISTOL];
-		curAmmo = maxAmmo= 10;
+		curAmmo = maxAmmo= 15;
 		resource[0].Load(L"Item_Weapon_Pistol.png");
 		reverseResource[0].Load(L"Item_Weapon_Pistol_Reverse.png");
 		resource[1].Load(L"Item_Weapon_Pistol2.png");
@@ -126,7 +126,7 @@ class Shotgun :public Weapon
 public:
 	Shotgun() :Weapon() {
 		coolTime = cooltime[SHOTGUN];
-		curAmmo = maxAmmo = 5;
+		curAmmo = maxAmmo = 8;
 		resource[0].Load(L"Item_Weapon_Shotgun.png");
 		reverseResource[0].Load(L"Item_Weapon_Shotgun_Reverse.png");
 		resource[1].Load(L"Item_Weapon_Shotgun2.png");

@@ -4,7 +4,7 @@
 
 extern double frame_time;
 
-PistolMan::PistolMan(double x, double y, Player* target) : Enemy(x,y,target)
+PistolMan::PistolMan(double x, double y, Player* target) : Enemy(x, y, target)
 {
 	SetImage(STATE_IDLE);
 	hand.Load(L"hand.png");
@@ -12,7 +12,7 @@ PistolMan::PistolMan(double x, double y, Player* target) : Enemy(x,y,target)
 	state = new EnemyIdle();
 	weapon = new Pistol();
 	attackRange = 400;
-	attackCoolTime =0;
+	attackCoolTime = 0;
 	col = new Collider(Vector2D<float>(animation[direction].size.right, animation[direction].size.bottom));
 	col->owner = this;
 	col->layer = enemy;
@@ -136,7 +136,7 @@ void PistolMan::SetImage(int state)
 
 void PistolMan::SetDirection()
 {
-	if(target!=nullptr) angle = std::atan2(dir.y, dir.x) * (180.0f / M_PI);
+	if (target != nullptr) angle = std::atan2(dir.y, dir.x) * (180.0f / M_PI);
 	if (angle >= -20 && angle <= 60) {
 		direction = FRONT_RIGHT;
 	}
@@ -159,7 +159,7 @@ void PistolMan::SetDirection()
 
 void PistolMan::attack()
 {
-	weapon->attack(handPos,target->GetPos(),enemyBullet);
+	weapon->attack(handPos, target->GetPos(), enemyBullet);
 }
 
 void PistolMan::DestroyImage()
@@ -174,16 +174,24 @@ void PistolMan::handle_collision(int otherLayer)
 	{
 	case wall:
 	case player:
-		pos = lastPos;
-		break;
+	case rolled_player:
+		if (!isWallCollision(Vector2D<float>(pos.x, lastPos.y), col->size))
+			pos.y = lastPos.y;
+		else if (!isWallCollision(Vector2D<float>(lastPos.x, pos.y), col->size))
+			pos.x = lastPos.x;
+		else
+			pos = lastPos;
+		lastPos = pos;
+		col->pos = pos;
+		if (otherLayer == wall)break;
 	case playerBullet:
 		state->exit(*this);
 		delete state;
 		state = new EnemyDamaged();
 		state->enter(*this);
 		frame = 0;
-		pos -= dir*2;
-		return;
+		pos -= dir * 2;
+		break;
 	default:
 		break;
 	}

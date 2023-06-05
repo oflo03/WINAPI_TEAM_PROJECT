@@ -113,6 +113,8 @@ void Marin::update()
 	if (frame >= animation[direction].frame) frame = 0;
 	for (auto& W : myWeapons)
 		W->update();
+	if (myWeapons[selectedWeapon]->IsRunOut())
+		SetWeapon(SWORD);
 	col->pos = pos;
 }
 
