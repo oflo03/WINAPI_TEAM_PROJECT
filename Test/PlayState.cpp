@@ -11,7 +11,7 @@ void LoadTileMap();
 void PrintMap(HDC mDC);
 
 std::vector<std::unique_ptr<Collider>> COLL;
-std::vector<Bullet*> Bullets;
+std::vector<std::unique_ptr<Bullet>> Bullets;
 
 bool lookRange;
 
@@ -30,10 +30,9 @@ PlayState::~PlayState()
 
 void PlayState::update()
 {
-	player->col->layer = 1;
-	player->update();
 	for (auto& E : enemy)
 		E->update();
+	player->update();
 	for (auto& B : Bullets)
 		B->update();
 	ColliderUpdate();
@@ -48,9 +47,9 @@ void PlayState::handle_events()
 	else if (GetAsyncKeyState('X') & 1) {
 		lookRange = !lookRange;
 	}
-	player->handle_event();
 	for (auto& E : enemy)
 		E->handle_event();
+	player->handle_event();
 }
 
 

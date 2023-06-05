@@ -51,6 +51,7 @@ PlayerState* IdleState::handle_event(Player& player)
 
 void IdleState::update(Player& player)
 {
+	player.col->layer = 1;
 	return;
 }
 

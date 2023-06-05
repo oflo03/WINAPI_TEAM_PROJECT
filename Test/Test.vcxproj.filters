@@ -103,9 +103,6 @@
     <ClInclude Include="Animation.h">
       <Filter>Else</Filter>
     </ClInclude>
-    <ClInclude Include="Controller.h">
-      <Filter>Controller</Filter>
-    </ClInclude>
     <ClInclude Include="Master.h">
       <Filter>Else</Filter>
     </ClInclude>
@@ -143,9 +140,6 @@
     </Filter>
     <Filter Include="Else">
       <UniqueIdentifier>{33c173a7-87da-4e35-b8b5-a5e71ba141b8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Controller">
-      <UniqueIdentifier>{c977a0e0-de7b-458a-81dd-0eab38b7265f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

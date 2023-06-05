@@ -154,7 +154,6 @@
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Collider.h" />
-    <ClInclude Include="Controller.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyDamaged.h" />
     <ClInclude Include="EnemyIdle.h" />

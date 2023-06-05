@@ -19,7 +19,6 @@ Marin::Marin(float x, float y) : Player(x, y)
 	myWeapons.emplace_back(new Rifle);
 	myWeapons.emplace_back(new Shotgun);
 	myWeapons.emplace_back(new Shotgun);
-	myWeapons.emplace_back(new Shotgun);
 }
 
 Marin::Marin() : Player()
@@ -35,7 +34,6 @@ Marin::Marin() : Player()
 	myWeapons.emplace_back(new Sword);
 	myWeapons.emplace_back(new Pistol);
 	myWeapons.emplace_back(new Rifle);
-	myWeapons.emplace_back(new Shotgun);
 	myWeapons.emplace_back(new Shotgun);
 	myWeapons.emplace_back(new Shotgun);
 }
@@ -69,13 +67,15 @@ void Marin::draw_character(HDC mDC)
 		animation[direction].resource.Draw(mDC, pos.x - animation[direction].size.right, yDest - 20, animation[direction].size.right * 2, animation[direction].size.bottom * 2,
 			(int)frame * animation[direction].size.right, 0, animation[direction].size.right, animation[direction].size.bottom
 		);
-		if (dynamic_cast<RollState*>(state) == nullptr) {
+		if (col->layer == player) {
 			myWeapons[selectedWeapon]->draw_weapon(mDC, handPos, mPos);
 			hand.Draw(mDC, handPos.x - hand.GetWidth(), handPos.y - hand.GetHeight(), hand.GetWidth() * 2, hand.GetHeight() * 2);
 		}
+		else
+		{ }
 	}
 	else {
-		if (dynamic_cast<RollState*>(state) == nullptr) {
+		if (col->layer == player) {
 			myWeapons[selectedWeapon]->draw_weapon(mDC, handPos, mPos);
 			hand.Draw(mDC, handPos.x - hand.GetWidth(), handPos.y - hand.GetHeight(), hand.GetWidth() * 2, hand.GetHeight() * 2);
 		}
@@ -107,9 +107,10 @@ void Marin::update()
 	mPos.y = temp.y;
 	lastPos = pos;
 	state->update(*this);
-	if (dynamic_cast<RollState*>(state) == nullptr)
-		frame = (frame + frame_time * animation[direction].frame);
-	else frame = (frame + frame_time * 2 * animation[direction].frame);
+	if (col->layer==player)
+		frame = (frame + frame_time *1.5* animation[direction].frame);
+	else 
+		frame = (frame + frame_time * 2 * animation[direction].frame);
 	if (frame >= animation[direction].frame) frame = 0;
 	for (auto& W : myWeapons)
 		W->update();

@@ -11,7 +11,7 @@ PistolMan::PistolMan(double x, double y, Player* target) : Enemy(x, y, target)
 	velocity = 100;
 	state = new EnemyIdle();
 	weapon = new Pistol();
-	attackRange = 400;
+	attackRange = 800;
 	attackCoolTime = 0;
 	col = new Collider(Vector2D<float>(animation[direction].size.right, animation[direction].size.bottom));
 	col->owner = this;
@@ -76,8 +76,6 @@ void PistolMan::handle_event()
 
 void PistolMan::update()
 {
-	lastPos = pos;
-	col->pos = pos;
 	state->update(*this);
 	if (dynamic_cast<EnemyDamaged*>(state) == nullptr)
 		frame = (frame + frame_time * 2 * animation[direction].frame);
@@ -87,6 +85,7 @@ void PistolMan::update()
 	weapon->update();
 	if (attackCoolTime)
 		attackCoolTime--;
+	col->pos = pos;
 }
 
 void PistolMan::SetImage(int state)
@@ -173,8 +172,6 @@ void PistolMan::handle_collision(int otherLayer)
 	switch (otherLayer)
 	{
 	case wall:
-	case player:
-	case rolled_player:
 		if (!isWallCollision(Vector2D<float>(pos.x, lastPos.y), col->size))
 			pos.y = lastPos.y;
 		else if (!isWallCollision(Vector2D<float>(lastPos.x, pos.y), col->size))
@@ -183,13 +180,32 @@ void PistolMan::handle_collision(int otherLayer)
 			pos = lastPos;
 		lastPos = pos;
 		col->pos = pos;
-		if (otherLayer == wall)break;
+		break;
+	case rolled_player:
+		state->exit(*this);
+		delete state;
+		state = new EnemyDamaged();
+		state->enter(*this);
+		frame = 0;
+		lastPos = pos;
+		pos -= dir * 10;
+		break;
+	case playerMelee:
+		state->exit(*this);
+		delete state;
+		state = new EnemyDamaged();
+		state->enter(*this);
+		frame = 0;
+		lastPos = pos;
+		pos -= dir * 10;
+		break;
 	case playerBullet:
 		state->exit(*this);
 		delete state;
 		state = new EnemyDamaged();
 		state->enter(*this);
 		frame = 0;
+		lastPos = pos;
 		pos -= dir * 2;
 		break;
 	default:

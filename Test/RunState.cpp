@@ -72,6 +72,7 @@ PlayerState* RunState::handle_event(Player& player)
 
 void RunState::update(Player& player)
 {
+	player.col->layer = 1;
 	if (player.GetDir().GetLenth() == 1) {
 		player.SetPos(player.GetPos() + player.GetDir() * player.GetVelocity() * frame_time);
 	}

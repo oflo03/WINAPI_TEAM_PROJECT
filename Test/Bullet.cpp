@@ -1,23 +1,23 @@
 #include"Bullet.h"
 
 extern double frame_time;
-extern std::vector<Bullet*> Bullets;
+extern std::vector<std::unique_ptr<Bullet>> Bullets;
 
 Bullet::Bullet(int type,int side, Vector2D<float> pos, Vector2D<float> dir) :
-	type(type), pos(pos), dir(dir), damage(BulletDamage[type]), frame(0) , side(side)
+	pos(pos), dir(dir), damage(BulletDamage[type]), frame(0) ,isInvalid(false)
 {
-	SetImage(type);
 	col = new Collider(8);
+	col->layer = side;
 	col->owner = this;
 	if (side == enemyBullet) {
-		velocity = 1.5;
+		velocity = 1.2;
 	}
 	else {
 		velocity = 2;
 	}
-	col->layer = side;
 	col->pos = pos;
 	COLL.emplace_back(col);
+	SetImage(type);
 	angle= std::atan2(dir.y, dir.x) * (180.0f / M_PI)*-1;
 }
 
@@ -28,7 +28,7 @@ Bullet::~Bullet() {
 
 void Bullet::SetImage(int type)
 {
-	if(side==playerBullet){
+	if(col->layer ==playerBullet){
 		switch (type)
 		{
 		case 1:
@@ -95,35 +95,39 @@ void Bullet::handle_collision(int otherLayer)
 	switch (otherLayer)
 	{
 	case wall:
+		this->col->isInvalid = true;
 		for (auto i = Bullets.begin(); i != Bullets.end(); ++i)
-			if (Bullets[i - Bullets.begin()] == this)
+			if (Bullets[i - Bullets.begin()].get()== this)
 			{
 				Bullets.erase(i);
 				break;
 			}
-		this->col->isInvalid = true;
 		break;
 	case player:
-		if (side == enemyBullet) {
-			for (auto i = Bullets.begin(); i != Bullets.end(); ++i)
-				if (Bullets[i - Bullets.begin()] == this)
-				{
-					Bullets.erase(i);
-					break;
-				}
-			this->col->isInvalid = true;
-		}
+		this->col->isInvalid = true;
+		for (auto i = Bullets.begin(); i != Bullets.end(); ++i)
+			if (Bullets[i - Bullets.begin()].get() == this)
+			{
+				Bullets.erase(i);
+				break;
+			}
 		break;
 	case enemy:
-		if (side ==playerBullet) {
-			for (auto i = Bullets.begin(); i != Bullets.end(); ++i)
-				if (Bullets[i - Bullets.begin()] == this)
-				{
-					Bullets.erase(i);
-					break;
-				}
-			this->col->isInvalid = true;
-		}
+		this->col->isInvalid = true;
+		for (auto i = Bullets.begin(); i != Bullets.end(); ++i)
+			if (Bullets[i - Bullets.begin()].get() == this)
+			{
+				Bullets.erase(i);
+				break;
+			}
+		break;
+	case playerMelee:
+		dir *= -1;
+		velocity = 2;
+		angle += 180;
+		col->layer = playerBullet;
+		animation.resource.Destroy();
+		animation.resource.Load(L"bounced_bullet.png");
 		break;
 	default:
 		break;

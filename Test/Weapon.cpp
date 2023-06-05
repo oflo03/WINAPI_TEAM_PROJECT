@@ -2,7 +2,7 @@
 
 extern double frame_time;
 extern bool lookRange;
-extern bool collisionable[6][6];
+extern bool collisionable[7][7];
 extern HPEN GREENP;
 
 void Sword::update()
@@ -10,8 +10,27 @@ void Sword::update()
 	if (curTime)
 		--curTime;
 	if (frame > 0) {
-		frame = (frame + frame_time * 3 * slash.frame);
+		frame = (frame + frame_time * 4 * slash.frame);
 		if (frame >= slash.frame) frame = 0;
+	}
+	if ((int)frame == 4)
+	{
+		Vector2D<float> mPos(cos(-angle * M_PI / 180) * attackRange, sin(-angle * M_PI / 180) * attackRange);
+		mPos += centerPos;
+		for (auto& other : COLL) {
+			Vector2D<float> dot[4] = { Vector2D<float>(other->pos.x - other->size.x, other->pos.y - other->size.y),
+			Vector2D<float>(other->pos.x + other->size.x, other->pos.y - other->size.y),
+			Vector2D<float>(other->pos.x + other->size.x, other->pos.y + other->size.y),
+			Vector2D<float>(other->pos.x - other->size.x, other->pos.y + other->size.y) };
+			for (int i = 0; i < 4;i++) {
+				if (collisionable[other->layer][playerMelee] && (dot[i] - centerPos).GetLenth() <= attackRange) {
+					if ((mPos - centerPos).GetRadian(dot[i] - centerPos) <= 60) {
+						other.get()->owner->handle_collision(playerMelee);
+						break;
+					}
+				}
+			}
+		}
 	}
 }
 void Sword::attack(const Vector2D<float>& center, const Vector2D<float>& mPos, int side)
@@ -24,9 +43,8 @@ void Sword::attack(const Vector2D<float>& center, const Vector2D<float>& mPos, i
 
 void Sword::draw_weapon(HDC mDC, const Vector2D<float>& center, const Vector2D<float>& mPos)
 {
+	centerPos = center;
 	if (frame == 0.0f) {
-		POINT mPos;
-		GetCursorPos(&mPos);
 		angle = std::atan2(mPos.y - (center.y), mPos.x - center.x) * (180.0f / M_PI) * -1;
 		int width = resource[0].GetWidth();
 		int height = resource[0].GetHeight();
@@ -74,46 +92,23 @@ void Sword::draw_weapon(HDC mDC, const Vector2D<float>& center, const Vector2D<f
 		);
 		if (lookRange)
 		{
-			POINT mPos;
-			GetCursorPos(&mPos);
-			Vector2D<float> lineP1 = Vector2D<float>(mPos.x, mPos.y) - center;
-			Vector2D<float> lineP2 = Vector2D<float>(mPos.x, mPos.y) - center;
-			lineP1 = lineP1.Normalize() * 120;
-			lineP2 = lineP2.Normalize() * 120;
-			lineP1.Rotate(-70);
-			lineP2.Rotate(70);
+			Vector2D<float> lineP1 = Vector2D<float>(cos(-angle * M_PI / 180) * attackRange, sin(-angle * M_PI / 180) * attackRange);
+			Vector2D<float> lineP2 = Vector2D<float>(cos(-angle * M_PI / 180) * attackRange, sin(-angle * M_PI / 180) * attackRange);
+			lineP1 = lineP1.Normalize() * attackRange;
+			lineP2 = lineP2.Normalize() * attackRange;
+			lineP1.Rotate(-60);
+			lineP2.Rotate(60);
 
 			HPEN old = (HPEN)SelectObject(mDC, GREENP);
 			MoveToEx(mDC, center.x + lineP1.x, center.y + lineP1.y, NULL);
 			LineTo(mDC, center.x, center.y);
 			LineTo(mDC, center.x + lineP2.x, center.y + lineP2.y);
-			Arc(mDC, center.x - 120, center.y - 120, center.x + 120, center.y + 120,
+			Arc(mDC, center.x - attackRange, center.y - attackRange, center.x + attackRange, center.y + attackRange,
 				center.x + lineP2.x, center.y + lineP2.y, center.x + lineP1.x, center.y + lineP1.y);
 			SelectObject(mDC, old);
 		}
 		rotatedImage.Destroy();
 		temp.Destroy();
-	}
-	if (frame >= 4 && frame <= 5) {
-		for (auto& other : COLL) {
-			if (collisionable[other->layer][player])
-			{
-				POINT mPos;
-				GetCursorPos(&mPos);
-				Vector2D<float> mVec = Vector2D<float>(mPos.x, mPos.y) - center;
-				float mrad = mVec.GetRadian(Vector2D<float>(1, 0));
-				float rad = (other->pos - center).GetRadian(Vector2D<float>(1, 0));
-				if (abs(rad - mrad) < 70 || abs(rad - mrad) > 290)
-					if (other->shape == rect)
-						if (((center - other->pos <= Vector2D<float>(120, 120) + other->size) ||
-							((center - other->pos) > other->size) && ((center - other->pos).Vabs() - other->size.Vabs()).GetLenth() < 120))
-							other->owner->handle_collision(player); else;
-					else if (other->shape == circle)
-						if (((center - other->pos <= Vector2D<float>(120, 120) + other->size) ||
-							((center - other->pos) > other->size) && ((center - other->pos).Vabs() - other->size.Vabs()).GetLenth() < 120))
-							other->owner->handle_collision(player);
-			}
-		}
 	}
 }
 

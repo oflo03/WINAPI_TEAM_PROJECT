@@ -1,15 +1,16 @@
 #include"Collider.h"
 #include"Master.h"
 
-//	wall, player, rolled_player, enemy, playerBullet, enemyBullet
-bool collisionable[6][6]
+//	wall, player, rolled_player, enemy, playerBullet, enemyBullet, playerMelee
+bool collisionable[7][7]
 {
-	0,0,0,0,0,0,
-	1,0,0,1,0,1,
-	1,0,0,1,0,0,
-	1,1,1,1,1,0,
-	1,0,0,1,0,0,
-	1,1,0,0,0,0
+	0,0,0,0,0,0,0,
+	1,0,0,1,0,1,0,
+	1,0,0,1,0,0,0,
+	1,1,1,1,1,0,1,
+	1,0,0,1,0,0,0,
+	1,1,0,0,0,0,1,
+	0,0,0,0,0,0,0
 };
 
 std::queue<CollisionMessage> collisionMsg;
@@ -20,22 +21,36 @@ void Collider::detection()
 	for (auto& other : COLL) {
 		if (this == other.get()) continue;
 		if (!collisionable[this->layer][other->layer]) continue;
-		if (this->shape == rect)
-			if (other->shape == rect)
-				if (this->pos - other->pos <= this->size + other->size)
-					collisionMsg.emplace(CollisionMessage(this->owner, other->layer)); else;
-			else if (other->shape == circle)
-				if (((this->pos - other->pos <= this->size + other->size) ||
-					((this->pos - other->pos) > this->size) && ((this->pos - other->pos).Vabs() - this->size.Vabs()).GetLenth() < other->size.x))
-					collisionMsg.emplace(CollisionMessage(this->owner, other->layer)); else; else;
-		else if (this->shape == circle)
-			if (other->shape == rect)
-				if (((this->pos - other->pos <= this->size + other->size) ||
-					((this->pos - other->pos) > other->size) && ((this->pos - other->pos).Vabs() - other->size.Vabs()).GetLenth() < this->size.x))
-					collisionMsg.emplace(CollisionMessage(this->owner, other->layer)); else;
-			else if (other->shape == circle)
-				if ((this->pos - other->pos).GetLenth() <= this->size.x + other->size.x)
+		if (this->shape == rect) {
+			if (other->shape == rect) {
+				if (this->pos - other->pos <= this->size + other->size) {
 					collisionMsg.emplace(CollisionMessage(this->owner, other->layer));
+					break;
+				}
+			}
+			else if (other->shape == circle) {
+				if (((this->pos - other->pos <= this->size + other->size) ||
+					((this->pos - other->pos) > this->size) && ((this->pos - other->pos).Vabs() - this->size.Vabs()).GetLenth() < other->size.x)) {
+					collisionMsg.emplace(CollisionMessage(this->owner, other->layer));
+					break;
+				}
+			}
+		}
+		else if (this->shape == circle) {
+			if (other->shape == rect) {
+				if (((this->pos - other->pos <= this->size + other->size) ||
+					((this->pos - other->pos) > other->size) && ((this->pos - other->pos).Vabs() - other->size.Vabs()).GetLenth() < this->size.x)) {
+					collisionMsg.emplace(CollisionMessage(this->owner, other->layer));
+					break;
+				}
+			}
+			else if (other->shape == circle) {
+				if ((this->pos - other->pos).GetLenth() <= this->size.x + other->size.x) {
+					collisionMsg.emplace(CollisionMessage(this->owner, other->layer));
+					break;
+				}
+			}
+		}
 	}
 }
 

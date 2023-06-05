@@ -4,7 +4,7 @@ class RollState :
     public PlayerState
 {
 private:
-    int rollingTime;
+    float rollingTime;
     Vector2D<float> dir;
 public:
     RollState(float dirX,float dirY): dir(dirX,dirY) { rollingTime = 0; }

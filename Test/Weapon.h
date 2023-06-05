@@ -6,7 +6,7 @@
 
 extern std::default_random_engine dre;
 extern std::uniform_int_distribution<int> uid;
-extern std::vector<Bullet*> Bullets;
+extern std::vector<std::unique_ptr<Bullet>> Bullets;
 
 class Weapon
 	: public Item
@@ -68,11 +68,14 @@ class Sword : public Weapon
 private:
 	Animation slash;
 	float frame;
+	float attackRange;
+	Vector2D<float> centerPos;
 public:
 	Sword() :Weapon() {
 		coolTime = cooltime[SWORD];
 		curAmmo = 1;
 		frame = 0;
+		attackRange = 110;
 		resource[0].Load(L"Item_Weapon_Sword.png");
 		reverseResource[0].Load(L"Item_Weapon_Sword_Reverse.png");
 		resource[1].Load(L"Item_Weapon_Sword.png");
