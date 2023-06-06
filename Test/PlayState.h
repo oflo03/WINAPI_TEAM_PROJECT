@@ -1,9 +1,7 @@
 #pragma once
 #include "game_framework.h"
-#include"Marin.h"
-#include"PistolMan.h"
 #include<random>
-
+#include"Enemy.h"
 
 class PlayState :
     public GameState

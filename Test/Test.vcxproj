@@ -145,6 +145,7 @@
     <ClCompile Include="LogoState.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="ShotgunMan.cpp" />
     <ClCompile Include="Tilemap.cpp" />
     <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
@@ -168,6 +169,7 @@
     <ClInclude Include="RifleMan.h" />
     <ClInclude Include="RollState.h" />
     <ClInclude Include="RunState.h" />
+    <ClInclude Include="ShotgunMan.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="LogoState.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>

@@ -3,6 +3,7 @@
 #include"Player.h"
 
 extern RECT screen;
+
 class EnemyState;
 
 class Enemy : public Master

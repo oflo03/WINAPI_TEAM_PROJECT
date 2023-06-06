@@ -1,10 +1,16 @@
 #include "PlayState.h"
+#include"Marin.h"
+#include"PistolMan.h"
+#include"RifleMan.h"
+#include"ShotgunMan.h"
 
 extern HDC mDC;
-
 std::random_device rd;
 std::default_random_engine dre(rd());
 std::uniform_int_distribution<int> uid(1, 10000);
+std::uniform_int_distribution<int> rad(-180, 180);
+std::uniform_int_distribution<int> ranTime(20, 100);
+std::uniform_int_distribution<int> ran(0, 1);
 
 void ColliderUpdate();
 void LoadTileMap(int num);
@@ -18,6 +24,8 @@ bool lookRange;
 PlayState::PlayState() : GameState(), player(new Marin)	// 모든 스테이트 시작 전에 콜라이더 벡터 초기화 하는거 넣어줘요 - 병욱
 {
 	enemy.emplace_back(new PistolMan(300, 400, player));
+	enemy.emplace_back(new RifleMan(350, 400, player));
+	enemy.emplace_back(new ShotgunMan(350, 500, player));
 	LoadTileMap(2);
 }
 

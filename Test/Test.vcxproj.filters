@@ -41,6 +41,9 @@
     <ClCompile Include="RifleMan.cpp">
       <Filter>Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="ShotgunMan.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IdleState.h">
@@ -101,6 +104,9 @@
       <Filter>Else</Filter>
     </ClInclude>
     <ClInclude Include="RifleMan.h">
+      <Filter>Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="ShotgunMan.h">
       <Filter>Enemy</Filter>
     </ClInclude>
   </ItemGroup>

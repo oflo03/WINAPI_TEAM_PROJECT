@@ -1,9 +1,9 @@
 #include "RifleMan.h"
 
 extern double frame_time;
-std::uniform_int_distribution<int> rad(-180, 180);
-std::uniform_int_distribution<int> ranTime(20, 100);
-std::uniform_int_distribution<int> ran(0, 1);
+extern std::uniform_int_distribution<int> rad;
+extern std::uniform_int_distribution<int> ranTime;
+extern std::uniform_int_distribution<int> ran;
 
 RifleMan::RifleMan(double x, double y, Player* target) : Enemy(x, y, target)
 {
@@ -12,7 +12,7 @@ RifleMan::RifleMan(double x, double y, Player* target) : Enemy(x, y, target)
 	velocity = 100;
 	moveTime = 200;
 	state = STATE_IDLE;
-	weapon = new Pistol();
+	weapon = new Rifle();
 	weapon->Enemy();
 	attackRange = 350;
 	attackCoolTime = 0;
@@ -64,8 +64,12 @@ void RifleMan::draw_character(HDC mDC)
 
 void RifleMan::handle_event()
 {
-	if (!attackable())
+	if (!attackable()) {
+		state = STATE_RUN;
+		DestroyImage();
+		SetImage(state);
 		SetDir((target->GetPos() - GetPos()).Normalize());
+	}
 	else {
 		attack();
 		if ((int)moveTime == 0) {
@@ -131,8 +135,8 @@ void RifleMan::SetImage(int state)
 		break;
 	case STATE_RUN:
 		animation[FRONT].resource.Load(L"enemy_rifle_run_front.png");
-		animation[FRONT_RIGHT].resource.Load(L"enemy_rifle_run_right.png");
-		animation[FRONT_LEFT].resource.Load(L"enemy_rifle_run_left.png");
+		animation[FRONT_RIGHT].resource.Load(L"enemy_rifle_run_front_right.png");
+		animation[FRONT_LEFT].resource.Load(L"enemy_rifle_run_front_left.png");
 		animation[BACK].resource.Load(L"enemy_rifle_run_back.png");
 		animation[BACK_RIGHT].resource.Load(L"enemy_rifle_run_back.png");
 		animation[BACK_LEFT].resource.Load(L"enemy_rifle_run_back.png");
