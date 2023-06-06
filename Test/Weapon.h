@@ -6,7 +6,7 @@
 
 extern std::default_random_engine dre;
 extern std::uniform_int_distribution<int> uid;
-extern std::vector<std::unique_ptr<Bullet>> Bullets;
+extern std::vector<Bullet*> Bullets;
 
 class Weapon
 	: public Item
@@ -28,8 +28,9 @@ public:
 		}
 	}
 	virtual void update() = 0;
-	virtual void attack(const Vector2D<float>& center, const Vector2D<float>& mPos,int side) = 0;
+	virtual void attack(const Vector2D<float>& center, const Vector2D<float>& mPos, int side) = 0;
 	void ReLoad() { curAmmo = maxAmmo; };
+	void Enemy() { maxAmmo /= 3, ReLoad(); };
 	void SetCurTime(int t) { curTime = t; }
 	bool IsRunOut() { return (curAmmo == 0); }
 	virtual void draw_weapon(HDC mDC, const Vector2D<float>& center, const Vector2D<float>& mPos) {
@@ -89,7 +90,7 @@ public:
 		slash.resource.Destroy();
 	}
 	virtual void update();
-	virtual void attack(const Vector2D<float>& center, const Vector2D<float>& mPos,int side);
+	virtual void attack(const Vector2D<float>& center, const Vector2D<float>& mPos, int side);
 	virtual void draw_weapon(HDC mDC, const Vector2D<float>& center, const Vector2D<float>& mPos);
 };
 
@@ -99,7 +100,7 @@ private:
 public:
 	Pistol() :Weapon() {
 		coolTime = cooltime[PISTOL];
-		curAmmo = maxAmmo= 15;
+		curAmmo = maxAmmo = 15;
 		resource[0].Load(L"Item_Weapon_Pistol.png");
 		reverseResource[0].Load(L"Item_Weapon_Pistol_Reverse.png");
 		resource[1].Load(L"Item_Weapon_Pistol2.png");

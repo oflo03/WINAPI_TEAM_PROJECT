@@ -1,10 +1,10 @@
 #include"Bullet.h"
 
 extern double frame_time;
-extern std::vector<std::unique_ptr<Bullet>> Bullets;
+extern std::vector<Bullet*> Bullets;
 
 Bullet::Bullet(int type, int side, Vector2D<float> pos, Vector2D<float> dir) :
-	pos(pos), dir(dir), frame(0), isInvalid(false)
+	pos(pos), dir(dir), frame(0)
 {
 	col = new Collider(8);
 	col->layer = side;
@@ -15,6 +15,7 @@ Bullet::Bullet(int type, int side, Vector2D<float> pos, Vector2D<float> dir) :
 	else {
 		velocity = 1;
 	}
+	col->damage = BulletDamage[type];
 	col->pos = pos;
 	COLL.emplace_back(col);
 	SetImage(type);
@@ -31,13 +32,13 @@ void Bullet::SetImage(int type)
 	if (col->layer == playerBullet) {
 		switch (type)
 		{
-		case 1:
+		case PISTOL:
 			this->animation.resource.Load(L"Bullet_Pistol.png");
 			break;
-		case 2:
+		case RIFLE:
 			this->animation.resource.Load(L"Bullet_Rifle.png");
 			break;
-		case 3:
+		case SHOTGUN:
 			this->animation.resource.Load(L"Bullet_Shotgun.png");
 			break;
 		default:
@@ -96,7 +97,6 @@ void Bullet::handle_collision(int otherLayer, int damage)
 	{
 	case wall:
 		this->col->isInvalid = true;
-		isInvalid = true;
 		for (auto i = Bullets.begin(); i != Bullets.end(); ++i)
 			if (Bullets[i - Bullets.begin()].get() == this)
 			{
@@ -105,24 +105,14 @@ void Bullet::handle_collision(int otherLayer, int damage)
 			}
 		break;
 	case player:
-		this->col->isInvalid = true;
-		isInvalid = true;
-		for (auto i = Bullets.begin(); i != Bullets.end(); ++i)
-			if (Bullets[i - Bullets.begin()].get() == this)
-			{
-				Bullets.erase(i);
-				break;
-			}
-		break;
 	case enemy:
-		this->col->isInvalid = true;
-		isInvalid = true;
 		for (auto i = Bullets.begin(); i != Bullets.end(); ++i)
-			if (Bullets[i - Bullets.begin()].get() == this)
+			if (Bullets[i - Bullets.begin()] == this)
 			{
 				Bullets.erase(i);
 				break;
 			}
+		deleteSet.insert(this);
 		break;
 	case playerMelee:
 		dir *= -1;

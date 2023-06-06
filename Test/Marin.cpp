@@ -13,6 +13,7 @@ Marin::Marin(float x, float y) : Player(x, y)
 	col->owner = this;
 	col->layer = player;
 	col->pos = pos;
+	col->damage = 5;
 	COLL.emplace_back(col);
 	myWeapons.emplace_back(new Sword);
 	myWeapons.emplace_back(new Pistol);
@@ -30,6 +31,7 @@ Marin::Marin() : Player()
 	col->owner = this;
 	col->layer = player;
 	col->pos = pos;
+	col->damage = 5;
 	COLL.emplace_back(col);
 	myWeapons.emplace_back(new Sword);
 	myWeapons.emplace_back(new Pistol);

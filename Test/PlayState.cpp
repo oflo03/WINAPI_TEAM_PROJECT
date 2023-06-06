@@ -10,8 +10,8 @@ void ColliderUpdate();
 void LoadTileMap();
 void PrintMap(HDC mDC);
 
-std::vector<std::unique_ptr<Collider>> COLL;
-std::vector<std::unique_ptr<Bullet>> Bullets;
+std::vector<Collider*> COLL;
+std::vector<Bullet*> Bullets;
 
 bool lookRange;
 
