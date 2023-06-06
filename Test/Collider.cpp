@@ -80,8 +80,6 @@ void ColliderUpdate()
 			collisionMsg.front().collided->handle_collision(collisionMsg.front().otherLayer, collisionMsg.front().damage);
 		collisionMsg.pop();
 	}
-
-	COLL.erase(std::remove_if(COLL.begin(), COLL.end(), [](const std::unique_ptr<Collider>& col) {return col->isInvalid; }), COLL.end());
 }
 
 

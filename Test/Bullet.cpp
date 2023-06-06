@@ -96,6 +96,7 @@ void Bullet::handle_collision(int otherLayer, int damage)
 	{
 	case wall:
 		this->col->isInvalid = true;
+		isInvalid = true;
 		for (auto i = Bullets.begin(); i != Bullets.end(); ++i)
 			if (Bullets[i - Bullets.begin()].get() == this)
 			{
@@ -105,6 +106,7 @@ void Bullet::handle_collision(int otherLayer, int damage)
 		break;
 	case player:
 		this->col->isInvalid = true;
+		isInvalid = true;
 		for (auto i = Bullets.begin(); i != Bullets.end(); ++i)
 			if (Bullets[i - Bullets.begin()].get() == this)
 			{
@@ -114,6 +116,7 @@ void Bullet::handle_collision(int otherLayer, int damage)
 		break;
 	case enemy:
 		this->col->isInvalid = true;
+		isInvalid = true;
 		for (auto i = Bullets.begin(); i != Bullets.end(); ++i)
 			if (Bullets[i - Bullets.begin()].get() == this)
 			{
@@ -123,7 +126,6 @@ void Bullet::handle_collision(int otherLayer, int damage)
 		break;
 	case playerMelee:
 		dir *= -1;
-		velocity = 1;
 		angle += 180;
 		col->layer = playerBullet;
 		animation.resource.Destroy();

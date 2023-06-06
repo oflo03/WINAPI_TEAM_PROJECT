@@ -36,6 +36,7 @@ void PlayState::update()
 	for (auto& B : Bullets)
 		B->update();
 	ColliderUpdate();
+	COLL.erase(std::remove_if(COLL.begin(), COLL.end(), [](const std::unique_ptr<Collider>& col) {return col->isInvalid; }), COLL.end());
 }
 
 void PlayState::handle_events()

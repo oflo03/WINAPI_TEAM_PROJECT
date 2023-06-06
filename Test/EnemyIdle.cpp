@@ -25,5 +25,6 @@ EnemyState* EnemyIdle::handle_event(Enemy& player)
 
 void EnemyIdle::update(Enemy& player)
 {
+	player.SetPos((player.GetPos()- player.target->GetPos()).Rotate(0.1) + player.target->GetPos());
 	player.SetDirection();
 }

@@ -10,7 +10,7 @@ RollState::~RollState()
 
 PlayerState* RollState::handle_event(Player& player)
 {
-	if (rollingTime >= 9)
+	if ((int)rollingTime == 9)
 	{
 		player.SetWeaponTime(10);
 		return new IdleState;
@@ -22,7 +22,7 @@ void RollState::update(Player& player)
 {
 	player.col->layer = rolled_player;
 	rollingTime = (rollingTime + frame_time * 2 * 9);
-	if (rollingTime >= 6) return;
+	if ((int)rollingTime >= 6) return;
 	if(dir.GetLenth()==1){
 		player.SetPos(player.GetPos() + dir * player.GetVelocity()*3 * frame_time);
 	}

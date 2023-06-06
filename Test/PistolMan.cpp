@@ -189,6 +189,14 @@ void PistolMan::handle_collision(int otherLayer, int damage)
 		frame = 0;
 		lastPos = pos;
 		pos -= dir * 10;
+		if (!isWallCollision(Vector2D<float>(pos.x, lastPos.y), col->size))
+			pos.y = lastPos.y;
+		else if (!isWallCollision(Vector2D<float>(lastPos.x, pos.y), col->size))
+			pos.x = lastPos.x;
+		else
+			pos = lastPos;
+		lastPos = pos;
+		col->pos = pos;
 		break;
 	case playerMelee:
 		state->exit(*this);
@@ -198,6 +206,14 @@ void PistolMan::handle_collision(int otherLayer, int damage)
 		frame = 0;
 		lastPos = pos;
 		pos -= dir * 10;
+		if (!isWallCollision(Vector2D<float>(pos.x, lastPos.y), col->size))
+			pos.y = lastPos.y;
+		else if (!isWallCollision(Vector2D<float>(lastPos.x, pos.y), col->size))
+			pos.x = lastPos.x;
+		else
+			pos = lastPos;
+		lastPos = pos;
+		col->pos = pos;
 		break;
 	case playerBullet:
 		state->exit(*this);
