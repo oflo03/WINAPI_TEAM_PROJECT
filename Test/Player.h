@@ -30,7 +30,7 @@ protected:
 	std::vector<Weapon*> myWeapons;
 public:
 	Player(float x, float y) : pos(x, y), dir(0, 0), frame(0), angle(90), direction(FRONT), state(nullptr), selectedWeapon(SWORD), velocity(200) {}
-	Player() : pos(400, 300), dir(0, 0), frame(0), angle(90), direction(FRONT), state(nullptr), selectedWeapon(SWORD), velocity(200) {}
+	Player() : pos(300, 300), dir(0, 0), frame(0), angle(90), direction(FRONT), state(nullptr), selectedWeapon(SWORD), velocity(200) {}
 	virtual void draw_character(HDC mDC) = 0;
 	virtual void handle_event() = 0;
 	virtual void update() = 0;
