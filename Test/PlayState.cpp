@@ -27,6 +27,7 @@ PlayState::PlayState() : GameState(), player(new Marin)	// 모든 스테이트 시작 전
 	enemy.emplace_back(new RifleMan(350, 400, player));
 	enemy.emplace_back(new ShotgunMan(350, 500, player));
 	LoadTileMap(2);
+	PlaySound(L"BGM_PlayState.wav", NULL, SND_ASYNC | SND_LOOP);
 }
 
 PlayState::~PlayState()

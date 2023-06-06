@@ -201,10 +201,16 @@ void PistolMan::handle_collision(int otherLayer, int damage)
 	switch (otherLayer)
 	{
 	case wall:
-		if (!isWallCollision(Vector2D<float>(pos.x, lastPos.y), col->size))
+		if (!isWallCollision(Vector2D<float>(pos.x + velocity * frame_time / 2 * (pos.x > lastPos.x ? 1 : -1), lastPos.y), col->size))
+		{
+			pos.x += velocity * frame_time / 2 * (pos.x > lastPos.x ? 1 : -1);
 			pos.y = lastPos.y;
-		else if (!isWallCollision(Vector2D<float>(lastPos.x, pos.y), col->size))
+		}
+		else if (!isWallCollision(Vector2D<float>(lastPos.x, pos.y + velocity * frame_time / 2 * (pos.x > lastPos.x ? 1 : -1)), col->size))
+		{
 			pos.x = lastPos.x;
+			pos.y += velocity * frame_time / 2 * (pos.y > lastPos.y ? 1 : -1);
+		}
 		else
 			pos = lastPos;
 		lastPos = pos;
