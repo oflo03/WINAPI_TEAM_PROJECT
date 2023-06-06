@@ -7,7 +7,7 @@ extern double frame_time;
 Marin::Marin(float x, float y) : Player(x, y)
 {
 	state = new IdleState;
-	hand.Load(L"hand.png");
+	hand.Load(L"Marin_hand.png");
 	SetImage(STATE_IDLE);
 	col = new Collider(Vector2D<float>(animation[direction].size.right, animation[direction].size.bottom));
 	col->owner = this;
@@ -25,7 +25,7 @@ Marin::Marin(float x, float y) : Player(x, y)
 Marin::Marin() : Player()
 {
 	state = new IdleState;
-	hand.Load(L"hand.png");
+	hand.Load(L"Marin_hand.png");
 	SetImage(STATE_IDLE);
 	col = new Collider(Vector2D<float>(animation[direction].size.right, animation[direction].size.bottom));
 	col->owner = this;

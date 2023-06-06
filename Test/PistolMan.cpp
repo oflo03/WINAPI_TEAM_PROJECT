@@ -7,7 +7,7 @@ extern double frame_time;
 PistolMan::PistolMan(double x, double y, Player* target) : Enemy(x, y, target)
 {
 	SetImage(STATE_IDLE);
-	hand.Load(L"hand.png");
+	hand.Load(L"enemy_pistol_hand.png");
 	velocity = 100;
 	state = new EnemyIdle();
 	weapon = new Pistol();
