@@ -19,6 +19,6 @@ struct Tile
 {
 	int type;
 	int tilePos;
-	friend std::ifstream& operator>>(std::ifstream& is,Tile& tile);
-	virtual void handle_collision(int otherLayer);
+	friend std::ifstream& operator>>(std::ifstream& is, Tile& tile);
+	virtual void handle_collision(int otherLayer, int damage) {};
 };

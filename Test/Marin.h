@@ -13,5 +13,5 @@ public:
 	virtual void update();
 	virtual void SetImage(int state);
 	virtual void SetDirection();
-	virtual void handle_collision(int otherLayer);
+	virtual void handle_collision(int otherLayer, int damage);
 };

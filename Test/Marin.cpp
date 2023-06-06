@@ -187,7 +187,7 @@ void Marin::SetDirection()
 	}
 }
 
-void Marin::handle_collision(int otherLayer)
+void Marin::handle_collision(int otherLayer, int damage)
 {
 	switch (otherLayer)
 	{

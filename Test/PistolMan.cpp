@@ -167,7 +167,7 @@ void PistolMan::DestroyImage()
 		animation[i].resource.Destroy();
 }
 
-void PistolMan::handle_collision(int otherLayer)
+void PistolMan::handle_collision(int otherLayer, int damage)
 {
 	switch (otherLayer)
 	{

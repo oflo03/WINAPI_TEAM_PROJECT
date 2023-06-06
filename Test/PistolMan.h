@@ -18,6 +18,6 @@ public:
     virtual void SetDirection();
     virtual void attack();
     virtual void DestroyImage();
-    virtual void handle_collision(int otherLayer);
+    virtual void handle_collision(int otherLayer, int damage);
 };
 

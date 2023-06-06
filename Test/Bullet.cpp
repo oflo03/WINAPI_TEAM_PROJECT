@@ -3,22 +3,22 @@
 extern double frame_time;
 extern std::vector<std::unique_ptr<Bullet>> Bullets;
 
-Bullet::Bullet(int type,int side, Vector2D<float> pos, Vector2D<float> dir) :
-	pos(pos), dir(dir), damage(BulletDamage[type]), frame(0) ,isInvalid(false)
+Bullet::Bullet(int type, int side, Vector2D<float> pos, Vector2D<float> dir) :
+	pos(pos), dir(dir), frame(0), isInvalid(false)
 {
 	col = new Collider(8);
 	col->layer = side;
 	col->owner = this;
 	if (side == enemyBullet) {
-		velocity = 1.2;
+		velocity = 0.5;
 	}
 	else {
-		velocity = 2;
+		velocity = 1;
 	}
 	col->pos = pos;
 	COLL.emplace_back(col);
 	SetImage(type);
-	angle= std::atan2(dir.y, dir.x) * (180.0f / M_PI)*-1;
+	angle = std::atan2(dir.y, dir.x) * (180.0f / M_PI) * -1;
 }
 
 
@@ -28,7 +28,7 @@ Bullet::~Bullet() {
 
 void Bullet::SetImage(int type)
 {
-	if(col->layer ==playerBullet){
+	if (col->layer == playerBullet) {
 		switch (type)
 		{
 		case 1:
@@ -47,7 +47,7 @@ void Bullet::SetImage(int type)
 	else
 		this->animation.resource.Load(L"enemy_bullet.png");
 	this->animation.frame = 4;
-	this->animation.size = { 0,0,animation.resource.GetWidth() / 4, animation.resource.GetHeight()};
+	this->animation.size = { 0,0,animation.resource.GetWidth() / 4, animation.resource.GetHeight() };
 }
 
 void Bullet::draw_bullet(HDC mDC)
@@ -60,7 +60,7 @@ void Bullet::draw_bullet(HDC mDC)
 	rotatedImage.Create(width, height, 32);
 	for (int y = 0; y < height; y++) {
 		for (int x = 0; x < width; x++) {
-			BYTE* srcPixel=(BYTE*)animation.resource.GetPixelAddress((int)frame *width+ x, y);
+			BYTE* srcPixel = (BYTE*)animation.resource.GetPixelAddress((int)frame * width + x, y);
 			BYTE* destPixel = (BYTE*)temp.GetPixelAddress(x, y);
 			memcpy(destPixel, srcPixel, sizeof(BYTE) * 4);
 		}
@@ -69,14 +69,14 @@ void Bullet::draw_bullet(HDC mDC)
 		for (int x = 0; x < width; x++) {
 			Vector2D<float> rotatedPos = (Vector2D<float>(x - width / 2, y - height / 2)).Rotate(angle) + Vector2D<float>(width / 2, height / 2);
 			if (rotatedPos.x >= 0 && rotatedPos.x < width && rotatedPos.y >= 0 && rotatedPos.y < height) {
-				BYTE* srcPixel=(BYTE*)temp.GetPixelAddress(rotatedPos.x, rotatedPos.y);
+				BYTE* srcPixel = (BYTE*)temp.GetPixelAddress(rotatedPos.x, rotatedPos.y);
 				BYTE* destPixel = (BYTE*)rotatedImage.GetPixelAddress(x, y);
 				memcpy(destPixel, srcPixel, sizeof(BYTE) * 4);
 			}
 		}
 	}
-	rotatedImage.TransparentBlt(mDC, pos.x - animation.size.right/2, pos.y - animation.size.bottom/2, animation.size.right, animation.size.bottom,
-		0, 0, animation.size.right, animation.size.bottom,RGB(0,0,0)
+	rotatedImage.TransparentBlt(mDC, pos.x - animation.size.right / 2, pos.y - animation.size.bottom / 2, animation.size.right, animation.size.bottom,
+		0, 0, animation.size.right, animation.size.bottom, RGB(0, 0, 0)
 	);
 	rotatedImage.Destroy();
 	temp.Destroy();
@@ -90,14 +90,14 @@ void Bullet::update()
 	col->pos = pos;
 }
 
-void Bullet::handle_collision(int otherLayer)
+void Bullet::handle_collision(int otherLayer, int damage)
 {
 	switch (otherLayer)
 	{
 	case wall:
 		this->col->isInvalid = true;
 		for (auto i = Bullets.begin(); i != Bullets.end(); ++i)
-			if (Bullets[i - Bullets.begin()].get()== this)
+			if (Bullets[i - Bullets.begin()].get() == this)
 			{
 				Bullets.erase(i);
 				break;
@@ -123,7 +123,7 @@ void Bullet::handle_collision(int otherLayer)
 		break;
 	case playerMelee:
 		dir *= -1;
-		velocity = 2;
+		velocity = 1;
 		angle += 180;
 		col->layer = playerBullet;
 		animation.resource.Destroy();

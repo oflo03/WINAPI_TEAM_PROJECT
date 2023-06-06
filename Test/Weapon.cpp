@@ -22,10 +22,10 @@ void Sword::update()
 			Vector2D<float>(other->pos.x + other->size.x, other->pos.y - other->size.y),
 			Vector2D<float>(other->pos.x + other->size.x, other->pos.y + other->size.y),
 			Vector2D<float>(other->pos.x - other->size.x, other->pos.y + other->size.y) };
-			for (int i = 0; i < 4;i++) {
+			for (int i = 0; i < 4; i++) {
 				if (collisionable[other->layer][playerMelee] && (dot[i] - centerPos).GetLenth() <= attackRange) {
 					if ((mPos - centerPos).GetRadian(dot[i] - centerPos) <= 60) {
-						other.get()->owner->handle_collision(playerMelee);
+						other.get()->owner->handle_collision(playerMelee, BulletDamage[SWORD]);
 						break;
 					}
 				}

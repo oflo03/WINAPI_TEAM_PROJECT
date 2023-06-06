@@ -62,5 +62,3 @@ std::ifstream& operator>>(std::ifstream& is, Tile& tile)
 	}
 	return is;
 }
-
-void Tile::handle_collision(int otherLayer) {}

@@ -23,6 +23,7 @@ struct Collider
 	Vector2D<float> size;
 	int shape;
 	int layer;
+	int damage;
 	Master* owner;
 	bool isInvalid;
 	Collider() : size(0, 0), shape(point),isInvalid(false) { }

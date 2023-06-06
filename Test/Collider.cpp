@@ -24,14 +24,14 @@ void Collider::detection()
 		if (this->shape == rect) {
 			if (other->shape == rect) {
 				if (this->pos - other->pos <= this->size + other->size) {
-					collisionMsg.emplace(CollisionMessage(this->owner, other->layer));
+					collisionMsg.emplace(CollisionMessage(this->owner, other->layer, other->damage));
 					break;
 				}
 			}
 			else if (other->shape == circle) {
 				if (((this->pos - other->pos <= this->size + other->size) ||
 					((this->pos - other->pos) > this->size) && ((this->pos - other->pos).Vabs() - this->size.Vabs()).GetLenth() < other->size.x)) {
-					collisionMsg.emplace(CollisionMessage(this->owner, other->layer));
+					collisionMsg.emplace(CollisionMessage(this->owner, other->layer, other->damage));
 					break;
 				}
 			}
@@ -40,13 +40,13 @@ void Collider::detection()
 			if (other->shape == rect) {
 				if (((this->pos - other->pos <= this->size + other->size) ||
 					((this->pos - other->pos) > other->size) && ((this->pos - other->pos).Vabs() - other->size.Vabs()).GetLenth() < this->size.x)) {
-					collisionMsg.emplace(CollisionMessage(this->owner, other->layer));
+					collisionMsg.emplace(CollisionMessage(this->owner, other->layer, other->damage));
 					break;
 				}
 			}
 			else if (other->shape == circle) {
 				if ((this->pos - other->pos).GetLenth() <= this->size.x + other->size.x) {
-					collisionMsg.emplace(CollisionMessage(this->owner, other->layer));
+					collisionMsg.emplace(CollisionMessage(this->owner, other->layer, other->damage));
 					break;
 				}
 			}
@@ -77,7 +77,7 @@ void ColliderUpdate()
 	while (!collisionMsg.empty())
 	{
 		if (collisionMsg.front().collided)
-			collisionMsg.front().collided->handle_collision(collisionMsg.front().otherLayer);
+			collisionMsg.front().collided->handle_collision(collisionMsg.front().otherLayer, collisionMsg.front().damage);
 		collisionMsg.pop();
 	}
 
