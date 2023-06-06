@@ -1,11 +1,11 @@
-#include "PistolMan.h"
+#include "RifleMan.h"
 
 extern double frame_time;
 std::uniform_int_distribution<int> rad(-180, 180);
 std::uniform_int_distribution<int> ranTime(20, 100);
 std::uniform_int_distribution<int> ran(0, 1);
 
-PistolMan::PistolMan(double x, double y, Player* target) : Enemy(x, y, target)
+RifleMan::RifleMan(double x, double y, Player* target) : Enemy(x, y, target)
 {
 	SetImage(STATE_IDLE);
 	hand.Load(L"enemy_pistol_hand.png");
@@ -14,7 +14,7 @@ PistolMan::PistolMan(double x, double y, Player* target) : Enemy(x, y, target)
 	state = STATE_IDLE;
 	weapon = new Pistol();
 	weapon->Enemy();
-	attackRange = 300;
+	attackRange = 350;
 	attackCoolTime = 0;
 	col = new Collider(Vector2D<float>(animation[direction].size.right, animation[direction].size.bottom));
 	col->owner = this;
@@ -26,13 +26,13 @@ PistolMan::PistolMan(double x, double y, Player* target) : Enemy(x, y, target)
 
 
 
-PistolMan::~PistolMan()
+RifleMan::~RifleMan()
 {
 	delete weapon;
 	DestroyImage();
 }
 
-void PistolMan::draw_character(HDC mDC)
+void RifleMan::draw_character(HDC mDC)
 {
 	handPos = pos;
 	if (abs(angle) < 90)
@@ -62,7 +62,7 @@ void PistolMan::draw_character(HDC mDC)
 	}
 }
 
-void PistolMan::handle_event()
+void RifleMan::handle_event()
 {
 	if (!attackable())
 		SetDir((target->GetPos() - GetPos()).Normalize());
@@ -74,12 +74,12 @@ void PistolMan::handle_event()
 				dir.x = dir.y = 0;
 				moveTime = 50;
 			}
-			else{
+			else {
 				moveTime = ranTime(dre);
 				state = ran(dre);
-				if (state == STATE_IDLE) 
+				if (state == STATE_IDLE)
 					dir.x = dir.y = 0;
-				else if (state == STATE_RUN) 
+				else if (state == STATE_RUN)
 					dir = Vector2D<float>(1, 0).Rotate(rad(dre));
 			}
 			DestroyImage();
@@ -93,17 +93,17 @@ void PistolMan::handle_event()
 		weapon->ReLoad();
 }
 
-void PistolMan::update()
+void RifleMan::update()
 {
 	lastPos = pos;
 	if (state != STATE_DAMAGED) {
 		pos = pos + dir * velocity * frame_time;
 		frame = (frame + frame_time * 2 * animation[direction].frame);
-		if((int)moveTime)moveTime--;
+		if ((int)moveTime)moveTime--;
 	}
 	else {
 		frame = (frame + frame_time * 10 * animation[direction].frame);
-		if ((int)moveTime) moveTime-= frame_time * 10 * 2;
+		if ((int)moveTime) moveTime -= frame_time * 10 * 2;
 	}
 	if (frame >= animation[direction].frame) frame = 0;
 	SetDirection();
@@ -113,41 +113,41 @@ void PistolMan::update()
 	col->pos = pos;
 }
 
-void PistolMan::SetImage(int state)
+void RifleMan::SetImage(int state)
 {
 	switch (state)
 	{
 	case STATE_IDLE:
-		animation[FRONT].resource.Load(L"enemy_pistol_right.png");
-		animation[FRONT_RIGHT].resource.Load(L"enemy_pistol_right.png");
-		animation[FRONT_LEFT].resource.Load(L"enemy_pistol_left.png");
-		animation[BACK].resource.Load(L"enemy_pistol_back.png");
-		animation[BACK_RIGHT].resource.Load(L"enemy_pistol_back.png");
-		animation[BACK_LEFT].resource.Load(L"enemy_pistol_back.png");
+		animation[FRONT].resource.Load(L"enemy_rifle_right.png");
+		animation[FRONT_RIGHT].resource.Load(L"enemy_rifle_right.png");
+		animation[FRONT_LEFT].resource.Load(L"enemy_rifle_left.png");
+		animation[BACK].resource.Load(L"enemy_rifle_back.png");
+		animation[BACK_RIGHT].resource.Load(L"enemy_rifle_back.png");
+		animation[BACK_LEFT].resource.Load(L"enemy_rifle_back.png");
 		for (int i = 0; i < 6; i++) {
 			animation[i].frame = 2;
 			animation[i].size = { 0,0,animation[i].resource.GetWidth() / animation[i].frame,animation[i].resource.GetHeight() };
 		}
 		break;
 	case STATE_RUN:
-		animation[FRONT].resource.Load(L"enemy_pistol_run_front.png");
-		animation[FRONT_RIGHT].resource.Load(L"enemy_pistol_run_right.png");
-		animation[FRONT_LEFT].resource.Load(L"enemy_pistol_run_left.png");
-		animation[BACK].resource.Load(L"enemy_pistol_run_back.png");
-		animation[BACK_RIGHT].resource.Load(L"enemy_pistol_run_back.png");
-		animation[BACK_LEFT].resource.Load(L"enemy_pistol_run_back.png");
+		animation[FRONT].resource.Load(L"enemy_rifle_run_front.png");
+		animation[FRONT_RIGHT].resource.Load(L"enemy_rifle_run_right.png");
+		animation[FRONT_LEFT].resource.Load(L"enemy_rifle_run_left.png");
+		animation[BACK].resource.Load(L"enemy_rifle_run_back.png");
+		animation[BACK_RIGHT].resource.Load(L"enemy_rifle_run_back.png");
+		animation[BACK_LEFT].resource.Load(L"enemy_rifle_run_back.png");
 		for (int i = 0; i < 6; i++) {
 			animation[i].frame = 6;
 			animation[i].size = { 0,0,animation[i].resource.GetWidth() / animation[i].frame,animation[i].resource.GetHeight() };
 		}
 		break;
 	case STATE_DAMAGED:
-		animation[FRONT].resource.Load(L"enemy_pistol_damaged_front.png");
-		animation[FRONT_RIGHT].resource.Load(L"enemy_pistol_damaged_right.png");
-		animation[FRONT_LEFT].resource.Load(L"enemy_pistol_damaged_left.png");
-		animation[BACK].resource.Load(L"enemy_pistol_damaged_front.png");
-		animation[BACK_RIGHT].resource.Load(L"enemy_pistol_damaged_right.png");
-		animation[BACK_LEFT].resource.Load(L"enemy_pistol_damaged_left.png");
+		animation[FRONT].resource.Load(L"enemy_rifle_damaged_front.png");
+		animation[FRONT_RIGHT].resource.Load(L"enemy_rifle_damaged_right.png");
+		animation[FRONT_LEFT].resource.Load(L"enemy_rifle_damaged_left.png");
+		animation[BACK].resource.Load(L"enemy_rifle_damaged_front.png");
+		animation[BACK_RIGHT].resource.Load(L"enemy_rifle_damaged_right.png");
+		animation[BACK_LEFT].resource.Load(L"enemy_rifle_damaged_left.png");
 		for (int i = 0; i < 6; i++) {
 			animation[i].frame = 2;
 			animation[i].size = { 0,0,animation[i].resource.GetWidth() / animation[i].frame,animation[i].resource.GetHeight() };
@@ -158,9 +158,9 @@ void PistolMan::SetImage(int state)
 	}
 }
 
-void PistolMan::SetDirection()
+void RifleMan::SetDirection()
 {
-	if (target != nullptr) angle = std::atan2(target->GetPos().y-pos.y, target->GetPos().x - pos.x) * (180.0f / M_PI);
+	if (target != nullptr) angle = std::atan2(target->GetPos().y - pos.y, target->GetPos().x - pos.x) * (180.0f / M_PI);
 	if (angle >= -20 && angle <= 60) {
 		direction = FRONT_RIGHT;
 	}
@@ -181,18 +181,18 @@ void PistolMan::SetDirection()
 	}
 }
 
-void PistolMan::attack()
+void RifleMan::attack()
 {
 	weapon->attack(handPos, target->GetPos(), enemyBullet);
 }
 
-void PistolMan::DestroyImage()
+void RifleMan::DestroyImage()
 {
 	for (int i = 0; i < 6; i++)
 		animation[i].resource.Destroy();
 }
 
-void PistolMan::handle_collision(int otherLayer, int damage)
+void RifleMan::handle_collision(int otherLayer, int damage)
 {
 	switch (otherLayer)
 	{
@@ -213,7 +213,7 @@ void PistolMan::handle_collision(int otherLayer, int damage)
 		moveTime = 2;
 		frame = 0;
 		lastPos = pos;
-		pos -= (target->GetPos()-pos).Normalize() * 10;
+		pos -= (target->GetPos() - pos).Normalize() * 10;
 		if (!isWallCollision(Vector2D<float>(pos.x, lastPos.y), col->size))
 			pos.y = lastPos.y;
 		else if (!isWallCollision(Vector2D<float>(lastPos.x, pos.y), col->size))
@@ -261,3 +261,4 @@ void PistolMan::handle_collision(int otherLayer, int damage)
 		break;
 	}
 }
+

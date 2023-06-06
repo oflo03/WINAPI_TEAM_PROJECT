@@ -38,13 +38,7 @@
     <ClCompile Include="Collider.cpp">
       <Filter>Colider</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyIdle.cpp">
-      <Filter>Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="EnemyRun.cpp">
-      <Filter>Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="EnemyDamaged.cpp">
+    <ClCompile Include="RifleMan.cpp">
       <Filter>Enemy</Filter>
     </ClCompile>
   </ItemGroup>
@@ -106,16 +100,7 @@
     <ClInclude Include="Master.h">
       <Filter>Else</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyState.h">
-      <Filter>Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="EnemyIdle.h">
-      <Filter>Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="EnemyRun.h">
-      <Filter>Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="EnemyDamaged.h">
+    <ClInclude Include="RifleMan.h">
       <Filter>Enemy</Filter>
     </ClInclude>
   </ItemGroup>

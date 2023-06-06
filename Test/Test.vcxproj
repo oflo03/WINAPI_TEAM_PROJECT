@@ -131,9 +131,6 @@
   <ItemGroup>
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Collider.cpp" />
-    <ClCompile Include="EnemyDamaged.cpp" />
-    <ClCompile Include="EnemyIdle.cpp" />
-    <ClCompile Include="EnemyRun.cpp" />
     <ClCompile Include="game_framework.cpp" />
     <ClCompile Include="IdleState.cpp" />
     <ClCompile Include="main.cpp" />
@@ -142,6 +139,7 @@
     <ClCompile Include="PlayState.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="RifleMan.cpp" />
     <ClCompile Include="RollState.cpp" />
     <ClCompile Include="RunState.cpp" />
     <ClCompile Include="LogoState.cpp">
@@ -155,10 +153,6 @@
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="Enemy.h" />
-    <ClInclude Include="EnemyDamaged.h" />
-    <ClInclude Include="EnemyIdle.h" />
-    <ClInclude Include="EnemyRun.h" />
-    <ClInclude Include="EnemyState.h" />
     <ClInclude Include="game_framework.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClInclude>
@@ -171,6 +165,7 @@
     <ClInclude Include="PlayState.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClInclude>
+    <ClInclude Include="RifleMan.h" />
     <ClInclude Include="RollState.h" />
     <ClInclude Include="RunState.h" />
     <ClInclude Include="State.h" />

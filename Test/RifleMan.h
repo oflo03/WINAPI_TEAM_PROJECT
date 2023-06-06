@@ -1,6 +1,7 @@
 #pragma once
 #include "Enemy.h"
-class PistolMan :
+
+class RifleMan :
     public Enemy
 {
 private:
@@ -10,8 +11,8 @@ private:
     Weapon* weapon;
     float moveTime;
 public:
-    PistolMan(double x, double y, Player* target);
-    ~PistolMan();
+    RifleMan(double x, double y, Player* target);
+    ~RifleMan();
     virtual void draw_character(HDC mDC);
     virtual void handle_event();
     virtual void update();

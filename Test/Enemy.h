@@ -1,5 +1,4 @@
 #pragma once
-#include"EnemyState.h"
 #include"Master.h"
 #include"Player.h"
 
@@ -16,13 +15,13 @@ protected:
 	Vector2D<float> lastPos;
 	int direction;
 	int attackCoolTime;
-	EnemyState* state;
+	int state;
 	float velocity;
 	float attackRange;
 public:
 	Player* target;
-	Enemy(float x, float y,Player* target) : pos(x, y), dir(0, 0), frame(0), angle(90), direction(FRONT), state(nullptr), velocity(0) ,target(target), attackCoolTime(0){}
-	Enemy() : pos(screen.right/2, screen.bottom/2), dir(0, 0), frame(0), angle(90), direction(FRONT), state(nullptr), velocity(0),target(nullptr), attackCoolTime(0) {}
+	Enemy(float x, float y,Player* target) : pos(x, y), dir(0, 0), frame(0), angle(90), direction(FRONT), state(STATE_IDLE), velocity(0) ,target(target), attackCoolTime(0){}
+	Enemy() : pos(screen.right/2, screen.bottom/2), dir(0, 0), frame(0), angle(90), direction(FRONT), state(STATE_IDLE), velocity(0),target(nullptr), attackCoolTime(0) {}
 	virtual ~Enemy() {}
 	virtual void draw_character(HDC mDC) = 0;
 	virtual void handle_event() = 0;
@@ -38,6 +37,6 @@ public:
 	double GetVelocity() { return velocity; };
 	void SetDirection(int direction) { this->direction = direction; }
 	bool attackable() { 
-		return ((target->GetPos() - pos).GetLenth() <= attackRange);
+		return (target!=nullptr&&(target->GetPos() - pos).GetLenth() <= attackRange);
 	}
 };
