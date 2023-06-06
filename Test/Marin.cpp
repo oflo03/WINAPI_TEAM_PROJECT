@@ -7,7 +7,7 @@ extern double frame_time;
 Marin::Marin(float x, float y) : Player(x, y)
 {
 	state = new IdleState;
-	hand.Load(L"hand.png");
+	hand.Load(L"Marin_hand.png");
 	SetImage(STATE_IDLE);
 	col = new Collider(Vector2D<float>(animation[direction].size.right, animation[direction].size.bottom));
 	col->owner = this;
@@ -25,7 +25,7 @@ Marin::Marin(float x, float y) : Player(x, y)
 Marin::Marin() : Player()
 {
 	state = new IdleState;
-	hand.Load(L"hand.png");
+	hand.Load(L"Marin_hand.png");
 	SetImage(STATE_IDLE);
 	col = new Collider(Vector2D<float>(animation[direction].size.right, animation[direction].size.bottom));
 	col->owner = this;
@@ -130,8 +130,8 @@ void Marin::SetImage(int state)
 		animation[FRONT_RIGHT].resource.Load(L"Marin_idle_front_right.png");
 		animation[FRONT_LEFT].resource.Load(L"Marin_idle_front_left.png");
 		animation[BACK].resource.Load(L"Marin_idle_back.png");
-		animation[BACK_RIGHT].resource.Load(L"Marin_idle_back_right (1).png");
-		animation[BACK_LEFT].resource.Load(L"Marin_idle_back_left (1).png");
+		animation[BACK_RIGHT].resource.Load(L"Marin_idle_back_right.png");
+		animation[BACK_LEFT].resource.Load(L"Marin_idle_back_left.png");
 		for (int i = 0; i < 6; i++) {
 			animation[i].frame = 4;
 			animation[i].size = { 0,0,animation[i].resource.GetWidth() / animation[i].frame,animation[i].resource.GetHeight() };
@@ -142,8 +142,8 @@ void Marin::SetImage(int state)
 		animation[FRONT_RIGHT].resource.Load(L"Marin_run_front_right.png");
 		animation[FRONT_LEFT].resource.Load(L"Marin_run_front_left.png");
 		animation[BACK].resource.Load(L"Marin_run_back.png");
-		animation[BACK_RIGHT].resource.Load(L"Marin_run_back_right (1).png");
-		animation[BACK_LEFT].resource.Load(L"Marin_run_back_left (1).png");
+		animation[BACK_RIGHT].resource.Load(L"Marin_run_back_right.png");
+		animation[BACK_LEFT].resource.Load(L"Marin_run_back_left.png");
 		for (int i = 0; i < 6; i++) {
 			animation[i].frame = 6;
 			animation[i].size = { 0,0,animation[i].resource.GetWidth() / animation[i].frame,animation[i].resource.GetHeight() };
