@@ -2,8 +2,9 @@
 #include"Animation.h"
 #include"Vector2D.h"
 #include"Master.h"
+#include"Item.h"
 
-const int BulletDamage[]{ 20,10,7,5 ,30};
+const int BulletDamage[]{ 20,10,7,5 ,30 };
 
 class Bullet
 	:public Master
@@ -15,7 +16,6 @@ protected:
 	Vector2D<float> dir;
 	double velocity;
 	double angle;
-	bool isInvalid;
 public:
 	Bullet(int type, int side, Vector2D<float> pos, Vector2D<float> dir);
 	~Bullet();

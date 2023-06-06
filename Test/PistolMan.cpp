@@ -11,12 +11,14 @@ PistolMan::PistolMan(double x, double y, Player* target) : Enemy(x, y, target)
 	velocity = 100;
 	state = new EnemyIdle();
 	weapon = new Pistol();
-	attackRange = 800;
+	weapon->Enemy();
+	attackRange = 500;
 	attackCoolTime = 0;
 	col = new Collider(Vector2D<float>(animation[direction].size.right, animation[direction].size.bottom));
 	col->owner = this;
 	col->layer = enemy;
 	col->pos = pos;
+	col->damage = 5;
 	COLL.emplace_back(col);
 }
 
@@ -69,7 +71,7 @@ void PistolMan::handle_event()
 		frame = 0;
 	}
 	if (weapon->IsRunOut() && attackCoolTime == 0)
-		attackCoolTime = 100;
+		attackCoolTime = 300;
 	else if (weapon->IsRunOut() && attackCoolTime == 1)
 		weapon->ReLoad();
 }
@@ -186,6 +188,7 @@ void PistolMan::handle_collision(int otherLayer, int damage)
 		delete state;
 		state = new EnemyDamaged();
 		state->enter(*this);
+		col->layer = damaged_enemy;
 		frame = 0;
 		lastPos = pos;
 		pos -= dir * 10;
@@ -195,6 +198,7 @@ void PistolMan::handle_collision(int otherLayer, int damage)
 		delete state;
 		state = new EnemyDamaged();
 		state->enter(*this);
+		col->layer = damaged_enemy;
 		frame = 0;
 		lastPos = pos;
 		pos -= dir * 10;
@@ -204,6 +208,7 @@ void PistolMan::handle_collision(int otherLayer, int damage)
 		delete state;
 		state = new EnemyDamaged();
 		state->enter(*this);
+		col->layer = damaged_enemy;
 		frame = 0;
 		lastPos = pos;
 		pos -= dir * 2;

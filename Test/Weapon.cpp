@@ -2,7 +2,7 @@
 
 extern double frame_time;
 extern bool lookRange;
-extern bool collisionable[7][7];
+extern bool collisionable[9][9];
 extern HPEN GREENP;
 
 void Sword::update()
@@ -25,7 +25,7 @@ void Sword::update()
 			for (int i = 0; i < 4; i++) {
 				if (collisionable[other->layer][playerMelee] && (dot[i] - centerPos).GetLenth() <= attackRange) {
 					if ((mPos - centerPos).GetRadian(dot[i] - centerPos) <= 60) {
-						other.get()->owner->handle_collision(playerMelee, BulletDamage[SWORD]);
+						other->owner->handle_collision(playerMelee, BulletDamage[SWORD]);
 						break;
 					}
 				}
