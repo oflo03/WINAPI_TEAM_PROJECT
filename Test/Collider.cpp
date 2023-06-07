@@ -1,18 +1,18 @@
 #include"Collider.h"
 #include"Master.h"
 
-//	wall, player, rolled_player, enemy, playerBullet, enemyBullet, playerMelee, damaged_player, damaged_enemy
+//	wall, player, rolled_player, enemy, playerBullet, enemyBullet, playerMelee, damaged_player
 bool collisionable[9][9]
 {
 	0,0,0,0,0,0,0,0,0,
-	1,0,0,1,0,1,0,0,1,
+	1,0,0,1,0,1,0,0,0,
 	1,0,0,1,0,0,0,0,0,
-	1,1,1,1,1,0,1,1,1,
+	1,1,1,1,1,0,1,1,0,
 	1,0,0,1,0,0,0,0,0,
 	1,1,0,0,0,0,1,0,0,
 	0,0,0,0,0,0,0,0,0,
-	1,0,0,1,0,0,0,0,1,
-	1,1,0,1,0,0,0,1,1
+	1,0,0,1,0,0,0,0,0,
+	1,0,0,0,0,0,0,0,0
 };
 
 std::queue<CollisionMessage> collisionMsg;

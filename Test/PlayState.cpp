@@ -1,8 +1,7 @@
-#include "PlayState.h"
-#include"Marin.h"
-#include"PistolMan.h"
-#include"RifleMan.h"
-#include"ShotgunMan.h"
+#include"PlayState.h"
+#include"EnemyManager.h"
+#include"EffectManager.h"
+#include"Player.h"
 
 extern HDC mDC;
 std::random_device rd;
@@ -21,29 +20,29 @@ std::vector<Bullet*> Bullets;
 
 bool lookRange;
 
-PlayState::PlayState() : GameState(), player(new Marin)	// 모든 스테이트 시작 전에 콜라이더 벡터 초기화 하는거 넣어줘요 - 병욱
+PlayState::PlayState() : GameState()	// 모든 스테이트 시작 전에 콜라이더 벡터 초기화 하는거 넣어줘요 - 병욱
 {
-	enemy.emplace_back(new PistolMan(300, 400, player));
-	enemy.emplace_back(new RifleMan(350, 400, player));
-	enemy.emplace_back(new ShotgunMan(350, 500, player));
+	EnemyManager::getInstance()->init(1);
 	LoadTileMap(2);
 	PlaySound(L"BGM_PlayState.wav", NULL, SND_ASYNC | SND_LOOP);
 }
 
 PlayState::~PlayState()
 {
-	delete player;
-	enemy.clear();
+	Player::Destroy();
+	EnemyManager::destroy();
 }
 
 void PlayState::update()
 {
-	for (auto& E : enemy)
-		E->update();
-	player->update();
+
+	EnemyManager::getInstance()->update();
+	Player::getInstance(1)->update();
 	for (auto& B : Bullets)
 		B->update();
+	EffectManager::getInstance()->update();
 	ColliderUpdate();
+	EffectManager::getInstance()->delete_effect();
 }
 
 void PlayState::handle_events()
@@ -55,9 +54,8 @@ void PlayState::handle_events()
 	else if (GetAsyncKeyState('X') & 1) {
 		lookRange = !lookRange;
 	}
-	for (auto& E : enemy)
-		E->handle_event();
-	player->handle_event();
+	EnemyManager::getInstance()->handle_event();
+	Player::getInstance(1)->handle_event();
 }
 
 
@@ -67,10 +65,10 @@ void PlayState::draw()
 	PrintMap(mDC);
 	for (auto& B : Bullets)
 		B->draw_bullet(mDC);
-	for (auto& E : enemy)
-		E->draw_character(mDC);
-	player->draw_character(mDC);
+	Player::getInstance(1)->draw_character(mDC);
+	EnemyManager::getInstance()->draw(mDC);
 	if (lookRange)
 		for (auto& c : COLL)
 			c->draw_range(mDC);
+	EffectManager::getInstance()->Draw(mDC);
 }

@@ -1,6 +1,8 @@
 #pragma once
 #include "Player.h"
 
+class Player;
+
 class Marin :
     public Player
 {

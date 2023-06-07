@@ -8,14 +8,19 @@
 #include"Master.h"
 
 class PlayerState;
-
+class Marin;
 
 class Player
 	:public Master
 {
+private:
+	static Player* instance;
 protected:
+	Player(float x, float y) : pos(x, y), dir(0, 0), frame(0), angle(90), direction(FRONT), state(nullptr), selectedWeapon(SWORD), velocity(200) {}
+	Player() : pos(300, 300), dir(0, 0), frame(0), angle(90), direction(FRONT), state(nullptr), selectedWeapon(SWORD), velocity(200) {}
 	Animation animation[6];
 	CImage hand;
+	CImage shadow[2];
 	float frame;
 	float angle;
 	Vector2D<float> pos;
@@ -29,8 +34,8 @@ protected:
 	int selectedWeapon;
 	std::vector<Weapon*> myWeapons;
 public:
-	Player(float x, float y) : pos(x, y), dir(0, 0), frame(0), angle(90), direction(FRONT), state(nullptr), selectedWeapon(SWORD), velocity(200) {}
-	Player() : pos(300, 300), dir(0, 0), frame(0), angle(90), direction(FRONT), state(nullptr), selectedWeapon(SWORD), velocity(200) {}
+	static Player* getInstance(int character);
+	static void Destroy() { delete instance; }
 	virtual void draw_character(HDC mDC) = 0;
 	virtual void handle_event() = 0;
 	virtual void update() = 0;

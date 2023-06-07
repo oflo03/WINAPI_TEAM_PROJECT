@@ -1,0 +1,71 @@
+#include "EnemyManager.h"
+#include"PistolMan.h"
+#include"RifleMan.h"
+#include"ShotgunMan.h"
+#include"Bat.h"
+
+EnemyManager::~EnemyManager()
+{
+	enemy.clear();
+}
+
+EnemyManager* EnemyManager::getInstance()
+{
+	if (instance == nullptr)
+		instance = new EnemyManager();
+	return instance;
+}
+
+void EnemyManager::init(int stage)
+{
+	switch (stage)
+	{
+	case 1:
+		enemy.emplace_back(new PistolMan(300, 400, Player::getInstance(1)));
+		enemy.emplace_back(new RifleMan(350, 400, Player::getInstance(1)));
+		enemy.emplace_back(new ShotgunMan(350, 500, Player::getInstance(1)));
+		break;
+	case 2:
+		break;
+	case 3:
+		break;
+	default:
+		break;
+	}
+}
+
+void EnemyManager::destroy()
+{
+	delete instance;
+}
+
+void EnemyManager::delete_enemy(Enemy* e)
+{
+	for (auto i = enemy.begin(); i != enemy.end(); ++i)
+		if (enemy[i - enemy.begin()] == e)
+		{
+			enemy.erase(i);
+			break;
+		}
+}
+
+void EnemyManager::handle_event()
+{
+	for (auto& E : enemy)
+		E->handle_event();
+}
+
+void EnemyManager::update()
+{
+	for (auto& E : enemy)
+		E->update();
+	std::sort(enemy.begin(), enemy.end(), [](const Enemy* e1, const Enemy* e2) {return e1->GetPos().y < e2->GetPos().y; });
+}
+
+void EnemyManager::draw(HDC mDC)
+{
+	for (auto& E : enemy)
+		E->draw_character(mDC);
+}
+
+EnemyManager* EnemyManager::instance = nullptr;

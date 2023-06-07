@@ -4,10 +4,12 @@
 
 extern double frame_time;
 
-Marin::Marin(float x, float y) : Player(x, y)
+Marin::Marin(float x, float y) : Player(x,y)
 {
 	state = new IdleState;
 	hand.Load(L"Marin_hand.png");
+	shadow[0].Load(L"shadow.png");
+	shadow[1].Load(L"shadow2.png");
 	SetImage(STATE_IDLE);
 	col = new Collider(Vector2D<float>(animation[direction].size.right, animation[direction].size.bottom));
 	col->owner = this;
@@ -26,6 +28,8 @@ Marin::Marin() : Player()
 {
 	state = new IdleState;
 	hand.Load(L"Marin_hand.png");
+	shadow[0].Load(L"shadow.png");
+	shadow[1].Load(L"shadow2.png");
 	SetImage(STATE_IDLE);
 	col = new Collider(Vector2D<float>(animation[direction].size.right, animation[direction].size.bottom));
 	col->owner = this;
@@ -46,6 +50,8 @@ Marin::~Marin()
 		animation[j].resource.Destroy();
 	for (int i = 0; i < myWeapons.size(); i++)
 		delete myWeapons[i];
+	shadow[0].Destroy();
+	shadow[1].Destroy();
 	delete state;
 
 }
@@ -64,12 +70,14 @@ void Marin::draw_character(HDC mDC)
 		handPos.x -= 17;
 		handPos.y += 8;
 	}
+	bool isRolling = col->layer == rolled_player;
 	float yDest = pos.y - (animation[direction].size.bottom - 20) * 2;
+	shadow[isRolling].Draw(mDC, pos.x - shadow[isRolling].GetWidth(), pos.y+ col->size.y - 2 - shadow[isRolling].GetHeight(), shadow[isRolling].GetWidth() * 2, shadow[isRolling].GetHeight() * 2);
 	if (direction == FRONT || direction == FRONT_RIGHT || direction == FRONT_LEFT) {
 		animation[direction].resource.Draw(mDC, pos.x - animation[direction].size.right, yDest - 20, animation[direction].size.right * 2, animation[direction].size.bottom * 2,
 			(int)frame * animation[direction].size.right, 0, animation[direction].size.right, animation[direction].size.bottom
 		);
-		if (col->layer == player) {
+		if (!isRolling) {
 			myWeapons[selectedWeapon]->draw_weapon(mDC, handPos, mPos);
 			hand.Draw(mDC, handPos.x - hand.GetWidth(), handPos.y - hand.GetHeight(), hand.GetWidth() * 2, hand.GetHeight() * 2);
 		}
@@ -77,7 +85,7 @@ void Marin::draw_character(HDC mDC)
 		{ }
 	}
 	else {
-		if (col->layer == player) {
+		if (!isRolling) {
 			myWeapons[selectedWeapon]->draw_weapon(mDC, handPos, mPos);
 			hand.Draw(mDC, handPos.x - hand.GetWidth(), handPos.y - hand.GetHeight(), hand.GetWidth() * 2, hand.GetHeight() * 2);
 		}

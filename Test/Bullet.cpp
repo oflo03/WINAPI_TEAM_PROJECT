@@ -1,10 +1,11 @@
 #include"Bullet.h"
+#include"EffectManager.h"
 
 extern double frame_time;
 extern std::vector<Bullet*> Bullets;
 
 Bullet::Bullet(int type, int side, Vector2D<float> pos, Vector2D<float> dir) :
-	pos(pos), dir(dir), frame(0)
+	pos(pos), dir(dir), frame(0),type(type)
 {
 	col = new Collider(8);
 	col->layer = side;
@@ -46,7 +47,7 @@ void Bullet::SetImage(int type)
 		}
 	}
 	else
-		this->animation.resource.Load(L"enemy_bullet.png");
+		this->animation.resource.Load(L"enemy_bullet3.png");
 	this->animation.frame = 4;
 	this->animation.size = { 0,0,animation.resource.GetWidth() / 4, animation.resource.GetHeight() };
 }
@@ -98,6 +99,24 @@ void Bullet::handle_collision(int otherLayer, int damage)
 	case wall:
 	case player:
 	case enemy:
+		if (col->layer == enemyBullet)
+			EffectManager::getInstance()->set_effect(new Particle(L"enemy_bullet_effect.png", col->pos+dir, 3, 5));
+		else {
+			switch (type)
+			{
+			case PISTOL:
+				EffectManager::getInstance()->set_effect(new Particle(L"Bullet_Pistol_effect.png", col->pos + dir, 3, 4));
+				break;
+			case RIFLE:
+				EffectManager::getInstance()->set_effect(new Particle(L"Bullet_Rifle_effect.png", col->pos + dir, 4, 6));
+				break;
+			case SHOTGUN:
+				EffectManager::getInstance()->set_effect(new Particle(L"Bullet_shotgun_effect.png", col->pos + dir, 4, 6));
+				break;
+			default:
+				break;
+			}
+		}
 		for (auto i = Bullets.begin(); i != Bullets.end(); ++i)
 			if (Bullets[i - Bullets.begin()] == this)
 			{

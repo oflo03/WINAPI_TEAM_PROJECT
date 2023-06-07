@@ -44,6 +44,18 @@
     <ClCompile Include="ShotgunMan.cpp">
       <Filter>Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="Bat.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyManager.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Player</Filter>
+    </ClCompile>
+    <ClCompile Include="EffectManager.cpp">
+      <Filter>Effect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IdleState.h">
@@ -109,6 +121,18 @@
     <ClInclude Include="ShotgunMan.h">
       <Filter>Enemy</Filter>
     </ClInclude>
+    <ClInclude Include="Bat.h">
+      <Filter>Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect.h">
+      <Filter>Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyManager.h">
+      <Filter>Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="EffectManager.h">
+      <Filter>Effect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Player">
@@ -131,6 +155,9 @@
     </Filter>
     <Filter Include="Else">
       <UniqueIdentifier>{33c173a7-87da-4e35-b8b5-a5e71ba141b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Effect">
+      <UniqueIdentifier>{976a18a5-e0fc-4f6b-a401-a5ff759a4550}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

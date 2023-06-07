@@ -1,14 +1,16 @@
 #include "PistolMan.h"
+#include"EffectManager.h"
 
 extern double frame_time;
 extern std::uniform_int_distribution<int> rad;
 extern std::uniform_int_distribution<int> ranTime;
 extern std::uniform_int_distribution<int> ran;
 
-PistolMan::PistolMan(double x, double y, Player* target) : Enemy(x, y, target)
+PistolMan::PistolMan(double x, double y, Player* target) : Enemy(x, y)
 {
 	SetImage(STATE_IDLE);
 	hand.Load(L"enemy_pistol_hand.png");
+	shadow.Load(L"shadow.png");
 	velocity = 100;
 	moveTime = 200;
 	state = STATE_IDLE;
@@ -29,6 +31,8 @@ PistolMan::PistolMan(double x, double y, Player* target) : Enemy(x, y, target)
 PistolMan::~PistolMan()
 {
 	delete weapon;
+	hand.Destroy();
+	shadow.Destroy();
 	DestroyImage();
 }
 
@@ -45,7 +49,8 @@ void PistolMan::draw_character(HDC mDC)
 		handPos.x -= 17;
 		handPos.y += 8;
 	}
-	float yDest = pos.y - (animation[direction].size.bottom - 20) * 2;
+	float yDest = pos.y - (animation[direction].size.bottom - 22) * 2;
+	shadow.Draw(mDC, pos.x - shadow.GetWidth(), pos.y + col->size.y - 2 - shadow.GetHeight(), shadow.GetWidth() * 2, shadow.GetHeight() * 2);
 	if (direction == FRONT || direction == FRONT_RIGHT || direction == FRONT_LEFT) {
 		animation[direction].resource.Draw(mDC, pos.x - animation[direction].size.right, yDest - 20, animation[direction].size.right * 2, animation[direction].size.bottom * 2,
 			(int)frame * animation[direction].size.right, 0, animation[direction].size.right, animation[direction].size.bottom
@@ -68,7 +73,7 @@ void PistolMan::handle_event()
 		state = STATE_RUN;
 		DestroyImage();
 		SetImage(state);
-		SetDir((target->GetPos() - GetPos()).Normalize());
+		dir = (target->GetPos() - pos).Normalize();
 	}
 	else {
 		attack();
@@ -217,23 +222,8 @@ void PistolMan::handle_collision(int otherLayer, int damage)
 		col->pos = pos;
 		break;
 	case rolled_player:
-		state = STATE_DAMAGED;
-		DestroyImage();
-		SetImage(state);
-		moveTime = 2;
-		frame = 0;
-		lastPos = pos;
-		pos -= (target->GetPos()-pos).Normalize() * 10;
-		if (!isWallCollision(Vector2D<float>(pos.x, lastPos.y), col->size))
-			pos.y = lastPos.y;
-		else if (!isWallCollision(Vector2D<float>(lastPos.x, pos.y), col->size))
-			pos.x = lastPos.x;
-		else
-			pos = lastPos;
-		lastPos = pos;
-		col->pos = pos;
-		break;
 	case playerMelee:
+		EffectManager::getInstance()->set_effect(new Particle(L"melee_effect.png", col->pos, 4, 3));
 		state = STATE_DAMAGED;
 		DestroyImage();
 		SetImage(state);

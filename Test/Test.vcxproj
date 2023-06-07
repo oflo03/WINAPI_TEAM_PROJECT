@@ -129,13 +129,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Bat.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Collider.cpp" />
+    <ClCompile Include="EffectManager.cpp" />
+    <ClCompile Include="EnemyManager.cpp" />
     <ClCompile Include="game_framework.cpp" />
     <ClCompile Include="IdleState.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Marin.cpp" />
     <ClCompile Include="PistolMan.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayState.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
@@ -151,9 +155,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
+    <ClInclude Include="Bat.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Collider.h" />
+    <ClInclude Include="Effect.h" />
+    <ClInclude Include="EffectManager.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EnemyManager.h" />
     <ClInclude Include="game_framework.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClInclude>

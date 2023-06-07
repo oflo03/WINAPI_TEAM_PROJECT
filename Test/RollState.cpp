@@ -43,4 +43,5 @@ void RollState::exit(Player& player)
 
 
 
+
 bool Player::GetIfRoll() { return (dynamic_cast<RollState*>(state) != nullptr); };

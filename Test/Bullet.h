@@ -4,13 +4,14 @@
 #include"Master.h"
 #include"Item.h"
 
-const int BulletDamage[]{ 20,10,7,5 ,30 };
+const int BulletDamage[]{ 10,10,7,5 ,30 };
 
 class Bullet
 	:public Master
 {
 protected:
 	Animation animation;
+	int type;
 	float frame;
 	Vector2D<float> pos;
 	Vector2D<float> dir;
