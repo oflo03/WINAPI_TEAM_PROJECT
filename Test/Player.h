@@ -10,6 +10,10 @@
 class PlayerState;
 class Marin;
 
+extern enum OBJECTTYPE;
+const int playerhp[] = { 6,30,30,50,15 };
+extern Vector2D<float> camPos;
+
 class Player
 	:public Master
 {
@@ -30,6 +34,7 @@ protected:
 	Vector2D<float> dir;
 	int direction;
 	PlayerState* state;
+	int hp;
 	int velocity;
 	int selectedWeapon;
 	std::vector<Weapon*> myWeapons;
@@ -41,7 +46,7 @@ public:
 	virtual void update() = 0;
 	virtual void SetImage(int state) = 0;
 	virtual void SetDirection() = 0;
-	virtual void attack() { myWeapons[selectedWeapon]->attack(handPos,mPos,playerBullet); };
+	virtual void attack() { myWeapons[selectedWeapon]->attack(handPos, mPos, playerBullet); }
 	void DestroyImage() { for (int i = 0; i < 6; i++) animation[i].resource.Destroy(); }
 	void SetPos(Vector2D<float> temp) { pos = temp; }
 	Vector2D<float> GetPos() { return pos; }
@@ -52,7 +57,7 @@ public:
 	bool GetIfRoll();
 	int GetWeapon() { return selectedWeapon; }
 	void SetWeaponTime(int t) { myWeapons[selectedWeapon]->SetCurTime(t); }
-	void SetWeapon(int type) {if(!myWeapons[type]->IsRunOut()) selectedWeapon = type, myWeapons[selectedWeapon]->SetCurTime(10); }
+	void SetWeapon(int type) { if (!myWeapons[type]->IsRunOut()) selectedWeapon = type, myWeapons[selectedWeapon]->SetCurTime(10); }
 	void SetWeaponUp() { do selectedWeapon += 5, selectedWeapon %= 6; while (myWeapons[selectedWeapon]->IsRunOut()); }
 	void SetWeaponDown() { do selectedWeapon += 1, selectedWeapon %= 6; while (myWeapons[selectedWeapon]->IsRunOut()); }
 };

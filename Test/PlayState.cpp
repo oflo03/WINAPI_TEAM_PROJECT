@@ -38,7 +38,6 @@ PlayState::~PlayState()
 
 void PlayState::update()
 {
-
 	EnemyManager::getInstance()->update();
 	Player::getInstance(1)->update();
 	for (auto& B : Bullets)
@@ -81,4 +80,6 @@ void PlayState::draw()
 		mapDC, camPos.x - camSize.x, camPos.y - camSize.y, camSize.x * 2, camSize.y * 2, SRCCOPY);
 	DeleteObject(mapbitmap);
 	DeleteDC(mapDC);
+
+	// 이 이후에 mDC에다 UI 그리기
 }
