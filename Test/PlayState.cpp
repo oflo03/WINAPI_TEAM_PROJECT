@@ -63,10 +63,10 @@ void PlayState::handle_events()
 void PlayState::draw()
 {
 	PrintMap(mDC);
+	EnemyManager::getInstance()->draw(mDC);
+	Player::getInstance(1)->draw_character(mDC);
 	for (auto& B : Bullets)
 		B->draw_bullet(mDC);
-	Player::getInstance(1)->draw_character(mDC);
-	EnemyManager::getInstance()->draw(mDC);
 	if (lookRange)
 		for (auto& c : COLL)
 			c->draw_range(mDC);

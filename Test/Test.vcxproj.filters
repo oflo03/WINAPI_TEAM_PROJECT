@@ -56,6 +56,9 @@
     <ClCompile Include="EffectManager.cpp">
       <Filter>Effect</Filter>
     </ClCompile>
+    <ClCompile Include="Bombshe.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IdleState.h">
@@ -132,6 +135,9 @@
     </ClInclude>
     <ClInclude Include="EffectManager.h">
       <Filter>Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Bombshe.h">
+      <Filter>Enemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
