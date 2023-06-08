@@ -1,9 +1,12 @@
 #include "game_framework.h"
 #include"LogoState.h"
+#include"Vector2D.h"
 
 double frame_time;
 extern std::vector<GameState*> stateStack;
 HDC mDC;
+Vector2D<float> monitorSize;
+Vector2D<float> camSize;
 
 HINSTANCE g_hinst;
 LPCTSTR IpszClass = L"Window Class Name";
@@ -36,6 +39,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevinstance, LPSTR lpszCmdPa
 	MONITORINFO monitorInfo;
 	monitorInfo.cbSize = sizeof(MONITORINFO);
 	GetMonitorInfo(hMonitor, &monitorInfo);
+
+	monitorSize = Vector2D<float>(monitorInfo.rcMonitor.right - monitorInfo.rcMonitor.left,
+		monitorInfo.rcMonitor.bottom - monitorInfo.rcMonitor.top);
+	camSize = monitorSize / 4;
 
 	hWnd = CreateWindow(IpszClass, IpszWindowName, WS_POPUP,
 		monitorInfo.rcMonitor.left, monitorInfo.rcMonitor.top,
