@@ -29,6 +29,12 @@ void LoadTileMap(int num)
 	case 2:
 		mapFile = std::ifstream{ "map2.txt" };
 		break;
+	case 3:
+		mapFile = std::ifstream{ "map3.txt" };
+		break;
+	case 4:
+		mapFile = std::ifstream{ "map4.txt" };
+		break;
 	default:
 		return;
 	}

@@ -4,8 +4,6 @@
 #include"EffectManager.h"
 
 extern double frame_time;
-extern Vector2D<float> camPos;
-extern Vector2D<float> monitorSize;
 
 Marin::Marin(float x, float y) : Player(x, y)
 {

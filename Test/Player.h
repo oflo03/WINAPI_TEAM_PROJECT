@@ -13,6 +13,7 @@ class Marin;
 extern enum OBJECTTYPE;
 const int playerhp[] = { 6,30,30,50,15 };
 extern Vector2D<float> camPos;
+extern Vector2D<float> monitorSize;
 
 class Player
 	:public Master
@@ -21,7 +22,7 @@ private:
 	static Player* instance;
 protected:
 	Player(float x, float y) : pos(x, y), dir(0, 0), frame(0), angle(90), direction(FRONT), state(nullptr), selectedWeapon(SWORD), velocity(200) {}
-	Player() : pos(300, 300), dir(0, 0), frame(0), angle(90), direction(FRONT), state(nullptr), selectedWeapon(SWORD), velocity(200) {}
+	Player() : pos(monitorSize.x / 2, monitorSize.y - 80), dir(0, 0), frame(0), angle(90), direction(FRONT), state(nullptr), selectedWeapon(SWORD), velocity(200) {}
 	Animation animation[6];
 	CImage hand;
 	CImage shadow[2];
@@ -57,7 +58,7 @@ public:
 	bool GetIfRoll();
 	int GetWeapon() { return selectedWeapon; }
 	void SetWeaponTime(int t) { myWeapons[selectedWeapon]->SetCurTime(t); }
-	void SetWeapon(int type) { if (!myWeapons[type]->IsRunOut()) selectedWeapon = type, myWeapons[selectedWeapon]->SetCurTime(10); }
+	void SetWeapon(int type) { if (!myWeapons[type]->IsRunOut()) selectedWeapon = type, myWeapons[selectedWeapon]->SetCurTime(cooltime[type] - 3); }
 	void SetWeaponUp() { do selectedWeapon += 5, selectedWeapon %= 6; while (myWeapons[selectedWeapon]->IsRunOut()); }
 	void SetWeaponDown() { do selectedWeapon += 1, selectedWeapon %= 6; while (myWeapons[selectedWeapon]->IsRunOut()); }
 };
