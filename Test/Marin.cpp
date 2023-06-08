@@ -134,6 +134,12 @@ void Marin::update()
 		SetWeapon(SWORD);
 	col->pos = pos;
 	camPos = pos + (mPos - pos) / 4;
+	if (myWeapons[selectedWeapon]->IsReBound()) {
+		Vector2D<float> t = mPos - pos;
+		t.Normalize();
+		t.Rotate(90);
+		camPos += t * rebound[selectedWeapon] * (myWeapons[selectedWeapon]->GetCurTime() % 2 ? 1 : -1);
+	}
 }
 
 void Marin::SetImage(int state)
