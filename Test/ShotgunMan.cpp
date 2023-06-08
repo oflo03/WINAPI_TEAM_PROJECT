@@ -255,7 +255,6 @@ void ShotgunMan::handle_collision(int otherLayer, int damage)
 	case playerMelee:
 		EffectManager::getInstance()->set_effect(new Effect(L"melee_effect.png", col->pos, 4, 3));
 		moveTime = 2;
-		frame = 0;
 		lastPos = pos;
 		pos -= (target->GetPos() - pos).Normalize() * 10;
 		if (!isWallCollision(Vector2D<float>(pos.x, lastPos.y), col->size))
@@ -281,13 +280,10 @@ void ShotgunMan::handle_collision(int otherLayer, int damage)
 		else state = STATE_DAMAGED;
 		DestroyImage();
 		SetImage(state);
+		frame = 0;
 		break;
 	case playerBullet:
-		state = STATE_DAMAGED;
-		DestroyImage();
-		SetImage(state);
 		moveTime = 2;
-		frame = 0;
 		lastPos = pos;
 		pos -= (target->GetPos() - pos).Normalize() * 2;
 		if (!isWallCollision(Vector2D<float>(pos.x, lastPos.y), col->size))
@@ -313,6 +309,7 @@ void ShotgunMan::handle_collision(int otherLayer, int damage)
 		else state = STATE_DAMAGED;
 		DestroyImage();
 		SetImage(state);
+		frame = 0;
 		break;
 	default:
 		break;

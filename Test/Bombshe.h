@@ -1,12 +1,16 @@
 #pragma once
 #include "Enemy.h"
+#include "EffectManager.h"
+
 class Bombshe :
     public Enemy
 {
 private:
     Animation animation[6];
-    int attackSize;
+    float attackSize;
     float moveTime;
+    Effect* wave;
+    bool isAttack;
 public:
     Bombshe(double x, double y, Player* target);
     ~Bombshe();

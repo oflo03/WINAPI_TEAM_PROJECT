@@ -1,18 +1,18 @@
 #include "Bombshe.h"
-#include"EffectManager.h"
+#include"EnemyManager.h"
 
 extern double frame_time;
-extern std::uniform_int_distribution<int> rad;
-extern std::uniform_int_distribution<int> ranTime;
-extern std::uniform_int_distribution<int> ran;
+extern bool lookRange;
+extern HPEN GREENP;
 
-Bombshe::Bombshe(double x, double y, Player* target) : Enemy(x, y)
+Bombshe::Bombshe(double x, double y, Player* target) : Enemy(x, y),isAttack(false)
 {
 	SetImage(STATE_IDLE);
 	shadow.Load(L"shadow.png");
 	attackSize = 0;
 	velocity = 100;
 	moveTime = 200;
+	HP = 70;
 	state = STATE_IDLE;
 	attackRange = 200;
 	attackCoolTime = 200;
@@ -21,6 +21,7 @@ Bombshe::Bombshe(double x, double y, Player* target) : Enemy(x, y)
 	col->layer = enemy;
 	col->pos = pos;
 	col->damage = 5;
+	frame = 0;
 	COLL.emplace_back(col);
 }
 
@@ -35,14 +36,19 @@ Bombshe::~Bombshe()
 void Bombshe::draw_character(HDC mDC)
 {
 	float yDest = pos.y - (animation[direction].size.bottom - 22) * 2;
-	shadow.Draw(mDC, pos.x - shadow.GetWidth(), pos.y + col->size.y - 2 - shadow.GetHeight(), shadow.GetWidth() * 2, shadow.GetHeight() * 2);
+	shadow.Draw(mDC, pos.x - shadow.GetWidth(), pos.y + animation[direction].size.bottom - 2 - shadow.GetHeight(), shadow.GetWidth() * 2, shadow.GetHeight() * 2);
 	animation[direction].resource.Draw(mDC, pos.x - animation[direction].size.right, yDest - 20, animation[direction].size.right * 2, animation[direction].size.bottom * 2,
 		(int)frame * animation[direction].size.right, 0, animation[direction].size.right, animation[direction].size.bottom);
+	if (isAttack&&lookRange) {
+		HPEN old = (HPEN)SelectObject(mDC, GREENP);
+		Arc(mDC, pos.x-attackSize, pos.y - attackSize, pos.x + attackSize, pos.y + attackSize, 0,0,0,0);
+		SelectObject(mDC, old);
+	}
 }
 
 void Bombshe::handle_event()
 {
-	if (attackable()){
+	if (attackable() && !targetLocked || (state == STATE_DAMAGED && frame == 1)) {
 		targetLocked = true;
 		state = STATE_RUN;
 		DestroyImage();
@@ -50,9 +56,32 @@ void Bombshe::handle_event()
 		frame = 0;
 	}
 	if(targetLocked) {
-		if(frame > 4.5&&frame<5)EffectManager::getInstance()->set_effect(new Effect(L"banshe_effect.png", col->pos, 4, 13));
-		if((int)frame >= 4)
+		if (!isAttack&&(int)frame==4) {
+			wave = new Effect(L"banshe_effect.png", col->pos, 1, 13);
+			EffectManager::getInstance()->set_effect(wave);
+			isAttack = true;
+		}
+		if (isAttack) {
 			attack();
+			if ((int)(wave->time+1) == wave->effect.frame) {
+				if (wave->effect.frame == 13) {
+					wave->effect.resource.Destroy();
+					wave->effect.resource.Load(L"banshe_effect2.png");
+					wave->effect.frame = 3;
+					wave->effect.size = { 0,0,wave->effect.resource.GetWidth() / wave->effect.frame ,wave->effect.resource.GetHeight() };
+					wave->time = 0;
+					wave->velocity = 2.5;
+				}
+				else if(wave->effect.frame == 3)
+					wave->time = 0;
+			}
+			if (state == STATE_DAMAGED) {
+				state = STATE_RUN;
+				DestroyImage();
+				SetImage(state);
+				frame = 0;
+			}
+		}
 	}
 }
 
@@ -61,14 +90,29 @@ void Bombshe::update()
 	if(state == STATE_IDLE){
 		frame = (frame + frame_time * 2 * animation[direction].frame);
 		if (frame >= animation[direction].frame) frame = 0;
+		SetDirection();
+		col->pos = pos;
 	}
 	else if (state == STATE_RUN&&(int)frame<5) {
 		frame = (frame + frame_time * 2 * animation[direction].frame);
-		if (attackSize < 160)
-			attackSize += 5;
+		if (frame >= animation[direction].frame) frame = 0;
+		if (attackSize < 100)
+			attackSize += 1;
+		SetDirection();
+		col->pos = pos;
 	}
-	SetDirection();
-	col->pos = pos;
+	else if (state == STATE_DEAD) {
+		if ((int)frame < animation[direction].frame)
+			frame = (frame + frame_time * 3 * animation[direction].frame);
+		else {
+			EnemyManager::getInstance()->delete_enemy(this);
+			deleteSet.insert(this);
+			EffectManager::getInstance()->set_effect(new Effect(L"Bombshe_explode.png", pos, 3, 5));
+		}
+	}
+	else if (state == STATE_DAMAGED) {
+		frame = (frame + frame_time * 2 * animation[direction].frame);
+	}
 }
 
 void Bombshe::SetImage(int state)
@@ -95,7 +139,7 @@ void Bombshe::SetImage(int state)
 		animation[BACK_RIGHT].resource.Load(L"Bombshe_attack.png");
 		animation[BACK_LEFT].resource.Load(L"Bombshe_attack.png");
 		for (int i = 0; i < 6; i++) {
-			animation[i].frame = 4;
+			animation[i].frame = 5;
 			animation[i].size = { 0,0,animation[i].resource.GetWidth() / animation[i].frame,animation[i].resource.GetHeight() };
 		}
 		break;
@@ -108,6 +152,18 @@ void Bombshe::SetImage(int state)
 		animation[BACK_LEFT].resource.Load(L"Bombshe_damaged.png");
 		for (int i = 0; i < 6; i++) {
 			animation[i].frame = 1;
+			animation[i].size = { 0,0,animation[i].resource.GetWidth() / animation[i].frame,animation[i].resource.GetHeight() };
+		}
+		break;
+	case STATE_DEAD:
+		animation[FRONT].resource.Load(L"Bombshe_dead.png");
+		animation[FRONT_RIGHT].resource.Load(L"Bombshe_dead.png");
+		animation[FRONT_LEFT].resource.Load(L"Bombshe_dead.png");
+		animation[BACK].resource.Load(L"Bombshe_dead.png");
+		animation[BACK_RIGHT].resource.Load(L"Bombshe_dead.png");
+		animation[BACK_LEFT].resource.Load(L"Bombshe_dead.png");
+		for (int i = 0; i < 6; i++) {
+			animation[i].frame = 2;
 			animation[i].size = { 0,0,animation[i].resource.GetWidth() / animation[i].frame,animation[i].resource.GetHeight() };
 		}
 		break;
@@ -183,14 +239,45 @@ void Bombshe::handle_collision(int otherLayer, int damage)
 		lastPos = pos;
 		col->pos = pos;
 		break;
+
 	case rolled_player:
 	case playerMelee:
 		EffectManager::getInstance()->set_effect(new Effect(L"melee_effect.png", col->pos, 4, 3));
-		moveTime = 1;
+		HP -= damage;
+		if (HP <= 0) {
+			state = STATE_DEAD;
+			for (auto i = COLL.begin(); i != COLL.end(); ++i)
+				if (COLL[i - COLL.begin()] == this->col)
+				{
+					COLL.erase(i);
+					break;
+				}
+			delete this->col;
+			this->col = nullptr;
+			wave->time = wave->effect.frame;
+		}
+		else state = STATE_DAMAGED;
+		DestroyImage();
+		SetImage(state);
 		frame = 0;
 		break;
 	case playerBullet:
-		moveTime = 1;
+		HP -= damage;
+		if (HP <= 0) {
+			state = STATE_DEAD;
+			for (auto i = COLL.begin(); i != COLL.end(); ++i)
+				if (COLL[i - COLL.begin()] == this->col)
+				{
+					COLL.erase(i);
+					break;
+				}
+			delete this->col;
+			this->col = nullptr;
+			wave->time = wave->effect.frame;
+		}
+		else state = STATE_DAMAGED;
+		DestroyImage();
+		SetImage(state);
 		frame = 0;
 		break;
 	default:

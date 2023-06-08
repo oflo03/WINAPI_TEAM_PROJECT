@@ -62,6 +62,9 @@
     <ClCompile Include="Effect.cpp">
       <Filter>Effect</Filter>
     </ClCompile>
+    <ClCompile Include="DropItem.cpp">
+      <Filter>DropItem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IdleState.h">
@@ -142,6 +145,9 @@
     <ClInclude Include="Bombshe.h">
       <Filter>Enemy</Filter>
     </ClInclude>
+    <ClInclude Include="DropItem.h">
+      <Filter>DropItem</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Player">
@@ -167,6 +173,9 @@
     </Filter>
     <Filter Include="Effect">
       <UniqueIdentifier>{976a18a5-e0fc-4f6b-a401-a5ff759a4550}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DropItem">
+      <UniqueIdentifier>{271ce2b6-2b58-4b83-a08d-6a35b2a40227}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

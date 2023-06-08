@@ -25,6 +25,7 @@ void EnemyManager::init(int stage)
 		enemy.emplace_back(new RifleMan(350, 400, Player::getInstance(1)));
 		enemy.emplace_back(new ShotgunMan(350, 500, Player::getInstance(1)));
 		enemy.emplace_back(new Bat(400, 500, Player::getInstance(1)));
+		enemy.emplace_back(new Bombshe(400, 500, Player::getInstance(1)));
 		break;
 	case 2:
 		break;

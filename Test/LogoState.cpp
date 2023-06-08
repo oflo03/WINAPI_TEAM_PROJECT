@@ -32,7 +32,5 @@ void LogoState::handle_events()
 
 void LogoState::draw()
 {
-	Rectangle(mDC, -1, -1, screen.right, screen.bottom);
-	logo.Draw(mDC, (screen.right-logo.GetWidth())/2, (screen.bottom - logo.GetHeight()) / 2,
-		logo.GetWidth(), logo.GetHeight());
+	logo.Draw(mDC, 0, 0, screen.right, screen.bottom);
 }

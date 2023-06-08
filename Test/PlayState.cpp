@@ -65,7 +65,7 @@ void PlayState::handle_events()
 void PlayState::draw()
 {
 	HDC mapDC = CreateCompatibleDC(mDC);
-	HBITMAP mapbitmap = CreateCompatibleBitmap(mDC, monitorSize.x, monitorSize.y);
+	HBITMAP mapbitmap = CreateCompatibleBitmap(mDC, 1920, 1080);
 	SelectObject(mapDC, mapbitmap);
 	PrintMap(mapDC);
 	EnemyManager::getInstance()->draw(mapDC);

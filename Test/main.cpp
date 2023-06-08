@@ -42,7 +42,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevinstance, LPSTR lpszCmdPa
 
 	monitorSize = Vector2D<float>(monitorInfo.rcMonitor.right - monitorInfo.rcMonitor.left,
 		monitorInfo.rcMonitor.bottom - monitorInfo.rcMonitor.top);
-	camSize = monitorSize / 4;
+	camSize = monitorSize /4;
 
 	hWnd = CreateWindow(IpszClass, IpszWindowName, WS_POPUP,
 		monitorInfo.rcMonitor.left, monitorInfo.rcMonitor.top,
@@ -96,12 +96,11 @@ LRESULT WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 	case WM_PAINT:
 	{
 		hDC = BeginPaint(hWnd, &ps);
-		HBITMAP hBitmap = CreateCompatibleBitmap(hDC, screen.right, screen.bottom);
+		HBITMAP hBitmap = CreateCompatibleBitmap(hDC, monitorSize.x, monitorSize.y);
 		mDC = CreateCompatibleDC(hDC);
 		SelectObject(mDC, hBitmap);
 		stateStack.back()->draw();
-		BitBlt(hDC, 0, 0, screen.right, screen.bottom, mDC, 0, 0, SRCCOPY);
-		//StretchBlt(hDC, 0, 0, screen.right, screen.bottom, mDC, 0, 0, screen.right / 4, screen.bottom / 4, SRCCOPY);
+		BitBlt(hDC, 0, 0, monitorSize.x, monitorSize.y, mDC, 0, 0, SRCCOPY);
 		DeleteObject(hBitmap);
 		DeleteDC(mDC);
 		EndPaint(hWnd, &ps);
