@@ -1,6 +1,7 @@
 #include "IdleState.h"
 #include"RollState.h"
 #include "Marin.h"
+#include"EffectManager.h"
 
 extern double frame_time;
 extern Vector2D<float> camPos;
@@ -217,6 +218,17 @@ void Marin::handle_collision(int otherLayer, int damage)
 			pos = lastPos;
 		lastPos = pos;
 		col->pos = pos;
+		break;
+	case enemy:
+		if(col->layer==player)
+			pos -= dir * 5;
+		else 
+			pos = lastPos;
+		lastPos = pos;
+		col->pos = pos;
+		break;
+	case enemyBullet:
+		EffectManager::getInstance()->set_effect(new Effect(L"player_damaged.png", col->pos = pos, 3, 5));
 		break;
 	default:
 		break;

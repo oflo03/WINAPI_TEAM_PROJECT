@@ -8,7 +8,7 @@ std::random_device rd;
 std::default_random_engine dre(rd());
 std::uniform_int_distribution<int> uid(1, 10000);
 std::uniform_int_distribution<int> rad(-180, 180);
-std::uniform_int_distribution<int> ranTime(20, 100);
+std::uniform_int_distribution<int> ranTime(20, 70);
 std::uniform_int_distribution<int> ran(0, 1);
 
 void ColliderUpdate();
@@ -27,7 +27,7 @@ PlayState::PlayState() : GameState()	// 모든 스테이트 시작 전에 콜라이더 벡터 초
 {
 	EnemyManager::getInstance()->init(1);
 	LoadTileMap(2);
-	PlaySound(L"BGM_PlayState.wav", NULL, SND_ASYNC | SND_LOOP);
+	//PlaySound(L"BGM_PlayState.wav", NULL, SND_ASYNC | SND_LOOP);
 }
 
 PlayState::~PlayState()
@@ -69,10 +69,10 @@ void PlayState::draw()
 	HBITMAP mapbitmap = CreateCompatibleBitmap(mDC, monitorSize.x, monitorSize.y);
 	SelectObject(mapDC, mapbitmap);
 	PrintMap(mapDC);
+	EnemyManager::getInstance()->draw(mapDC);
+	Player::getInstance(1)->draw_character(mapDC);
 	for (auto& B : Bullets)
 		B->draw_bullet(mapDC);
-	Player::getInstance(1)->draw_character(mapDC);
-	EnemyManager::getInstance()->draw(mapDC);
 	if (lookRange)
 		for (auto& c : COLL)
 			c->draw_range(mapDC);

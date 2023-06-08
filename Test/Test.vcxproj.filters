@@ -59,6 +59,9 @@
     <ClCompile Include="Bombshe.cpp">
       <Filter>Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="Effect.cpp">
+      <Filter>Effect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IdleState.h">

@@ -100,23 +100,31 @@ void Bullet::handle_collision(int otherLayer, int damage)
 	case player:
 	case enemy:
 		if (col->layer == enemyBullet)
-			EffectManager::getInstance()->set_effect(new Particle(L"enemy_bullet_effect.png", col->pos+dir, 3, 5));
+			EffectManager::getInstance()->set_effect(new Effect(L"enemy_bullet_effect.png", col->pos + dir, 3, 5));
 		else {
 			switch (type)
 			{
 			case PISTOL:
-				EffectManager::getInstance()->set_effect(new Particle(L"Bullet_Pistol_effect.png", col->pos + dir, 3, 4));
+				EffectManager::getInstance()->set_effect(new Effect(L"Bullet_Pistol_effect.png", col->pos + dir, 3, 4));
 				break;
 			case RIFLE:
-				EffectManager::getInstance()->set_effect(new Particle(L"Bullet_Rifle_effect.png", col->pos + dir, 4, 6));
+				EffectManager::getInstance()->set_effect(new Effect(L"Bullet_Rifle_effect.png", col->pos + dir, 4, 6));
 				break;
 			case SHOTGUN:
-				EffectManager::getInstance()->set_effect(new Particle(L"Bullet_shotgun_effect.png", col->pos + dir, 4, 6));
+				EffectManager::getInstance()->set_effect(new Effect(L"Bullet_shotgun_effect.png", col->pos + dir, 4, 6));
 				break;
 			default:
 				break;
 			}
 		}
+		for (auto i = COLL.begin(); i != COLL.end(); ++i)
+			if (COLL[i - COLL.begin()] == this->col)
+			{
+				COLL.erase(i);
+				break;
+			}
+		delete this->col;
+		this->col = nullptr;
 		for (auto i = Bullets.begin(); i != Bullets.end(); ++i)
 			if (Bullets[i - Bullets.begin()] == this)
 			{

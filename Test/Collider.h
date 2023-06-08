@@ -13,7 +13,7 @@ enum shapetype
 
 enum layertype
 {
-	wall, player, rolled_player, enemy, playerBullet, enemyBullet, playerMelee, damaged_player, playerFoot
+	wall, player, rolled_player, enemy, playerBullet, enemyBullet, playerMelee, damaged_player
 };
 
 class Master;

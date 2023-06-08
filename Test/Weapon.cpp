@@ -13,7 +13,7 @@ void Sword::update()
 		frame = (frame + frame_time * 4 * slash.frame);
 		if (frame >= slash.frame) frame = 0;
 	}
-	if ((int)frame == 4)
+	if (frame > 4.3&& frame < 5)
 	{
 		Vector2D<float> mPos(cos(-angle * M_PI / 180) * attackRange, sin(-angle * M_PI / 180) * attackRange);
 		mPos += centerPos;

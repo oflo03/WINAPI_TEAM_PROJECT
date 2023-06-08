@@ -3,7 +3,7 @@
 #include"RifleMan.h"
 #include"ShotgunMan.h"
 #include"Bat.h"
-
+#include"Bombshe.h"
 EnemyManager::~EnemyManager()
 {
 	enemy.clear();
@@ -24,6 +24,7 @@ void EnemyManager::init(int stage)
 		enemy.emplace_back(new PistolMan(300, 400, Player::getInstance(1)));
 		enemy.emplace_back(new RifleMan(350, 400, Player::getInstance(1)));
 		enemy.emplace_back(new ShotgunMan(350, 500, Player::getInstance(1)));
+		enemy.emplace_back(new Bat(400, 500, Player::getInstance(1)));
 		break;
 	case 2:
 		break;
@@ -51,8 +52,10 @@ void EnemyManager::delete_enemy(Enemy* e)
 
 void EnemyManager::handle_event()
 {
-	for (auto& E : enemy)
-		E->handle_event();
+	for (auto& E : enemy) {
+		if(!E->isDead())
+			E->handle_event();
+	}
 }
 
 void EnemyManager::update()

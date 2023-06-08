@@ -22,7 +22,7 @@ void EffectManager::Draw(HDC mDC)
 void EffectManager::update()
 {
     for (auto& e : effect)
-        e->update();
+       e->update();
 }
 
 void EffectManager::set_effect(Effect* e)

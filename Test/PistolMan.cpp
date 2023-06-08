@@ -1,5 +1,6 @@
 #include "PistolMan.h"
 #include"EffectManager.h"
+#include"EnemyManager.h"
 
 extern double frame_time;
 extern std::uniform_int_distribution<int> rad;
@@ -23,6 +24,7 @@ PistolMan::PistolMan(double x, double y, Player* target) : Enemy(x, y)
 	col->layer = enemy;
 	col->pos = pos;
 	col->damage = 5;
+	HP = 100;
 	COLL.emplace_back(col);
 }
 
@@ -50,21 +52,26 @@ void PistolMan::draw_character(HDC mDC)
 		handPos.y += 8;
 	}
 	float yDest = pos.y - (animation[direction].size.bottom - 22) * 2;
-	shadow.Draw(mDC, pos.x - shadow.GetWidth(), pos.y + col->size.y - 2 - shadow.GetHeight(), shadow.GetWidth() * 2, shadow.GetHeight() * 2);
-	if (direction == FRONT || direction == FRONT_RIGHT || direction == FRONT_LEFT) {
-		animation[direction].resource.Draw(mDC, pos.x - animation[direction].size.right, yDest - 20, animation[direction].size.right * 2, animation[direction].size.bottom * 2,
-			(int)frame * animation[direction].size.right, 0, animation[direction].size.right, animation[direction].size.bottom
-		);
-		weapon->draw_weapon(mDC, handPos, target->GetPos());
-		hand.Draw(mDC, handPos.x - hand.GetWidth(), handPos.y - hand.GetHeight(), hand.GetWidth() * 2, hand.GetHeight() * 2);
+	if (state != STATE_DEAD) {
+		shadow.Draw(mDC, pos.x - shadow.GetWidth(), pos.y + col->size.y - 2 - shadow.GetHeight(), shadow.GetWidth() * 2, shadow.GetHeight() * 2);
+		if (direction == FRONT || direction == FRONT_RIGHT || direction == FRONT_LEFT) {
+			animation[direction].resource.Draw(mDC, pos.x - animation[direction].size.right, yDest - 20, animation[direction].size.right * 2, animation[direction].size.bottom * 2,
+				(int)frame * animation[direction].size.right, 0, animation[direction].size.right, animation[direction].size.bottom
+			);
+			weapon->draw_weapon(mDC, handPos, target->GetPos());
+			hand.Draw(mDC, handPos.x - hand.GetWidth(), handPos.y - hand.GetHeight(), hand.GetWidth() * 2, hand.GetHeight() * 2);
+		}
+		else {
+			weapon->draw_weapon(mDC, handPos, target->GetPos());
+			hand.Draw(mDC, handPos.x - hand.GetWidth(), handPos.y - hand.GetHeight(), hand.GetWidth() * 2, hand.GetHeight() * 2);
+			animation[direction].resource.Draw(mDC, pos.x - animation[direction].size.right, yDest - 20, animation[direction].size.right * 2, animation[direction].size.bottom * 2,
+				(int)frame * animation[direction].size.right, 0, animation[direction].size.right, animation[direction].size.bottom
+			);
+		}
 	}
-	else {
-		weapon->draw_weapon(mDC, handPos, target->GetPos());
-		hand.Draw(mDC, handPos.x - hand.GetWidth(), handPos.y - hand.GetHeight(), hand.GetWidth() * 2, hand.GetHeight() * 2);
+	else
 		animation[direction].resource.Draw(mDC, pos.x - animation[direction].size.right, yDest - 20, animation[direction].size.right * 2, animation[direction].size.bottom * 2,
-			(int)frame * animation[direction].size.right, 0, animation[direction].size.right, animation[direction].size.bottom
-		);
-	}
+			(int)frame * animation[direction].size.right, 0, animation[direction].size.right, animation[direction].size.bottom);
 }
 
 void PistolMan::handle_event()
@@ -105,21 +112,31 @@ void PistolMan::handle_event()
 void PistolMan::update()
 {
 	lastPos = pos;
-	if (state != STATE_DAMAGED) {
-		pos = pos + dir * velocity * frame_time;
-		frame = (frame + frame_time * 2 * animation[direction].frame);
-		if((int)moveTime)moveTime--;
+	if (state == STATE_DEAD) {
+		if((int)frame< animation[direction].frame) 
+			frame = (frame + frame_time * 2 * animation[direction].frame);
+		else {
+			EnemyManager::getInstance()->delete_enemy(this);
+			deleteSet.insert(this);
+		}
 	}
 	else {
-		frame = (frame + frame_time * 10 * animation[direction].frame);
-		if ((int)moveTime) moveTime-= frame_time * 10 * 2;
+		if(state == STATE_DAMAGED){
+			frame = (frame + frame_time * 10 * animation[direction].frame);
+			if ((int)moveTime) moveTime -= frame_time * 10 * 2;
+		}
+		else {
+			pos = pos + dir * velocity * frame_time;
+			frame = (frame + frame_time * 2 * animation[direction].frame);
+			if ((int)moveTime)moveTime--;
+		}
+		if (frame >= animation[direction].frame) frame = 0;
+		SetDirection();
+		weapon->update();
+		if (attackCoolTime)
+			attackCoolTime--;
+		col->pos = pos;
 	}
-	if (frame >= animation[direction].frame) frame = 0;
-	SetDirection();
-	weapon->update();
-	if (attackCoolTime)
-		attackCoolTime--;
-	col->pos = pos;
 }
 
 void PistolMan::SetImage(int state)
@@ -162,6 +179,18 @@ void PistolMan::SetImage(int state)
 			animation[i].size = { 0,0,animation[i].resource.GetWidth() / animation[i].frame,animation[i].resource.GetHeight() };
 		}
 		break;
+	case STATE_DEAD:
+		animation[FRONT].resource.Load(L"enemy_pistol_dead_front.png");
+		animation[FRONT_RIGHT].resource.Load(L"enemy_pistol_dead_front.png");
+		animation[FRONT_LEFT].resource.Load(L"enemy_pistol_dead_front.png");
+		animation[BACK].resource.Load(L"enemy_pistol_dead_back.png");
+		animation[BACK_RIGHT].resource.Load(L"enemy_pistol_dead_back.png");
+		animation[BACK_LEFT].resource.Load(L"enemy_pistol_dead_back.png");
+		for (int i = 0; i < 6; i++) {
+			animation[i].frame = 5;
+			animation[i].size = { 0,0,animation[i].resource.GetWidth() / animation[i].frame,animation[i].resource.GetHeight() };
+		}
+		break;
 	default:
 		break;
 	}
@@ -169,7 +198,7 @@ void PistolMan::SetImage(int state)
 
 void PistolMan::SetDirection()
 {
-	if (target != nullptr) angle = std::atan2(target->GetPos().y-pos.y, target->GetPos().x - pos.x) * (180.0f / M_PI);
+	 angle = std::atan2(target->GetPos().y-pos.y, target->GetPos().x - pos.x) * (180.0f / M_PI);
 	if (angle >= -20 && angle <= 60) {
 		direction = FRONT_RIGHT;
 	}
@@ -223,10 +252,7 @@ void PistolMan::handle_collision(int otherLayer, int damage)
 		break;
 	case rolled_player:
 	case playerMelee:
-		EffectManager::getInstance()->set_effect(new Particle(L"melee_effect.png", col->pos, 4, 3));
-		state = STATE_DAMAGED;
-		DestroyImage();
-		SetImage(state);
+		EffectManager::getInstance()->set_effect(new Effect(L"melee_effect.png", col->pos, 4, 3));
 		moveTime = 2;
 		frame = 0;
 		lastPos = pos;
@@ -239,6 +265,21 @@ void PistolMan::handle_collision(int otherLayer, int damage)
 			pos = lastPos;
 		lastPos = pos;
 		col->pos = pos;
+		HP -= damage;
+		if (HP <= 0) {
+			state = STATE_DEAD;
+			for (auto i = COLL.begin(); i != COLL.end(); ++i)
+				if (COLL[i - COLL.begin()] == this->col)
+				{
+					COLL.erase(i);
+					break;
+				}
+			delete this->col;
+			this->col = nullptr;
+		}
+		else state = STATE_DAMAGED;
+		DestroyImage();
+		SetImage(state);
 		break;
 	case playerBullet:
 		state = STATE_DAMAGED;
@@ -256,6 +297,21 @@ void PistolMan::handle_collision(int otherLayer, int damage)
 			pos = lastPos;
 		lastPos = pos;
 		col->pos = pos;
+		HP -= damage;
+		if (HP <= 0) {
+			state = STATE_DEAD;
+			for (auto i = COLL.begin(); i != COLL.end(); ++i)
+				if (COLL[i - COLL.begin()] == this->col)
+				{
+					COLL.erase(i);
+					break;
+				}
+			delete this->col;
+			this->col = nullptr;
+		}
+		else state = STATE_DAMAGED;
+		DestroyImage();
+		SetImage(state);
 		break;
 	default:
 		break;

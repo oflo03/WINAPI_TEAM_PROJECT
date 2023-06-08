@@ -75,19 +75,12 @@ void ColliderUpdate()
 		c->detection();
 	while (!collisionMsg.empty())
 	{
-		if (collisionMsg.front().collided)
+		if (collisionMsg.front().collided&& collisionMsg.front().collided->col!=nullptr)
 			collisionMsg.front().collided->handle_collision(collisionMsg.front().otherLayer, collisionMsg.front().damage);
 		collisionMsg.pop();
 	}
 	while (!deleteSet.empty())
 	{
-		for (auto i = COLL.begin(); i != COLL.end(); ++i)
-			if (COLL[i - COLL.begin()] == (*deleteSet.begin())->col)
-			{
-				COLL.erase(i);
-				break;
-			}
-		delete (*deleteSet.begin())->col;
 		delete (*deleteSet.begin());
 		deleteSet.erase(deleteSet.begin());
 	}

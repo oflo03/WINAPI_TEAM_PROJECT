@@ -10,7 +10,7 @@ Bat::Bat(double x, double y, Player* target) : Enemy(x, y)
 	shadow.Load(L"shadow.png");
 	velocity = 200;
 	state = STATE_IDLE;
-	attackRange = 400;
+	attackRange = 600;
 	col = new Collider(6);
 	col->owner = this;
 	col->layer = 3;
@@ -30,7 +30,7 @@ Bat::~Bat()
 void Bat::draw_character(HDC mDC)
 {
 	float yDest = pos.y - (animation.size.bottom) * 2;
-	shadow.Draw(mDC, pos.x - shadow.GetWidth(), pos.y + col->size.y*2 - 2 - shadow.GetHeight(), shadow.GetWidth() * 2, shadow.GetHeight() * 2);
+	shadow.Draw(mDC, pos.x - shadow.GetWidth(), pos.y + 6*2 - 2 - shadow.GetHeight(), shadow.GetWidth() * 2, shadow.GetHeight() * 2);
 	animation.resource.Draw(mDC, pos.x - animation.size.right, yDest - 20, animation.size.right * 2, animation.size.bottom * 2,
 		(int)frame * animation.size.right, 0, animation.size.right, animation.size.bottom
 	);
@@ -49,9 +49,11 @@ void Bat::handle_event()
 void Bat::update()
 {
 	lastPos = pos;
-	frame = (frame + frame_time * 5 * animation.frame);
+	pos = pos + dir * velocity * frame_time;
+	frame = (frame + frame_time * 2 * animation.frame);
 	if (frame >= animation.frame) frame = 0;
-	col->pos = pos;
+	if(col!=nullptr)
+		col->pos = pos;
 }
 
 void Bat::SetImage(int state)
@@ -63,14 +65,18 @@ void Bat::SetImage(int state)
 		animation.frame = 6;
 		animation.size = { 0,0,animation.resource.GetWidth() / animation.frame,animation.resource.GetHeight() };
 		break;
-	case STATE_RUN:
-		animation.resource.Load(L"bat.png");
+	case STATE_DEAD:
+		animation.resource.Load(L"bat_damaged.png");
 		animation.frame = 6;
 		animation.size = { 0,0,animation.resource.GetWidth() / animation.frame,animation.resource.GetHeight() };
 		break;
 	default:
 		break;
 	}
+}
+
+void Bat::SetDirection()
+{
 }
 
 void Bat::attack()
@@ -107,9 +113,16 @@ void Bat::handle_collision(int otherLayer, int damage)
 	case rolled_player:
 	case playerMelee:
 	case playerBullet:
-		EffectManager::getInstance()->set_effect(new DieMotion(BAT, L"bat_damaged.png", col->pos, 4, 3));
-		EnemyManager::getInstance()->delete_enemy(this);
-		deleteSet.insert(this);
+	if(col!=nullptr){
+		for (auto i = COLL.begin(); i != COLL.end(); ++i)
+			if (COLL[i - COLL.begin()] == this->col)
+			{
+				COLL.erase(i);
+				break;
+			}
+		delete this->col;
+		this->col = nullptr;
+	}
 		break;
 	default:
 		break;

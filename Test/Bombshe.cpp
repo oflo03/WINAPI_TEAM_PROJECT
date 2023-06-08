@@ -42,34 +42,32 @@ void Bombshe::draw_character(HDC mDC)
 
 void Bombshe::handle_event()
 {
-	if (!attackable()) {
-	}
-	else if(state== STATE_IDLE){
+	if (attackable()){
+		targetLocked = true;
 		state = STATE_RUN;
 		DestroyImage();
 		SetImage(state);
 		frame = 0;
 	}
-	else {
-		attack();
+	if(targetLocked) {
+		if(frame > 4.5&&frame<5)EffectManager::getInstance()->set_effect(new Effect(L"banshe_effect.png", col->pos, 4, 13));
+		if((int)frame >= 4)
+			attack();
 	}
 }
 
 void Bombshe::update()
 {
-	lastPos = pos;
-	if (state != STATE_DAMAGED) {
+	if(state == STATE_IDLE){
 		frame = (frame + frame_time * 2 * animation[direction].frame);
+		if (frame >= animation[direction].frame) frame = 0;
 	}
-	else {
-		frame = (frame + frame_time * 10 * animation[direction].frame);
+	else if (state == STATE_RUN&&(int)frame<5) {
+		frame = (frame + frame_time * 2 * animation[direction].frame);
+		if (attackSize < 160)
+			attackSize += 5;
 	}
-	if (frame >= animation[direction].frame) frame = 0;
 	SetDirection();
-	if (state!=STATE_RUN&&attackCoolTime)
-		attackCoolTime--;
-	if (state == STATE_RUN)
-		attackSize += 5;
 	col->pos = pos;
 }
 
@@ -120,7 +118,7 @@ void Bombshe::SetImage(int state)
 
 void Bombshe::SetDirection()
 {
-	if (target != nullptr) angle = std::atan2(target->GetPos().y - pos.y, target->GetPos().x - pos.x) * (180.0f / M_PI);
+	angle = std::atan2(target->GetPos().y - pos.y, target->GetPos().x - pos.x) * (180.0f / M_PI);
 	if (angle >= -20 && angle <= 60) {
 		direction = FRONT_RIGHT;
 	}
@@ -143,6 +141,20 @@ void Bombshe::SetDirection()
 
 void Bombshe::attack()
 {
+	for (auto& other : COLL) {
+		for (int i = 0; i < 4; i++) {
+			if (other->layer == player) {
+				Vector2D<float> dot[4] = { Vector2D<float>(other->pos.x - other->size.x, other->pos.y - other->size.y),
+				Vector2D<float>(other->pos.x + other->size.x, other->pos.y - other->size.y),
+				Vector2D<float>(other->pos.x + other->size.x, other->pos.y + other->size.y),
+				Vector2D<float>(other->pos.x - other->size.x, other->pos.y + other->size.y) };
+				if ((dot[i] - pos).GetLenth() <= attackSize) {
+					other->owner->handle_collision(enemyBullet, 1);
+					break;
+				}
+			}
+		}
+	}
 }
 
 void Bombshe::DestroyImage()
@@ -173,39 +185,13 @@ void Bombshe::handle_collision(int otherLayer, int damage)
 		break;
 	case rolled_player:
 	case playerMelee:
-		EffectManager::getInstance()->set_effect(new Particle(L"melee_effect.png", col->pos, 4, 3));
-		state = STATE_DAMAGED;
-		DestroyImage();
-		SetImage(state);
+		EffectManager::getInstance()->set_effect(new Effect(L"melee_effect.png", col->pos, 4, 3));
 		moveTime = 1;
 		frame = 0;
-		lastPos = pos;
-		pos -= (target->GetPos() - pos).Normalize() * 10;
-		if (!isWallCollision(Vector2D<float>(pos.x, lastPos.y), col->size))
-			pos.y = lastPos.y;
-		else if (!isWallCollision(Vector2D<float>(lastPos.x, pos.y), col->size))
-			pos.x = lastPos.x;
-		else
-			pos = lastPos;
-		lastPos = pos;
-		col->pos = pos;
 		break;
 	case playerBullet:
-		state = STATE_DAMAGED;
-		DestroyImage();
-		SetImage(state);
 		moveTime = 1;
 		frame = 0;
-		lastPos = pos;
-		pos -= (target->GetPos() - pos).Normalize() * 2;
-		if (!isWallCollision(Vector2D<float>(pos.x, lastPos.y), col->size))
-			pos.y = lastPos.y;
-		else if (!isWallCollision(Vector2D<float>(lastPos.x, pos.y), col->size))
-			pos.x = lastPos.x;
-		else
-			pos = lastPos;
-		lastPos = pos;
-		col->pos = pos;
 		break;
 	default:
 		break;
