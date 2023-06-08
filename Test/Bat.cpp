@@ -2,14 +2,36 @@
 #include "Bat.h"
 #include"EffectManager.h"
 
+Animation Bat::animation[2];
+
+enum BATSTATE {
+	IDLE,DEAD
+};
+
 extern double frame_time;
+
+void Bat::init()
+{
+	animation[IDLE].resource.Load(L"bat.png");
+	animation[IDLE].frame = 6;
+	animation[IDLE].size = { 0,0,animation[IDLE].resource.GetWidth() / animation[IDLE].frame,animation[IDLE].resource.GetHeight() };
+	animation[DEAD].resource.Load(L"bat_damaged.png");
+	animation[DEAD].frame = 4;
+	animation[DEAD].size = { 0,0,animation[DEAD].resource.GetWidth() / animation[DEAD].frame,animation[DEAD].resource.GetHeight() };
+}
+
+void Bat::release()
+{
+	for (int i = 0; i < 2; i++) {
+		animation[i].resource.Destroy();
+	}
+}
 
 Bat::Bat(double x, double y, Player* target) : Enemy(x, y)
 {
-	SetImage(STATE_IDLE);
 	shadow.Load(L"shadow.png");
 	velocity = 200;
-	state = STATE_IDLE;
+	state = IDLE;
 	attackRange = 600;
 	col = new Collider(10);
 	col->owner = this;
@@ -23,16 +45,16 @@ Bat::Bat(double x, double y, Player* target) : Enemy(x, y)
 
 Bat::~Bat()
 {
-	DestroyImage();
 	shadow.Destroy();
 }
+
 
 void Bat::draw_character(HDC mDC)
 {
 	float yDest = pos.y-10;
 	shadow.Draw(mDC, pos.x - shadow.GetWidth(), pos.y + 60 - 2 - shadow.GetHeight(), shadow.GetWidth() * 2, shadow.GetHeight() * 2);
-	animation.resource.Draw(mDC, pos.x - animation.size.right, yDest - 20, animation.size.right * 2, animation.size.bottom * 2,
-		(int)frame * animation.size.right, 0, animation.size.right, animation.size.bottom
+	animation[state].resource.Draw(mDC, pos.x - animation[state].size.right, yDest - 20, animation[state].size.right * 2, animation[state].size.bottom * 2,
+		(int)frame * animation[state].size.right, 0, animation[state].size.right, animation[state].size.bottom
 	);
 }
 
@@ -49,15 +71,15 @@ void Bat::handle_event()
 void Bat::update()
 {
 	lastPos = pos;
-	if(state==STATE_IDLE){
+	if(state==IDLE){
 		pos = pos + dir * velocity * frame_time;
-		frame = (frame + frame_time * 2 * animation.frame);
-		if (frame >= animation.frame) frame = 0;
+		frame = (frame + frame_time * 2 * animation[state].frame);
+		if (frame >= animation[state].frame) frame = 0;
 		col->pos = pos;
 	}
 	else {
-		if((int)frame< animation.frame)
-			frame = (frame + frame_time * 2 * animation.frame);
+		if((int)frame< animation[state].frame)
+			frame = (frame + frame_time * 2 * animation[state].frame);
 		else {
 			EnemyManager::getInstance()->delete_enemy(this);
 			deleteSet.insert(this);
@@ -90,25 +112,6 @@ void Bat::update()
 	}
 }
 
-void Bat::SetImage(int state)
-{
-	switch (state)
-	{
-	case STATE_IDLE:
-		animation.resource.Load(L"bat.png");
-		animation.frame = 6;
-		animation.size = { 0,0,animation.resource.GetWidth() / animation.frame,animation.resource.GetHeight() };
-		break;
-	case STATE_DEAD:
-		animation.resource.Load(L"bat_damaged.png");
-		animation.frame = 4;
-		animation.size = { 0,0,animation.resource.GetWidth() / animation.frame,animation.resource.GetHeight() };
-		break;
-	default:
-		break;
-	}
-}
-
 void Bat::SetDirection()
 {
 }
@@ -116,11 +119,6 @@ void Bat::SetDirection()
 void Bat::attack()
 {
 
-}
-
-void Bat::DestroyImage()
-{
-	animation.resource.Destroy();
 }
 
 void Bat::handle_collision(int otherLayer, int damage)
@@ -146,7 +144,7 @@ void Bat::handle_collision(int otherLayer, int damage)
 	case player:
 	case playerMelee:
 	case playerBullet:
-		state = STATE_DEAD;
+		state = DEAD;
 		for (auto i = COLL.begin(); i != COLL.end(); ++i)
 			if (COLL[i - COLL.begin()] == this->col)
 			{
@@ -155,8 +153,6 @@ void Bat::handle_collision(int otherLayer, int damage)
 			}
 		delete this->col;
 		this->col = nullptr;
-		DestroyImage();
-		SetImage(state);
 		frame = 0;
 		break;
 	default:

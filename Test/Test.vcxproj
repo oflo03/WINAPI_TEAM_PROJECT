@@ -133,7 +133,9 @@
     <ClCompile Include="Bombshe.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Collider.cpp" />
-    <ClCompile Include="DropItem.cpp" />
+    <ClCompile Include="DropItem.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="Effect.cpp" />
     <ClCompile Include="EffectManager.cpp" />
     <ClCompile Include="EnemyManager.cpp" />
@@ -162,7 +164,9 @@
     <ClInclude Include="Bombshe.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Collider.h" />
-    <ClInclude Include="DropItem.h" />
+    <ClInclude Include="DropItem.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="Effect.h" />
     <ClInclude Include="EffectManager.h" />
     <ClInclude Include="Enemy.h" />

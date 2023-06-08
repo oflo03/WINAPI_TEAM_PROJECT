@@ -83,10 +83,6 @@ void RunState::update(Player& player)
 
 void RunState::enter(Player& player)
 {
-	player.SetImage(STATE_RUN);
+	player.SetCurState(STATE_RUN);
 }
 
-void RunState::exit(Player& player)
-{
-	player.DestroyImage();
-}

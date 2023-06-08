@@ -25,6 +25,7 @@ bool lookRange;
 
 PlayState::PlayState() : GameState()	// 모든 스테이트 시작 전에 콜라이더 벡터 초기화 하는거 넣어줘요 - 병욱
 {
+	Player::init();
 	EnemyManager::getInstance()->init(1);
 	LoadTileMap(3);
 	//PlaySound(L"BGM_PlayState.wav", NULL, SND_ASYNC | SND_LOOP);
@@ -38,8 +39,8 @@ PlayState::~PlayState()
 
 void PlayState::update()
 {
-	EnemyManager::getInstance()->update();
 	Player::getInstance(1)->update();
+	EnemyManager::getInstance()->update();
 	for (auto& B : Bullets)
 		B->update();
 	EffectManager::getInstance()->update();

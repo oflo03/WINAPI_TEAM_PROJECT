@@ -1,34 +1,35 @@
 #pragma once
-#include"Master.h"
 #include"Animation.h"
-#include"Item.h"
-
-extern enum ID;
+#include"Master.h"
 
 class DropItem
 {
 private:
 	int type;
-	Animation image;
+	CImage image;
 	Vector2D<float> pos;
+	float xDir;
 public:
-	DropItem(int type, Vector2D<float> pos) : type(type),pos(pos) 
+	DropItem(int type, Vector2D<float> pos) : type(type),pos(pos),xDir(0)
 	{
-		switch (type)
+		/*switch (type)
 		{
 		case PISTOL:
-			image.resource.Load(L"drop_pistol.png");
+			image.Load(L"drop_pistol.png");
 			break;
 		case RIFLE:
-			image.resource.Load(L"drop_rifle.png");
+			image.Load(L"drop_rifle.png");
 			break;
 		case SHOTGUN:
-			image.resource.Load(L"drop_shotgun.png");
+			image.Load(L"drop_shotgun.png");
 			break;
 		default:
 			break;
-		}
+		}*/
 	}
-
+	~DropItem() { image.Destroy(); }
+	void update();
+	void Draw(HDC mDC);
+	virtual void handle_collision(int otherLayer, int damage);
 };
 

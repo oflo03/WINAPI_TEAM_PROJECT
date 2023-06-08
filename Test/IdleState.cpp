@@ -57,10 +57,5 @@ void IdleState::update(Player& player)
 
 void IdleState::enter(Player& player)
 {
-	player.SetImage(STATE_IDLE);
-}
-
-void IdleState::exit(Player& player)
-{
-	player.DestroyImage();
+	player.SetCurState(STATE_IDLE);
 }

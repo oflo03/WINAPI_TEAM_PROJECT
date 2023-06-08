@@ -7,6 +7,11 @@
 EnemyManager::~EnemyManager()
 {
 	enemy.clear();
+	PistolMan::release();
+	RifleMan::release();
+	ShotgunMan::release();
+	Bat::release();
+	Bombshe::release();
 }
 
 EnemyManager* EnemyManager::getInstance()
@@ -18,6 +23,11 @@ EnemyManager* EnemyManager::getInstance()
 
 void EnemyManager::init(int stage)
 {
+	PistolMan::init();
+	RifleMan::init();
+	ShotgunMan::init();
+	Bat::init();
+	Bombshe::init();
 	switch (stage)
 	{
 	case 1:
@@ -38,7 +48,8 @@ void EnemyManager::init(int stage)
 
 void EnemyManager::destroy()
 {
-	delete instance;
+	if(instance!=nullptr)
+		delete instance;
 }
 
 void EnemyManager::delete_enemy(Enemy* e)

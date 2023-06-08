@@ -1,12 +1,17 @@
 #include"Marin.h"
 #include"Player.h"
 
+void Player::init()
+{
+	Marin::init();
+}
+
 Player* Player::getInstance(int character) {
 	if (instance == nullptr) {
 		switch (character)
 		{
 		case 1:
-			instance = new Marin;
+			instance = new Marin(400,300);
 			break;
 		case 2:
 			break;
@@ -16,5 +21,6 @@ Player* Player::getInstance(int character) {
 	}
 	return instance;
 }
+
 
 Player* Player::instance = nullptr;

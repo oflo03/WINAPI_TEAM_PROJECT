@@ -4,10 +4,11 @@
 #include<Windows.h>
 #include<atlImage.h>
 
+
 class GameState {
 private:
 public:
-	GameState() = default;
+	GameState() {  };
 	virtual ~GameState() = default;
 	virtual void update() = 0;
 	virtual void handle_events() = 0;

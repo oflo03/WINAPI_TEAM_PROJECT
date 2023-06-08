@@ -6,7 +6,7 @@ class Bombshe :
     public Enemy
 {
 private:
-    Animation animation[6];
+    static Animation animation[4][3];
     float attackSize;
     float moveTime;
     Effect* wave;
@@ -14,13 +14,13 @@ private:
 public:
     Bombshe(double x, double y, Player* target);
     ~Bombshe();
+    static void init();
+    static void release();
     virtual void draw_character(HDC mDC);
     virtual void handle_event();
     virtual void update();
-    virtual void SetImage(int state);
     virtual void SetDirection();
     virtual void attack();
-    virtual void DestroyImage();
     virtual void handle_collision(int otherLayer, int damage);
 };
 

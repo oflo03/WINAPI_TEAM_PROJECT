@@ -33,15 +33,8 @@ void RollState::update(Player& player)
 
 void RollState::enter(Player& player)
 {
-	player.SetImage(STATE_ROLL);
-}
-
-void RollState::exit(Player& player)
-{
-	player.DestroyImage();
+	player.SetCurState(STATE_ROLL);
 }
 
 
-
-
-bool Player::GetIfRoll() { return (dynamic_cast<RollState*>(state) != nullptr); };
+bool Player::GetIfRoll() { return curstate==STATE_ROLL; };

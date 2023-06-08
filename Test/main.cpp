@@ -1,6 +1,7 @@
 #include "game_framework.h"
 #include"LogoState.h"
 #include"Vector2D.h"
+#include <crtdbg.h>
 
 double frame_time;
 extern std::vector<GameState*> stateStack;

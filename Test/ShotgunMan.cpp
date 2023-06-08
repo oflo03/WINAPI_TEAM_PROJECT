@@ -7,9 +7,62 @@ extern std::uniform_int_distribution<int> rad;
 extern std::uniform_int_distribution<int> ranTime;
 extern std::uniform_int_distribution<int> ran;
 
+Animation ShotgunMan::animation[4][6];
+
+void ShotgunMan::init()
+{
+	animation[STATE_IDLE][FRONT].resource.Load(L"enemy_shotgun_front.png");
+	animation[STATE_IDLE][FRONT_RIGHT].resource.Load(L"enemy_shotgun_front.png");
+	animation[STATE_IDLE][FRONT_LEFT].resource.Load(L"enemy_shotgun_front.png");
+	animation[STATE_IDLE][BACK].resource.Load(L"enemy_shotgun_back.png");
+	animation[STATE_IDLE][BACK_RIGHT].resource.Load(L"enemy_shotgun_back.png");
+	animation[STATE_IDLE][BACK_LEFT].resource.Load(L"enemy_shotgun_back.png");
+	for (int i = 0; i < 6; i++) {
+		animation[STATE_IDLE][i].frame = 2;
+		animation[STATE_IDLE][i].size = { 0,0,animation[STATE_IDLE][i].resource.GetWidth() / animation[STATE_IDLE][i].frame,animation[STATE_IDLE][i].resource.GetHeight() };
+	}
+	animation[STATE_RUN][FRONT].resource.Load(L"enemy_shotgun_run_front.png");
+	animation[STATE_RUN][FRONT_RIGHT].resource.Load(L"enemy_shotgun_run_right.png");
+	animation[STATE_RUN][FRONT_LEFT].resource.Load(L"enemy_shotgun_run_left.png");
+	animation[STATE_RUN][BACK].resource.Load(L"enemy_shotgun_run_back.png");
+	animation[STATE_RUN][BACK_RIGHT].resource.Load(L"enemy_shotgun_run_back.png");
+	animation[STATE_RUN][BACK_LEFT].resource.Load(L"enemy_shotgun_run_back.png");
+	for (int i = 0; i < 6; i++) {
+		animation[STATE_RUN][i].frame = 6;
+		animation[STATE_RUN][i].size = { 0,0,animation[STATE_RUN][i].resource.GetWidth() / animation[STATE_RUN][i].frame,animation[STATE_RUN][i].resource.GetHeight() };
+	}
+	animation[STATE_DAMAGED][FRONT].resource.Load(L"enemy_shotgun_damaged_front.png");
+	animation[STATE_DAMAGED][FRONT_RIGHT].resource.Load(L"enemy_shotgun_damaged_right.png");
+	animation[STATE_DAMAGED][FRONT_LEFT].resource.Load(L"enemy_shotgun_damaged_left.png");
+	animation[STATE_DAMAGED][BACK].resource.Load(L"enemy_shotgun_damaged_front.png");
+	animation[STATE_DAMAGED][BACK_RIGHT].resource.Load(L"enemy_shotgun_damaged_right.png");
+	animation[STATE_DAMAGED][BACK_LEFT].resource.Load(L"enemy_shotgun_damaged_left.png");
+	for (int i = 0; i < 6; i++) {
+		animation[STATE_DAMAGED][i].frame = 2;
+		animation[STATE_DAMAGED][i].size = { 0,0,animation[STATE_DAMAGED][i].resource.GetWidth() / animation[STATE_DAMAGED][i].frame,animation[STATE_DAMAGED][i].resource.GetHeight() };
+	}
+	animation[STATE_DEAD][FRONT].resource.Load(L"enemy_shotgun_dead.png");
+	animation[STATE_DEAD][FRONT_RIGHT].resource.Load(L"enemy_shotgun_dead.png");
+	animation[STATE_DEAD][FRONT_LEFT].resource.Load(L"enemy_shotgun_dead.png");
+	animation[STATE_DEAD][BACK].resource.Load(L"enemy_shotgun_dead.png");
+	animation[STATE_DEAD][BACK_RIGHT].resource.Load(L"enemy_shotgun_dead.png");
+	animation[STATE_DEAD][BACK_LEFT].resource.Load(L"enemy_shotgun_dead.png");
+	for (int i = 0; i < 6; i++) {
+		animation[STATE_DEAD][i].frame = 3;
+		animation[STATE_DEAD][i].size = { 0,0,animation[STATE_DEAD][i].resource.GetWidth() / animation[STATE_DEAD][i].frame,animation[STATE_DEAD][i].resource.GetHeight() };
+	}
+}
+
+void ShotgunMan::release()
+{
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 6; j++)
+			animation[i][j].resource.Destroy();
+	}
+}
+
 ShotgunMan::ShotgunMan(double x, double y, Player* target) : Enemy(x, y)
 {
-	SetImage(STATE_IDLE);
 	hand.Load(L"enemy_pistol_hand.png");
 	shadow.Load(L"shadow.png");
 	velocity = 100;
@@ -20,7 +73,7 @@ ShotgunMan::ShotgunMan(double x, double y, Player* target) : Enemy(x, y)
 	weapon->Enemy();
 	attackRange = 500;
 	attackCoolTime = 0;
-	col = new Collider(Vector2D<float>(animation[direction].size.right, animation[direction].size.bottom));
+	col = new Collider(Vector2D<float>(animation[STATE_IDLE][FRONT].size.right, animation[STATE_IDLE][FRONT].size.bottom));
 	col->owner = this;
 	col->layer = enemy;
 	col->pos = pos;
@@ -28,15 +81,13 @@ ShotgunMan::ShotgunMan(double x, double y, Player* target) : Enemy(x, y)
 	COLL.emplace_back(col);
 }
 
-
-
 ShotgunMan::~ShotgunMan()
 {
 	delete weapon;
 	hand.Destroy();
-	DestroyImage();
 	shadow.Destroy();
 }
+
 
 void ShotgunMan::draw_character(HDC mDC)
 {
@@ -51,12 +102,12 @@ void ShotgunMan::draw_character(HDC mDC)
 		handPos.x -= 17;
 		handPos.y += 8;
 	}
-	float yDest = pos.y - (animation[direction].size.bottom - 25) * 2;
+	float yDest = pos.y - (animation[STATE_IDLE][FRONT].size.bottom - 25) * 2;
 	if (state != STATE_DEAD) {
 		shadow.Draw(mDC, pos.x - shadow.GetWidth(), pos.y + col->size.y - 2 - shadow.GetHeight(), shadow.GetWidth() * 2, shadow.GetHeight() * 2);
 		if (direction == FRONT || direction == FRONT_RIGHT || direction == FRONT_LEFT) {
-			animation[direction].resource.Draw(mDC, pos.x - animation[direction].size.right, yDest - 20, animation[direction].size.right * 2, animation[direction].size.bottom * 2,
-				(int)frame * animation[direction].size.right, 0, animation[direction].size.right, animation[direction].size.bottom
+			animation[state][direction].resource.Draw(mDC, pos.x - animation[state][direction].size.right, yDest - 20, animation[state][direction].size.right * 2, animation[state][direction].size.bottom * 2,
+				(int)frame * animation[state][direction].size.right, 0, animation[state][direction].size.right, animation[state][direction].size.bottom
 			);
 			weapon->draw_weapon(mDC, handPos, target->GetPos());
 			hand.Draw(mDC, handPos.x - hand.GetWidth(), handPos.y - hand.GetHeight(), hand.GetWidth() * 2, hand.GetHeight() * 2);
@@ -64,22 +115,20 @@ void ShotgunMan::draw_character(HDC mDC)
 		else {
 			weapon->draw_weapon(mDC, handPos, target->GetPos());
 			hand.Draw(mDC, handPos.x - hand.GetWidth(), handPos.y - hand.GetHeight(), hand.GetWidth() * 2, hand.GetHeight() * 2);
-			animation[direction].resource.Draw(mDC, pos.x - animation[direction].size.right, yDest - 20, animation[direction].size.right * 2, animation[direction].size.bottom * 2,
-				(int)frame * animation[direction].size.right, 0, animation[direction].size.right, animation[direction].size.bottom
+			animation[state][direction].resource.Draw(mDC, pos.x - animation[state][direction].size.right, yDest - 20, animation[state][direction].size.right * 2, animation[state][direction].size.bottom * 2,
+				(int)frame * animation[state][direction].size.right, 0, animation[state][direction].size.right, animation[state][direction].size.bottom
 			);
 		}
 	}
 	else
-		animation[direction].resource.Draw(mDC, pos.x - animation[direction].size.right, yDest - 20, animation[direction].size.right * 2, animation[direction].size.bottom * 2,
-			(int)frame * animation[direction].size.right, 0, animation[direction].size.right, animation[direction].size.bottom);
+		animation[state][direction].resource.Draw(mDC, pos.x - animation[state][direction].size.right, yDest - 20, animation[state][direction].size.right * 2, animation[state][direction].size.bottom * 2,
+			(int)frame * animation[state][direction].size.right, 0, animation[state][direction].size.right, animation[state][direction].size.bottom);
 }
 
 void ShotgunMan::handle_event()
 {
 	if (!attackable()) {
 		state = STATE_RUN;
-		DestroyImage();
-		SetImage(state);
 		dir = (target->GetPos() - pos).Normalize();
 	}
 	else {
@@ -98,8 +147,6 @@ void ShotgunMan::handle_event()
 				else if (state == STATE_RUN)
 					dir = Vector2D<float>(1, 0).Rotate(rad(dre));
 			}
-			DestroyImage();
-			SetImage(state);
 			frame = 0;
 		}
 	}
@@ -113,8 +160,8 @@ void ShotgunMan::update()
 {
 	lastPos = pos;
 	if (state == STATE_DEAD) {
-		if ((int)frame < animation[direction].frame)
-			frame = (frame + frame_time * 2 * animation[direction].frame);
+		if ((int)frame < animation[state][direction].frame)
+			frame = (frame + frame_time * 2 * animation[state][direction].frame);
 		else {
 			EnemyManager::getInstance()->delete_enemy(this);
 			deleteSet.insert(this);
@@ -123,77 +170,20 @@ void ShotgunMan::update()
 	}
 	else {
 		if (state == STATE_DAMAGED) {
-			frame = (frame + frame_time * 10 * animation[direction].frame);
+			frame = (frame + frame_time * 10 * animation[state][direction].frame);
 			if ((int)moveTime) moveTime -= frame_time * 10 * 2;
 		}
 		else {
 			pos = pos + dir * velocity * frame_time;
-			frame = (frame + frame_time * 2 * animation[direction].frame);
+			frame = (frame + frame_time * 2 * animation[state][direction].frame);
 			if ((int)moveTime)moveTime--;
 		}
-		if (frame >= animation[direction].frame) frame = 0;
+		if (frame >= animation[state][direction].frame) frame = 0;
 		SetDirection();
 		weapon->update();
 		if (attackCoolTime)
 			attackCoolTime--;
 		col->pos = pos;
-	}
-}
-
-void ShotgunMan::SetImage(int state)
-{
-	switch (state)
-	{
-	case STATE_IDLE:
-		animation[FRONT].resource.Load(L"enemy_shotgun_front.png");
-		animation[FRONT_RIGHT].resource.Load(L"enemy_shotgun_front.png");
-		animation[FRONT_LEFT].resource.Load(L"enemy_shotgun_front.png");
-		animation[BACK].resource.Load(L"enemy_shotgun_back.png");
-		animation[BACK_RIGHT].resource.Load(L"enemy_shotgun_back.png");
-		animation[BACK_LEFT].resource.Load(L"enemy_shotgun_back.png");
-		for (int i = 0; i < 6; i++) {
-			animation[i].frame = 2;
-			animation[i].size = { 0,0,animation[i].resource.GetWidth() / animation[i].frame,animation[i].resource.GetHeight() };
-		}
-		break;
-	case STATE_RUN:
-		animation[FRONT].resource.Load(L"enemy_shotgun_run_front.png");
-		animation[FRONT_RIGHT].resource.Load(L"enemy_shotgun_run_right.png");
-		animation[FRONT_LEFT].resource.Load(L"enemy_shotgun_run_left.png");
-		animation[BACK].resource.Load(L"enemy_shotgun_run_back.png");
-		animation[BACK_RIGHT].resource.Load(L"enemy_shotgun_run_back.png");
-		animation[BACK_LEFT].resource.Load(L"enemy_shotgun_run_back.png");
-		for (int i = 0; i < 6; i++) {
-			animation[i].frame = 6;
-			animation[i].size = { 0,0,animation[i].resource.GetWidth() / animation[i].frame,animation[i].resource.GetHeight() };
-		}
-		break;
-	case STATE_DAMAGED:
-		animation[FRONT].resource.Load(L"enemy_shotgun_damaged_front.png");
-		animation[FRONT_RIGHT].resource.Load(L"enemy_shotgun_damaged_right.png");
-		animation[FRONT_LEFT].resource.Load(L"enemy_shotgun_damaged_left.png");
-		animation[BACK].resource.Load(L"enemy_shotgun_damaged_front.png");
-		animation[BACK_RIGHT].resource.Load(L"enemy_shotgun_damaged_right.png");
-		animation[BACK_LEFT].resource.Load(L"enemy_shotgun_damaged_left.png");
-		for (int i = 0; i < 6; i++) {
-			animation[i].frame = 2;
-			animation[i].size = { 0,0,animation[i].resource.GetWidth() / animation[i].frame,animation[i].resource.GetHeight() };
-		}
-		break;
-	case STATE_DEAD:
-		animation[FRONT].resource.Load(L"enemy_shotgun_dead.png");
-		animation[FRONT_RIGHT].resource.Load(L"enemy_shotgun_dead.png");
-		animation[FRONT_LEFT].resource.Load(L"enemy_shotgun_dead.png");
-		animation[BACK].resource.Load(L"enemy_shotgun_dead.png");
-		animation[BACK_RIGHT].resource.Load(L"enemy_shotgun_dead.png");
-		animation[BACK_LEFT].resource.Load(L"enemy_shotgun_dead.png");
-		for (int i = 0; i < 6; i++) {
-			animation[i].frame = 3;
-			animation[i].size = { 0,0,animation[i].resource.GetWidth() / animation[i].frame,animation[i].resource.GetHeight() };
-		}
-		break;
-	default:
-		break;
 	}
 }
 
@@ -225,11 +215,6 @@ void ShotgunMan::attack()
 	weapon->attack(handPos, target->GetPos(), enemyBullet);
 }
 
-void ShotgunMan::DestroyImage()
-{
-	for (int i = 0; i < 6; i++)
-		animation[i].resource.Destroy();
-}
 
 void ShotgunMan::handle_collision(int otherLayer, int damage)
 {
@@ -278,8 +263,6 @@ void ShotgunMan::handle_collision(int otherLayer, int damage)
 			this->col = nullptr;
 		}
 		else state = STATE_DAMAGED;
-		DestroyImage();
-		SetImage(state);
 		frame = 0;
 		break;
 	case playerBullet:
@@ -307,8 +290,6 @@ void ShotgunMan::handle_collision(int otherLayer, int damage)
 			this->col = nullptr;
 		}
 		else state = STATE_DAMAGED;
-		DestroyImage();
-		SetImage(state);
 		frame = 0;
 		break;
 	default:

@@ -30,9 +30,7 @@ public:
 	virtual void handle_event() = 0;
 	virtual void update() = 0;
 	virtual void attack()=0;
-	virtual void SetImage(int state) = 0;
 	virtual void SetDirection() = 0;
-	virtual void DestroyImage() = 0;
 	void SetPos(Vector2D<float> temp) { pos = temp; }
 	Vector2D<float> GetPos() const { return pos; }
 	void SetDir(Vector2D<float> temp) { dir = temp; }
