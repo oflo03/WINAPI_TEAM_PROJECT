@@ -17,6 +17,9 @@ void PrintMap(HDC mDC);
 
 std::vector<Collider*> COLL;
 std::vector<Bullet*> Bullets;
+extern Vector2D<float> monitorSize;
+extern Vector2D<float> camSize;
+Vector2D<float> camPos;
 
 bool lookRange;
 
@@ -62,13 +65,20 @@ void PlayState::handle_events()
 
 void PlayState::draw()
 {
-	PrintMap(mDC);
+	HDC mapDC = CreateCompatibleDC(mDC);
+	HBITMAP mapbitmap = CreateCompatibleBitmap(mDC, monitorSize.x, monitorSize.y);
+	SelectObject(mapDC, mapbitmap);
+	PrintMap(mapDC);
 	for (auto& B : Bullets)
-		B->draw_bullet(mDC);
-	Player::getInstance(1)->draw_character(mDC);
-	EnemyManager::getInstance()->draw(mDC);
+		B->draw_bullet(mapDC);
+	Player::getInstance(1)->draw_character(mapDC);
+	EnemyManager::getInstance()->draw(mapDC);
 	if (lookRange)
 		for (auto& c : COLL)
-			c->draw_range(mDC);
-	EffectManager::getInstance()->Draw(mDC);
+			c->draw_range(mapDC);
+	EffectManager::getInstance()->Draw(mapDC);
+	StretchBlt(mDC, 0, 0, screen.right, screen.bottom,
+		mapDC, camPos.x - camSize.x, camPos.y - camSize.y, camSize.x * 2, camSize.y * 2, SRCCOPY);
+	DeleteObject(mapbitmap);
+	DeleteDC(mapDC);
 }

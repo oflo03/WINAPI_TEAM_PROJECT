@@ -3,8 +3,10 @@
 #include "Marin.h"
 
 extern double frame_time;
+extern Vector2D<float> camPos;
+extern Vector2D<float> monitorSize;
 
-Marin::Marin(float x, float y) : Player(x,y)
+Marin::Marin(float x, float y) : Player(x, y)
 {
 	state = new IdleState;
 	hand.Load(L"Marin_hand.png");
@@ -72,7 +74,7 @@ void Marin::draw_character(HDC mDC)
 	}
 	bool isRolling = col->layer == rolled_player;
 	float yDest = pos.y - (animation[direction].size.bottom - 20) * 2;
-	shadow[isRolling].Draw(mDC, pos.x - shadow[isRolling].GetWidth(), pos.y+ col->size.y - 2 - shadow[isRolling].GetHeight(), shadow[isRolling].GetWidth() * 2, shadow[isRolling].GetHeight() * 2);
+	shadow[isRolling].Draw(mDC, pos.x - shadow[isRolling].GetWidth(), pos.y + col->size.y - 2 - shadow[isRolling].GetHeight(), shadow[isRolling].GetWidth() * 2, shadow[isRolling].GetHeight() * 2);
 	if (direction == FRONT || direction == FRONT_RIGHT || direction == FRONT_LEFT) {
 		animation[direction].resource.Draw(mDC, pos.x - animation[direction].size.right, yDest - 20, animation[direction].size.right * 2, animation[direction].size.bottom * 2,
 			(int)frame * animation[direction].size.right, 0, animation[direction].size.right, animation[direction].size.bottom
@@ -82,7 +84,8 @@ void Marin::draw_character(HDC mDC)
 			hand.Draw(mDC, handPos.x - hand.GetWidth(), handPos.y - hand.GetHeight(), hand.GetWidth() * 2, hand.GetHeight() * 2);
 		}
 		else
-		{ }
+		{
+		}
 	}
 	else {
 		if (!isRolling) {
@@ -115,11 +118,14 @@ void Marin::update()
 	GetCursorPos(&temp);
 	mPos.x = temp.x;
 	mPos.y = temp.y;
+	mPos -= monitorSize / 2;
+	mPos /= 2;
+	mPos += camPos;
 	lastPos = pos;
 	state->update(*this);
-	if (col->layer==player)
-		frame = (frame + frame_time *1.5* animation[direction].frame);
-	else 
+	if (col->layer == player)
+		frame = (frame + frame_time * 1.5 * animation[direction].frame);
+	else
 		frame = (frame + frame_time * 2 * animation[direction].frame);
 	if (frame >= animation[direction].frame) frame = 0;
 	for (auto& W : myWeapons)
@@ -127,6 +133,7 @@ void Marin::update()
 	if (myWeapons[selectedWeapon]->IsRunOut())
 		SetWeapon(SWORD);
 	col->pos = pos;
+	camPos = pos + (mPos - pos) / 4;
 }
 
 void Marin::SetImage(int state)
