@@ -77,6 +77,9 @@
     <ClCompile Include="PatternA.cpp">
       <Filter>Enemy\Boss</Filter>
     </ClCompile>
+    <ClCompile Include="PatternB.cpp">
+      <Filter>Enemy\Boss</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IdleState.h">
@@ -170,6 +173,9 @@
       <Filter>Enemy\Boss</Filter>
     </ClInclude>
     <ClInclude Include="PatternA.h">
+      <Filter>Enemy\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="PatternB.h">
       <Filter>Enemy\Boss</Filter>
     </ClInclude>
   </ItemGroup>

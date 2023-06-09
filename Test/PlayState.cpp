@@ -3,6 +3,7 @@
 #include"EffectManager.h"
 #include"Player.h"
 #include"DropItem.h"
+#include"Boss.h"
 
 extern HDC mDC;
 std::random_device rd;
@@ -29,11 +30,11 @@ bool lookRange;
 PlayState::PlayState() : GameState()	// 모든 스테이트 시작 전에 콜라이더 벡터 초기화 하는거 넣어줘요 - 병욱
 {
 	Player::init();
-	EnemyManager::getInstance()->init(7);
+	EnemyManager::getInstance()->init(8);
 	EffectManager::init();
 	Bullet::init();
 	DropItem::init();
-	LoadTileMap(3);
+	LoadTileMap(4);
 	//PlaySound(L"BGM_PlayState.wav", NULL, SND_ASYNC | SND_LOOP);
 }
 
@@ -49,6 +50,7 @@ void PlayState::update()
 		d->update();
 	Player::getInstance(1)->update();
 	EnemyManager::getInstance()->update();
+	Boss::getInstance()->update();
 	for (auto& B : Bullets)
 		B->update();
 	EffectManager::getInstance()->update();
@@ -67,6 +69,7 @@ void PlayState::handle_events()
 	}
 	EnemyManager::getInstance()->handle_event();
 	Player::getInstance(1)->handle_event();
+	Boss::getInstance()->handle_event();
 }
 
 
@@ -81,6 +84,7 @@ void PlayState::draw()
 		d->Draw(mapDC);
 	EnemyManager::getInstance()->draw(mapDC);
 	Player::getInstance(1)->draw_character(mapDC);
+	Boss::getInstance()->draw(mapDC);
 	for (auto& B : Bullets)
 		B->draw_bullet(mapDC);
 	if (lookRange)
