@@ -10,7 +10,6 @@
 class PlayerState;
 class Marin;
 
-const int playerhp[] = { 6,30,30,50,15 };
 extern Vector2D<float> camPos;
 extern Vector2D<float> monitorSize;
 
@@ -20,11 +19,12 @@ class Player
 private:
 	static Player* instance;
 protected:
-	Player(float x, float y) : pos(x, y), dir(0, 0), frame(0), angle(90), direction(FRONT), state(nullptr), selectedWeapon(SWORD), velocity(200),curstate(STATE_IDLE) {}
-	Player() : pos(960, 1000), dir(0, 0), frame(0), angle(90), direction(FRONT), state(nullptr), selectedWeapon(SWORD), velocity(200), curstate(STATE_IDLE) {}
+	Player(float x, float y) : pos(x, y), dir(0, 0), frame(0), damageCnt(0), angle(90), direction(FRONT), state(nullptr), selectedWeapon(SWORD), velocity(200), hp(6), curstate(STATE_IDLE) {}
+	Player() : pos(960, 1000), dir(0, 0), frame(0), damageCnt(0), angle(90), direction(FRONT), state(nullptr), selectedWeapon(SWORD), velocity(200), hp(6), curstate(STATE_IDLE) {}
 	CImage hand;
 	CImage shadow[2];
 	float frame;
+	float damageCnt;
 	float angle;
 	Vector2D<float> pos;
 	Vector2D<float> lastPos;
@@ -56,10 +56,13 @@ public:
 	double GetVelocity() { return velocity; };
 	void SetDirection(int direction) { this->direction = direction; }
 	bool GetIfRoll();
+	int GetWeaponCurAmmo() { return myWeapons[selectedWeapon]->GetCurAmmo(); }
+	int GetWeaponMaxAmmo() { return myWeapons[selectedWeapon]->GetMaxAmmo(); }
 	int GetWeapon() { return selectedWeapon; }
+	int GetHP() { return hp; }
 	void SetWeaponTime(int t) { myWeapons[selectedWeapon]->SetCurTime(t); }
 	void SetWeapon(int type) { if (!myWeapons[type]->IsRunOut()) selectedWeapon = type, myWeapons[selectedWeapon]->SetCurTime(cooltime[type] - 3); }
-	void SetWeaponUp() { do selectedWeapon += 5, selectedWeapon %= 6; while (myWeapons[selectedWeapon]->IsRunOut()); }
-	void SetWeaponDown() { do selectedWeapon += 1, selectedWeapon %= 6; while (myWeapons[selectedWeapon]->IsRunOut()); }
+	void SetWeaponUp() { do selectedWeapon += 4, selectedWeapon %= 5; while (myWeapons[selectedWeapon]->IsRunOut()); }
+	void SetWeaponDown() { do selectedWeapon += 1, selectedWeapon %= 5; while (myWeapons[selectedWeapon]->IsRunOut()); }
 	void SetCurState(int state) { curstate = state; }
 };

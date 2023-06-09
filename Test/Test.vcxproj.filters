@@ -77,6 +77,9 @@
     <ClCompile Include="PatternA.cpp">
       <Filter>Enemy\Boss</Filter>
     </ClCompile>
+    <ClCompile Include="UI.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
     <ClCompile Include="PatternB.cpp">
       <Filter>Enemy\Boss</Filter>
     </ClCompile>
@@ -175,6 +178,9 @@
     <ClInclude Include="PatternA.h">
       <Filter>Enemy\Boss</Filter>
     </ClInclude>
+    <ClInclude Include="UI.h">
+      <Filter>UI</Filter>
+    </ClInclude>
     <ClInclude Include="PatternB.h">
       <Filter>Enemy\Boss</Filter>
     </ClInclude>
@@ -209,6 +215,9 @@
     </Filter>
     <Filter Include="Enemy\Boss">
       <UniqueIdentifier>{d1b4f441-90c4-4280-9018-f880bba6ab05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI">
+      <UniqueIdentifier>{0fae3807-f7bc-4d12-852a-31659b10434e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

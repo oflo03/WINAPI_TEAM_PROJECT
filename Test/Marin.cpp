@@ -90,9 +90,10 @@ void Marin::draw_character(HDC mDC)
 	float yDest = pos.y - (animation[curstate][direction].size.bottom - 20) * 2;
 	shadow[isRolling].Draw(mDC, pos.x - shadow[isRolling].GetWidth(), pos.y + col->size.y - 2 - shadow[isRolling].GetHeight(), shadow[isRolling].GetWidth() * 2, shadow[isRolling].GetHeight() * 2);
 	if (direction == FRONT || direction == FRONT_RIGHT || direction == FRONT_LEFT) {
-		animation[curstate][direction].resource.Draw(mDC, pos.x - animation[curstate][direction].size.right, yDest - 20, animation[curstate][direction].size.right * 2, animation[curstate][direction].size.bottom * 2,
-			(int)frame * animation[curstate][direction].size.right, 0, animation[curstate][direction].size.right, animation[curstate][direction].size.bottom
-		);
+		if (col->layer != damaged_player || (int)(damageCnt / 0.5) % 2)
+			animation[curstate][direction].resource.Draw(mDC, pos.x - animation[curstate][direction].size.right, yDest - 20, animation[curstate][direction].size.right * 2, animation[curstate][direction].size.bottom * 2,
+				(int)frame * animation[curstate][direction].size.right, 0, animation[curstate][direction].size.right, animation[curstate][direction].size.bottom
+			);
 		if (!isRolling) {
 			myWeapons[selectedWeapon]->draw_weapon(mDC, handPos, mPos);
 			hand.Draw(mDC, handPos.x - hand.GetWidth(), handPos.y - hand.GetHeight(), hand.GetWidth() * 2, hand.GetHeight() * 2);
@@ -106,9 +107,10 @@ void Marin::draw_character(HDC mDC)
 			myWeapons[selectedWeapon]->draw_weapon(mDC, handPos, mPos);
 			hand.Draw(mDC, handPos.x - hand.GetWidth(), handPos.y - hand.GetHeight(), hand.GetWidth() * 2, hand.GetHeight() * 2);
 		}
-		animation[curstate][direction].resource.Draw(mDC, pos.x - animation[curstate][direction].size.right, yDest - 20, animation[curstate][direction].size.right * 2, animation[curstate][direction].size.bottom * 2,
-			(int)frame * animation[curstate][direction].size.right, 0, animation[curstate][direction].size.right, animation[curstate][direction].size.bottom
-		);
+		if (col->layer != damaged_player || (int)(damageCnt / 0.5) % 2)
+			animation[curstate][direction].resource.Draw(mDC, pos.x - animation[curstate][direction].size.right, yDest - 20, animation[curstate][direction].size.right * 2, animation[curstate][direction].size.bottom * 2,
+				(int)frame * animation[curstate][direction].size.right, 0, animation[curstate][direction].size.right, animation[curstate][direction].size.bottom
+			);
 	}
 }
 
@@ -138,6 +140,8 @@ void Marin::update()
 	state->update(*this);
 	frame = (frame + frame_time * animation[curstate][direction].velocity * animation[curstate][direction].frame);
 	if (frame >= animation[curstate][direction].frame) frame = 0;
+	if (damageCnt > 0)damageCnt -= 0.1;
+	if (col->layer == damaged_player && (int)damageCnt == 0) col->layer = player;
 	myWeapons[selectedWeapon]->update();
 	if (myWeapons[selectedWeapon]->GetShotTime() == 0 && myWeapons[selectedWeapon]->IsRunOut())
 		SetWeapon(SWORD);
@@ -148,6 +152,12 @@ void Marin::update()
 		t.Normalize();
 		t.Rotate(180);
 		camPos += t * rebound[selectedWeapon] * (myWeapons[selectedWeapon]->GetCurTime() % 2 ? 1 : -1);
+	}
+	if (damageCnt > 8) {
+		Vector2D<float> t = mPos - pos;
+		t.Normalize();
+		t.Rotate(180);
+		camPos += t * 10 * ((int)(damageCnt / 0.5) % 2 ? 1 : -1);
 	}
 }
 
@@ -190,7 +200,12 @@ void Marin::handle_collision(int otherLayer, int damage)
 		break;
 	case enemy:
 		if (col->layer == player)
+		{
 			pos -= dir;
+			--hp;
+			col->layer = damaged_player;
+			damageCnt = 10.0;
+		}
 		else
 			pos = lastPos;
 		lastPos = pos;
@@ -198,6 +213,12 @@ void Marin::handle_collision(int otherLayer, int damage)
 		break;
 	case enemyBullet:
 		EffectManager::getInstance()->set_effect(new Effect(CEffect::DAMAGED, col->pos));
+		if (col->layer == player)
+		{
+			--hp;
+			col->layer = damaged_player;
+			damageCnt = 10.0;
+		}
 		break;
 	case dropitem:
 		myWeapons[damage + 1]->ReLoad();

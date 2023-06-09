@@ -13,6 +13,7 @@ PlayerState* RollState::handle_event(Player& player)
 	if ((int)rollingTime == 9)
 	{
 		player.SetWeaponTime(10);
+		player.col->layer = 1;
 		return new IdleState;
 	}
 	return nullptr;
