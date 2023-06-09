@@ -12,7 +12,7 @@ enum ID // 아이템 추가할 때 여기 ID명 작성
 	, ROCKET	// rocket launcher
 };
 
-const int cooltime[]{ 30,15,7,30,10 };
+const int cooltime[]{ 30,15,7,30,50 };
 const int rebound[]{ 8,15,5,20,10 };
 
 class Item

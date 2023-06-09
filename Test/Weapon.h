@@ -33,6 +33,7 @@ public:
 	void Enemy() { maxAmmo /= 3, ReLoad(); };
 	void SetCurTime(int t) { curTime = t; }
 	int GetCurTime() { return curTime; }
+	int GetShotTime() { return shotTime; }
 	bool IsReBound() { return (coolTime - curTime < 3); }
 	bool IsRunOut() { return (curAmmo == 0); }
 	virtual void draw_weapon(HDC mDC, const Vector2D<float>& center, const Vector2D<float>& mPos) {
@@ -137,6 +138,21 @@ public:
 		reverseResource[0].Load(L"Item_Weapon_Shotgun_Reverse.png");
 		resource[1].Load(L"Item_Weapon_Shotgun2.png");
 		reverseResource[1].Load(L"Item_Weapon_Shotgun_Reverse2.png");
+	}
+	virtual void update();
+	virtual void attack(const Vector2D<float>& center, const Vector2D<float>& mPos, int side);
+};
+
+class Rocket :public Weapon
+{
+public:
+	Rocket() :Weapon() {
+		coolTime = cooltime[ROCKET];
+		curAmmo = maxAmmo = 1;
+		resource[0].Load(L"Item_Weapon_Rocket.png");
+		reverseResource[0].Load(L"Item_Weapon_Rocket_Reverse.png");
+		resource[1].Load(L"Item_Weapon_Rocket2.png");
+		reverseResource[1].Load(L"Item_Weapon_Rocket_Reverse2.png");
 	}
 	virtual void update();
 	virtual void attack(const Vector2D<float>& center, const Vector2D<float>& mPos, int side);

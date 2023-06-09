@@ -11,7 +11,11 @@ Player* Player::getInstance(int character) {
 		switch (character)
 		{
 		case 1:
-			instance = new Marin(400,300);
+			instance = new Marin(960, 256);
+			//instance = new Marin(224, 256);		//	1스테이지 소환 좌표
+			// instance = new Marin(960, 256);		2스테이지 소환 좌표
+			// instance = new Marin(224, 640);		3스테이지 소환 좌표
+			// instance = new Marin(960, 1000);		4스테이지 소환 좌표
 			break;
 		case 2:
 			break;
