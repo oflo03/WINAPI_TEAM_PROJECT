@@ -59,7 +59,7 @@ Marin::Marin(float x, float y) : Player(x, y)
 	myWeapons.emplace_back(new Pistol);
 	myWeapons.emplace_back(new Rifle);
 	myWeapons.emplace_back(new Shotgun);
-	myWeapons.emplace_back(new Shotgun);
+	myWeapons.emplace_back(new Rocket);
 }
 
 Marin::~Marin()
@@ -138,9 +138,8 @@ void Marin::update()
 	state->update(*this);
 	frame = (frame + frame_time * animation[curstate][direction].velocity * animation[curstate][direction].frame);
 	if (frame >= animation[curstate][direction].frame) frame = 0;
-	for (auto& W : myWeapons)
-		W->update();
-	if (myWeapons[selectedWeapon]->IsRunOut())
+	myWeapons[selectedWeapon]->update();
+	if (myWeapons[selectedWeapon]->GetShotTime() == 0 && myWeapons[selectedWeapon]->IsRunOut())
 		SetWeapon(SWORD);
 	col->pos = pos;
 	camPos = pos + (mPos - pos) / 4;
@@ -190,9 +189,9 @@ void Marin::handle_collision(int otherLayer, int damage)
 		col->pos = pos;
 		break;
 	case enemy:
-		if(col->layer==player)
+		if (col->layer == player)
 			pos -= dir;
-		else 
+		else
 			pos = lastPos;
 		lastPos = pos;
 		col->pos = pos;
@@ -201,7 +200,7 @@ void Marin::handle_collision(int otherLayer, int damage)
 		EffectManager::getInstance()->set_effect(new Effect(CEffect::DAMAGED, col->pos));
 		break;
 	case dropitem:
-		myWeapons[damage+1]->ReLoad();
+		myWeapons[damage + 1]->ReLoad();
 		selectedWeapon = damage + 1;
 		break;
 	default:

@@ -32,15 +32,62 @@ void EnemyManager::init(int stage)
 	switch (stage)
 	{
 	case 1:
-		enemy.emplace_back(new PistolMan(300, 500, player));
-		enemy.emplace_back(new RifleMan(350, 500, player));
-		enemy.emplace_back(new ShotgunMan(350, 500, player));
-		enemy.emplace_back(new Bat(400, 500, player));
-		enemy.emplace_back(new Bombshe(400, 600, player));
+		enemy.emplace_back(new PistolMan(300, 400, Player::getInstance(1)));
+		enemy.emplace_back(new PistolMan(1000, 400, Player::getInstance(1)));
+		enemy.emplace_back(new PistolMan(1800, 400, Player::getInstance(1)));
 		break;
 	case 2:
+		enemy.emplace_back(new PistolMan(300, 400, Player::getInstance(1)));
+		enemy.emplace_back(new PistolMan(1000, 400, Player::getInstance(1)));
+		enemy.emplace_back(new PistolMan(1800, 400, Player::getInstance(1)));
+		enemy.emplace_back(new PistolMan(300, 900, Player::getInstance(1)));
+		enemy.emplace_back(new PistolMan(1000, 900, Player::getInstance(1)));
+		enemy.emplace_back(new PistolMan(1800, 900, Player::getInstance(1)));
 		break;
 	case 3:
+		enemy.emplace_back(new RifleMan(300, 400, Player::getInstance(1)));
+		enemy.emplace_back(new PistolMan(1000, 400, Player::getInstance(1)));
+		enemy.emplace_back(new PistolMan(1800, 400, Player::getInstance(1)));
+		enemy.emplace_back(new PistolMan(300, 900, Player::getInstance(1)));
+		enemy.emplace_back(new PistolMan(1000, 900, Player::getInstance(1)));
+		enemy.emplace_back(new RifleMan(1800, 900, Player::getInstance(1)));
+		break;
+	case 4:
+		enemy.emplace_back(new PistolMan(600, 200, Player::getInstance(1)));
+		enemy.emplace_back(new PistolMan(1500, 200, Player::getInstance(1)));
+		enemy.emplace_back(new RifleMan(300, 600, Player::getInstance(1)));
+		enemy.emplace_back(new RifleMan(1800, 600, Player::getInstance(1)));
+		enemy.emplace_back(new ShotgunMan(960, 1000, Player::getInstance(1)));
+		break;
+	case 5:
+		enemy.emplace_back(new Bat(300, 200, Player::getInstance(1)));
+		enemy.emplace_back(new Bat(1600, 200, Player::getInstance(1)));
+		enemy.emplace_back(new Bat(600, 600, Player::getInstance(1)));
+		enemy.emplace_back(new Bat(1500, 600, Player::getInstance(1)));
+		break;
+	case 6:
+		enemy.emplace_back(new ShotgunMan(600, 200, Player::getInstance(1)));
+		enemy.emplace_back(new ShotgunMan(1300, 200, Player::getInstance(1)));
+		enemy.emplace_back(new Bat(300, 600, Player::getInstance(1)));
+		enemy.emplace_back(new Bat(1800, 600, Player::getInstance(1)));
+		enemy.emplace_back(new ShotgunMan(100, 800, Player::getInstance(1)));
+		enemy.emplace_back(new ShotgunMan(1850, 800, Player::getInstance(1)));
+		enemy.emplace_back(new Bat(300, 1000, Player::getInstance(1)));
+		enemy.emplace_back(new Bat(1800, 1000, Player::getInstance(1)));
+		break;
+	case 7:
+		enemy.emplace_back(new Bombshe(400, 600, Player::getInstance(1)));
+		enemy.emplace_back(new Bombshe(1500, 600, Player::getInstance(1)));
+		enemy.emplace_back(new PistolMan(800, 300, Player::getInstance(1)));
+		enemy.emplace_back(new PistolMan(1000, 300, Player::getInstance(1)));
+		enemy.emplace_back(new RifleMan(800, 800, Player::getInstance(1)));
+		enemy.emplace_back(new RifleMan(1000, 800, Player::getInstance(1)));
+		break;
+	case 8:
+		break;
+	case 9:
+		break;
+	case 10:
 		break;
 	default:
 		break;

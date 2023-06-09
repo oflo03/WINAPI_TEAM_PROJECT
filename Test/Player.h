@@ -21,7 +21,7 @@ private:
 	static Player* instance;
 protected:
 	Player(float x, float y) : pos(x, y), dir(0, 0), frame(0), angle(90), direction(FRONT), state(nullptr), selectedWeapon(SWORD), velocity(200),curstate(STATE_IDLE) {}
-	Player() : pos(monitorSize.x / 2, monitorSize.y - 80), dir(0, 0), frame(0), angle(90), direction(FRONT), state(nullptr), selectedWeapon(SWORD), velocity(200), curstate(STATE_IDLE) {}
+	Player() : pos(960, 1000), dir(0, 0), frame(0), angle(90), direction(FRONT), state(nullptr), selectedWeapon(SWORD), velocity(200), curstate(STATE_IDLE) {}
 	CImage hand;
 	CImage shadow[2];
 	float frame;

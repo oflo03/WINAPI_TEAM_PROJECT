@@ -1,4 +1,5 @@
 #include"Weapon.h"
+#include"Player.h"
 
 extern double frame_time;
 extern bool lookRange;
@@ -13,7 +14,7 @@ void Sword::update()
 		frame = (frame + frame_time * 4 * slash.frame);
 		if (frame >= slash.frame) frame = 0;
 	}
-	if (frame > 4&& frame < 5)
+	if (frame > 4 && frame < 5)
 	{
 		Vector2D<float> mPos(cos(-angle * M_PI / 180) * attackRange, sin(-angle * M_PI / 180) * attackRange);
 		mPos += centerPos;
@@ -173,11 +174,31 @@ void Shotgun::attack(const Vector2D<float>& hand, const Vector2D<float>& mPos, i
 		t.Rotate(-10);
 		for (int i = 0; i < 5; ++i)
 		{
-			Bullets.emplace_back(new Bullet(BSHOTGUN,side,  hand + Vector2D<float>(t.x * 30, t.y * 30 - 10), t * 10));
+			Bullets.emplace_back(new Bullet(BSHOTGUN, side, hand + Vector2D<float>(t.x * 30, t.y * 30 - 10), t * 10));
 			t.Rotate(5);
 		}
 		curTime = coolTime;
 		shotTime = 7;
+		curAmmo--;
+	}
+}
+
+void Rocket::update()
+{
+	if (curTime)
+		--curTime;
+	if (shotTime)
+		shotTime--;
+}
+void Rocket::attack(const Vector2D<float>& hand, const Vector2D<float>& mPos, int side)
+{
+	if (!curTime && curAmmo > 0)
+	{
+		Vector2D<float> t = Vector2D<float>(mPos.x - hand.x, mPos.y - hand.y);
+		t /= t.GetLenth();
+		Bullets.emplace_back(new Bullet(BSHOTGUN, side, hand + Vector2D<float>(t.x * 30, t.y * 30 - 10), t * 10));
+		curTime = coolTime;
+		shotTime = 30;
 		curAmmo--;
 	}
 }

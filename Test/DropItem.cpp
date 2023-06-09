@@ -16,21 +16,21 @@ void DropItem::init()
 
 void DropItem::update()
 {
-	pos.y += std::sin(xDir/3.14)/3;
+	pos.y += std::sin(xDir / 3.14) / 3;
 	xDir += 0.1;
 	col->pos = pos;
 }
 
 void DropItem::Draw(HDC mDC)
 {
-	int width = image[type].GetWidth()*2;
-	int height = image[type].GetHeight()*2;
+	int width = image[type].GetWidth() * 2;
+	int height = image[type].GetHeight() * 2;
 	image[type].Draw(mDC, pos.x - width / 2, pos.y - height / 2, width, height);
 }
 
 void DropItem::handle_collision(int otherLayer, int damage)
 {
-	if (otherLayer == player) {
+	if (otherLayer == player || otherLayer == rolled_player) {
 		for (auto i = COLL.begin(); i != COLL.end(); ++i)
 			if (COLL[i - COLL.begin()] == this->col)
 			{
