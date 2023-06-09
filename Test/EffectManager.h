@@ -15,6 +15,7 @@ private:
 	}
 public:
 	static EffectManager* getInstance();
+	static void init();
 	static void Destroy();
 	void Draw(HDC mDC);
 	void update();

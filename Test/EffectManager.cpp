@@ -7,6 +7,11 @@ EffectManager* EffectManager::getInstance()
     return instance;
 }
 
+void EffectManager::init()
+{
+    Effect::init();
+}
+
 void EffectManager::Destroy()
 {
    if(instance!=nullptr)

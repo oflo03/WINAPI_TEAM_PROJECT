@@ -2,32 +2,31 @@
 #include"Animation.h"
 #include"Master.h"
 
-class DropItem
+enum DROP
+{
+	DPISTOL,
+	DRIFLE,
+	DSHOTGUN
+};
+
+class DropItem : public Master
 {
 private:
+	static CImage image[3];
 	int type;
-	CImage image;
 	Vector2D<float> pos;
 	float xDir;
 public:
-	DropItem(int type, Vector2D<float> pos) : type(type),pos(pos),xDir(0)
-	{
-		/*switch (type)
-		{
-		case PISTOL:
-			image.Load(L"drop_pistol.png");
-			break;
-		case RIFLE:
-			image.Load(L"drop_rifle.png");
-			break;
-		case SHOTGUN:
-			image.Load(L"drop_shotgun.png");
-			break;
-		default:
-			break;
-		}*/
+	DropItem(int type, Vector2D<float> pos) : type(type),pos(pos),xDir(0){
+		col = new Collider(Vector2D<float>(image[type].GetWidth(), image[type].GetHeight()));
+		col->layer = dropitem;
+		col->owner = this;
+		col->pos = pos;
+		col->damage = type;
+		COLL.emplace_back(col);
 	}
-	~DropItem() { image.Destroy(); }
+	~DropItem() { }
+	static void init();
 	void update();
 	void Draw(HDC mDC);
 	virtual void handle_collision(int otherLayer, int damage);

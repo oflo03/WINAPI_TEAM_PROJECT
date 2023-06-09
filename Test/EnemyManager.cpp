@@ -28,14 +28,15 @@ void EnemyManager::init(int stage)
 	ShotgunMan::init();
 	Bat::init();
 	Bombshe::init();
+	Player* player = Player::getInstance(1);
 	switch (stage)
 	{
 	case 1:
-		enemy.emplace_back(new PistolMan(300, 400, Player::getInstance(1)));
-		enemy.emplace_back(new RifleMan(350, 400, Player::getInstance(1)));
-		enemy.emplace_back(new ShotgunMan(350, 500, Player::getInstance(1)));
-		enemy.emplace_back(new Bat(400, 500, Player::getInstance(1)));
-		enemy.emplace_back(new Bombshe(400, 500, Player::getInstance(1)));
+		enemy.emplace_back(new PistolMan(300, 500, player));
+		enemy.emplace_back(new RifleMan(350, 500, player));
+		enemy.emplace_back(new ShotgunMan(350, 500, player));
+		enemy.emplace_back(new Bat(400, 500, player));
+		enemy.emplace_back(new Bombshe(400, 500, player));
 		break;
 	case 2:
 		break;

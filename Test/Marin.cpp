@@ -17,6 +17,7 @@ void Marin::init() {
 	for (int i = 0; i < 6; i++) {
 		animation[STATE_IDLE][i].frame = 4;
 		animation[STATE_IDLE][i].size = { 0,0,animation[STATE_IDLE][i].resource.GetWidth() / animation[STATE_IDLE][i].frame,animation[STATE_IDLE][i].resource.GetHeight() };
+		animation[STATE_IDLE][i].velocity = 1.5;
 	}
 	animation[STATE_RUN][FRONT].resource.Load(L"Marin_run_front.png");
 	animation[STATE_RUN][FRONT_RIGHT].resource.Load(L"Marin_run_front_right.png");
@@ -27,6 +28,7 @@ void Marin::init() {
 	for (int i = 0; i < 6; i++) {
 		animation[STATE_RUN][i].frame = 6;
 		animation[STATE_RUN][i].size = { 0,0,animation[STATE_RUN][i].resource.GetWidth() / animation[STATE_RUN][i].frame,animation[STATE_RUN][i].resource.GetHeight() };
+		animation[STATE_RUN][i].velocity = 1.5;
 	}
 	animation[STATE_ROLL][FRONT].resource.Load(L"Marin_roll_front.png");
 	animation[STATE_ROLL][FRONT_RIGHT].resource.Load(L"Marin_roll_front_right.png");
@@ -37,6 +39,7 @@ void Marin::init() {
 	for (int i = 0; i < 6; i++) {
 		animation[STATE_ROLL][i].frame = 9;
 		animation[STATE_ROLL][i].size = { 0,0,animation[STATE_ROLL][i].resource.GetWidth() / animation[STATE_ROLL][i].frame,animation[STATE_ROLL][i].resource.GetHeight() };
+		animation[STATE_ROLL][i].velocity = 2;
 	}
 }
 
@@ -133,10 +136,7 @@ void Marin::update()
 	mPos += camPos;
 	lastPos = pos;
 	state->update(*this);
-	if (col->layer == player)
-		frame = (frame + frame_time * 1.5 * animation[curstate][direction].frame);
-	else
-		frame = (frame + frame_time * 2 * animation[curstate][direction].frame);
+	frame = (frame + frame_time * animation[curstate][direction].velocity * animation[curstate][direction].frame);
 	if (frame >= animation[curstate][direction].frame) frame = 0;
 	for (auto& W : myWeapons)
 		W->update();
@@ -191,14 +191,18 @@ void Marin::handle_collision(int otherLayer, int damage)
 		break;
 	case enemy:
 		if(col->layer==player)
-			pos -= dir * 5;
+			pos -= dir;
 		else 
 			pos = lastPos;
 		lastPos = pos;
 		col->pos = pos;
 		break;
 	case enemyBullet:
-		EffectManager::getInstance()->set_effect(new Effect(L"player_damaged.png", col->pos = pos, 3, 5));
+		EffectManager::getInstance()->set_effect(new Effect(CEffect::DAMAGED, col->pos));
+		break;
+	case dropitem:
+		myWeapons[damage+1]->ReLoad();
+		selectedWeapon = damage + 1;
 		break;
 	default:
 		break;

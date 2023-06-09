@@ -5,18 +5,35 @@
 
 extern double frame_time;
 
+enum CEffect {
+	PISTOLBULLET,
+	RIFLEBULLET,
+	SHOTGUNBULLET,
+	ENEMYBULLET,
+	BOUNCEBULLET,
+	SWORDATTACK,
+	BOMBSHE1,
+	BOMBSHE2,
+	BATDIE,
+	BOMBSHEDIE,
+	SHOTGUNDIE,
+	DAMAGED
+	//이펙트 추가는 여기서
+};
+
 class Effect {
 public:
-	Animation effect;
+	static Animation effect[12];
+	int type;
 	float time;
 	Vector2D<float> pos;
-	int velocity;
-	Effect(std::wstring name, Vector2D<float> pos, int velocity, int frame);
-	~Effect() { effect.resource.Destroy(); }
+	Effect(const CEffect& type, Vector2D<float> pos) : type(type), pos(pos), time(0) {}
+	~Effect() {  }
+	static void init();
 	void Draw(HDC mDC);
 	void update();
 	bool TimeOver() const {
-		return ((int)time == effect.frame);
+		return ((int)time == effect[type].frame);
 	}
 };
 

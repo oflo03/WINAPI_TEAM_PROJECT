@@ -1,68 +1,72 @@
 #include"Bullet.h"
 #include"EffectManager.h"
+#include"Player.h"
 
 extern double frame_time;
 extern std::vector<Bullet*> Bullets;
 
+Animation Bullet::animation[6];
+
+void Bullet::init() {
+	animation[BPISTOL].resource.Load(L"Bullet_Pistol.png");
+	animation[BPISTOL].frame = 4;
+	animation[BPISTOL].velocity = 3;
+	animation[BRIFLE].resource.Load(L"Bullet_Rifle.png");
+	animation[BRIFLE].frame = 4;
+	animation[BRIFLE].velocity = 3;
+	animation[BSHOTGUN].resource.Load(L"Bullet_Shotgun.png");
+	animation[BSHOTGUN].frame = 4;
+	animation[BSHOTGUN].velocity = 3;
+	animation[BENEMY].resource.Load(L"enemy_bullet3.png");
+	animation[BENEMY].frame = 4;
+	animation[BENEMY].velocity = 3;
+	animation[BBOUNCE].resource.Load(L"bounced_bullet.png");
+	animation[BBOUNCE].frame = 4;
+	animation[BBOUNCE].velocity = 3;
+	animation[BOSSBULLET1].resource.Load(L"boss_bullet1.png");
+	animation[BOSSBULLET1].frame = 4;
+	animation[BOSSBULLET1].velocity = 3;
+	for(int i=0;i<5;i++)
+		animation[i].size = {0,0,animation[i].resource.GetWidth() / animation[i].frame, animation[i].resource.GetHeight()};
+}
+
 Bullet::Bullet(int type, int side, Vector2D<float> pos, Vector2D<float> dir) :
-	pos(pos), dir(dir), frame(0),type(type)
+	pos(pos), dir(dir), frame(0),type(type),side(side)
 {
 	col = new Collider(8);
-	col->layer = side;
-	col->owner = this;
 	if (side == enemyBullet) {
+		this->type = BENEMY;
 		velocity = 0.5;
 	}
 	else {
 		velocity = 1;
 	}
+	if (type == BOSSBULLET1)
+		col->size.x = col->size.y = 10;
+	col->layer = side;
+	col->owner = this;
 	col->damage = BulletDamage[type];
 	col->pos = pos;
 	COLL.emplace_back(col);
-	SetImage(type);
 	angle = std::atan2(dir.y, dir.x) * (180.0f / M_PI) * -1;
 }
 
 
 Bullet::~Bullet() {
-	animation.resource.Destroy();
 }
 
-void Bullet::SetImage(int type)
-{
-	if (col->layer == playerBullet) {
-		switch (type)
-		{
-		case PISTOL:
-			this->animation.resource.Load(L"Bullet_Pistol.png");
-			break;
-		case RIFLE:
-			this->animation.resource.Load(L"Bullet_Rifle.png");
-			break;
-		case SHOTGUN:
-			this->animation.resource.Load(L"Bullet_Shotgun.png");
-			break;
-		default:
-			break;
-		}
-	}
-	else
-		this->animation.resource.Load(L"enemy_bullet3.png");
-	this->animation.frame = 4;
-	this->animation.size = { 0,0,animation.resource.GetWidth() / 4, animation.resource.GetHeight() };
-}
 
 void Bullet::draw_bullet(HDC mDC)
 {
-	int width = animation.size.right;
-	int height = animation.size.bottom;
+	int width = animation[type].size.right;
+	int height = animation[type].size.bottom;
 	CImage temp;
 	temp.Create(width, height, 32);
 	CImage rotatedImage;
 	rotatedImage.Create(width, height, 32);
 	for (int y = 0; y < height; y++) {
 		for (int x = 0; x < width; x++) {
-			BYTE* srcPixel = (BYTE*)animation.resource.GetPixelAddress((int)frame * width + x, y);
+			BYTE* srcPixel = (BYTE*)animation[type].resource.GetPixelAddress((int)frame * width + x, y);
 			BYTE* destPixel = (BYTE*)temp.GetPixelAddress(x, y);
 			memcpy(destPixel, srcPixel, sizeof(BYTE) * 4);
 		}
@@ -77,8 +81,8 @@ void Bullet::draw_bullet(HDC mDC)
 			}
 		}
 	}
-	rotatedImage.TransparentBlt(mDC, pos.x - animation.size.right / 2, pos.y - animation.size.bottom / 2, animation.size.right, animation.size.bottom,
-		0, 0, animation.size.right, animation.size.bottom, RGB(0, 0, 0)
+	rotatedImage.TransparentBlt(mDC, pos.x - animation[type].size.right / 2, pos.y - animation[type].size.bottom / 2, animation[type].size.right, animation[type].size.bottom,
+		0, 0, animation[type].size.right, animation[type].size.bottom, RGB(0, 0, 0)
 	);
 	rotatedImage.Destroy();
 	temp.Destroy();
@@ -87,8 +91,8 @@ void Bullet::draw_bullet(HDC mDC)
 void Bullet::update()
 {
 	pos += dir * velocity;
-	frame = (frame + frame_time * 3 * animation.frame);
-	if (frame >= animation.frame) frame = 0;
+	frame = (frame + frame_time * animation[type].velocity * animation[type].frame);
+	if (frame >= animation[type].frame) frame = 0;
 	col->pos = pos;
 }
 
@@ -99,23 +103,25 @@ void Bullet::handle_collision(int otherLayer, int damage)
 	case wall:
 	case player:
 	case enemy:
-		if (col->layer == enemyBullet)
-			EffectManager::getInstance()->set_effect(new Effect(L"enemy_bullet_effect.png", col->pos + dir, 3, 5));
-		else {
-			switch (type)
-			{
-			case PISTOL:
-				EffectManager::getInstance()->set_effect(new Effect(L"Bullet_Pistol_effect.png", col->pos + dir, 3, 4));
-				break;
-			case RIFLE:
-				EffectManager::getInstance()->set_effect(new Effect(L"Bullet_Rifle_effect.png", col->pos + dir, 4, 6));
-				break;
-			case SHOTGUN:
-				EffectManager::getInstance()->set_effect(new Effect(L"Bullet_shotgun_effect.png", col->pos + dir, 4, 6));
-				break;
-			default:
-				break;
-			}
+		switch (type)
+		{
+		case BPISTOL:
+			EffectManager::getInstance()->set_effect(new Effect(CEffect::PISTOLBULLET, col->pos));
+			break;
+		case BRIFLE:
+			EffectManager::getInstance()->set_effect(new Effect(CEffect::RIFLEBULLET, col->pos));
+			break;
+		case BSHOTGUN:
+			EffectManager::getInstance()->set_effect(new Effect(CEffect::SHOTGUNBULLET, col->pos));
+			break;
+		case BENEMY:
+			EffectManager::getInstance()->set_effect(new Effect(CEffect::ENEMYBULLET, col->pos));
+			break;
+		case BBOUNCE:
+			EffectManager::getInstance()->set_effect(new Effect(CEffect::BOUNCEBULLET, col->pos));
+			break;
+		default:
+			break;
 		}
 		for (auto i = COLL.begin(); i != COLL.end(); ++i)
 			if (COLL[i - COLL.begin()] == this->col)
@@ -133,12 +139,12 @@ void Bullet::handle_collision(int otherLayer, int damage)
 			}
 		deleteSet.insert(this);
 		break;
-	case playerMelee:
-		dir *= -1;
-		angle += 180;
+	case playerMelee: {
+		dir = Player::getInstance(1)->GetMouseVector()*10;
+		angle = Player::getInstance(1)->GetAngle()*-1;
 		col->layer = playerBullet;
-		animation.resource.Destroy();
-		animation.resource.Load(L"bounced_bullet.png");
+		type = BBOUNCE;
+	}
 		break;
 	default:
 		break;

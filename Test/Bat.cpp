@@ -15,9 +15,11 @@ void Bat::init()
 	animation[IDLE].resource.Load(L"bat.png");
 	animation[IDLE].frame = 6;
 	animation[IDLE].size = { 0,0,animation[IDLE].resource.GetWidth() / animation[IDLE].frame,animation[IDLE].resource.GetHeight() };
+	animation[IDLE].velocity = 2;
 	animation[DEAD].resource.Load(L"bat_damaged.png");
 	animation[DEAD].frame = 4;
 	animation[DEAD].size = { 0,0,animation[DEAD].resource.GetWidth() / animation[DEAD].frame,animation[DEAD].resource.GetHeight() };
+	animation[DEAD].velocity = 2;
 }
 
 void Bat::release()
@@ -51,7 +53,7 @@ Bat::~Bat()
 
 void Bat::draw_character(HDC mDC)
 {
-	float yDest = pos.y-10;
+	float yDest = pos.y- animation[IDLE].size.bottom;
 	shadow.Draw(mDC, pos.x - shadow.GetWidth(), pos.y + 60 - 2 - shadow.GetHeight(), shadow.GetWidth() * 2, shadow.GetHeight() * 2);
 	animation[state].resource.Draw(mDC, pos.x - animation[state].size.right, yDest - 20, animation[state].size.right * 2, animation[state].size.bottom * 2,
 		(int)frame * animation[state].size.right, 0, animation[state].size.right, animation[state].size.bottom
@@ -71,19 +73,17 @@ void Bat::handle_event()
 void Bat::update()
 {
 	lastPos = pos;
+	frame = (frame + frame_time * animation[state].velocity * animation[state].frame);
 	if(state==IDLE){
 		pos = pos + dir * velocity * frame_time;
-		frame = (frame + frame_time * 2 * animation[state].frame);
 		if (frame >= animation[state].frame) frame = 0;
 		col->pos = pos;
 	}
 	else {
-		if((int)frame< animation[state].frame)
-			frame = (frame + frame_time * 2 * animation[state].frame);
-		else {
+		if ((int)frame == animation[state].frame) {
 			EnemyManager::getInstance()->delete_enemy(this);
 			deleteSet.insert(this);
-			EffectManager::getInstance()->set_effect(new Effect(L"bat_explosion.png", pos, 3, 5));
+			EffectManager::getInstance()->set_effect(new Effect(CEffect::BATDIE, pos));
 			for (auto& other : COLL) {
 				for (int i = 0; i < 4; i++) {
 					if (other->layer==player) {

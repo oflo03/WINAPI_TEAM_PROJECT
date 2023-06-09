@@ -13,7 +13,7 @@ void Sword::update()
 		frame = (frame + frame_time * 4 * slash.frame);
 		if (frame >= slash.frame) frame = 0;
 	}
-	if (frame > 4.3&& frame < 5)
+	if (frame > 4&& frame < 5)
 	{
 		Vector2D<float> mPos(cos(-angle * M_PI / 180) * attackRange, sin(-angle * M_PI / 180) * attackRange);
 		mPos += centerPos;
@@ -25,7 +25,7 @@ void Sword::update()
 			for (int i = 0; i < 4; i++) {
 				if (collisionable[other->layer][playerMelee] && (dot[i] - centerPos).GetLenth() <= attackRange) {
 					if ((mPos - centerPos).GetRadian(dot[i] - centerPos) <= 60) {
-						other->owner->handle_collision(playerMelee, BulletDamage[SWORD]);
+						other->owner->handle_collision(playerMelee, 10);
 						break;
 					}
 				}
@@ -127,7 +127,7 @@ void Pistol::attack(const Vector2D<float>& hand, const Vector2D<float>& mPos, in
 		Vector2D<float> t = Vector2D<float>(mPos.x - hand.x, mPos.y - hand.y);
 		t.Normalize();
 		t.Rotate(uid(dre) % 11 - 5);
-		Bullets.emplace_back(new Bullet(PISTOL, side, hand + Vector2D<float>(t.x * 30, t.y * 30 - 10), t * 10));
+		Bullets.emplace_back(new Bullet(BPISTOL, side, hand + Vector2D<float>(t.x * 30, t.y * 30 - 10), t * 10));
 		curTime = coolTime;
 		shotTime = 10;
 		curAmmo--;
@@ -150,7 +150,7 @@ void Rifle::attack(const Vector2D<float>& hand, const Vector2D<float>& mPos, int
 		Vector2D<float> t = Vector2D<float>(mPos.x - hand.x, mPos.y - hand.y);
 		t /= t.GetLenth();
 		t.Rotate(uid(dre) % 15 - 7);
-		Bullets.emplace_back(new Bullet(RIFLE, side, hand + Vector2D<float>(t.x * 30, t.y * 30 - 10), t * 10));
+		Bullets.emplace_back(new Bullet(BRIFLE, side, hand + Vector2D<float>(t.x * 30, t.y * 30 - 10), t * 10));
 		curTime = coolTime;
 		shotTime = 5;
 		curAmmo--;
@@ -173,7 +173,7 @@ void Shotgun::attack(const Vector2D<float>& hand, const Vector2D<float>& mPos, i
 		t.Rotate(-10);
 		for (int i = 0; i < 5; ++i)
 		{
-			Bullets.emplace_back(new Bullet(SHOTGUN, side, hand + Vector2D<float>(t.x * 30, t.y * 30 - 10), t * 10));
+			Bullets.emplace_back(new Bullet(BSHOTGUN,side,  hand + Vector2D<float>(t.x * 30, t.y * 30 - 10), t * 10));
 			t.Rotate(5);
 		}
 		curTime = coolTime;

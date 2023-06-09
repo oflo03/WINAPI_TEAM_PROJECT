@@ -6,6 +6,7 @@ struct Animation
 	CImage resource;
 	RECT size;
 	int frame;
+	float velocity;
 };
 
 enum STATE

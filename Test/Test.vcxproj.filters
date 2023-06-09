@@ -65,6 +65,9 @@
     <ClCompile Include="DropItem.cpp">
       <Filter>DropItem</Filter>
     </ClCompile>
+    <ClCompile Include="Boss.cpp">
+      <Filter>Enemy\Boss</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IdleState.h">
@@ -148,6 +151,9 @@
     <ClInclude Include="DropItem.h">
       <Filter>DropItem</Filter>
     </ClInclude>
+    <ClInclude Include="Boss.h">
+      <Filter>Enemy\Boss</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Player">
@@ -176,6 +182,9 @@
     </Filter>
     <Filter Include="DropItem">
       <UniqueIdentifier>{271ce2b6-2b58-4b83-a08d-6a35b2a40227}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Enemy\Boss">
+      <UniqueIdentifier>{d1b4f441-90c4-4280-9018-f880bba6ab05}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

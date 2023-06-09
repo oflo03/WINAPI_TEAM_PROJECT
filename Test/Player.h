@@ -49,8 +49,10 @@ public:
 	virtual void attack() { myWeapons[selectedWeapon]->attack(handPos, mPos, playerBullet); }
 	void SetPos(Vector2D<float> temp) { pos = temp; }
 	Vector2D<float> GetPos() { return pos; }
+	float GetAngle() { return angle; }
 	void SetDir(Vector2D<float> temp) { dir = temp; }
 	Vector2D<float> GetDir() { return dir; }
+	Vector2D<float> GetMouseVector() { return (mPos - handPos).Normalize(); }
 	double GetVelocity() { return velocity; };
 	void SetDirection(int direction) { this->direction = direction; }
 	bool GetIfRoll();

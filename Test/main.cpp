@@ -43,7 +43,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevinstance, LPSTR lpszCmdPa
 
 	monitorSize = Vector2D<float>(monitorInfo.rcMonitor.right - monitorInfo.rcMonitor.left,
 		monitorInfo.rcMonitor.bottom - monitorInfo.rcMonitor.top);
-	camSize = monitorSize /4;
+	camSize = monitorSize /3;
 
 	hWnd = CreateWindow(IpszClass, IpszWindowName, WS_POPUP,
 		monitorInfo.rcMonitor.left, monitorInfo.rcMonitor.top,

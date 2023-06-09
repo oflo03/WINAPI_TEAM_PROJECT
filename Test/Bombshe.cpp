@@ -6,7 +6,7 @@ extern bool lookRange;
 extern HPEN GREENP;
 
 enum BOMBSTATE {
-	IDLE,ATTACK,DAMAGED,DEAD
+	BIDLE,BATTACK,BDAMAGED,BDEAD
 };
 
 Animation Bombshe::animation[4][3];
@@ -21,7 +21,7 @@ Bombshe::Bombshe(double x, double y, Player* target) : Enemy(x, y),isAttack(fals
 	state = STATE_IDLE;
 	attackRange = 200;
 	attackCoolTime = 200;
-	col = new Collider(Vector2D<float>(animation[IDLE][FRONT].size.right, animation[IDLE][FRONT].size.bottom));
+	col = new Collider(Vector2D<float>(animation[BIDLE][FRONT].size.right, animation[BIDLE][FRONT].size.bottom));
 	col->owner = this;
 	col->layer = enemy;
 	col->pos = pos;
@@ -39,33 +39,37 @@ Bombshe::~Bombshe()
 
 void Bombshe::init()
 {
-	animation[IDLE][FRONT].resource.Load(L"Bombshe_front.png");
-	animation[IDLE][FRONT_RIGHT].resource.Load(L"Bombshe_right.png");
-	animation[IDLE][FRONT_LEFT].resource.Load(L"Bombshe_left.png");
+	animation[BIDLE][FRONT].resource.Load(L"Bombshe_front.png");
+	animation[BIDLE][FRONT_RIGHT].resource.Load(L"Bombshe_right.png");
+	animation[BIDLE][FRONT_LEFT].resource.Load(L"Bombshe_left.png");
 	for (int i = 0; i < 3; i++) {
-		animation[IDLE][i].frame = 4;
-		animation[IDLE][i].size = { 0,0,animation[IDLE][i].resource.GetWidth() / animation[IDLE][i].frame,animation[IDLE][i].resource.GetHeight() };
+		animation[BIDLE][i].frame = 4;
+		animation[BIDLE][i].size = { 0,0,animation[BIDLE][i].resource.GetWidth() / animation[BIDLE][i].frame,animation[BIDLE][i].resource.GetHeight() };
+		animation[BIDLE][i].velocity = 2;
 	}
-	animation[ATTACK][FRONT].resource.Load(L"Bombshe_attack.png");
-	animation[ATTACK][FRONT_RIGHT].resource.Load(L"Bombshe_attack.png");
-	animation[ATTACK][FRONT_LEFT].resource.Load(L"Bombshe_attack.png");
+	animation[BATTACK][FRONT].resource.Load(L"Bombshe_attack.png");
+	animation[BATTACK][FRONT_RIGHT].resource.Load(L"Bombshe_attack.png");
+	animation[BATTACK][FRONT_LEFT].resource.Load(L"Bombshe_attack.png");
 	for (int i = 0; i < 3; i++) {
-		animation[ATTACK][i].frame = 5;
-		animation[ATTACK][i].size = { 0,0,animation[ATTACK][i].resource.GetWidth() / animation[ATTACK][i].frame,animation[ATTACK][i].resource.GetHeight() };
+		animation[BATTACK][i].frame = 5;
+		animation[BATTACK][i].size = { 0,0,animation[BATTACK][i].resource.GetWidth() / animation[BATTACK][i].frame,animation[BATTACK][i].resource.GetHeight() };
+		animation[BATTACK][i].velocity = 2;
 	}
-	animation[DAMAGED][FRONT].resource.Load(L"Bombshe_damaged.png");
-	animation[DAMAGED][FRONT_RIGHT].resource.Load(L"Bombshe_damaged.png");
-	animation[DAMAGED][FRONT_LEFT].resource.Load(L"Bombshe_damaged.png");
+	animation[BDAMAGED][FRONT].resource.Load(L"Bombshe_damaged.png");
+	animation[BDAMAGED][FRONT_RIGHT].resource.Load(L"Bombshe_damaged.png");
+	animation[BDAMAGED][FRONT_LEFT].resource.Load(L"Bombshe_damaged.png");
 	for (int i = 0; i < 3; i++) {
-		animation[DAMAGED][i].frame = 1;
-		animation[DAMAGED][i].size = { 0,0,animation[DAMAGED][i].resource.GetWidth() / animation[DAMAGED][i].frame,animation[DAMAGED][i].resource.GetHeight() };
+		animation[BDAMAGED][i].frame = 1;
+		animation[BDAMAGED][i].size = { 0,0,animation[BDAMAGED][i].resource.GetWidth() / animation[BDAMAGED][i].frame,animation[BDAMAGED][i].resource.GetHeight() };
+		animation[BDAMAGED][i].velocity = 3;
 	}
-	animation[DEAD][FRONT].resource.Load(L"Bombshe_dead.png");
-	animation[DEAD][FRONT_RIGHT].resource.Load(L"Bombshe_dead.png");
-	animation[DEAD][FRONT_LEFT].resource.Load(L"Bombshe_dead.png");
+	animation[BDEAD][FRONT].resource.Load(L"Bombshe_dead.png");
+	animation[BDEAD][FRONT_RIGHT].resource.Load(L"Bombshe_dead.png");
+	animation[BDEAD][FRONT_LEFT].resource.Load(L"Bombshe_dead.png");
 	for (int i = 0; i < 3; i++) {
-		animation[DEAD][i].frame = 2;
-		animation[DEAD][i].size = { 0,0,animation[DEAD][i].resource.GetWidth() / animation[DEAD][i].frame,animation[DEAD][i].resource.GetHeight() };
+		animation[BDEAD][i].frame = 2;
+		animation[BDEAD][i].size = { 0,0,animation[BDEAD][i].resource.GetWidth() / animation[BDEAD][i].frame,animation[BDEAD][i].resource.GetHeight() };
+		animation[BDEAD][i].velocity = 3;
 	}
 }
 
@@ -79,7 +83,7 @@ void Bombshe::release()
 
 void Bombshe::draw_character(HDC mDC)
 {
-	float yDest = pos.y - (animation[IDLE][FRONT].size.bottom - 22) * 2;
+	float yDest = pos.y - (animation[BIDLE][FRONT].size.bottom - 22) * 2;
 	shadow.Draw(mDC, pos.x - shadow.GetWidth(), pos.y + animation[state][direction].size.bottom - 2 - shadow.GetHeight(), shadow.GetWidth() * 2, shadow.GetHeight() * 2);
 	animation[state][direction].resource.Draw(mDC, pos.x - animation[state][direction].size.right, yDest - 20, animation[state][direction].size.right * 2, animation[state][direction].size.bottom * 2,
 		(int)frame * animation[state][direction].size.right, 0, animation[state][direction].size.right, animation[state][direction].size.bottom);
@@ -92,34 +96,30 @@ void Bombshe::draw_character(HDC mDC)
 
 void Bombshe::handle_event()
 {
-	if (attackable() && !targetLocked || (state == DAMAGED && frame == 1)) {
+	if (attackable() && !targetLocked || (state == BDAMAGED && (int)frame == 1)) {
 		targetLocked = true;
-		state = ATTACK;
+		state = BATTACK;
 		frame = 0;
 	}
 	if(targetLocked) {
 		if (!isAttack&&(int)frame==4) {
-			wave = new Effect(L"banshe_effect.png", col->pos, 1, 13);
+			wave = new Effect(CEffect::BOMBSHE1, col->pos);
 			EffectManager::getInstance()->set_effect(wave);
 			isAttack = true;
 		}
 		if (isAttack) {
 			attack();
-			if ((int)(wave->time+1) == wave->effect.frame) {
-				if (wave->effect.frame == 13) {
-					wave->effect.resource.Destroy();
-					wave->effect.resource.Load(L"banshe_effect2.png");
-					wave->effect.frame = 3;
-					wave->effect.size = { 0,0,wave->effect.resource.GetWidth() / wave->effect.frame ,wave->effect.resource.GetHeight() };
+			if ((int)(wave->time+1) == wave->effect[wave->type].frame) {
+				if (wave->effect[wave->type].frame == 13) {
+					wave->type = CEffect::BOMBSHE2;
 					wave->time = 0;
-					wave->velocity = 2.5;
 				}
-				else if(wave->effect.frame == 3)
+				else if(wave->effect[wave->type].frame == 3)
 					wave->time = 0;
 			}
-			if (state == DAMAGED) {
-				state = ATTACK;
-				frame = 0;
+			if (state == BDAMAGED) {
+				state = BATTACK;
+				frame;
 			}
 		}
 	}
@@ -127,29 +127,26 @@ void Bombshe::handle_event()
 
 void Bombshe::update()
 {
-	if(state == IDLE){
-		frame = (frame + frame_time * 2 * animation[state][direction].frame);
+	frame = (frame + frame_time * animation[state][direction].velocity * animation[state][direction].frame);
+	if(state == BIDLE){
 		if (frame >= animation[state][direction].frame) frame = 0;
 		SetDirection();
 		col->pos = pos;
 	}
-	else if (state == ATTACK&&(int)frame<5) {
-		frame = (frame + frame_time * 2 * animation[state][direction].frame);
-		if (frame >= animation[state][direction].frame) frame = 0;
+	else if (state == BATTACK&&(int)frame<5) {
 		if (attackSize < 100)
 			attackSize += 1;
 		SetDirection();
 		col->pos = pos;
 	}
-	else if (state == DEAD) {
-		if ((int)frame < animation[state][direction].frame)
-			frame = (frame + frame_time * 3 * animation[state][direction].frame);
-		else {
+	else if (state == BDEAD) {
+		if ((int)frame == animation[state][direction].frame) {
 			EnemyManager::getInstance()->delete_enemy(this);
 			deleteSet.insert(this);
-			EffectManager::getInstance()->set_effect(new Effect(L"Bombshe_explode.png", pos, 3, 5));
+			EffectManager::getInstance()->set_effect(new Effect(CEffect::BOMBSHEDIE, pos));
 		}
 	}
+	if ((int)frame == animation[state][direction].frame) frame = 0;
 }
 
 void Bombshe::SetDirection()
@@ -216,10 +213,10 @@ void Bombshe::handle_collision(int otherLayer, int damage)
 
 	case rolled_player:
 	case playerMelee:
-		EffectManager::getInstance()->set_effect(new Effect(L"melee_effect.png", col->pos, 4, 3));
+		EffectManager::getInstance()->set_effect(new Effect(CEffect::SWORDATTACK, col->pos));
 		HP -= damage;
 		if (HP <= 0) {
-			state = STATE_DEAD;
+			state = BDEAD;
 			for (auto i = COLL.begin(); i != COLL.end(); ++i)
 				if (COLL[i - COLL.begin()] == this->col)
 				{
@@ -228,15 +225,15 @@ void Bombshe::handle_collision(int otherLayer, int damage)
 				}
 			delete this->col;
 			this->col = nullptr;
-			wave->time = wave->effect.frame;
+			wave->time = wave->effect[wave->type].frame;
 		}
-		else state = DAMAGED;
+		else state = BDAMAGED;
 		frame = 0;
 		break;
 	case playerBullet:
 		HP -= damage;
 		if (HP <= 0) {
-			state = DEAD;
+			state = BDEAD;
 			for (auto i = COLL.begin(); i != COLL.end(); ++i)
 				if (COLL[i - COLL.begin()] == this->col)
 				{
@@ -245,9 +242,9 @@ void Bombshe::handle_collision(int otherLayer, int damage)
 				}
 			delete this->col;
 			this->col = nullptr;
-			wave->time = wave->effect.frame;
+			wave->time = wave->effect[wave->type].frame;
 		}
-		else state = DAMAGED;
+		else state = BDAMAGED;
 		frame = 0;
 		break;
 	default:

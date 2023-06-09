@@ -2,6 +2,7 @@
 #include"EnemyManager.h"
 #include"EffectManager.h"
 #include"Player.h"
+#include"DropItem.h"
 
 extern HDC mDC;
 std::random_device rd;
@@ -10,6 +11,7 @@ std::uniform_int_distribution<int> uid(1, 10000);
 std::uniform_int_distribution<int> rad(-180, 180);
 std::uniform_int_distribution<int> ranTime(20, 70);
 std::uniform_int_distribution<int> ran(0, 1);
+std::uniform_int_distribution<int> randrop(0, 1);
 
 void ColliderUpdate();
 void LoadTileMap(int num);
@@ -17,6 +19,7 @@ void PrintMap(HDC mDC);
 
 std::vector<Collider*> COLL;
 std::vector<Bullet*> Bullets;
+std::vector<DropItem*> drops;
 extern Vector2D<float> monitorSize;
 extern Vector2D<float> camSize;
 Vector2D<float> camPos;
@@ -27,6 +30,9 @@ PlayState::PlayState() : GameState()	// 모든 스테이트 시작 전에 콜라이더 벡터 초
 {
 	Player::init();
 	EnemyManager::getInstance()->init(1);
+	EffectManager::init();
+	Bullet::init();
+	DropItem::init();
 	LoadTileMap(3);
 	//PlaySound(L"BGM_PlayState.wav", NULL, SND_ASYNC | SND_LOOP);
 }
@@ -39,6 +45,8 @@ PlayState::~PlayState()
 
 void PlayState::update()
 {
+	for (auto& d : drops)
+		d->update();
 	Player::getInstance(1)->update();
 	EnemyManager::getInstance()->update();
 	for (auto& B : Bullets)
@@ -69,6 +77,8 @@ void PlayState::draw()
 	HBITMAP mapbitmap = CreateCompatibleBitmap(mDC, 1920, 1080);
 	SelectObject(mapDC, mapbitmap);
 	PrintMap(mapDC);
+	for (auto& d : drops)
+		d->Draw(mapDC);
 	EnemyManager::getInstance()->draw(mapDC);
 	Player::getInstance(1)->draw_character(mapDC);
 	for (auto& B : Bullets)

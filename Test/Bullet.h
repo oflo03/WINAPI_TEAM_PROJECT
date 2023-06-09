@@ -4,23 +4,35 @@
 #include"Master.h"
 #include"Item.h"
 
-const int BulletDamage[]{ 10,10,7,5 ,30 };
+const int BulletDamage[]{ 10,7,5,5,3,30 };
+
+enum bullet_table {
+	BPISTOL,
+	BRIFLE,
+	BSHOTGUN,
+	BENEMY,
+	BBOUNCE,
+	BOSSBULLET1,
+	BOSSBULLET2,
+	BOSSBULLET3
+};
 
 class Bullet
 	:public Master
 {
 protected:
-	Animation animation;
+	static Animation animation[6];
 	int type;
+	int side;
 	float frame;
 	Vector2D<float> pos;
 	Vector2D<float> dir;
 	double velocity;
 	double angle;
 public:
-	Bullet(int type, int side, Vector2D<float> pos, Vector2D<float> dir);
+	Bullet(int type,int side, Vector2D<float> pos, Vector2D<float> dir);
 	~Bullet();
-	void SetImage(int type);
+	static void init();
 	void draw_bullet(HDC mDC);
 	void update();
 	virtual void handle_collision(int otherLayer, int damage);
