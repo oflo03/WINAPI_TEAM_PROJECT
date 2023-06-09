@@ -11,7 +11,7 @@ Vector2D<float> camSize;
 
 HINSTANCE g_hinst;
 LPCTSTR IpszClass = L"Window Class Name";
-LPCTSTR IpszWindowName = L"¸â¸ðÀå";
+LPCTSTR IpszWindowName = L"Drop The Gun";
 RECT screen;
 LRESULT WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam);
 
@@ -29,7 +29,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevinstance, LPSTR lpszCmdPa
 	WndClass.cbWndExtra = 0;
 	WndClass.hInstance = hInstance;
 	WndClass.hIcon = LoadIcon(NULL, IDI_APPLICATION);
-	WndClass.hCursor = LoadCursor(NULL, IDC_ARROW);
+	WndClass.hCursor = LoadCursor(NULL, NULL);
 	WndClass.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);
 	WndClass.lpszMenuName = NULL;
 	WndClass.lpszClassName = IpszClass;
@@ -93,6 +93,7 @@ LRESULT WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 		GetClientRect(hWnd, &screen);
 		start_game(new LogoState());
 		SetTimer(hWnd, 1, 10, NULL);
+		SetCursor(NULL);
 		break;
 	case WM_PAINT:
 	{
