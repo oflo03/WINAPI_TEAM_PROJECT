@@ -147,6 +147,7 @@
     <ClCompile Include="IdleState.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Marin.cpp" />
+    <ClCompile Include="PatternB.cpp" />
     <ClCompile Include="PistolMan.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayState.cpp">
@@ -187,6 +188,7 @@
     <ClInclude Include="Item.h" />
     <ClInclude Include="Marin.h" />
     <ClInclude Include="Master.h" />
+    <ClInclude Include="PatternB.h" />
     <ClInclude Include="PistolMan.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayState.h">

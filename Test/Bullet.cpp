@@ -5,7 +5,7 @@
 extern double frame_time;
 extern std::vector<Bullet*> Bullets;
 
-Animation Bullet::animation[6];
+Animation Bullet::animation[7];
 
 void Bullet::init() {
 	animation[BPISTOL].resource.Load(L"Bullet_Pistol.png");
@@ -26,7 +26,10 @@ void Bullet::init() {
 	animation[BOSSBULLET1].resource.Load(L"boss_bullet1.png");
 	animation[BOSSBULLET1].frame = 4;
 	animation[BOSSBULLET1].velocity = 3;
-	for(int i=0;i<5;i++)
+	animation[BOSSBULLET2].resource.Load(L"boss_bullet2.png");
+	animation[BOSSBULLET2].frame = 1;
+	animation[BOSSBULLET2].velocity = 0;
+	for(int i=0;i<7;i++)
 		animation[i].size = {0,0,animation[i].resource.GetWidth() / animation[i].frame, animation[i].resource.GetHeight()};
 }
 
@@ -35,14 +38,25 @@ Bullet::Bullet(int type, int side, Vector2D<float> pos, Vector2D<float> dir) :
 {
 	col = new Collider(8);
 	if (side == enemyBullet) {
-		this->type = BENEMY;
-		velocity = 0.5;
+		switch (this->type)
+		{
+		case BOSSBULLET1:
+			col->size.x = col->size.y = 10;
+			velocity = 2;
+			break;
+		case BOSSBULLET2:
+			col->size.x = col->size.y = 10;
+			velocity = 2;
+			break;
+		default:
+			this->type = BENEMY;
+			velocity = 0.5;
+			break;
+		}
 	}
 	else {
 		velocity = 1;
 	}
-	if (type == BOSSBULLET1)
-		col->size.x = col->size.y = 10;
 	col->layer = side;
 	col->owner = this;
 	col->damage = BulletDamage[type];
@@ -88,7 +102,7 @@ void Bullet::draw_bullet(HDC mDC){
 		temp.Destroy();
 	}
 	else {
-		animation[type].resource.Draw(mDC, pos.x - animation[type].size.right / 2, pos.y - animation[type].size.bottom / 2, animation[type].size.right, animation[type].size.bottom,
+		animation[type].resource.Draw(mDC, pos.x - animation[type].size.right, pos.y - animation[type].size.bottom, animation[type].size.right*2, animation[type].size.bottom*2,
 			animation[type].size.right*(int)frame, 0, animation[type].size.right, animation[type].size.bottom
 		);
 	}
@@ -96,7 +110,11 @@ void Bullet::draw_bullet(HDC mDC){
 
 void Bullet::update()
 {
-	pos += dir * velocity;
+	if(type != BOSSBULLET1)
+		pos += dir * velocity;
+	else {
+
+	}
 	frame = (frame + frame_time * animation[type].velocity * animation[type].frame);
 	if (frame >= animation[type].frame) frame = 0;
 	col->pos = pos;
@@ -104,6 +122,7 @@ void Bullet::update()
 
 void Bullet::handle_collision(int otherLayer, int damage)
 {
+	if (type == BOSSBULLET1) return;
 	switch (otherLayer)
 	{
 	case wall:
@@ -120,6 +139,8 @@ void Bullet::handle_collision(int otherLayer, int damage)
 		case BSHOTGUN:
 			EffectManager::getInstance()->set_effect(new Effect(CEffect::SHOTGUNBULLET, col->pos));
 			break;
+		case BOSSBULLET1:
+		case BOSSBULLET2:
 		case BENEMY:
 			EffectManager::getInstance()->set_effect(new Effect(CEffect::ENEMYBULLET, col->pos));
 			break;
