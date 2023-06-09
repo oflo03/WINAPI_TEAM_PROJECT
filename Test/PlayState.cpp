@@ -14,6 +14,7 @@ std::uniform_int_distribution<int> rad(-180, 180);
 std::uniform_int_distribution<int> ranTime(20, 70);
 std::uniform_int_distribution<int> ran(0, 1);
 std::uniform_int_distribution<int> randrop(0, 1);
+std::uniform_int_distribution<int> ranP(0, 2);
 
 void ColliderUpdate();
 void LoadTileMap(int num);

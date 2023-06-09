@@ -1,6 +1,6 @@
 #include"EffectManager.h"
 
-Animation Effect::effect[14];
+Animation Effect::effect[15];
 
 void Effect::init()
 {
@@ -46,7 +46,10 @@ void Effect::init()
 	effect[CEffect::PATTERNB].resource.Load(L"boss_patternB.png");
 	effect[CEffect::PATTERNB].frame = 7;
 	effect[CEffect::PATTERNB].velocity = 4;
-	for (int i = 0; i < 14; i++) {
+	effect[CEffect::PATTERNC].resource.Load(L"boss_patternC.png");
+	effect[CEffect::PATTERNC].frame = 9;
+	effect[CEffect::PATTERNC].velocity = 2;
+	for (int i = 0; i < 15; i++) {
 		effect[i].size = { 0,0,effect[i].resource.GetWidth() / effect[i].frame, effect[i].resource.GetHeight() };
 	}
 }
