@@ -7,8 +7,7 @@ extern double frame_time;
 
 void PatternA::enter(Boss& boss)
 {
-	boss.leftHand = 0;
-	boss.rightHand = 1;
+
 }
 
 BossState* PatternA::handle_event(Boss& boss)

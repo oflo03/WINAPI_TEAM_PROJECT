@@ -38,6 +38,14 @@ PlayerState* IdleState::handle_event(Player& player)
 		player.SetWeapon(SHOTGUN);
 	if (GetAsyncKeyState('5') & 0x8000 && player.GetWeapon() != ROCKET)
 		player.SetWeapon(ROCKET);
+	if (GetAsyncKeyState(VK_CONTROL) & 1)
+		player.SetWeaponUp();
+	if (GetAsyncKeyState(VK_TAB) & 1)
+		player.SetWeaponDown();
+	if (GetAsyncKeyState(VK_XBUTTON1) & 1)
+		player.SetWeaponUp();
+	if (GetAsyncKeyState(VK_XBUTTON2) & 1)
+		player.SetWeaponDown();
 	player.SetDirection();
 	if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
 		player.attack();
@@ -51,7 +59,6 @@ PlayerState* IdleState::handle_event(Player& player)
 
 void IdleState::update(Player& player)
 {
-	player.col->layer = 1;
 	return;
 }
 

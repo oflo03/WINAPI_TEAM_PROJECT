@@ -6,12 +6,12 @@ extern bool lookRange;
 extern HPEN GREENP;
 
 enum BOMBSTATE {
-	BIDLE,BATTACK,BDAMAGED,BDEAD
+	BIDLE, BATTACK, BDAMAGED, BDEAD
 };
 
 Animation Bombshe::animation[4][3];
 
-Bombshe::Bombshe(double x, double y, Player* target) : Enemy(x, y),isAttack(false)
+Bombshe::Bombshe(double x, double y, Player* target) : Enemy(x, y), isAttack(false)
 {
 	shadow.Load(L"shadow.png");
 	attackSize = 0;
@@ -87,37 +87,37 @@ void Bombshe::draw_character(HDC mDC)
 	shadow.Draw(mDC, pos.x - shadow.GetWidth(), pos.y + animation[state][direction].size.bottom - 2 - shadow.GetHeight(), shadow.GetWidth() * 2, shadow.GetHeight() * 2);
 	animation[state][direction].resource.Draw(mDC, pos.x - animation[state][direction].size.right, yDest - 20, animation[state][direction].size.right * 2, animation[state][direction].size.bottom * 2,
 		(int)frame * animation[state][direction].size.right, 0, animation[state][direction].size.right, animation[state][direction].size.bottom);
-	if (isAttack&&lookRange) {
+	if (isAttack && lookRange) {
 		HPEN old = (HPEN)SelectObject(mDC, GREENP);
-		Arc(mDC, pos.x-attackSize, pos.y - attackSize, pos.x + attackSize, pos.y + attackSize, 0,0,0,0);
+		Arc(mDC, pos.x - attackSize, pos.y - attackSize, pos.x + attackSize, pos.y + attackSize, 0, 0, 0, 0);
 		SelectObject(mDC, old);
 	}
 }
 
 void Bombshe::handle_event()
 {
-	if (attackable() && !targetLocked || (state == BDAMAGED && (int)frame == 1)&& !targetLocked) {
+	if (attackable() && !targetLocked || (state == BDAMAGED && (int)frame == 1) && !targetLocked) {
 		targetLocked = true;
 		state = BATTACK;
 		frame = 0;
 	}
-	if(targetLocked) {
-		if (!isAttack&&(int)frame==4) {
+	if (targetLocked) {
+		if (!isAttack && (int)frame == 4) {
 			wave = new Effect(CEffect::BOMBSHE1, col->pos);
 			EffectManager::getInstance()->set_effect(wave);
 			isAttack = true;
 		}
 		if (isAttack) {
 			attack();
-			if ((int)(wave->time+1) == wave->effect[wave->type].frame) {
+			if ((int)(wave->time + 1) == wave->effect[wave->type].frame) {
 				if (wave->effect[wave->type].frame == 13) {
 					wave->type = CEffect::BOMBSHE2;
 					wave->time = 0;
 				}
-				else if(wave->effect[wave->type].frame == 3)
+				else if (wave->effect[wave->type].frame == 3)
 					wave->time = 0;
 			}
-			if (state == BDAMAGED&&(int)frame==1) {
+			if (state == BDAMAGED && (int)frame == 1) {
 				state = BATTACK;
 				frame = 0;
 			}
@@ -128,12 +128,12 @@ void Bombshe::handle_event()
 void Bombshe::update()
 {
 	frame = (frame + frame_time * animation[state][direction].velocity * animation[state][direction].frame);
-	if(state == BIDLE){
+	if (state == BIDLE) {
 		if (frame >= animation[state][direction].frame) frame = 0;
 		SetDirection();
 		col->pos = pos;
 	}
-	else if (state == BATTACK&&(int)frame<5) {
+	else if (state == BATTACK && (int)frame < 5) {
 		if (attackSize < 100)
 			attackSize += 1;
 		SetDirection();
@@ -146,7 +146,7 @@ void Bombshe::update()
 			EffectManager::getInstance()->set_effect(new Effect(CEffect::BOMBSHEDIE, pos));
 		}
 	}
-	if ((int)frame == animation[state][direction].frame&&state!=BDAMAGED) frame = 0;
+	if ((int)frame == animation[state][direction].frame && state != BDAMAGED) frame = 0;
 }
 
 void Bombshe::SetDirection()
@@ -225,7 +225,8 @@ void Bombshe::handle_collision(int otherLayer, int damage)
 				}
 			delete this->col;
 			this->col = nullptr;
-			wave->time = wave->effect[wave->type].frame;
+			if (wave)
+				wave->time = wave->effect[wave->type].frame;
 		}
 		else state = BDAMAGED;
 		frame = 0;
@@ -242,7 +243,8 @@ void Bombshe::handle_collision(int otherLayer, int damage)
 				}
 			delete this->col;
 			this->col = nullptr;
-			wave->time = wave->effect[wave->type].frame;
+			if (wave)
+				wave->time = wave->effect[wave->type].frame;
 		}
 		else state = BDAMAGED;
 		frame = 0;

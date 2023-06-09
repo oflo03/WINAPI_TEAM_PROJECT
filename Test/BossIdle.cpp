@@ -5,8 +5,7 @@ extern double frame_time;
 
 void BossIdle::enter(Boss& boss)
 {
-	boss.leftHand = 1;
-	boss.rightHand = 0;
+
 }
 
 BossState* BossIdle::handle_event(Boss& boss)

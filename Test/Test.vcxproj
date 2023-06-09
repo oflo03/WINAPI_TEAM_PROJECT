@@ -160,6 +160,7 @@
     </ClCompile>
     <ClCompile Include="ShotgunMan.cpp" />
     <ClCompile Include="Tilemap.cpp" />
+    <ClCompile Include="UI.cpp" />
     <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -200,6 +201,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="Tilemap.h" />
+    <ClInclude Include="UI.h" />
     <ClInclude Include="Vector2D.h" />
     <ClInclude Include="Weapon.h" />
   </ItemGroup>

@@ -3,6 +3,7 @@
 #include"EffectManager.h"
 #include"Player.h"
 #include"DropItem.h"
+#include"UI.h"
 
 extern HDC mDC;
 std::random_device rd;
@@ -25,6 +26,7 @@ extern Vector2D<float> camSize;
 Vector2D<float> camPos;
 
 bool lookRange;
+bool beatable;
 
 PlayState::PlayState() : GameState()	// 모든 스테이트 시작 전에 콜라이더 벡터 초기화 하는거 넣어줘요 - 병욱
 {
@@ -33,7 +35,9 @@ PlayState::PlayState() : GameState()	// 모든 스테이트 시작 전에 콜라이더 벡터 초
 	EffectManager::init();
 	Bullet::init();
 	DropItem::init();
+	UI::init();
 	LoadTileMap(3);
+	beatable = true;
 	//PlaySound(L"BGM_PlayState.wav", NULL, SND_ASYNC | SND_LOOP);
 }
 
@@ -65,6 +69,9 @@ void PlayState::handle_events()
 	else if (GetAsyncKeyState('X') & 1) {
 		lookRange = !lookRange;
 	}
+	else if ((GetAsyncKeyState('Z') & 1) && (GetAsyncKeyState('C') & 1)) {
+		beatable = !beatable;
+	}
 	EnemyManager::getInstance()->handle_event();
 	Player::getInstance(1)->handle_event();
 }
@@ -91,6 +98,5 @@ void PlayState::draw()
 		mapDC, camPos.x - camSize.x, camPos.y - camSize.y, camSize.x * 2, camSize.y * 2, SRCCOPY);
 	DeleteObject(mapbitmap);
 	DeleteDC(mapDC);
-
-	// 이 이후에 mDC에다 UI 그리기
+	UI::draw(mDC);
 }

@@ -34,6 +34,8 @@ public:
 	void SetCurTime(int t) { curTime = t; }
 	int GetCurTime() { return curTime; }
 	int GetShotTime() { return shotTime; }
+	int GetCurAmmo() { return curAmmo; }
+	int GetMaxAmmo() { return maxAmmo; }
 	bool IsReBound() { return (coolTime - curTime < 3); }
 	bool IsRunOut() { return (curAmmo == 0); }
 	virtual void draw_weapon(HDC mDC, const Vector2D<float>& center, const Vector2D<float>& mPos) {
@@ -77,7 +79,7 @@ private:
 public:
 	Sword() :Weapon() {
 		coolTime = cooltime[SWORD];
-		curAmmo = 1;
+		curAmmo = maxAmmo = 1;
 		frame = 0;
 		attackRange = 110;
 		resource[0].Load(L"Item_Weapon_Sword.png");

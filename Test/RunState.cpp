@@ -63,6 +63,14 @@ PlayerState* RunState::handle_event(Player& player)
 		player.SetWeapon(SHOTGUN);
 	if (GetAsyncKeyState('5') & 0x8000 && player.GetWeapon() != ROCKET)
 		player.SetWeapon(ROCKET);
+	if (GetAsyncKeyState(VK_CONTROL) & 1)
+		player.SetWeaponUp();
+	if (GetAsyncKeyState(VK_TAB) & 1)
+		player.SetWeaponDown();
+	if (GetAsyncKeyState(VK_XBUTTON1) & 1)
+		player.SetWeaponUp();
+	if (GetAsyncKeyState(VK_XBUTTON2) & 1)
+		player.SetWeaponDown();
 	if (isMove) {
 		player.SetDir(Vector2D<float>(dirX, dirY));
 		return nullptr;
@@ -72,7 +80,6 @@ PlayerState* RunState::handle_event(Player& player)
 
 void RunState::update(Player& player)
 {
-	player.col->layer = 1;
 	if (player.GetDir().GetLenth() == 1) {
 		player.SetPos(player.GetPos() + player.GetDir() * player.GetVelocity() * frame_time);
 	}
