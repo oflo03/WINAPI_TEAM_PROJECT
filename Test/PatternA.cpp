@@ -9,6 +9,7 @@ void PatternA::enter(Boss& boss)
 {
 	boss.handType[LEFT] = 0;
 	boss.handType[RIGHT] = 1;
+	boss.frame = 2;
 }
 
 BossState* PatternA::handle_event(Boss& boss)

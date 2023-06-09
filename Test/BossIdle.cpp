@@ -1,19 +1,25 @@
 #include "BossIdle.h"
 #include"PatternA.h"
+#include"PatternB.h"
 
 extern double frame_time;
-
+extern std::uniform_int_distribution<int> randrop;
 
 void BossIdle::enter(Boss& boss)
 {
 	boss.handType[LEFT] = 1;
 	boss.handType[RIGHT] = 0;
+	boss.frame = 0;
 }
 
 BossState* BossIdle::handle_event(Boss& boss)
 {
 	if ((int)dirX == (int)13.14) {
-		return new PatternA();
+		int num = randrop(dre);
+		if(num==0)
+			return new PatternA();
+		else
+			return new PatternB();
 	}
 	return nullptr;
 }

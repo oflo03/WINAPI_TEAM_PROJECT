@@ -4,6 +4,7 @@
 
 extern double frame_time;
 extern std::vector<Bullet*> Bullets;
+extern std::queue<CollisionMessage> collisionMsg;
 
 Animation Bullet::animation[7];
 
@@ -42,7 +43,6 @@ Bullet::Bullet(int type, int side, Vector2D<float> pos, Vector2D<float> dir) :
 		{
 		case BOSSBULLET1:
 			col->size.x = col->size.y = 10;
-			velocity = 2;
 			break;
 		case BOSSBULLET2:
 			col->size.x = col->size.y = 10;
@@ -113,7 +113,10 @@ void Bullet::update()
 	if(type != BOSSBULLET1)
 		pos += dir * velocity;
 	else {
-
+		pos = (pos - dir).Rotate(1) + dir;
+		angle += 1;
+		if(angle>=381)
+			collisionMsg.emplace(CollisionMessage(this, enemy, 0));
 	}
 	frame = (frame + frame_time * animation[type].velocity * animation[type].frame);
 	if (frame >= animation[type].frame) frame = 0;
@@ -122,11 +125,12 @@ void Bullet::update()
 
 void Bullet::handle_collision(int otherLayer, int damage)
 {
-	if (type == BOSSBULLET1) return;
 	switch (otherLayer)
 	{
 	case wall:
 	case player:
+		if (type == BOSSBULLET1) 
+			return;
 	case enemy:
 		switch (type)
 		{
@@ -140,6 +144,8 @@ void Bullet::handle_collision(int otherLayer, int damage)
 			EffectManager::getInstance()->set_effect(new Effect(CEffect::SHOTGUNBULLET, col->pos));
 			break;
 		case BOSSBULLET1:
+			EffectManager::getInstance()->set_effect(new Effect(CEffect::PATTERNA, col->pos));
+			break;
 		case BOSSBULLET2:
 		case BENEMY:
 			EffectManager::getInstance()->set_effect(new Effect(CEffect::ENEMYBULLET, col->pos));

@@ -8,10 +8,10 @@ Boss::Boss() {
 	body.frame = 3;
 	body.size = { 0,0,body.resource.GetWidth() / body.frame ,body.resource.GetHeight() };
 	hand[LEFT].resource.Load(L"boss_lefthand.png");
-	hand[LEFT].frame = 3;
+	hand[LEFT].frame = 4;
 	hand[LEFT].size= { 0,0,hand[0].resource.GetWidth() / hand[0].frame ,hand[0].resource.GetHeight() };
 	hand[RIGHT].resource.Load(L"boss_righthand.png");
-	hand[RIGHT].frame = 3;
+	hand[RIGHT].frame = 4;
 	hand[RIGHT].size = { 0,0,hand[1].resource.GetWidth() / hand[1].frame ,hand[1].resource.GetHeight() };
 	shadow.Load(L"shadow.png");
 	state = new BossIdle();

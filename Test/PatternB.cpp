@@ -16,11 +16,15 @@ BossState* PatternB::handle_event(Boss& boss)
 {
 	if ((int)time == 4 && !isAttack) {
 		Vector2D<float> t(boss.pos + Vector2D<float>(10, 0));
-		for (int i = 0,angle=0; i < 4;i++,angle+=90) {
-			for (int i = 0,x=0; i < 20; i++,x+=10) {
-				Bullets.emplace_back(new Bullet(BOSSBULLET1, enemyBullet, Vector2D<float>(t.x+x,t.y).Rotate(angle), Vector2D<float>()));
+		for (int i = 0, angle = 0; i < 4; i++, angle += 90) {
+			for (int j = 0, x = 0; j < 40; j++, x += 30) {
+				Bullets.emplace_back(new Bullet(BOSSBULLET1, enemyBullet, Vector2D<float>(t.x + x, t.y).Rotate(angle), boss.pos));
 			}
 		}
+		isAttack = true;
+	}
+	else if ((int)time == 100) {
+		return new BossIdle();
 	}
 	return nullptr;
 }
