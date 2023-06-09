@@ -32,9 +32,9 @@ void EnemyManager::init(int stage)
 	switch (stage)
 	{
 	case 1:
-		enemy.emplace_back(new PistolMan(300, 400, Player::getInstance(1)));
-		enemy.emplace_back(new PistolMan(1000, 400, Player::getInstance(1)));
-		enemy.emplace_back(new PistolMan(1800, 400, Player::getInstance(1)));
+		spawn(PISTOLMAN, 300, 400);
+		spawn(PISTOLMAN, 1000, 400);
+		spawn(PISTOLMAN, 1800, 400);
 		break;
 	case 2:
 		enemy.emplace_back(new PistolMan(300, 400, Player::getInstance(1)));
@@ -96,8 +96,32 @@ void EnemyManager::init(int stage)
 
 void EnemyManager::destroy()
 {
-	if(instance!=nullptr)
+	if (instance != nullptr)
 		delete instance;
+}
+
+void EnemyManager::spawn(int type, float x, float y)
+{
+	switch (type)
+	{
+	case PISTOLMAN:
+		enemy.emplace_back(new PistolMan(x, y, Player::getInstance(1)));
+		break;
+	case RIFLEMAN:
+		enemy.emplace_back(new RifleMan(x, y, Player::getInstance(1)));
+		break;
+	case SHOTGUNMAN:
+		enemy.emplace_back(new ShotgunMan(x, y, Player::getInstance(1)));
+		break;
+	case BAT:
+		enemy.emplace_back(new Bat(x, y, Player::getInstance(1)));
+		break;
+	case BOMBSHE:
+		enemy.emplace_back(new Bombshe(x, y, Player::getInstance(1)));
+		break;
+	default:
+		break;
+	}
 }
 
 void EnemyManager::delete_enemy(Enemy* e)
@@ -113,7 +137,7 @@ void EnemyManager::delete_enemy(Enemy* e)
 void EnemyManager::handle_event()
 {
 	for (auto& E : enemy) {
-		if(!E->isDead())
+		if (!E->isDead())
 			E->handle_event();
 	}
 }
