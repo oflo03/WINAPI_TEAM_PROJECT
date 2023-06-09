@@ -56,36 +56,42 @@ Bullet::~Bullet() {
 }
 
 
-void Bullet::draw_bullet(HDC mDC)
-{
+void Bullet::draw_bullet(HDC mDC){
 	int width = animation[type].size.right;
 	int height = animation[type].size.bottom;
-	CImage temp;
-	temp.Create(width, height, 32);
-	CImage rotatedImage;
-	rotatedImage.Create(width, height, 32);
-	for (int y = 0; y < height; y++) {
-		for (int x = 0; x < width; x++) {
-			BYTE* srcPixel = (BYTE*)animation[type].resource.GetPixelAddress((int)frame * width + x, y);
-			BYTE* destPixel = (BYTE*)temp.GetPixelAddress(x, y);
-			memcpy(destPixel, srcPixel, sizeof(BYTE) * 4);
-		}
-	}
-	for (int y = 0; y < height; y++) {
-		for (int x = 0; x < width; x++) {
-			Vector2D<float> rotatedPos = (Vector2D<float>(x - width / 2, y - height / 2)).Rotate(angle) + Vector2D<float>(width / 2, height / 2);
-			if (rotatedPos.x >= 0 && rotatedPos.x < width && rotatedPos.y >= 0 && rotatedPos.y < height) {
-				BYTE* srcPixel = (BYTE*)temp.GetPixelAddress(rotatedPos.x, rotatedPos.y);
-				BYTE* destPixel = (BYTE*)rotatedImage.GetPixelAddress(x, y);
+	if(type != BOSSBULLET1){
+		CImage temp;
+		temp.Create(width, height, 32);
+		CImage rotatedImage;
+		rotatedImage.Create(width, height, 32);
+		for (int y = 0; y < height; y++) {
+			for (int x = 0; x < width; x++) {
+				BYTE* srcPixel = (BYTE*)animation[type].resource.GetPixelAddress((int)frame * width + x, y);
+				BYTE* destPixel = (BYTE*)temp.GetPixelAddress(x, y);
 				memcpy(destPixel, srcPixel, sizeof(BYTE) * 4);
 			}
 		}
+		for (int y = 0; y < height; y++) {
+			for (int x = 0; x < width; x++) {
+				Vector2D<float> rotatedPos = (Vector2D<float>(x - width / 2, y - height / 2)).Rotate(angle) + Vector2D<float>(width / 2, height / 2);
+				if (rotatedPos.x >= 0 && rotatedPos.x < width && rotatedPos.y >= 0 && rotatedPos.y < height) {
+					BYTE* srcPixel = (BYTE*)temp.GetPixelAddress(rotatedPos.x, rotatedPos.y);
+					BYTE* destPixel = (BYTE*)rotatedImage.GetPixelAddress(x, y);
+					memcpy(destPixel, srcPixel, sizeof(BYTE) * 4);
+				}
+			}
+		}
+		rotatedImage.TransparentBlt(mDC, pos.x - animation[type].size.right / 2, pos.y - animation[type].size.bottom / 2, animation[type].size.right, animation[type].size.bottom,
+			0, 0, animation[type].size.right, animation[type].size.bottom, RGB(0, 0, 0)
+		);
+		rotatedImage.Destroy();
+		temp.Destroy();
 	}
-	rotatedImage.TransparentBlt(mDC, pos.x - animation[type].size.right / 2, pos.y - animation[type].size.bottom / 2, animation[type].size.right, animation[type].size.bottom,
-		0, 0, animation[type].size.right, animation[type].size.bottom, RGB(0, 0, 0)
-	);
-	rotatedImage.Destroy();
-	temp.Destroy();
+	else {
+		animation[type].resource.Draw(mDC, pos.x - animation[type].size.right / 2, pos.y - animation[type].size.bottom / 2, animation[type].size.right, animation[type].size.bottom,
+			animation[type].size.right*(int)frame, 0, animation[type].size.right, animation[type].size.bottom
+		);
+	}
 }
 
 void Bullet::update()

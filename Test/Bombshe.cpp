@@ -61,7 +61,7 @@ void Bombshe::init()
 	for (int i = 0; i < 3; i++) {
 		animation[BDAMAGED][i].frame = 1;
 		animation[BDAMAGED][i].size = { 0,0,animation[BDAMAGED][i].resource.GetWidth() / animation[BDAMAGED][i].frame,animation[BDAMAGED][i].resource.GetHeight() };
-		animation[BDAMAGED][i].velocity = 3;
+		animation[BDAMAGED][i].velocity = 8;
 	}
 	animation[BDEAD][FRONT].resource.Load(L"Bombshe_dead.png");
 	animation[BDEAD][FRONT_RIGHT].resource.Load(L"Bombshe_dead.png");
@@ -96,7 +96,7 @@ void Bombshe::draw_character(HDC mDC)
 
 void Bombshe::handle_event()
 {
-	if (attackable() && !targetLocked || (state == BDAMAGED && (int)frame == 1)) {
+	if (attackable() && !targetLocked || (state == BDAMAGED && (int)frame == 1)&& !targetLocked) {
 		targetLocked = true;
 		state = BATTACK;
 		frame = 0;
@@ -117,9 +117,9 @@ void Bombshe::handle_event()
 				else if(wave->effect[wave->type].frame == 3)
 					wave->time = 0;
 			}
-			if (state == BDAMAGED) {
+			if (state == BDAMAGED&&(int)frame==1) {
 				state = BATTACK;
-				frame;
+				frame = 0;
 			}
 		}
 	}
@@ -146,7 +146,7 @@ void Bombshe::update()
 			EffectManager::getInstance()->set_effect(new Effect(CEffect::BOMBSHEDIE, pos));
 		}
 	}
-	if ((int)frame == animation[state][direction].frame) frame = 0;
+	if ((int)frame == animation[state][direction].frame&&state!=BDAMAGED) frame = 0;
 }
 
 void Bombshe::SetDirection()

@@ -132,6 +132,8 @@
     <ClCompile Include="Bat.cpp" />
     <ClCompile Include="Bombshe.cpp" />
     <ClCompile Include="Boss.cpp" />
+    <ClCompile Include="BossIdle.cpp" />
+    <ClCompile Include="BossState.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="DropItem.cpp">
@@ -140,6 +142,7 @@
     <ClCompile Include="Effect.cpp" />
     <ClCompile Include="EffectManager.cpp" />
     <ClCompile Include="EnemyManager.cpp" />
+    <ClCompile Include="PatternA.cpp" />
     <ClCompile Include="game_framework.cpp" />
     <ClCompile Include="IdleState.cpp" />
     <ClCompile Include="main.cpp" />
@@ -164,6 +167,8 @@
     <ClInclude Include="Bat.h" />
     <ClInclude Include="Bombshe.h" />
     <ClInclude Include="Boss.h" />
+    <ClInclude Include="BossIdle.h" />
+    <ClInclude Include="BossState.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="DropItem.h">
@@ -173,6 +178,7 @@
     <ClInclude Include="EffectManager.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyManager.h" />
+    <ClInclude Include="PatternA.h" />
     <ClInclude Include="game_framework.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClInclude>

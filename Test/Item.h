@@ -13,7 +13,7 @@ enum ID // 아이템 추가할 때 여기 ID명 작성
 };
 
 const int cooltime[]{ 30,15,7,30,10 };
-const int rebound[]{ 8,15,5,20,10 };
+const int rebound[]{ 8,10,5,20,10 };
 
 class Item
 {

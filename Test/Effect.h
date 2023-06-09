@@ -17,13 +17,13 @@ enum CEffect {
 	BATDIE,
 	BOMBSHEDIE,
 	SHOTGUNDIE,
-	DAMAGED
-	//이펙트 추가는 여기서
+	DAMAGED,
+	PATTERNA
 };
 
 class Effect {
 public:
-	static Animation effect[12];
+	static Animation effect[13];
 	int type;
 	float time;
 	Vector2D<float> pos;
