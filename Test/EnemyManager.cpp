@@ -32,7 +32,7 @@ void EnemyManager::init(int stage)
 	ShotgunMan::init();
 	Bat::init();
 	Bombshe::init();
-	Player* player = Player::getInstance(1);
+	Player* player = Player::getInstance(selectedPlayer);
 	spawnAnim.resource.Load(L"Enemy_Spawn.png");
 	spawnAnim.frame = 17;
 	spawnAnim.size = RECT(0, 0, 40, 40);
@@ -53,55 +53,63 @@ void EnemyManager::init(int stage)
 		spawn(PISTOLMAN, 1800, 900);
 		break;
 	case 3:
-		enemy.emplace_back(new RifleMan(300, 400, Player::getInstance(1)));
-		enemy.emplace_back(new PistolMan(1000, 400, Player::getInstance(1)));
-		enemy.emplace_back(new PistolMan(1800, 400, Player::getInstance(1)));
-		enemy.emplace_back(new PistolMan(300, 900, Player::getInstance(1)));
-		enemy.emplace_back(new PistolMan(1000, 900, Player::getInstance(1)));
-		enemy.emplace_back(new RifleMan(1800, 900, Player::getInstance(1)));
+		spawn(RIFLEMAN, 300, 400);
+		spawn(PISTOLMAN, 1000, 400);
+		spawn(PISTOLMAN, 1800, 400);
+		spawn(PISTOLMAN, 300, 900);
+		spawn(PISTOLMAN, 1000, 900);
+		spawn(RIFLEMAN, 1800, 900);
 		break;
 	case 4:
-		enemy.emplace_back(new PistolMan(600, 200, Player::getInstance(1)));
-		enemy.emplace_back(new PistolMan(1500, 200, Player::getInstance(1)));
-		enemy.emplace_back(new RifleMan(300, 600, Player::getInstance(1)));
-		enemy.emplace_back(new RifleMan(1800, 600, Player::getInstance(1)));
-		enemy.emplace_back(new ShotgunMan(960, 1000, Player::getInstance(1)));
+		spawn(PISTOLMAN, 600, 200);
+		spawn(PISTOLMAN, 1500, 200);
+		spawn(RIFLEMAN, 300, 600);
+		spawn(RIFLEMAN, 1800, 600);
+		spawn(SHOTGUNMAN, 960, 1000);
 		break;
 	case 5:
-		enemy.emplace_back(new Bat(300, 200, Player::getInstance(1)));
-		enemy.emplace_back(new Bat(1600, 200, Player::getInstance(1)));
-		enemy.emplace_back(new Bat(600, 600, Player::getInstance(1)));
-		enemy.emplace_back(new Bat(1500, 600, Player::getInstance(1)));
+		spawn(BAT, 300, 200);
+		spawn(BAT, 1600, 200);
+		spawn(BAT, 600, 600);
+		spawn(BAT, 1500, 600);
 		break;
 	case 6:
-		enemy.emplace_back(new ShotgunMan(600, 200, Player::getInstance(1)));
-		enemy.emplace_back(new ShotgunMan(1300, 200, Player::getInstance(1)));
-		enemy.emplace_back(new Bat(300, 600, Player::getInstance(1)));
-		enemy.emplace_back(new Bat(1800, 600, Player::getInstance(1)));
-		enemy.emplace_back(new ShotgunMan(100, 800, Player::getInstance(1)));
-		enemy.emplace_back(new ShotgunMan(1850, 800, Player::getInstance(1)));
-		enemy.emplace_back(new Bat(300, 1000, Player::getInstance(1)));
-		enemy.emplace_back(new Bat(1800, 1000, Player::getInstance(1)));
+		spawn(SHOTGUNMAN, 600, 200);
+		spawn(SHOTGUNMAN, 1300, 200);
+		spawn(BAT, 300, 600);
+		spawn(BAT, 1800, 600);
+		spawn(SHOTGUNMAN, 100, 800);
+		spawn(SHOTGUNMAN, 1850, 800);
+		spawn(BAT, 300, 1000);
+		spawn(BAT, 1800, 1000);
 		break;
 	case 7:
-		enemy.emplace_back(new Bombshe(400, 600, Player::getInstance(1)));
-		enemy.emplace_back(new Bombshe(1500, 600, Player::getInstance(1)));
-		enemy.emplace_back(new PistolMan(800, 300, Player::getInstance(1)));
-		enemy.emplace_back(new PistolMan(1000, 300, Player::getInstance(1)));
-		enemy.emplace_back(new RifleMan(800, 800, Player::getInstance(1)));
-		enemy.emplace_back(new RifleMan(1000, 800, Player::getInstance(1)));
+		spawn(BOMBSHE, 400, 600);
+		spawn(BOMBSHE, 1500, 600);
+		spawn(PISTOLMAN, 800, 300);
+		spawn(PISTOLMAN, 1000, 300);
+		spawn(RIFLEMAN, 800, 800);
+		spawn(RIFLEMAN, 1000, 800);
 		break;
 	case 8:
-		enemy.emplace_back(new PistolMan(800, 300, Player::getInstance(1)));
-		enemy.emplace_back(new PistolMan(1000, 300, Player::getInstance(1)));
-		enemy.emplace_back(new RifleMan(800, 800, Player::getInstance(1)));
-		enemy.emplace_back(new RifleMan(1000, 800, Player::getInstance(1)));
-		enemy.emplace_back(new ShotgunMan(300, 200, Player::getInstance(1)));
-		enemy.emplace_back(new ShotgunMan(1600, 200, Player::getInstance(1)));
-		enemy.emplace_back(new Bat(300, 600, Player::getInstance(1)));
-		enemy.emplace_back(new Bat(1800, 600, Player::getInstance(1)));
+		spawn(SHOTGUNMAN, 800, 300);
+		spawn(SHOTGUNMAN, 1000, 300);
+		spawn(SHOTGUNMAN, 800, 800);
+		spawn(SHOTGUNMAN, 1000, 800);
+		spawn(SHOTGUNMAN, 300, 200);
+		spawn(SHOTGUNMAN, 1600, 200);
+		spawn(SHOTGUNMAN, 300, 600);
+		spawn(SHOTGUNMAN, 1800, 600);
 		break;
 	case 9:
+		spawn(PISTOLMAN, 800, 300);
+		spawn(PISTOLMAN, 1000, 300);
+		spawn(RIFLEMAN, 800, 800);
+		spawn(RIFLEMAN, 1000, 800);
+		spawn(SHOTGUNMAN, 300, 200);
+		spawn(SHOTGUNMAN, 1600, 200);
+		spawn(BAT, 300, 600);
+		spawn(BAT, 1800, 600);
 		break;
 	default:
 		break;
@@ -119,19 +127,19 @@ void EnemyManager::spawn(int type, float x, float y)
 	switch (type)
 	{
 	case PISTOLMAN:
-		enemy.emplace_back(new PistolMan(x, y, Player::getInstance(1)));
+		enemy.emplace_back(new PistolMan(x, y, Player::getInstance(selectedPlayer)));
 		break;
 	case RIFLEMAN:
-		enemy.emplace_back(new RifleMan(x, y, Player::getInstance(1)));
+		enemy.emplace_back(new RifleMan(x, y, Player::getInstance(selectedPlayer)));
 		break;
 	case SHOTGUNMAN:
-		enemy.emplace_back(new ShotgunMan(x, y, Player::getInstance(1)));
+		enemy.emplace_back(new ShotgunMan(x, y, Player::getInstance(selectedPlayer)));
 		break;
 	case BAT:
-		enemy.emplace_back(new Bat(x, y, Player::getInstance(1)));
+		enemy.emplace_back(new Bat(x, y, Player::getInstance(selectedPlayer)));
 		break;
 	case BOMBSHE:
-		enemy.emplace_back(new Bombshe(x, y, Player::getInstance(1)));
+		enemy.emplace_back(new Bombshe(x, y, Player::getInstance(selectedPlayer)));
 		break;
 	default:
 		break;

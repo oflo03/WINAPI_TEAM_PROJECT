@@ -13,7 +13,7 @@ void UI::init()
 	heart.Load(L"UI_Image_Heart.png");
 	weapons.Load(L"UI_Image_Weapons.png");
 	cursor.Load(L"UI_Image_Cursor.png");
-	pp = Player::getInstance(1);
+	pp = Player::getInstance(selectedPlayer);
 	ammoTextBox = RECT(monitorSize.x - 250, 170, monitorSize.x - 10, 200);
 	romulus = CreateFont(48, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET,
 		OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,

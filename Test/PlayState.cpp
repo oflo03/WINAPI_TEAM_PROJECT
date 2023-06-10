@@ -40,6 +40,7 @@ PlayState::PlayState() : GameState()	// 모든 스테이트 시작 전에 콜라이더 벡터 초
 	LoadTileMap(3);
 	UI::init();
 	beatable = true;
+	selectedPlayer = marin;
 	//PlaySound(L"BGM_PlayState.wav", NULL, SND_ASYNC | SND_LOOP);
 }
 
@@ -53,7 +54,7 @@ void PlayState::update()
 {
 	for (auto& d : drops)
 		d->update();
-	Player::getInstance(1)->update();
+	Player::getInstance(selectedPlayer)->update();
 	EnemyManager::getInstance()->update();
 	Boss::getInstance()->update();
 	for (auto& B : Bullets)
@@ -76,7 +77,7 @@ void PlayState::handle_events()
 		beatable = !beatable;
 	}
 	EnemyManager::getInstance()->handle_event();
-	Player::getInstance(1)->handle_event();
+	Player::getInstance(selectedPlayer)->handle_event();
 	Boss::getInstance()->handle_event();
 }
 
@@ -91,7 +92,7 @@ void PlayState::draw()
 	for (auto& d : drops)
 		d->Draw(mapDC);
 	EnemyManager::getInstance()->draw(mapDC);
-	Player::getInstance(1)->draw_character(mapDC);
+	Player::getInstance(selectedPlayer)->draw_character(mapDC);
 	Boss::getInstance()->draw(mapDC);
 	for (auto& B : Bullets)
 		B->draw_bullet(mapDC);

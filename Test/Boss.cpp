@@ -18,7 +18,7 @@ Boss::Boss() {
 	warning.Load(L"boss_patternD.png");
 	state = new BossIdle();
 	frame = 0;
-	target = Player::getInstance(1);
+	target = Player::getInstance(selectedPlayer);
 	pos.x = 960;
 	pos.y = 500;
 	HP = 1000;

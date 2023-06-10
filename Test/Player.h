@@ -13,6 +13,12 @@ class Marin;
 extern Vector2D<float> camPos;
 extern Vector2D<float> monitorSize;
 
+enum playertype
+{
+	marin, pilot, knight
+};
+extern int selectedPlayer;
+
 class Player
 	:public Master
 {

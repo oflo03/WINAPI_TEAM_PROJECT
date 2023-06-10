@@ -142,6 +142,7 @@
     <ClCompile Include="Effect.cpp" />
     <ClCompile Include="EffectManager.cpp" />
     <ClCompile Include="EnemyManager.cpp" />
+    <ClCompile Include="Knight.cpp" />
     <ClCompile Include="PatternA.cpp" />
     <ClCompile Include="game_framework.cpp" />
     <ClCompile Include="IdleState.cpp" />
@@ -150,6 +151,7 @@
     <ClCompile Include="PatternB.cpp" />
     <ClCompile Include="PatternC.cpp" />
     <ClCompile Include="PatternD.cpp" />
+    <ClCompile Include="Pilot.cpp" />
     <ClCompile Include="PistolMan.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayState.cpp">
@@ -182,6 +184,7 @@
     <ClInclude Include="EffectManager.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyManager.h" />
+    <ClInclude Include="Knight.h" />
     <ClInclude Include="PatternA.h" />
     <ClInclude Include="game_framework.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
@@ -193,6 +196,7 @@
     <ClInclude Include="PatternB.h" />
     <ClInclude Include="PatternC.h" />
     <ClInclude Include="PatternD.h" />
+    <ClInclude Include="Pilot.h" />
     <ClInclude Include="PistolMan.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayState.h">
