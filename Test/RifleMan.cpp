@@ -204,7 +204,7 @@ void RifleMan::update()
 			col->pos = pos;
 			col->damage = 5;
 			COLL.emplace_back(col);
-			attackCoolTime = 300;
+			weapon->SetCurTime(100);
 			frame = 0;
 		}
 	}
