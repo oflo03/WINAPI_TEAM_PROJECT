@@ -41,6 +41,17 @@ void LogoState::handle_events()
 		entering = true;
 		enterTime = logoTime + 0.5;
 	}
+	else if (GetAsyncKeyState('E') & 1)
+	{
+		if(logoTime < 1.5)
+			logoTime = 1.5;
+		else if(logoTime >= 1.5&&logoTime < 2)
+			logoTime = 2;
+		else if(logoTime >= 2 && logoTime < 3.5)
+			logoTime = 3.5;
+		else if (logoTime >= 3.5 && logoTime < 4)
+			logoTime = 4;
+	}
 }
 
 

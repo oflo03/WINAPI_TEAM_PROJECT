@@ -18,7 +18,7 @@ void UI::init()
 	bossHp.Load(L"boss_hp.png");
 	bossHpFrame.Load(L"boss_hp_frame.png");
 	bossHpFrame2.Load(L"boss_hp_frame2.png");
-	pp = Player::getInstance(1);
+	pp = Player::getInstance();
 	ammoTextBox = RECT(monitorSize.x - 250, 170, monitorSize.x - 10, 200);
 	romulus = CreateFont(48, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET,
 		OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,

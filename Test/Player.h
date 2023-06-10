@@ -24,6 +24,7 @@ class Player
 {
 private:
 	static Player* instance;
+	static int currentCharacter;
 protected:
 	Player(float x, float y) : pos(x, y), dir(0, 0), frame(0), damageCnt(0), angle(90), direction(FRONT), state(nullptr), selectedWeapon(SWORD), velocity(200), hp(6), curstate(STATE_IDLE) {}
 	Player() : pos(960, 1000), dir(0, 0), frame(0), damageCnt(0), angle(90), direction(FRONT), state(nullptr), selectedWeapon(SWORD), velocity(200), hp(6), curstate(STATE_IDLE) {}
