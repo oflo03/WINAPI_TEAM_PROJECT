@@ -92,7 +92,7 @@ ShotgunMan::~ShotgunMan()
 
 void ShotgunMan::draw_character(HDC mDC)
 {
-	if (col) {
+	if (col || HP <= 0) {
 		handPos = pos;
 		if (abs(angle) < 90)
 		{
@@ -166,7 +166,7 @@ void ShotgunMan::handle_event()
 
 void ShotgunMan::update()
 {
-	if (col) {
+	if (col || HP <= 0) {
 		lastPos = pos;
 		if (state == STATE_DEAD) {
 			if ((int)frame < animation[state][direction].frame)
@@ -206,7 +206,6 @@ void ShotgunMan::update()
 			col->layer = enemy;
 			col->pos = pos;
 			col->damage = 5;
-			HP = 100;
 			COLL.emplace_back(col);
 			frame = 0;
 		}

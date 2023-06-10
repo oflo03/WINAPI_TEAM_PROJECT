@@ -94,7 +94,7 @@ PistolMan::~PistolMan()
 
 void PistolMan::draw_character(HDC mDC)
 {
-	if (col) {
+	if (col || HP <= 0) {
 		handPos = pos;
 		if (abs(angle) < 90)
 		{
@@ -168,7 +168,7 @@ void PistolMan::handle_event()
 
 void PistolMan::update()
 {
-	if (col) {
+	if (col || HP <= 0) {
 		lastPos = pos;
 		frame = (frame + frame_time * animation[state][direction].velocity * animation[state][direction].frame);
 		if (state == STATE_DEAD) {

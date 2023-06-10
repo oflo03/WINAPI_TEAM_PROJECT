@@ -76,7 +76,7 @@ void Bombshe::release()
 
 void Bombshe::draw_character(HDC mDC)
 {
-	if (col) {
+	if (col || HP <= 0) {
 		float yDest = pos.y - (animation[BIDLE][FRONT].size.bottom - 22) * 2;
 		shadow.Draw(mDC, pos.x - shadow.GetWidth(), pos.y + animation[state][direction].size.bottom - 2 - shadow.GetHeight(), shadow.GetWidth() * 2, shadow.GetHeight() * 2);
 		animation[state][direction].resource.Draw(mDC, pos.x - animation[state][direction].size.right, yDest - 20, animation[state][direction].size.right * 2, animation[state][direction].size.bottom * 2,
@@ -127,7 +127,7 @@ void Bombshe::handle_event()
 
 void Bombshe::update()
 {
-	if (col) {
+	if (col || HP <= 0) {
 		frame = (frame + frame_time * animation[state][direction].velocity * animation[state][direction].frame);
 		if (state == BIDLE) {
 			if (frame >= animation[state][direction].frame) frame = 0;
@@ -157,7 +157,6 @@ void Bombshe::update()
 			col->layer = enemy;
 			col->pos = pos;
 			col->damage = 5;
-			HP = 100;
 			COLL.emplace_back(col);
 			frame = 0;
 		}

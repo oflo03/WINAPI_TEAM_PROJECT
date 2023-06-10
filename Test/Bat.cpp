@@ -47,7 +47,7 @@ Bat::~Bat()
 
 void Bat::draw_character(HDC mDC)
 {
-	if (col) {
+	if (col || state == DEAD) {
 		float yDest = pos.y - animation[IDLE].size.bottom;
 		shadow.Draw(mDC, pos.x - shadow.GetWidth(), pos.y + 60 - 2 - shadow.GetHeight(), shadow.GetWidth() * 2, shadow.GetHeight() * 2);
 		animation[state].resource.Draw(mDC, pos.x - animation[state].size.right, yDest - 20, animation[state].size.right * 2, animation[state].size.bottom * 2,
@@ -72,7 +72,7 @@ void Bat::handle_event()
 
 void Bat::update()
 {
-	if (col) {
+	if (col || state == DEAD) {
 		lastPos = pos;
 		frame = (frame + frame_time * animation[state].velocity * animation[state].frame);
 		if (state == IDLE) {
