@@ -1,6 +1,8 @@
 #pragma once
 #include"Enemy.h"
 
+extern Animation spawnAnim;
+
 class EnemyManager {
 private:
 	static EnemyManager* instance;
