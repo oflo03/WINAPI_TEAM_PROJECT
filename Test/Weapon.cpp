@@ -196,7 +196,7 @@ void Rocket::attack(const Vector2D<float>& hand, const Vector2D<float>& mPos, in
 	{
 		Vector2D<float> t = Vector2D<float>(mPos.x - hand.x, mPos.y - hand.y);
 		t /= t.GetLenth();
-		Bullets.emplace_back(new Bullet(BSHOTGUN, side, hand + Vector2D<float>(t.x * 30, t.y * 30 - 10), t * 10));
+		Bullets.emplace_back(new Bullet(BROCKET, side, hand + Vector2D<float>(t.x * 30, t.y * 30 - 10), t * 5));
 		curTime = coolTime;
 		shotTime = 30;
 		curAmmo--;

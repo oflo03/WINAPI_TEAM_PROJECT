@@ -6,7 +6,7 @@ extern double frame_time;
 extern std::vector<Bullet*> Bullets;
 extern std::queue<CollisionMessage> collisionMsg;
 
-Animation Bullet::animation[9];
+Animation Bullet::animation[10];
 
 void Bullet::init() {
 	animation[BPISTOL].resource.Load(L"Bullet_Pistol.png");
@@ -18,6 +18,9 @@ void Bullet::init() {
 	animation[BSHOTGUN].resource.Load(L"Bullet_Shotgun.png");
 	animation[BSHOTGUN].frame = 4;
 	animation[BSHOTGUN].velocity = 3;
+	animation[BROCKET].resource.Load(L"Bullet_Rocket.png");
+	animation[BROCKET].frame = 5;
+	animation[BROCKET].velocity = 3;
 	animation[BENEMY].resource.Load(L"enemy_bullet3.png");
 	animation[BENEMY].frame = 4;
 	animation[BENEMY].velocity = 3;
@@ -36,12 +39,12 @@ void Bullet::init() {
 	animation[BOUNCEDBOSSBULLET2].resource.Load(L"boss_bullet2_bounced.png");
 	animation[BOUNCEDBOSSBULLET2].frame = 1;
 	animation[BOUNCEDBOSSBULLET2].velocity = 0;
-	for(int i=0;i<9;i++)
-		animation[i].size = {0,0,animation[i].resource.GetWidth() / animation[i].frame, animation[i].resource.GetHeight()};
+	for (int i = 0; i < 10; i++)
+		animation[i].size = { 0,0,animation[i].resource.GetWidth() / animation[i].frame, animation[i].resource.GetHeight() };
 }
 
 Bullet::Bullet(int type, int side, Vector2D<float> pos, Vector2D<float> dir) :
-	pos(pos), dir(dir), frame(0),type(type),side(side)
+	pos(pos), dir(dir), frame(0), type(type), side(side)
 {
 	col = new Collider(8);
 	if (side == enemyBullet) {
@@ -80,10 +83,10 @@ Bullet::~Bullet() {
 }
 
 
-void Bullet::draw_bullet(HDC mDC){
+void Bullet::draw_bullet(HDC mDC) {
 	int width = animation[type].size.right;
 	int height = animation[type].size.bottom;
-	if(type != BOSSBULLET1&& type != BOSSBULLET3){
+	if (type != BOSSBULLET1 && type != BOSSBULLET3) {
 		CImage temp;
 		temp.Create(width, height, 32);
 		CImage rotatedImage;
@@ -112,20 +115,20 @@ void Bullet::draw_bullet(HDC mDC){
 		temp.Destroy();
 	}
 	else {
-		animation[type].resource.Draw(mDC, pos.x - animation[type].size.right, pos.y - animation[type].size.bottom, animation[type].size.right*2, animation[type].size.bottom*2,
-			animation[type].size.right*(int)frame, 0, animation[type].size.right, animation[type].size.bottom
+		animation[type].resource.Draw(mDC, pos.x - animation[type].size.right, pos.y - animation[type].size.bottom, animation[type].size.right * 2, animation[type].size.bottom * 2,
+			animation[type].size.right * (int)frame, 0, animation[type].size.right, animation[type].size.bottom
 		);
 	}
 }
 
 void Bullet::update()
 {
-	if(type != BOSSBULLET1)
+	if (type != BOSSBULLET1)
 		pos += dir * velocity;
 	else {
 		pos = (pos - dir).Rotate(2) + dir;
 		angle += 2;
-		if(angle>=600)
+		if (angle >= 600)
 			collisionMsg.emplace(CollisionMessage(this, enemy, 0));
 	}
 	frame = (frame + frame_time * animation[type].velocity * animation[type].frame);
@@ -139,7 +142,7 @@ void Bullet::handle_collision(int otherLayer, int damage)
 	{
 	case wall:
 	case player:
-		if (type == BOSSBULLET1) 
+		if (type == BOSSBULLET1)
 			return;
 	case enemy:
 		switch (type)
@@ -185,17 +188,17 @@ void Bullet::handle_collision(int otherLayer, int damage)
 		deleteSet.insert(this);
 		break;
 	case playerMelee: {
-		if (type == BOSSBULLET1|| type == BOSSBULLET3)
+		if (type == BOSSBULLET1 || type == BOSSBULLET3)
 			return;
-		dir = Player::getInstance()->GetMouseVector()*10;
-		angle = Player::getInstance()->GetAngle()*-1;
+		dir = Player::getInstance()->GetMouseVector() * 10;
+		angle = Player::getInstance()->GetAngle() * -1;
 		col->layer = playerBullet;
 		if (type == BOSSBULLET2)
 			type = BOUNCEDBOSSBULLET2;
 		else
 			type = BBOUNCE;
 	}
-		break;
+					break;
 	default:
 		break;
 	}

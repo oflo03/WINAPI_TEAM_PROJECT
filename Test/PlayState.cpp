@@ -34,7 +34,7 @@ PlayState::PlayState() : GameState()	// 모든 스테이트 시작 전에 콜라이더 벡터 초
 {
 	selectedPlayer = marin;
 	Player::init();
-	EnemyManager::getInstance()->init(9);
+	EnemyManager::getInstance()->init(7);
 	EffectManager::init();
 	Bullet::init();
 	DropItem::init();

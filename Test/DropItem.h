@@ -6,13 +6,14 @@ enum DROP
 {
 	DPISTOL,
 	DRIFLE,
-	DSHOTGUN
+	DSHOTGUN,
+	DROCKET
 };
 
 class DropItem : public Master
 {
 private:
-	static CImage image[3];
+	static CImage image[4];
 	int type;
 	Vector2D<float> pos;
 	float xDir;

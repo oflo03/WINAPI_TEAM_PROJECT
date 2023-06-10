@@ -4,7 +4,7 @@
 extern double frame_time;
 extern std::vector<DropItem*> drops;
 
-CImage DropItem::image[3];
+CImage DropItem::image[4];
 
 
 
@@ -13,6 +13,7 @@ void DropItem::init()
 	image[DROP::DPISTOL].Load(L"drop_pistol.png");
 	image[DROP::DRIFLE].Load(L"drop_rifle.png");
 	image[DROP::DSHOTGUN].Load(L"drop_shotgun.png");
+	image[DROP::DROCKET].Load(L"drop_rocket.png");
 }
 
 void DropItem::update()
