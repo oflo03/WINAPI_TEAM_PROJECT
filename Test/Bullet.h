@@ -4,7 +4,7 @@
 #include"Master.h"
 #include"Item.h"
 
-const int BulletDamage[]{ 10,7,5,5,3,30,10,10 };
+const int BulletDamage[]{ 10,7,5,5,3,30,10,10,10,10,10,10,10 };
 
 enum bullet_table {
 	BPISTOL,
@@ -14,14 +14,15 @@ enum bullet_table {
 	BBOUNCE,
 	BOSSBULLET1,
 	BOSSBULLET2,
-	BOSSBULLET3
+	BOSSBULLET3,
+	BOUNCEDBOSSBULLET2
 };
 
 class Bullet
 	:public Master
 {
 protected:
-	static Animation animation[7];
+	static Animation animation[9];
 	int type;
 	int side;
 	float frame;

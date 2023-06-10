@@ -33,15 +33,15 @@ BossState* PatternA::handle_event(Boss& boss)
 void PatternA::update(Boss& boss)
 {
 	if ((int)time < 4)
-		boss.handPos[0].y -= 2;
+		boss.handPos[0].y -= frame_time*200;
 	else if((int)time >= 4&& (int)time<96){
 		if ((int)attackCoolTime < 8)
 			attackCoolTime = (attackCoolTime + frame_time * 2 * 8);
 		else
 			attackCoolTime = -5;
 	}
-	else {
-		boss.handPos[0].y += 2;
+	else if((int)time >= 96){
+		boss.handPos[0].y += frame_time * 200;
 	}
 	time = (time + frame_time * 10);
 }

@@ -19,12 +19,13 @@ enum CEffect {
 	SHOTGUNDIE,
 	DAMAGED,
 	PATTERNA,
-	PATTERNB
+	PATTERNB,
+	PATTERNC
 };
 
 class Effect {
 public:
-	static Animation effect[14];
+	static Animation effect[15];
 	int type;
 	float time;
 	Vector2D<float> pos;

@@ -83,6 +83,9 @@
     <ClCompile Include="PatternB.cpp">
       <Filter>Enemy\Boss</Filter>
     </ClCompile>
+    <ClCompile Include="PatternC.cpp">
+      <Filter>Enemy\Boss</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IdleState.h">
@@ -182,6 +185,9 @@
       <Filter>UI</Filter>
     </ClInclude>
     <ClInclude Include="PatternB.h">
+      <Filter>Enemy\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="PatternC.h">
       <Filter>Enemy\Boss</Filter>
     </ClInclude>
   </ItemGroup>
