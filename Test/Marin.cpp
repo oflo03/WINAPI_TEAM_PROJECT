@@ -4,6 +4,7 @@
 #include"EffectManager.h"
 
 extern double frame_time;
+extern bool beatable;
 
 Animation Marin::animation[5][6];
 
@@ -199,7 +200,7 @@ void Marin::handle_collision(int otherLayer, int damage)
 		col->pos = pos;
 		break;
 	case enemy:
-		if (col->layer == player)
+		if (col->layer == player && beatable)
 		{
 			pos -= dir;
 			--hp;
@@ -213,7 +214,7 @@ void Marin::handle_collision(int otherLayer, int damage)
 		break;
 	case enemyBullet:
 		EffectManager::getInstance()->set_effect(new Effect(CEffect::DAMAGED, col->pos));
-		if (col->layer == player)
+		if (col->layer == player && beatable)
 		{
 			--hp;
 			col->layer = damaged_player;

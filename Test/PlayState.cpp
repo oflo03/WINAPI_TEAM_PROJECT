@@ -37,7 +37,7 @@ PlayState::PlayState() : GameState()	// 모든 스테이트 시작 전에 콜라이더 벡터 초
 	EffectManager::init();
 	Bullet::init();
 	DropItem::init();
-	LoadTileMap(4);
+	LoadTileMap(3);
 	UI::init();
 	beatable = true;
 	//PlaySound(L"BGM_PlayState.wav", NULL, SND_ASYNC | SND_LOOP);
@@ -72,7 +72,7 @@ void PlayState::handle_events()
 	else if (GetAsyncKeyState('X') & 1) {
 		lookRange = !lookRange;
 	}
-	else if ((GetAsyncKeyState('Z') & 1) && (GetAsyncKeyState('C') & 1)) {
+	else if (GetAsyncKeyState('Z') & 1) {
 		beatable = !beatable;
 	}
 	EnemyManager::getInstance()->handle_event();

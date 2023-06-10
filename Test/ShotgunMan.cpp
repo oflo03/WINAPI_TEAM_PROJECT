@@ -74,18 +74,12 @@ ShotgunMan::ShotgunMan(double x, double y, Player* target) : Enemy(x, y)
 	shadow.Load(L"shadow.png");
 	velocity = 100;
 	moveTime = 200;
-	HP = 50;
+	HP = 100;
 	state = STATE_IDLE;
 	weapon = new Shotgun();
 	weapon->Enemy();
 	attackRange = 300;
 	attackCoolTime = 0;
-	col = new Collider(Vector2D<float>(animation[STATE_IDLE][FRONT].size.right, animation[STATE_IDLE][FRONT].size.bottom));
-	col->owner = this;
-	col->layer = enemy;
-	col->pos = pos;
-	col->damage = 5;
-	COLL.emplace_back(col);
 }
 
 ShotgunMan::~ShotgunMan()
@@ -98,102 +92,123 @@ ShotgunMan::~ShotgunMan()
 
 void ShotgunMan::draw_character(HDC mDC)
 {
-	handPos = pos;
-	if (abs(angle) < 90)
-	{
-		handPos.x += 18;
-		handPos.y += 8;
+	if (col || HP <= 0) {
+		handPos = pos;
+		if (abs(angle) < 90)
+		{
+			handPos.x += 18;
+			handPos.y += 8;
+		}
+		else
+		{
+			handPos.x -= 17;
+			handPos.y += 8;
+		}
+		float yDest = pos.y - (animation[STATE_IDLE][FRONT].size.bottom - 25) * 2;
+		if (state != STATE_DEAD) {
+			shadow.Draw(mDC, pos.x - shadow.GetWidth(), pos.y + col->size.y - 2 - shadow.GetHeight(), shadow.GetWidth() * 2, shadow.GetHeight() * 2);
+			if (direction == FRONT || direction == FRONT_RIGHT || direction == FRONT_LEFT) {
+				animation[state][direction].resource.Draw(mDC, pos.x - animation[state][direction].size.right, yDest - 20, animation[state][direction].size.right * 2, animation[state][direction].size.bottom * 2,
+					(int)frame * animation[state][direction].size.right, 0, animation[state][direction].size.right, animation[state][direction].size.bottom
+				);
+				weapon->draw_weapon(mDC, handPos, target->GetPos());
+				hand.Draw(mDC, handPos.x - hand.GetWidth(), handPos.y - hand.GetHeight(), hand.GetWidth() * 2, hand.GetHeight() * 2);
+			}
+			else {
+				weapon->draw_weapon(mDC, handPos, target->GetPos());
+				hand.Draw(mDC, handPos.x - hand.GetWidth(), handPos.y - hand.GetHeight(), hand.GetWidth() * 2, hand.GetHeight() * 2);
+				animation[state][direction].resource.Draw(mDC, pos.x - animation[state][direction].size.right, yDest - 20, animation[state][direction].size.right * 2, animation[state][direction].size.bottom * 2,
+					(int)frame * animation[state][direction].size.right, 0, animation[state][direction].size.right, animation[state][direction].size.bottom
+				);
+			}
+		}
+		else
+			animation[state][direction].resource.Draw(mDC, pos.x - animation[state][direction].size.right, yDest - 20, animation[state][direction].size.right * 2, animation[state][direction].size.bottom * 2,
+				(int)frame * animation[state][direction].size.right, 0, animation[state][direction].size.right, animation[state][direction].size.bottom);
 	}
 	else
-	{
-		handPos.x -= 17;
-		handPos.y += 8;
-	}
-	float yDest = pos.y - (animation[STATE_IDLE][FRONT].size.bottom - 25) * 2;
-	if (state != STATE_DEAD) {
-		shadow.Draw(mDC, pos.x - shadow.GetWidth(), pos.y + col->size.y - 2 - shadow.GetHeight(), shadow.GetWidth() * 2, shadow.GetHeight() * 2);
-		if (direction == FRONT || direction == FRONT_RIGHT || direction == FRONT_LEFT) {
-			animation[state][direction].resource.Draw(mDC, pos.x - animation[state][direction].size.right, yDest - 20, animation[state][direction].size.right * 2, animation[state][direction].size.bottom * 2,
-				(int)frame * animation[state][direction].size.right, 0, animation[state][direction].size.right, animation[state][direction].size.bottom
-			);
-			weapon->draw_weapon(mDC, handPos, target->GetPos());
-			hand.Draw(mDC, handPos.x - hand.GetWidth(), handPos.y - hand.GetHeight(), hand.GetWidth() * 2, hand.GetHeight() * 2);
-		}
-		else {
-			weapon->draw_weapon(mDC, handPos, target->GetPos());
-			hand.Draw(mDC, handPos.x - hand.GetWidth(), handPos.y - hand.GetHeight(), hand.GetWidth() * 2, hand.GetHeight() * 2);
-			animation[state][direction].resource.Draw(mDC, pos.x - animation[state][direction].size.right, yDest - 20, animation[state][direction].size.right * 2, animation[state][direction].size.bottom * 2,
-				(int)frame * animation[state][direction].size.right, 0, animation[state][direction].size.right, animation[state][direction].size.bottom
-			);
-		}
-	}
-	else
-		animation[state][direction].resource.Draw(mDC, pos.x - animation[state][direction].size.right, yDest - 20, animation[state][direction].size.right * 2, animation[state][direction].size.bottom * 2,
-			(int)frame * animation[state][direction].size.right, 0, animation[state][direction].size.right, animation[state][direction].size.bottom);
+		spawnAnim.resource.Draw(mDC, pos.x - spawnAnim.size.right, pos.y - spawnAnim.size.bottom, spawnAnim.size.right * 2, spawnAnim.size.bottom * 2,
+			(int)frame * spawnAnim.size.right, 0, spawnAnim.size.right, spawnAnim.size.bottom);
 }
 
 void ShotgunMan::handle_event()
 {
-	if (!attackable()) {
-		state = STATE_RUN;
-		dir = (target->GetPos() - pos).Normalize();
-	}
-	else {
-		attack();
-		if ((int)moveTime == 0) {
-			if (state == STATE_DAMAGED) {
-				state = STATE_IDLE;
-				dir.x = dir.y = 0;
-				moveTime = 50;
-			}
-			else {
-				moveTime = ranTime(dre);
-				state = ran(dre);
-				if (state == STATE_IDLE)
-					dir.x = dir.y = 0;
-				else if (state == STATE_RUN)
-					dir = Vector2D<float>(1, 0).Rotate(rad(dre));
-			}
-			frame = 0;
+	if (col) {
+		if (!attackable()) {
+			state = STATE_RUN;
+			dir = (target->GetPos() - pos).Normalize();
 		}
+		else {
+			attack();
+			if ((int)moveTime == 0) {
+				if (state == STATE_DAMAGED) {
+					state = STATE_IDLE;
+					dir.x = dir.y = 0;
+					moveTime = 50;
+				}
+				else {
+					moveTime = ranTime(dre);
+					state = ran(dre);
+					if (state == STATE_IDLE)
+						dir.x = dir.y = 0;
+					else if (state == STATE_RUN)
+						dir = Vector2D<float>(1, 0).Rotate(rad(dre));
+				}
+				frame = 0;
+			}
+		}
+		if (weapon->IsRunOut() && attackCoolTime == 0)
+			attackCoolTime = 300;
+		else if (weapon->IsRunOut() && attackCoolTime == 1)
+			weapon->ReLoad();
 	}
-	if (weapon->IsRunOut() && attackCoolTime == 0)
-		attackCoolTime = 300;
-	else if (weapon->IsRunOut() && attackCoolTime == 1)
-		weapon->ReLoad();
 }
 
 void ShotgunMan::update()
 {
-	lastPos = pos;
-	if (state == STATE_DEAD) {
-		if ((int)frame < animation[state][direction].frame)
-			frame = (frame + frame_time * animation[state][direction].velocity * animation[state][direction].frame);
-		else {
-			EnemyManager::getInstance()->delete_enemy(this);
-			deleteSet.insert(this);
-			int num = randrop(dre);
-			if (num == 0) {
-				drops.emplace_back(new DropItem(DROP::DSHOTGUN, pos));
+	if (col || HP <= 0) {
+		lastPos = pos;
+		if (state == STATE_DEAD) {
+			if ((int)frame < animation[state][direction].frame)
+				frame = (frame + frame_time * animation[state][direction].velocity * animation[state][direction].frame);
+			else {
+				EnemyManager::getInstance()->delete_enemy(this);
+				deleteSet.insert(this);
+				int num = randrop(dre);
+				if (num == 0) {
+					drops.emplace_back(new DropItem(DROP::DSHOTGUN, pos));
+				}
+				EffectManager::getInstance()->set_effect(new Effect(CEffect::SHOTGUNDIE, pos));
 			}
-			EffectManager::getInstance()->set_effect(new Effect(CEffect::SHOTGUNDIE, pos));
+		}
+		else {
+			frame = (frame + frame_time * animation[state][direction].velocity * animation[state][direction].frame);
+			if (state == STATE_DAMAGED) {
+				if (moveTime >= 0) moveTime -= frame_time * 2;
+			}
+			else {
+				pos = pos + dir * velocity * frame_time;
+				if ((int)moveTime)moveTime--;
+				if ((int)(frame) == animation[state][direction].frame) frame = 0;
+			}
+			SetDirection();
+			weapon->update();
+			if (attackCoolTime)
+				attackCoolTime--;
+			col->pos = pos;
 		}
 	}
 	else {
-		frame = (frame + frame_time * animation[state][direction].velocity * animation[state][direction].frame);
-		if (state == STATE_DAMAGED) {
-			if (moveTime >= 0) moveTime -= frame_time * 2;
+		frame = (frame + frame_time * spawnAnim.velocity * spawnAnim.frame);
+		if ((int)frame == spawnAnim.frame) {
+			col = new Collider(Vector2D<float>(animation[STATE_IDLE][FRONT].size.right, animation[STATE_IDLE][FRONT].size.bottom));
+			col->owner = this;
+			col->layer = enemy;
+			col->pos = pos;
+			col->damage = 5;
+			COLL.emplace_back(col);
+			frame = 0;
 		}
-		else {
-			pos = pos + dir * velocity * frame_time;
-			if ((int)moveTime)moveTime--;
-			if ((int)(frame) == animation[state][direction].frame) frame = 0;
-		}
-		SetDirection();
-		weapon->update();
-		if (attackCoolTime)
-			attackCoolTime--;
-		col->pos = pos;
 	}
 }
 

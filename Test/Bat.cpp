@@ -5,7 +5,7 @@
 Animation Bat::animation[2];
 
 enum BATSTATE {
-	IDLE,DEAD
+	IDLE, DEAD
 };
 
 extern double frame_time;
@@ -35,12 +35,6 @@ Bat::Bat(double x, double y, Player* target) : Enemy(x, y)
 	velocity = 200;
 	state = IDLE;
 	attackRange = 600;
-	col = new Collider(10);
-	col->owner = this;
-	col->layer = 3;
-	col->pos = pos;
-	col->damage = 5;
-	COLL.emplace_back(col);
 }
 
 
@@ -53,61 +47,81 @@ Bat::~Bat()
 
 void Bat::draw_character(HDC mDC)
 {
-	float yDest = pos.y- animation[IDLE].size.bottom;
-	shadow.Draw(mDC, pos.x - shadow.GetWidth(), pos.y + 60 - 2 - shadow.GetHeight(), shadow.GetWidth() * 2, shadow.GetHeight() * 2);
-	animation[state].resource.Draw(mDC, pos.x - animation[state].size.right, yDest - 20, animation[state].size.right * 2, animation[state].size.bottom * 2,
-		(int)frame * animation[state].size.right, 0, animation[state].size.right, animation[state].size.bottom
-	);
+	if (col || state == DEAD) {
+		float yDest = pos.y - animation[IDLE].size.bottom;
+		shadow.Draw(mDC, pos.x - shadow.GetWidth(), pos.y + 60 - 2 - shadow.GetHeight(), shadow.GetWidth() * 2, shadow.GetHeight() * 2);
+		animation[state].resource.Draw(mDC, pos.x - animation[state].size.right, yDest - 20, animation[state].size.right * 2, animation[state].size.bottom * 2,
+			(int)frame * animation[state].size.right, 0, animation[state].size.right, animation[state].size.bottom);
+	}
+	else
+		spawnAnim.resource.Draw(mDC, pos.x - spawnAnim.size.right, pos.y - spawnAnim.size.bottom, spawnAnim.size.right * 2, spawnAnim.size.bottom * 2,
+			(int)frame * spawnAnim.size.right, 0, spawnAnim.size.right, spawnAnim.size.bottom);
 }
 
 void Bat::handle_event()
 {
-	if (attackable())
-		targetLocked = true;
-	if (targetLocked)
-		dir = (target->GetPos() - pos).Normalize();
-	else
-		dir.x = dir.y = 0;
+	if (col) {
+		if (attackable())
+			targetLocked = true;
+		if (targetLocked)
+			dir = (target->GetPos() - pos).Normalize();
+		else
+			dir.x = dir.y = 0;
+	}
 }
 
 void Bat::update()
 {
-	lastPos = pos;
-	frame = (frame + frame_time * animation[state].velocity * animation[state].frame);
-	if(state==IDLE){
-		pos = pos + dir * velocity * frame_time;
-		if (frame >= animation[state].frame) frame = 0;
-		col->pos = pos;
-	}
-	else {
-		if ((int)frame == animation[state].frame) {
-			EnemyManager::getInstance()->delete_enemy(this);
-			deleteSet.insert(this);
-			EffectManager::getInstance()->set_effect(new Effect(CEffect::BATDIE, pos));
-			for (auto& other : COLL) {
-				for (int i = 0; i < 4; i++) {
-					if (other->layer==player) {
-						Vector2D<float> dot[4] = { Vector2D<float>(other->pos.x - other->size.x, other->pos.y - other->size.y),
-						Vector2D<float>(other->pos.x + other->size.x, other->pos.y - other->size.y),
-						Vector2D<float>(other->pos.x + other->size.x, other->pos.y + other->size.y),
-						Vector2D<float>(other->pos.x - other->size.x, other->pos.y + other->size.y) };
-						if ((dot[i] - pos).GetLenth() <= 60) {
-							other->owner->handle_collision(enemyBullet, 2);
-							break;
+	if (col || state == DEAD) {
+		lastPos = pos;
+		frame = (frame + frame_time * animation[state].velocity * animation[state].frame);
+		if (state == IDLE) {
+			pos = pos + dir * velocity * frame_time;
+			if (frame >= animation[state].frame) frame = 0;
+			col->pos = pos;
+		}
+		else {
+			if ((int)frame == animation[state].frame) {
+				EnemyManager::getInstance()->delete_enemy(this);
+				deleteSet.insert(this);
+				EffectManager::getInstance()->set_effect(new Effect(CEffect::BATDIE, pos));
+				for (auto& other : COLL) {
+					for (int i = 0; i < 4; i++) {
+						if (other->layer == player) {
+							Vector2D<float> dot[4] = { Vector2D<float>(other->pos.x - other->size.x, other->pos.y - other->size.y),
+							Vector2D<float>(other->pos.x + other->size.x, other->pos.y - other->size.y),
+							Vector2D<float>(other->pos.x + other->size.x, other->pos.y + other->size.y),
+							Vector2D<float>(other->pos.x - other->size.x, other->pos.y + other->size.y) };
+							if ((dot[i] - pos).GetLenth() <= 60) {
+								other->owner->handle_collision(enemyBullet, 2);
+								break;
+							}
 						}
-					}
-					else if (other->layer == enemy) {
-						Vector2D<float> dot[4] = { Vector2D<float>(other->pos.x - other->size.x, other->pos.y - other->size.y),
-						Vector2D<float>(other->pos.x + other->size.x, other->pos.y - other->size.y),
-						Vector2D<float>(other->pos.x + other->size.x, other->pos.y + other->size.y),
-						Vector2D<float>(other->pos.x - other->size.x, other->pos.y + other->size.y) };
-						if ((dot[i] - pos).GetLenth() <= 60) {
-							other->owner->handle_collision(playerBullet, 10);
-							break;
+						else if (other->layer == enemy) {
+							Vector2D<float> dot[4] = { Vector2D<float>(other->pos.x - other->size.x, other->pos.y - other->size.y),
+							Vector2D<float>(other->pos.x + other->size.x, other->pos.y - other->size.y),
+							Vector2D<float>(other->pos.x + other->size.x, other->pos.y + other->size.y),
+							Vector2D<float>(other->pos.x - other->size.x, other->pos.y + other->size.y) };
+							if ((dot[i] - pos).GetLenth() <= 60) {
+								other->owner->handle_collision(playerBullet, 10);
+								break;
+							}
 						}
 					}
 				}
 			}
+		}
+	}
+	else {
+		frame = (frame + frame_time * spawnAnim.velocity * spawnAnim.frame);
+		if ((int)frame == spawnAnim.frame) {
+			col = new Collider(10);
+			col->owner = this;
+			col->layer = enemy;
+			col->pos = pos;
+			col->damage = 5;
+			COLL.emplace_back(col);
+			frame = 0;
 		}
 	}
 }
