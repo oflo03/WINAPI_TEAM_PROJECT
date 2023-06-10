@@ -15,8 +15,11 @@ Boss::Boss() {
 	hand[RIGHT].frame = 4;
 	hand[RIGHT].size = { 0,0,hand[1].resource.GetWidth() / hand[1].frame ,hand[1].resource.GetHeight() };
 	shadow.Load(L"shadow.png");
-	warning.Load(L"boss_patternD.png");
 	state = new BossIdle();
+	pattern.push_back(3);
+	pattern.push_back(2);
+	pattern.push_back(1);
+	pattern.push_back(0);
 	frame = 0;
 	target = Player::getInstance(1);
 	pos.x = 960;

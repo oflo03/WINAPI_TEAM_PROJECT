@@ -89,6 +89,9 @@
     <ClCompile Include="PatternD.cpp">
       <Filter>Enemy\Boss</Filter>
     </ClCompile>
+    <ClCompile Include="SpawnerPattern.cpp">
+      <Filter>Enemy\Boss</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IdleState.h">
@@ -194,6 +197,9 @@
       <Filter>Enemy\Boss</Filter>
     </ClInclude>
     <ClInclude Include="PatternD.h">
+      <Filter>Enemy\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="SpawnerPattern.h">
       <Filter>Enemy\Boss</Filter>
     </ClInclude>
   </ItemGroup>

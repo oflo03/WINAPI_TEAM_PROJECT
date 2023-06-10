@@ -3,6 +3,7 @@
 #include"PatternB.h"
 #include "PatternC.h"
 #include"PatternD.h"
+#include"SpawnerPattern.h"
 
 extern double frame_time;
 extern std::uniform_int_distribution<int> ranP;
@@ -17,9 +18,10 @@ void BossIdle::enter(Boss& boss)
 BossState* BossIdle::handle_event(Boss& boss)
 {
 	if ((int)dirX == (int)13.14) {
-		int num;
-		while (boss.lastPattern == (num = ranP(dre)));
-		boss.lastPattern = num;
+		if (boss.pattern.empty())
+			return new SpawnerPattern();
+		int num = boss.pattern.back();
+		boss.pattern.pop_back();
 		if (num == 0)
 			return new PatternA();
 		else if (num == 1)

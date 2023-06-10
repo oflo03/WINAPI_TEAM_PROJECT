@@ -21,6 +21,7 @@ Bombshe::Bombshe(double x, double y, Player* target) : Enemy(x, y), isAttack(fal
 	state = STATE_IDLE;
 	attackRange = 200;
 	attackCoolTime = 200;
+	wave = nullptr;
 }
 
 

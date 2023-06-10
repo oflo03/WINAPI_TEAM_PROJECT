@@ -14,7 +14,6 @@ std::uniform_int_distribution<int> rad(-180, 180);
 std::uniform_int_distribution<int> ranTime(20, 70);
 std::uniform_int_distribution<int> ran(0, 1);
 std::uniform_int_distribution<int> randrop(0, 1);
-std::uniform_int_distribution<int> ranP(0, 3);
 
 void ColliderUpdate();
 void LoadTileMap(int num);
@@ -37,7 +36,7 @@ PlayState::PlayState() : GameState()	// 모든 스테이트 시작 전에 콜라이더 벡터 초
 	EffectManager::init();
 	Bullet::init();
 	DropItem::init();
-	LoadTileMap(3);
+	LoadTileMap(4);
 	UI::init();
 	beatable = true;
 	//PlaySound(L"BGM_PlayState.wav", NULL, SND_ASYNC | SND_LOOP);

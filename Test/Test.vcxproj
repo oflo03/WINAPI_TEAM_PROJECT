@@ -162,6 +162,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="ShotgunMan.cpp" />
+    <ClCompile Include="SpawnerPattern.cpp" />
     <ClCompile Include="Tilemap.cpp" />
     <ClCompile Include="UI.cpp" />
     <ClCompile Include="Weapon.cpp" />
@@ -202,6 +203,7 @@
     <ClInclude Include="RollState.h" />
     <ClInclude Include="RunState.h" />
     <ClInclude Include="ShotgunMan.h" />
+    <ClInclude Include="SpawnerPattern.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="LogoState.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>

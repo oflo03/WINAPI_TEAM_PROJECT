@@ -24,7 +24,7 @@ private:
 	~Boss();
 public:
 	Player* target;
-	CImage warning;
+	std::vector<int> pattern;
 	Vector2D<float> pos;
 	Vector2D<float> handPos[2];
 	int lastPattern;
