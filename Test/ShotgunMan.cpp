@@ -45,7 +45,7 @@ void ShotgunMan::init()
 	for (int i = 0; i < 6; i++) {
 		animation[STATE_DAMAGED][i].frame = 2;
 		animation[STATE_DAMAGED][i].size = { 0,0,animation[STATE_DAMAGED][i].resource.GetWidth() / animation[STATE_DAMAGED][i].frame,animation[STATE_DAMAGED][i].resource.GetHeight() };
-		animation[STATE_DAMAGED][i].velocity = 2;
+		animation[STATE_DAMAGED][i].velocity = 3;
 	}
 	animation[STATE_DEAD][FRONT].resource.Load(L"enemy_shotgun_dead.png");
 	animation[STATE_DEAD][FRONT_RIGHT].resource.Load(L"enemy_shotgun_dead.png");
@@ -185,7 +185,7 @@ void ShotgunMan::update()
 		else {
 			frame = (frame + frame_time * animation[state][direction].velocity * animation[state][direction].frame);
 			if (state == STATE_DAMAGED) {
-				if (moveTime >= 0) moveTime -= frame_time * 2;
+				if (moveTime >= 0) moveTime -= frame_time * 3;
 			}
 			else {
 				pos = pos + dir * velocity * frame_time;

@@ -190,15 +190,60 @@ void Bullet::handle_collision(int otherLayer, int damage)
 	case playerMelee: {
 		if (type == BOSSBULLET1 || type == BOSSBULLET3)
 			return;
-		dir = Player::getInstance()->GetMouseVector() * 10;
-		angle = Player::getInstance()->GetAngle() * -1;
-		col->layer = playerBullet;
-		if (type == BOSSBULLET2)
-			type = BOUNCEDBOSSBULLET2;
-		else
-			type = BBOUNCE;
-	}
+		if (Player::getInstance()->getCurChar() == knight) {
+			switch (type)
+			{
+			case BPISTOL:
+				EffectManager::getInstance()->set_effect(new Effect(CEffect::PISTOLBULLET, col->pos));
+				break;
+			case BRIFLE:
+				EffectManager::getInstance()->set_effect(new Effect(CEffect::RIFLEBULLET, col->pos));
+				break;
+			case BSHOTGUN:
+				EffectManager::getInstance()->set_effect(new Effect(CEffect::SHOTGUNBULLET, col->pos));
+				break;
+			case BOSSBULLET1:
+			case BOSSBULLET3:
+				EffectManager::getInstance()->set_effect(new Effect(CEffect::PATTERNA, col->pos));
+				break;
+			case BOSSBULLET2:
+			case BENEMY:
+				EffectManager::getInstance()->set_effect(new Effect(CEffect::ENEMYBULLET, col->pos));
+				break;
+			case BBOUNCE:
+			case BOUNCEDBOSSBULLET2:
+				EffectManager::getInstance()->set_effect(new Effect(CEffect::BOUNCEBULLET, col->pos));
+				break;
+			default:
+				break;
+			}
+			for (auto i = COLL.begin(); i != COLL.end(); ++i)
+				if (COLL[i - COLL.begin()] == this->col)
+				{
+					COLL.erase(i);
 					break;
+				}
+			delete this->col;
+			this->col = nullptr;
+			for (auto i = Bullets.begin(); i != Bullets.end(); ++i)
+				if (Bullets[i - Bullets.begin()] == this)
+				{
+					Bullets.erase(i);
+					break;
+				}
+			deleteSet.insert(this);
+		}
+		else {
+			dir = Player::getInstance()->GetMouseVector() * 10;
+			angle = Player::getInstance()->GetAngle() * -1;
+			col->layer = playerBullet;
+			if (type == BOSSBULLET2)
+				type = BOUNCEDBOSSBULLET2;
+			else
+				type = BBOUNCE;
+		}
+	}
+		break;
 	default:
 		break;
 	}

@@ -61,6 +61,7 @@ Knight::Knight(float x, float y) : Player(x, y)
 	myWeapons.emplace_back(new Rifle);
 	myWeapons.emplace_back(new Shotgun);
 	myWeapons.emplace_back(new Rocket);
+	currentCharacter = knight;
 }
 
 Knight::~Knight()

@@ -21,7 +21,6 @@ int selectedPlayer;
 
 Player* Player::getInstance() {
 	if (instance == nullptr) {
-		currentCharacter = selectedPlayer;
 		switch (selectedPlayer) {
 		case marin:
 			instance = new Marin(spawnpoint[2].x, spawnpoint[2].y);

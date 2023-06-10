@@ -31,15 +31,15 @@ bool lookRange;
 bool beatable = true;
 bool enemyclear;
 
-PlayState::PlayState() : GameState()	// 모든 스테이트 시작 전에 콜라이더 벡터 초기화 하는거 넣어줘요 - 병욱
+PlayState::PlayState() : GameState()	
 {
-	LevelManager::init();
 	Player::init();
 	EnemyManager::init();
 	EffectManager::init();
 	Bullet::init();
 	DropItem::init();
 	UI::init();
+	LevelManager::init();
 	//PlaySound(L"BGM_PlayState.wav", NULL, SND_ASYNC | SND_LOOP);
 }
 

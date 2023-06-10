@@ -9,7 +9,6 @@ protected:
 	Animation portal, E;
 	float pframe, eframe;
 	Vector2D<float> pos;
-public:
 	Portal(float x, float y) :pos(x, y), pframe(0), eframe(0) {
 		portal.resource.Load(L"Portal.png");
 		portal.frame = 4;
@@ -24,6 +23,7 @@ public:
 		portal.resource.Destroy();
 		E.resource.Destroy();
 	}
+public:
 	Vector2D<float> GetPos() { return pos; };
 	static Portal* getInstance();
 	void SetPos(Vector2D<float> point) { pos = point; }

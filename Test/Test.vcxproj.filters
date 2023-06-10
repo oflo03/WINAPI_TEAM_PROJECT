@@ -107,6 +107,7 @@
     <ClCompile Include="LevelManager.cpp">
       <Filter>Level</Filter>
     </ClCompile>
+    <ClCompile Include="SelectState.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IdleState.h">
@@ -232,6 +233,7 @@
     <ClInclude Include="LevelManager.h">
       <Filter>Level</Filter>
     </ClInclude>
+    <ClInclude Include="SelectState.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Player">
