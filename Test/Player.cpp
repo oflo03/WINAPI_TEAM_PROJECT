@@ -11,12 +11,11 @@ void Player::init()
 }
 
 
-int selectedPlayer;
+int selectedPlayer = marin;
 
-Player* Player::getInstance(int character) {
+Player* Player::getInstance() {
 	if (instance == nullptr) {
-		switch (character)
-		{
+		switch (selectedPlayer) {
 		case marin:
 			instance = new Marin(960, 640);
 			//instance = new Marin(224, 256);		//	1스테이지 소환 좌표

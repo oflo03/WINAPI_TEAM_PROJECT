@@ -32,7 +32,7 @@ void EnemyManager::init(int stage)
 	ShotgunMan::init();
 	Bat::init();
 	Bombshe::init();
-	Player* player = Player::getInstance(selectedPlayer);
+	Player* player = Player::getInstance();
 	spawnAnim.resource.Load(L"Enemy_Spawn.png");
 	spawnAnim.frame = 17;
 	spawnAnim.size = RECT(0, 0, 40, 40);
@@ -127,19 +127,19 @@ void EnemyManager::spawn(int type, float x, float y)
 	switch (type)
 	{
 	case PISTOLMAN:
-		enemy.emplace_back(new PistolMan(x, y, Player::getInstance(selectedPlayer)));
+		enemy.emplace_back(new PistolMan(x, y, Player::getInstance()));
 		break;
 	case RIFLEMAN:
-		enemy.emplace_back(new RifleMan(x, y, Player::getInstance(selectedPlayer)));
+		enemy.emplace_back(new RifleMan(x, y, Player::getInstance()));
 		break;
 	case SHOTGUNMAN:
-		enemy.emplace_back(new ShotgunMan(x, y, Player::getInstance(selectedPlayer)));
+		enemy.emplace_back(new ShotgunMan(x, y, Player::getInstance()));
 		break;
 	case BAT:
-		enemy.emplace_back(new Bat(x, y, Player::getInstance(selectedPlayer)));
+		enemy.emplace_back(new Bat(x, y, Player::getInstance()));
 		break;
 	case BOMBSHE:
-		enemy.emplace_back(new Bombshe(x, y, Player::getInstance(selectedPlayer)));
+		enemy.emplace_back(new Bombshe(x, y, Player::getInstance()));
 		break;
 	default:
 		break;

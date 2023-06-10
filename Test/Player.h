@@ -45,7 +45,7 @@ protected:
 	int selectedWeapon;
 	std::vector<Weapon*> myWeapons;
 public:
-	static Player* getInstance(int character);
+	static Player* getInstance();
 	static void init();
 	static void Destroy() { delete instance; }
 	virtual void draw_character(HDC mDC) = 0;
@@ -61,9 +61,11 @@ public:
 	Vector2D<float> GetMouseVector() { return (mPos - handPos).Normalize(); }
 	double GetVelocity() { return velocity; };
 	void SetDirection(int direction) { this->direction = direction; }
+	void WeaponReload(int type) { myWeapons[type]->ReLoad(); }
 	bool GetIfRoll();
 	int GetWeaponCurAmmo() { return myWeapons[selectedWeapon]->GetCurAmmo(); }
 	int GetWeaponMaxAmmo() { return myWeapons[selectedWeapon]->GetMaxAmmo(); }
+	bool GetIfWeaponFull(int type) { return myWeapons[type]->IsFull(); }
 	int GetWeapon() { return selectedWeapon; }
 	int GetHP() { return hp; }
 	void SetWeaponTime(int t) { myWeapons[selectedWeapon]->SetCurTime(t); }

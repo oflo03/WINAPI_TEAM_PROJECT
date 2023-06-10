@@ -221,10 +221,6 @@ void Knight::handle_collision(int otherLayer, int damage)
 			damageCnt = 10.0;
 		}
 		break;
-	case dropitem:
-		myWeapons[damage + 1]->ReLoad();
-		selectedWeapon = damage + 1;
-		break;
 	default:
 		break;
 	}

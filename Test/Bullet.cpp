@@ -187,8 +187,8 @@ void Bullet::handle_collision(int otherLayer, int damage)
 	case playerMelee: {
 		if (type == BOSSBULLET1|| type == BOSSBULLET3)
 			return;
-		dir = Player::getInstance(selectedPlayer)->GetMouseVector()*10;
-		angle = Player::getInstance(selectedPlayer)->GetAngle()*-1;
+		dir = Player::getInstance()->GetMouseVector()*10;
+		angle = Player::getInstance()->GetAngle()*-1;
 		col->layer = playerBullet;
 		if (type == BOSSBULLET2)
 			type = BOUNCEDBOSSBULLET2;

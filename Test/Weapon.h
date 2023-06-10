@@ -37,6 +37,7 @@ public:
 	int GetCurAmmo() { return curAmmo; }
 	int GetMaxAmmo() { return maxAmmo; }
 	bool IsReBound() { return (coolTime - curTime < 3); }
+	bool IsFull() { return maxAmmo == curAmmo; }
 	bool IsRunOut() { return (curAmmo == 0); }
 	virtual void draw_weapon(HDC mDC, const Vector2D<float>& center, const Vector2D<float>& mPos) {
 		angle = std::atan2(mPos.y - (center.y), mPos.x - center.x) * (180.0f / M_PI) * -1;

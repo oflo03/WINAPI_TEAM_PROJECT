@@ -56,6 +56,7 @@ Marin::Marin(float x, float y) : Player(x, y)
 	col->pos = pos;
 	col->damage = 5;
 	COLL.emplace_back(col);
+	hp = 8;
 	myWeapons.emplace_back(new Sword);
 	myWeapons.emplace_back(new Pistol);
 	myWeapons.emplace_back(new Rifle);
@@ -220,10 +221,6 @@ void Marin::handle_collision(int otherLayer, int damage)
 			col->layer = damaged_player;
 			damageCnt = 10.0;
 		}
-		break;
-	case dropitem:
-		myWeapons[damage + 1]->ReLoad();
-		selectedWeapon = damage + 1;
 		break;
 	default:
 		break;

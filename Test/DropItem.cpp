@@ -1,4 +1,5 @@
 #include "DropItem.h"
+#include "Player.h"
 
 extern double frame_time;
 extern std::vector<DropItem*> drops;
@@ -30,21 +31,25 @@ void DropItem::Draw(HDC mDC)
 
 void DropItem::handle_collision(int otherLayer, int damage)
 {
-	if (otherLayer == player || otherLayer == rolled_player) {
-		for (auto i = COLL.begin(); i != COLL.end(); ++i)
-			if (COLL[i - COLL.begin()] == this->col)
-			{
-				COLL.erase(i);
-				break;
-			}
-		delete this->col;
-		this->col = nullptr;
-		for (auto i = drops.begin(); i != drops.end(); ++i)
-			if (drops[i - drops.begin()] == this)
-			{
-				drops.erase(i);
-				break;
-			}
-		deleteSet.insert(this);
+	if (otherLayer == player || otherLayer == rolled_player || otherLayer == damaged_player) {
+		if (!Player::getInstance()->GetIfWeaponFull(type + 1)) {
+			Player::getInstance()->WeaponReload(type + 1);
+			Player::getInstance()->SetWeapon(type + 1);
+			for (auto i = COLL.begin(); i != COLL.end(); ++i)
+				if (COLL[i - COLL.begin()] == this->col)
+				{
+					COLL.erase(i);
+					break;
+				}
+			delete this->col;
+			this->col = nullptr;
+			for (auto i = drops.begin(); i != drops.end(); ++i)
+				if (drops[i - drops.begin()] == this)
+				{
+					drops.erase(i);
+					break;
+				}
+			deleteSet.insert(this);
+		}
 	}
 }

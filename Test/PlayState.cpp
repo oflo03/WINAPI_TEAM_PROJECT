@@ -32,15 +32,15 @@ bool beatable;
 
 PlayState::PlayState() : GameState()	// 모든 스테이트 시작 전에 콜라이더 벡터 초기화 하는거 넣어줘요 - 병욱
 {
+	selectedPlayer = marin;
 	Player::init();
-	EnemyManager::getInstance()->init(8);
+	EnemyManager::getInstance()->init(9);
 	EffectManager::init();
 	Bullet::init();
 	DropItem::init();
-	LoadTileMap(3);
+	LoadTileMap(4);
 	UI::init();
 	beatable = true;
-	selectedPlayer = marin;
 	//PlaySound(L"BGM_PlayState.wav", NULL, SND_ASYNC | SND_LOOP);
 }
 
@@ -54,7 +54,7 @@ void PlayState::update()
 {
 	for (auto& d : drops)
 		d->update();
-	Player::getInstance(selectedPlayer)->update();
+	Player::getInstance()->update();
 	EnemyManager::getInstance()->update();
 	Boss::getInstance()->update();
 	for (auto& B : Bullets)
@@ -77,7 +77,7 @@ void PlayState::handle_events()
 		beatable = !beatable;
 	}
 	EnemyManager::getInstance()->handle_event();
-	Player::getInstance(selectedPlayer)->handle_event();
+	Player::getInstance()->handle_event();
 	Boss::getInstance()->handle_event();
 }
 
@@ -92,7 +92,7 @@ void PlayState::draw()
 	for (auto& d : drops)
 		d->Draw(mapDC);
 	EnemyManager::getInstance()->draw(mapDC);
-	Player::getInstance(selectedPlayer)->draw_character(mapDC);
+	Player::getInstance()->draw_character(mapDC);
 	Boss::getInstance()->draw(mapDC);
 	for (auto& B : Bullets)
 		B->draw_bullet(mapDC);
