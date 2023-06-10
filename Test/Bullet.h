@@ -15,14 +15,15 @@ enum bullet_table {
 	BOSSBULLET1,
 	BOSSBULLET2,
 	BOSSBULLET3,
-	BOUNCEDBOSSBULLET2
+	BOUNCEDBOSSBULLET2,
+	BROCKET
 };
 
 class Bullet
 	:public Master
 {
 protected:
-	static Animation animation[9];
+	static Animation animation[10];
 	int type;
 	int side;
 	float frame;
@@ -31,7 +32,7 @@ protected:
 	double velocity;
 	double angle;
 public:
-	Bullet(int type,int side, Vector2D<float> pos, Vector2D<float> dir);
+	Bullet(int type, int side, Vector2D<float> pos, Vector2D<float> dir);
 	~Bullet();
 	static void init();
 	void draw_bullet(HDC mDC);

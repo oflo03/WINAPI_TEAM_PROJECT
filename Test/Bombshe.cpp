@@ -1,7 +1,13 @@
 #include "Bombshe.h"
 #include"EnemyManager.h"
+#include"DropItem.h"
 
 extern double frame_time;
+extern std::uniform_int_distribution<int> rad;
+extern std::uniform_int_distribution<int> ranTime;
+extern std::uniform_int_distribution<int> ran;
+extern std::uniform_int_distribution<int> randrop;
+extern std::vector<DropItem*> drops;
 extern bool lookRange;
 extern HPEN GREENP;
 
@@ -143,6 +149,10 @@ void Bombshe::update()
 		}
 		else if (state == BDEAD) {
 			if ((int)frame == animation[state][direction].frame) {
+				int num = randrop(dre);
+				if (num == 0) {
+					drops.emplace_back(new DropItem(DROP::DROCKET, pos));
+				}
 				EnemyManager::getInstance()->delete_enemy(this);
 				deleteSet.insert(this);
 				EffectManager::getInstance()->set_effect(new Effect(CEffect::BOMBSHEDIE, pos));

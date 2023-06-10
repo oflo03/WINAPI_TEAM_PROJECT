@@ -1,10 +1,10 @@
 #pragma once
 #include "game_framework.h"
 class LogoState :
-    public GameState
+	public GameState
 {
 private:
-	CImage logo;
+	CImage tuk, logo, title;
 	double logoTime;
 public:
 	LogoState();

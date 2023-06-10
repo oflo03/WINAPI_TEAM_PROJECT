@@ -21,7 +21,7 @@ Boss::Boss() {
 	pattern.push_back(1);
 	pattern.push_back(0);
 	frame = 0;
-	target = Player::getInstance(1);
+	target = Player::getInstance();
 	pos.x = 960;
 	pos.y = 500;
 	lastPattern = 2;

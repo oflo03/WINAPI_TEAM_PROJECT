@@ -27,8 +27,8 @@ protected:
 	bool targetLocked;
 public:
 	Player* target;
-	Enemy(float x, float y) : pos(x, y), dir(0, 0), frame(0), angle(90), direction(FRONT), state(STATE_IDLE), velocity(0), target(Player::getInstance(1)), targetLocked(false), attackCoolTime(0) {}
-	Enemy() : pos(screen.right / 2, screen.bottom / 2), dir(0, 0), frame(0), angle(90), direction(FRONT), state(STATE_IDLE), velocity(0), target(Player::getInstance(1)), targetLocked(false), attackCoolTime(0) {}
+	Enemy(float x, float y) : pos(x, y), dir(0, 0), frame(0), angle(90), direction(FRONT), state(STATE_IDLE), velocity(0), target(Player::getInstance()), targetLocked(false), attackCoolTime(0) {}
+	Enemy() : pos(screen.right / 2, screen.bottom / 2), dir(0, 0), frame(0), angle(90), direction(FRONT), state(STATE_IDLE), velocity(0), target(Player::getInstance()), targetLocked(false), attackCoolTime(0) {}
 	virtual ~Enemy() {}
 	virtual void draw_character(HDC mDC) = 0;
 	virtual void handle_event() = 0;

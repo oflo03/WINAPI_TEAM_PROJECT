@@ -1,14 +1,14 @@
 #include "IdleState.h"
 #include"RollState.h"
-#include "Marin.h"
+#include "Pilot.h"
 #include"EffectManager.h"
 
 extern double frame_time;
 extern bool beatable;
 
-Animation Marin::animation[5][6];
+Animation Pilot::animation[5][6];
 
-void Marin::init() {
+void Pilot::init() {
 	animation[STATE_IDLE][FRONT].resource.Load(L"Marin_idle_front.png");
 	animation[STATE_IDLE][FRONT_RIGHT].resource.Load(L"Marin_idle_front_right.png");
 	animation[STATE_IDLE][FRONT_LEFT].resource.Load(L"Marin_idle_front_left.png");
@@ -44,7 +44,7 @@ void Marin::init() {
 	}
 }
 
-Marin::Marin(float x, float y) : Player(x, y)
+Pilot::Pilot(float x, float y) : Player(x, y)
 {
 	state = new IdleState;
 	hand.Load(L"Marin_hand.png");
@@ -56,7 +56,6 @@ Marin::Marin(float x, float y) : Player(x, y)
 	col->pos = pos;
 	col->damage = 5;
 	COLL.emplace_back(col);
-	hp = 8;
 	myWeapons.emplace_back(new Sword);
 	myWeapons.emplace_back(new Pistol);
 	myWeapons.emplace_back(new Rifle);
@@ -64,7 +63,7 @@ Marin::Marin(float x, float y) : Player(x, y)
 	myWeapons.emplace_back(new Rocket);
 }
 
-Marin::~Marin()
+Pilot::~Pilot()
 {
 	for (int i = 0; i < myWeapons.size(); i++)
 		delete myWeapons[i];
@@ -74,7 +73,7 @@ Marin::~Marin()
 
 }
 
-void Marin::draw_character(HDC mDC)
+void Pilot::draw_character(HDC mDC)
 {
 	handPos = pos;
 	if (abs(angle) < 90)
@@ -116,7 +115,7 @@ void Marin::draw_character(HDC mDC)
 	}
 }
 
-void Marin::handle_event()
+void Pilot::handle_event()
 {
 	PlayerState* temp = this->state->handle_event(*this);
 	if (temp != nullptr) {
@@ -129,7 +128,7 @@ void Marin::handle_event()
 }
 
 
-void Marin::update()
+void Pilot::update()
 {
 	POINT temp;
 	GetCursorPos(&temp);
@@ -163,7 +162,7 @@ void Marin::update()
 	}
 }
 
-void Marin::SetDirection()
+void Pilot::SetDirection()
 {
 	angle = std::atan2(mPos.y - (pos.y), mPos.x - pos.x) * (180.0f / M_PI);
 	if (angle >= -20 && angle <= 60) {
@@ -186,7 +185,7 @@ void Marin::SetDirection()
 	}
 }
 
-void Marin::handle_collision(int otherLayer, int damage)
+void Pilot::handle_collision(int otherLayer, int damage)
 {
 	switch (otherLayer)
 	{

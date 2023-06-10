@@ -89,6 +89,15 @@
     <ClCompile Include="PatternD.cpp">
       <Filter>Enemy\Boss</Filter>
     </ClCompile>
+    <ClCompile Include="Knight.cpp">
+      <Filter>Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Pilot.cpp">
+      <Filter>Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Portal.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
     <ClCompile Include="SpawnerPattern.cpp">
       <Filter>Enemy\Boss</Filter>
     </ClCompile>
@@ -198,6 +207,15 @@
     </ClInclude>
     <ClInclude Include="PatternD.h">
       <Filter>Enemy\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="Knight.h">
+      <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Pilot.h">
+      <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Portal.h">
+      <Filter>Map</Filter>
     </ClInclude>
     <ClInclude Include="SpawnerPattern.h">
       <Filter>Enemy\Boss</Filter>
