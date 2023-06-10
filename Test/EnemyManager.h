@@ -12,10 +12,12 @@ private:
 	~EnemyManager();
 public:
 	static EnemyManager* getInstance();
-	void init(int stage);
+	static void init();
 	static void destroy();
+	void SetEnemy(int stage);
 	void spawn(int type, float x, float y);
 	void delete_enemy(Enemy* e);
+	bool isclear();
 	void handle_event();
 	void update();
 	void draw(HDC mDC);

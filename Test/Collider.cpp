@@ -75,7 +75,7 @@ void ColliderUpdate()
 		c->detection();
 	while (!collisionMsg.empty())
 	{
-		if (collisionMsg.front().collided&& collisionMsg.front().collided->col!=nullptr)
+		if (collisionMsg.front().collided && collisionMsg.front().collided->col != nullptr)
 			collisionMsg.front().collided->handle_collision(collisionMsg.front().otherLayer, collisionMsg.front().damage);
 		collisionMsg.pop();
 	}
@@ -95,4 +95,14 @@ bool isWallCollision(Vector2D<float> pos, Vector2D<float> size)
 			return true;
 	}
 	return false;
+}
+
+void Collider::Clear()
+{
+	while (!COLL.empty())
+	{
+		if ((*COLL.begin())->layer != player && (*COLL.begin())->layer != damaged_player && (*COLL.begin())->layer != rolled_player)
+			delete (*COLL.begin());
+		COLL.erase(COLL.begin());
+	}
 }

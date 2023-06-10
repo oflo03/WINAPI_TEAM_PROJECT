@@ -31,6 +31,7 @@ struct Collider
 	Collider(Vector2D<float> size) : size(size), shape(rect){ }
 	void detection();
 	void draw_range(HDC mDC);
+	static void Clear();
 };
 
 bool isWallCollision(Vector2D<float> pos, Vector2D<float> size);

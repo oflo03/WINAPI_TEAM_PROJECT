@@ -54,3 +54,12 @@ void DropItem::handle_collision(int otherLayer, int damage)
 		}
 	}
 }
+
+void DropItem::Clear()
+{
+	while (!drops.empty())
+	{
+		delete (*drops.begin());
+		drops.erase(drops.begin());
+	}
+}

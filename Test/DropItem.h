@@ -18,7 +18,7 @@ private:
 	Vector2D<float> pos;
 	float xDir;
 public:
-	DropItem(int type, Vector2D<float> pos) : type(type),pos(pos),xDir(0){
+	DropItem(int type, Vector2D<float> pos) : type(type), pos(pos), xDir(0) {
 		col = new Collider(Vector2D<float>(image[type].GetWidth(), image[type].GetHeight()));
 		col->layer = dropitem;
 		col->owner = this;
@@ -28,6 +28,7 @@ public:
 	}
 	~DropItem() { }
 	static void init();
+	static void Clear();
 	void update();
 	void Draw(HDC mDC);
 	virtual void handle_collision(int otherLayer, int damage);

@@ -7,6 +7,7 @@
 #include"UI.h"
 #include"Portal.h"
 #include"MapManager.h"
+#include"LevelManager.h"
 
 extern HDC mDC;
 std::random_device rd;
@@ -27,36 +28,37 @@ extern Vector2D<float> camSize;
 Vector2D<float> camPos;
 
 bool lookRange;
-bool beatable;
-bool enemyclear = true;
+bool beatable = true;
+bool enemyclear;
 
 PlayState::PlayState() : GameState()	// 모든 스테이트 시작 전에 콜라이더 벡터 초기화 하는거 넣어줘요 - 병욱
 {
-	selectedPlayer = marin;
-	MapManager::getInstance()->LoadTileMap(4);
+	LevelManager::init();
 	Player::init();
-	EnemyManager::getInstance()->init(10);
+	EnemyManager::init();
 	EffectManager::init();
 	Bullet::init();
 	DropItem::init();
 	UI::init();
-	beatable = true;
 	//PlaySound(L"BGM_PlayState.wav", NULL, SND_ASYNC | SND_LOOP);
 }
 
 PlayState::~PlayState()
 {
+	LevelManager::destroy();
 	Player::Destroy();
 	EnemyManager::destroy();
 }
 
 void PlayState::update()
 {
+	LevelManager::getInstance()->update();
 	for (auto& d : drops)
 		d->update();
 	Player::getInstance()->update();
 	EnemyManager::getInstance()->update();
-	//Boss::getInstance()->update();
+	if (LevelManager::getInstance()->GetStage() == 4)
+		Boss::getInstance()->update();
 	if (enemyclear)
 		Portal::getInstance()->update();
 	for (auto& B : Bullets)
@@ -82,7 +84,8 @@ void PlayState::handle_events()
 		Portal::getInstance()->handle_event();
 	EnemyManager::getInstance()->handle_event();
 	Player::getInstance()->handle_event();
-	//Boss::getInstance()->handle_event();
+	if (LevelManager::getInstance()->GetStage() == 4)
+		Boss::getInstance()->handle_event();
 }
 
 
@@ -107,7 +110,8 @@ void PlayState::draw()
 		}
 	else
 		Player::getInstance()->draw_character(mapDC);
-	//Boss::getInstance()->draw(mapDC);
+	if (LevelManager::getInstance()->GetStage() == 4)
+		Boss::getInstance()->draw(mapDC);
 	for (auto& B : Bullets)
 		B->draw_bullet(mapDC);
 	if (lookRange)

@@ -104,6 +104,9 @@
     <ClCompile Include="MapManager.cpp">
       <Filter>Map</Filter>
     </ClCompile>
+    <ClCompile Include="LevelManager.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IdleState.h">
@@ -226,6 +229,9 @@
     <ClInclude Include="MapManager.h">
       <Filter>Map</Filter>
     </ClInclude>
+    <ClInclude Include="LevelManager.h">
+      <Filter>Level</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Player">
@@ -260,6 +266,9 @@
     </Filter>
     <Filter Include="UI">
       <UniqueIdentifier>{0fae3807-f7bc-4d12-852a-31659b10434e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level">
+      <UniqueIdentifier>{f15293f7-f80a-4514-b6eb-2907e4b459c0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

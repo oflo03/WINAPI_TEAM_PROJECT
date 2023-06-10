@@ -143,6 +143,7 @@
     <ClCompile Include="EffectManager.cpp" />
     <ClCompile Include="EnemyManager.cpp" />
     <ClCompile Include="Knight.cpp" />
+    <ClCompile Include="LevelManager.cpp" />
     <ClCompile Include="MapManager.cpp" />
     <ClCompile Include="PatternA.cpp" />
     <ClCompile Include="game_framework.cpp" />
@@ -188,6 +189,7 @@
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyManager.h" />
     <ClInclude Include="Knight.h" />
+    <ClInclude Include="LevelManager.h" />
     <ClInclude Include="MapManager.h" />
     <ClInclude Include="PatternA.h" />
     <ClInclude Include="game_framework.h">
