@@ -1,9 +1,9 @@
 #include "UI.h"
-#include"MapManager.h"
+#include"LevelManager.h"
 #include"Boss.h"
 #define HeartSize 90
 
-CImage heart, weapons, cursor,bossHp,bossHpFrame, bossHpFrame2;
+CImage heart, weapons, cursor, bossHp, bossHpFrame, bossHpFrame2;
 Player* pp;
 
 RECT ammoTextBox;
@@ -53,12 +53,12 @@ void UI::draw(HDC mDC)
 	else
 		swprintf_s(ammoText, 8, L" ¡Ä / ¡Ä ");
 	DrawText(mDC, ammoText, 7, &ammoTextBox, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
-	if (MapManager::getInstance()->getCurStage() == 4) {
+	if (LevelManager::getInstance()->GetStage() == 4) {
 		if (Boss::getInstance()->getHP() > 0) {
 			float decreased = 1.0f - (float)Boss::getInstance()->getHP() / BOSSHP;
 			int srclenth = (decreased * (bossHp.GetWidth() - 2)) / 2;
 			int destlenth = (decreased * (monitorSize.x - 600)) / 2;
-			bossHp.Draw(mDC, 300+destlenth, monitorSize.y - 100, monitorSize.x - 600- destlenth*2, 90, srclenth, 0, bossHp.GetWidth()- srclenth*2, bossHp.GetHeight());
+			bossHp.Draw(mDC, 300 + destlenth, monitorSize.y - 100, monitorSize.x - 600 - destlenth * 2, 90, srclenth, 0, bossHp.GetWidth() - srclenth * 2, bossHp.GetHeight());
 		}
 		bossHpFrame.Draw(mDC, 300, monitorSize.y - 100, monitorSize.x - 600, 90, 0, 0, bossHpFrame.GetWidth(), bossHp.GetHeight());
 		bossHpFrame2.Draw(mDC, 300, monitorSize.y - 100, monitorSize.x - 600, 90, 0, 0, bossHpFrame.GetWidth(), bossHp.GetHeight());

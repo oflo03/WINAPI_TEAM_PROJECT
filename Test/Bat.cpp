@@ -35,6 +35,7 @@ Bat::Bat(double x, double y, Player* target) : Enemy(x, y)
 	velocity = 200;
 	state = IDLE;
 	attackRange = 600;
+	lastPos = pos;
 }
 
 

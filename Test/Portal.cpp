@@ -1,12 +1,13 @@
 #include"Portal.h"
 #include"Player.h"
+#include"LevelManager.h"
 
 extern double frame_time;
 
 Portal* Portal::getInstance()
 {
 	if (instance == nullptr)
-		instance = new Portal(960, 540);
+		instance = new Portal(0, 0);
 	return instance;
 }
 
@@ -20,8 +21,8 @@ void Portal::update()
 
 void Portal::handle_event()
 {
-	if ((GetAsyncKeyState('E') & 1) && (Player::getInstance()->GetPos() - pos).GetLenth() < 100)
-		; //여기에 다음 스테이지로 추가
+	if ((GetAsyncKeyState('E') & 0x8000) && (Player::getInstance()->GetPos() - pos).GetLenth() < 100)
+		LevelManager::getInstance()->loadNextStage();
 }
 
 void Portal::Draw(HDC mDC)

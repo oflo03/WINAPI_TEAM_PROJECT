@@ -26,6 +26,7 @@ public:
 	}
 	Vector2D<float> GetPos() { return pos; };
 	static Portal* getInstance();
+	void SetPos(Vector2D<float> point) { pos = point; }
 	void update();
 	void handle_event();
 	void Draw(HDC mDC);

@@ -10,6 +10,12 @@ void Player::init()
 	Knight::init();
 }
 
+Vector2D<float> spawnpoint[4]{
+	Vector2D<float>(224,256),
+	Vector2D<float>(960,256),
+	Vector2D<float>(224,540),
+	Vector2D<float>(960,1000)
+};
 
 int selectedPlayer;
 
@@ -18,17 +24,13 @@ Player* Player::getInstance() {
 		currentCharacter = selectedPlayer;
 		switch (selectedPlayer) {
 		case marin:
-			//instance = new Marin(960, 640);
-			instance = new Marin(224, 256);		//	1스테이지 소환 좌표
-			// instance = new Marin(960, 256);		//  2스테이지 소환 좌표
-			// instance = new Marin(224, 640);		//  3스테이지 소환 좌표
-			// instance = new Marin(960, 1000);		//  4스테이지 소환 좌표
+			instance = new Marin(spawnpoint[2].x, spawnpoint[2].y);
 			break;
 		case pilot:
-			instance = new Pilot(960, 640);
+			instance = new Pilot(spawnpoint[0].x, spawnpoint[0].y);
 			break;
 		case knight:
-			instance = new Knight(224, 256);
+			instance = new Knight(spawnpoint[0].x, spawnpoint[0].y);
 			break;
 		default:
 			break;

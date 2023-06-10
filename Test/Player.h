@@ -12,6 +12,7 @@ class Marin;
 
 extern Vector2D<float> camPos;
 extern Vector2D<float> monitorSize;
+extern Vector2D<float> spawnpoint[4];
 
 enum playertype
 {

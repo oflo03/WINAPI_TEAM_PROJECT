@@ -25,18 +25,21 @@ EnemyManager* EnemyManager::getInstance()
 	return instance;
 }
 
-void EnemyManager::init(int stage)
+void EnemyManager::init()
 {
 	PistolMan::init();
 	RifleMan::init();
 	ShotgunMan::init();
 	Bat::init();
 	Bombshe::init();
-	Player* player = Player::getInstance();
 	spawnAnim.resource.Load(L"Enemy_Spawn.png");
 	spawnAnim.frame = 17;
 	spawnAnim.size = RECT(0, 0, 40, 40);
 	spawnAnim.velocity = 0.5;
+}
+
+void EnemyManager::SetEnemy(int stage)
+{
 	switch (stage)
 	{
 	case 1:
@@ -65,7 +68,7 @@ void EnemyManager::init(int stage)
 		spawn(PISTOLMAN, 1500, 200);
 		spawn(RIFLEMAN, 300, 600);
 		spawn(RIFLEMAN, 1800, 600);
-		spawn(SHOTGUNMAN, 960, 1000);
+		spawn(SHOTGUNMAN, 960, 980);
 		break;
 	case 5:
 		spawn(BAT, 300, 200);
@@ -78,8 +81,8 @@ void EnemyManager::init(int stage)
 		spawn(SHOTGUNMAN, 1300, 200);
 		spawn(BAT, 300, 600);
 		spawn(BAT, 1800, 600);
-		spawn(SHOTGUNMAN, 100, 800);
-		spawn(SHOTGUNMAN, 1850, 800);
+		spawn(SHOTGUNMAN, 100, 970);
+		spawn(SHOTGUNMAN, 1800, 970);
 		spawn(BAT, 300, 1000);
 		spawn(BAT, 1800, 1000);
 		break;
@@ -154,6 +157,11 @@ void EnemyManager::delete_enemy(Enemy* e)
 			enemy.erase(i);
 			break;
 		}
+}
+
+bool EnemyManager::isclear()
+{
+	return enemy.empty();
 }
 
 void EnemyManager::handle_event()

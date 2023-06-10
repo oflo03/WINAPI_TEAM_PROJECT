@@ -80,6 +80,7 @@ ShotgunMan::ShotgunMan(double x, double y, Player* target) : Enemy(x, y)
 	weapon->Enemy();
 	attackRange = 300;
 	attackCoolTime = 0;
+	lastPos = pos;
 }
 
 ShotgunMan::~ShotgunMan()
@@ -207,6 +208,7 @@ void ShotgunMan::update()
 			col->pos = pos;
 			col->damage = 5;
 			COLL.emplace_back(col);
+			attackCoolTime = 300;
 			frame = 0;
 		}
 	}

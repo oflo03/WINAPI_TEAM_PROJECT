@@ -81,6 +81,7 @@ PistolMan::PistolMan(double x, double y, Player* target) : Enemy(x, y)
 	weapon->Enemy();
 	attackRange = 400;
 	attackCoolTime = 0;
+	lastPos = pos;
 }
 
 
@@ -206,6 +207,7 @@ void PistolMan::update()
 			col->pos = pos;
 			col->damage = 5;
 			COLL.emplace_back(col);
+			attackCoolTime = 300;
 			frame = 0;
 		}
 	}
