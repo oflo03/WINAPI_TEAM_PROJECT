@@ -95,6 +95,9 @@
     <ClCompile Include="Pilot.cpp">
       <Filter>Player</Filter>
     </ClCompile>
+    <ClCompile Include="Portal.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IdleState.h">
@@ -207,6 +210,9 @@
     </ClInclude>
     <ClInclude Include="Pilot.h">
       <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Portal.h">
+      <Filter>Map</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

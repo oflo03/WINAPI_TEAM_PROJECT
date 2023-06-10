@@ -157,6 +157,7 @@
     <ClCompile Include="PlayState.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="Portal.cpp" />
     <ClCompile Include="RifleMan.cpp" />
     <ClCompile Include="RollState.cpp" />
     <ClCompile Include="RunState.cpp" />
@@ -202,6 +203,7 @@
     <ClInclude Include="PlayState.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClInclude>
+    <ClInclude Include="Portal.h" />
     <ClInclude Include="RifleMan.h" />
     <ClInclude Include="RollState.h" />
     <ClInclude Include="RunState.h" />
