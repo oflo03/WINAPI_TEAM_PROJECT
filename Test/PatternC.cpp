@@ -26,7 +26,7 @@ BossState* PatternC::handle_event(Boss& boss)
 			Vector2D<float> p = boss.handPos[isLeft];
 			Vector2D<float> t(2, 0);
 			for (int i = 0; i < 40; i++) {
-				Bullets.emplace_back(new Bullet(BOSSBULLET3, enemyBullet, t.Rotate(9) + p, t));
+				Bullets.emplace_back(new Bullet(BOSSBULLET3, enemyBullet, t.Rotate(9) + p, t*2));
 			}
 			isLeft = !isLeft;
 		}

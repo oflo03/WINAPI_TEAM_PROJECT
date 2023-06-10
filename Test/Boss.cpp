@@ -24,7 +24,6 @@ Boss::Boss() {
 	target = Player::getInstance(1);
 	pos.x = 960;
 	pos.y = 500;
-	HP = 1000;
 	lastPattern = 2;
 	handType[LEFT] = 1;
 	handType[RIGHT] = 0;
@@ -82,7 +81,8 @@ void Boss::handle_event()
 void Boss::update()
 {
 	state->update(*this);
-	col->pos = pos;
+	if(col!=nullptr)
+		col->pos = pos;
 }
 
 void Boss::handle_collision(int otherLayer, int damage)

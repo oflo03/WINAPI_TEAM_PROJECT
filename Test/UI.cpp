@@ -1,9 +1,11 @@
 #include "UI.h"
-
+#include"MapManager.h"
+#include"Boss.h"
 #define HeartSize 90
 
-CImage heart, weapons, cursor;
+CImage heart, weapons, cursor,bossHp,bossHpFrame, bossHpFrame2;
 Player* pp;
+
 RECT ammoTextBox;
 HFONT romulus;
 TCHAR ammoText[8];
@@ -13,6 +15,9 @@ void UI::init()
 	heart.Load(L"UI_Image_Heart.png");
 	weapons.Load(L"UI_Image_Weapons.png");
 	cursor.Load(L"UI_Image_Cursor.png");
+	bossHp.Load(L"boss_hp.png");
+	bossHpFrame.Load(L"boss_hp_frame.png");
+	bossHpFrame2.Load(L"boss_hp_frame2.png");
 	pp = Player::getInstance(1);
 	ammoTextBox = RECT(monitorSize.x - 250, 170, monitorSize.x - 10, 200);
 	romulus = CreateFont(48, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET,
@@ -24,6 +29,8 @@ void UI::Destroy()
 {
 	heart.Destroy();
 	weapons.Destroy();
+	bossHp.Destroy();
+	bossHpFrame.Destroy();
 	cursor.Destroy();
 	DeleteObject(romulus);
 }
@@ -46,7 +53,16 @@ void UI::draw(HDC mDC)
 	else
 		swprintf_s(ammoText, 8, L" ¡Ä / ¡Ä ");
 	DrawText(mDC, ammoText, 7, &ammoTextBox, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
-
+	if (MapManager::getInstance()->getCurStage() == 4) {
+		if (Boss::getInstance()->getHP() > 0) {
+			float decreased = 1.0f - (float)Boss::getInstance()->getHP() / BOSSHP;
+			int srclenth = (decreased * (bossHp.GetWidth() - 2)) / 2;
+			int destlenth = (decreased * (monitorSize.x - 600)) / 2;
+			bossHp.Draw(mDC, 300+destlenth, monitorSize.y - 100, monitorSize.x - 600- destlenth*2, 90, srclenth, 0, bossHp.GetWidth()- srclenth*2, bossHp.GetHeight());
+		}
+		bossHpFrame.Draw(mDC, 300, monitorSize.y - 100, monitorSize.x - 600, 90, 0, 0, bossHpFrame.GetWidth(), bossHp.GetHeight());
+		bossHpFrame2.Draw(mDC, 300, monitorSize.y - 100, monitorSize.x - 600, 90, 0, 0, bossHpFrame.GetWidth(), bossHp.GetHeight());
+	}
 	POINT mPos;
 	GetCursorPos(&mPos);
 	cursor.Draw(mDC, mPos.x - 20, mPos.y - 30, 40, 40);

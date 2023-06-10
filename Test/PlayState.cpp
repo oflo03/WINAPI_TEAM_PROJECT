@@ -5,6 +5,7 @@
 #include"DropItem.h"
 #include"Boss.h"
 #include"UI.h"
+#include"MapManager.h"
 
 extern HDC mDC;
 std::random_device rd;
@@ -16,8 +17,6 @@ std::uniform_int_distribution<int> ran(0, 1);
 std::uniform_int_distribution<int> randrop(0, 1);
 
 void ColliderUpdate();
-void LoadTileMap(int num);
-void PrintMap(HDC mDC);
 
 std::vector<Collider*> COLL;
 std::vector<Bullet*> Bullets;
@@ -31,12 +30,12 @@ bool beatable;
 
 PlayState::PlayState() : GameState()	// 모든 스테이트 시작 전에 콜라이더 벡터 초기화 하는거 넣어줘요 - 병욱
 {
+	MapManager::getInstance()->LoadTileMap(4);
 	Player::init();
-	EnemyManager::getInstance()->init(8);
+	//EnemyManager::getInstance()->init(8);
 	EffectManager::init();
 	Bullet::init();
 	DropItem::init();
-	LoadTileMap(4);
 	UI::init();
 	beatable = true;
 	//PlaySound(L"BGM_PlayState.wav", NULL, SND_ASYNC | SND_LOOP);
@@ -86,7 +85,7 @@ void PlayState::draw()
 	HDC mapDC = CreateCompatibleDC(mDC);
 	HBITMAP mapbitmap = CreateCompatibleBitmap(mDC, 1920, 1080);
 	SelectObject(mapDC, mapbitmap);
-	PrintMap(mapDC);
+	MapManager::getInstance()->PrintMap(mapDC);
 	for (auto& d : drops)
 		d->Draw(mapDC);
 	EnemyManager::getInstance()->draw(mapDC);

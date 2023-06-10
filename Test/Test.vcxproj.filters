@@ -92,6 +92,9 @@
     <ClCompile Include="SpawnerPattern.cpp">
       <Filter>Enemy\Boss</Filter>
     </ClCompile>
+    <ClCompile Include="MapManager.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IdleState.h">
@@ -135,9 +138,6 @@
     </ClInclude>
     <ClInclude Include="PistolMan.h">
       <Filter>Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="Tilemap.h">
-      <Filter>Map</Filter>
     </ClInclude>
     <ClInclude Include="Collider.h">
       <Filter>Colider</Filter>
@@ -202,6 +202,12 @@
     <ClInclude Include="SpawnerPattern.h">
       <Filter>Enemy\Boss</Filter>
     </ClInclude>
+    <ClInclude Include="Tilemap.h">
+      <Filter>Map</Filter>
+    </ClInclude>
+    <ClInclude Include="MapManager.h">
+      <Filter>Map</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Player">
@@ -236,9 +242,6 @@
     </Filter>
     <Filter Include="UI">
       <UniqueIdentifier>{0fae3807-f7bc-4d12-852a-31659b10434e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="aaa">
-      <UniqueIdentifier>{f70fd5e5-9760-43c3-8157-78599666e8ee}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

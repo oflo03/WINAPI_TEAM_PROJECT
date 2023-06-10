@@ -3,22 +3,25 @@
 #include<atlimage.h>
 #include<fstream>
 
-CImage grassImage;
-CImage wallImage;
-
-void LoadTileMap();
-void PrintMap(HDC mDC);
+#define TileSize 32
+#define PrintTileSize (TileSize * 2)
+#define PTS PrintTileSize
+#define GrassTileNum 8
+#define WallTileNum 16
 
 enum tileType
 {
 	none, grass, wall_t
 };
 
-struct Tile
+class Tile
 	:public Master
 {
+private:
+	friend std::ifstream& operator>>(std::ifstream& is, Tile& tile);
+public:
 	int type;
 	int tilePos;
-	friend std::ifstream& operator>>(std::ifstream& is, Tile& tile);
 	virtual void handle_collision(int otherLayer, int damage) {};
 };
+

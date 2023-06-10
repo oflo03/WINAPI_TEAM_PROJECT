@@ -2,6 +2,7 @@
 #include"Master.h"
 #include"Player.h"
 #include"BossState.h"
+#define BOSSHP 500
 
 extern RECT screen;
 
@@ -19,7 +20,7 @@ private:
 	Animation hand[2];
 	CImage shadow;
 	BossState* state;
-	int HP;
+	int HP=BOSSHP;
 	Boss();
 	~Boss();
 public:
@@ -34,6 +35,7 @@ public:
 	static Boss* getInstance();
 	static void release();
 	void draw(HDC mDC);
+	int getHP() { return HP; }
 	void handle_event();
 	void update();
 	void handle_collision(int otherLayer, int damage);
