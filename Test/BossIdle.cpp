@@ -2,6 +2,7 @@
 #include"PatternA.h"
 #include"PatternB.h"
 #include "PatternC.h"
+#include"PatternD.h"
 
 extern double frame_time;
 extern std::uniform_int_distribution<int> ranP;
@@ -16,13 +17,17 @@ void BossIdle::enter(Boss& boss)
 BossState* BossIdle::handle_event(Boss& boss)
 {
 	if ((int)dirX == (int)13.14) {
-		int num = ranP(dre);
+		int num;
+		while (boss.lastPattern == (num = ranP(dre)));
+		boss.lastPattern = num;
 		if (num == 0)
 			return new PatternA();
 		else if (num == 1)
 			return new PatternB();
 		else if (num == 2)
 			return new PatternC();
+		else if (num == 3)
+			return new PatternD();
 	}
 	return nullptr;
 }

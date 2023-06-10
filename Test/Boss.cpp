@@ -1,11 +1,12 @@
 #include "Boss.h"
 #include"BossIdle.h"
+#include"EffectManager.h"
 
 Boss* Boss::instance = nullptr;
 
 Boss::Boss() {
 	body.resource.Load(L"boss_body.png");
-	body.frame = 3;
+	body.frame = 4;
 	body.size = { 0,0,body.resource.GetWidth() / body.frame ,body.resource.GetHeight() };
 	hand[LEFT].resource.Load(L"boss_lefthand.png");
 	hand[LEFT].frame = 4;
@@ -14,12 +15,14 @@ Boss::Boss() {
 	hand[RIGHT].frame = 4;
 	hand[RIGHT].size = { 0,0,hand[1].resource.GetWidth() / hand[1].frame ,hand[1].resource.GetHeight() };
 	shadow.Load(L"shadow.png");
+	warning.Load(L"boss_patternD.png");
 	state = new BossIdle();
 	frame = 0;
 	target = Player::getInstance(1);
 	pos.x = 960;
 	pos.y = 500;
 	HP = 1000;
+	lastPattern = 2;
 	handType[LEFT] = 1;
 	handType[RIGHT] = 0;
 	for (int i = 0; i < 2; i++)
@@ -81,4 +84,37 @@ void Boss::update()
 
 void Boss::handle_collision(int otherLayer, int damage)
 {
+	switch (otherLayer)
+	{
+	case rolled_player:
+	case playerMelee:
+		EffectManager::getInstance()->set_effect(new Effect(CEffect::SWORDATTACK, col->pos));
+		HP -= damage;
+		if (HP <= 0) {
+			for (auto i = COLL.begin(); i != COLL.end(); ++i)
+				if (COLL[i - COLL.begin()] == this->col)
+				{
+					COLL.erase(i);
+					break;
+				}
+			delete this->col;
+			this->col = nullptr;
+		}
+		break;
+	case playerBullet:
+		HP -= damage;
+		if (HP <= 0) {
+			for (auto i = COLL.begin(); i != COLL.end(); ++i)
+				if (COLL[i - COLL.begin()] == this->col)
+				{
+					COLL.erase(i);
+					break;
+				}
+			delete this->col;
+			this->col = nullptr;
+		}
+		break;
+	default:
+		break;
+	}
 }

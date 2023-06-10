@@ -15,10 +15,10 @@ void PatternC::enter(Boss& boss)
 
 BossState* PatternC::handle_event(Boss& boss)
 {
-	if ((int)time == 100) {
+	if ((int)time == 1000) {
 		return new BossIdle();
 	}
-	else if ((int)time >= 4 && (int)time < 96) {
+	else if ((int)time >= 50 && (int)time < 950) {
 		if ((int)attackCoolTime == 0) {
 			EffectManager::getInstance()->set_effect(new Effect(CEffect::PATTERNC, Vector2D<float>(boss.handPos[isLeft].x, boss.handPos[isLeft].y)));
 		}
@@ -26,7 +26,7 @@ BossState* PatternC::handle_event(Boss& boss)
 			Vector2D<float> p = boss.handPos[isLeft];
 			Vector2D<float> t(2, 0);
 			for (int i = 0; i < 40; i++) {
-				Bullets.emplace_back(new Bullet(BOSSBULLET3, enemyBullet, t.Rotate(9) + p, t * 5));
+				Bullets.emplace_back(new Bullet(BOSSBULLET3, enemyBullet, t.Rotate(9) + p, t));
 			}
 			isLeft = !isLeft;
 		}
@@ -36,19 +36,19 @@ BossState* PatternC::handle_event(Boss& boss)
 
 void PatternC::update(Boss& boss)
 {
-	if ((int)time < 4) {
-		boss.handPos[0].y -= 2;
-		boss.handPos[1].y += 1;
+	if ((int)time < 50) {
+		boss.handPos[0]+=Vector2D<float>(-1,-2);
+		boss.handPos[1] += Vector2D<float>(+2, 1);
 	}
-	else if ((int)time >= 4 && (int)time < 96) {
+	else if ((int)time >=50 && (int)time < 950) {
 		if ((int)attackCoolTime < 9)
 			attackCoolTime = (attackCoolTime + frame_time * 2 * 9);
 		else
 			attackCoolTime = -10;
 	}
-	else if ((int)time >= 96) {
-		boss.handPos[0].y += 2;
-		boss.handPos[1].y -= 1;
+	else if ((int)time >= 950) {
+		boss.handPos[0] += Vector2D<float>(1, 2);
+		boss.handPos[1] += Vector2D<float>(-2, -1);
 	}
-	time = (time + frame_time * 10);
+	time++;
 }

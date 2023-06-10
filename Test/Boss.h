@@ -24,8 +24,10 @@ private:
 	~Boss();
 public:
 	Player* target;
+	CImage warning;
 	Vector2D<float> pos;
 	Vector2D<float> handPos[2];
+	int lastPattern;
 	float frame;
 	float angle[2];
 	int handType[2];

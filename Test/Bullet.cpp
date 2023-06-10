@@ -162,6 +162,7 @@ void Bullet::handle_collision(int otherLayer, int damage)
 			EffectManager::getInstance()->set_effect(new Effect(CEffect::ENEMYBULLET, col->pos));
 			break;
 		case BBOUNCE:
+		case BOUNCEDBOSSBULLET2:
 			EffectManager::getInstance()->set_effect(new Effect(CEffect::BOUNCEBULLET, col->pos));
 			break;
 		default:
@@ -184,7 +185,7 @@ void Bullet::handle_collision(int otherLayer, int damage)
 		deleteSet.insert(this);
 		break;
 	case playerMelee: {
-		if (type == BOSSBULLET1)
+		if (type == BOSSBULLET1|| type == BOSSBULLET3)
 			return;
 		dir = Player::getInstance(1)->GetMouseVector()*10;
 		angle = Player::getInstance(1)->GetAngle()*-1;
