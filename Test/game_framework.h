@@ -3,7 +3,6 @@
 #include<vector>
 #include<Windows.h>
 #include<atlImage.h>
-#include"SoundManager.h"
 
 
 class GameState {

@@ -1,5 +1,6 @@
 #pragma once
 #include "game_framework.h"
+#include"SoundManager.h"
 class LogoState :
 	public GameState
 {
