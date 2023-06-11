@@ -44,6 +44,12 @@ void Marin::init() {
 	}
 }
 
+void Marin::destroy() {
+	for (int i = 0; i < 5; i++)
+		for (int j = 0; j < 6; ++j)
+			animation[i][j].resource.Destroy();
+}
+
 Marin::Marin(float x, float y) : Player(x, y)
 {
 	state = new IdleState;

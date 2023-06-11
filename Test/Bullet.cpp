@@ -42,6 +42,10 @@ void Bullet::init() {
 	for (int i = 0; i < 10; i++)
 		animation[i].size = { 0,0,animation[i].resource.GetWidth() / animation[i].frame, animation[i].resource.GetHeight() };
 }
+void Bullet::destroy() {
+	for (int i = 0; i < 10; i++)
+		animation[i].resource.Destroy();
+}
 
 Bullet::Bullet(int type, int side, Vector2D<float> pos, Vector2D<float> dir) :
 	pos(pos), dir(dir), frame(0), type(type), side(side)
@@ -217,7 +221,7 @@ void Bullet::handle_collision(int otherLayer, int damage)
 				type = BBOUNCE;
 		}
 	}
-		break;
+					break;
 	default:
 		break;
 	}

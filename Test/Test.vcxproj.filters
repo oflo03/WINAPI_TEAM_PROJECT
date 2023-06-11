@@ -116,6 +116,12 @@
     <ClCompile Include="SelectState.cpp">
       <Filter>Game Framework</Filter>
     </ClCompile>
+    <ClCompile Include="EndingState.cpp">
+      <Filter>Game Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="GameOverState.cpp">
+      <Filter>Game Framework</Filter>
+    </ClCompile>
     <ClCompile Include="MenuState.cpp">
       <Filter>Game Framework</Filter>
     </ClCompile>
@@ -251,6 +257,12 @@
       <Filter>SoundManager</Filter>
     </ClInclude>
     <ClInclude Include="SelectState.h">
+      <Filter>Game Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="EndingState.h">
+      <Filter>Game Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="GameOverState.h">
       <Filter>Game Framework</Filter>
     </ClInclude>
     <ClInclude Include="MenuState.h">

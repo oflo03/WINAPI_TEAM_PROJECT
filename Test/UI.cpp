@@ -29,9 +29,10 @@ void UI::Destroy()
 {
 	heart.Destroy();
 	weapons.Destroy();
+	cursor.Destroy();
 	bossHp.Destroy();
 	bossHpFrame.Destroy();
-	cursor.Destroy();
+	bossHpFrame2.Destroy();
 	DeleteObject(romulus);
 }
 

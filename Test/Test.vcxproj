@@ -146,7 +146,9 @@
     </ClCompile>
     <ClCompile Include="Effect.cpp" />
     <ClCompile Include="EffectManager.cpp" />
+    <ClCompile Include="EndingState.cpp" />
     <ClCompile Include="EnemyManager.cpp" />
+    <ClCompile Include="GameOverState.cpp" />
     <ClCompile Include="Knight.cpp" />
     <ClCompile Include="LevelManager.cpp" />
     <ClCompile Include="MapManager.cpp" />
@@ -195,8 +197,10 @@
     </ClInclude>
     <ClInclude Include="Effect.h" />
     <ClInclude Include="EffectManager.h" />
+    <ClInclude Include="EndingState.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyManager.h" />
+    <ClInclude Include="GameOverState.h" />
     <ClInclude Include="Knight.h" />
     <ClInclude Include="LevelManager.h" />
     <ClInclude Include="MapManager.h" />

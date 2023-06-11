@@ -16,6 +16,14 @@ void DropItem::init()
 	image[DROP::DROCKET].Load(L"drop_rocket.png");
 }
 
+void DropItem::destroy()
+{
+	image[DROP::DPISTOL].Destroy();
+	image[DROP::DRIFLE].Destroy();
+	image[DROP::DSHOTGUN].Destroy();
+	image[DROP::DROCKET].Destroy();
+}
+
 void DropItem::update()
 {
 	pos.y += std::sin(xDir / 3.14) / 3;

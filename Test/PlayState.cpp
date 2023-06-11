@@ -8,6 +8,9 @@
 #include"Portal.h"
 #include"MapManager.h"
 #include"LevelManager.h"
+#include"SelectState.h"
+#include"GameOverState.h"
+#include"EndingState.h"
 #include"SoundManager.h"
 
 extern HDC mDC;
@@ -48,10 +51,14 @@ PlayState::PlayState() : GameState()
 
 PlayState::~PlayState()
 {
-	LevelManager::destroy();
 	Player::Destroy();
 	EnemyManager::destroy();
-	SoundManager::getInstance()->stop(MainState);
+	EffectManager::Destroy();
+	Bullet::destroy();
+	DropItem::destroy();
+	UI::Destroy();
+	LevelManager::destroy();
+	Collider::Clear();
 }
 
 void PlayState::update()
@@ -70,13 +77,19 @@ void PlayState::update()
 	EffectManager::getInstance()->update();
 	ColliderUpdate();
 	EffectManager::getInstance()->delete_effect();
+	if (LevelManager::getInstance()->GetStage() == 4)
+		if (Boss::getInstance()->getHP() <= 0)
+			change_state(new EndingState);
+		else if (Player::getInstance()->GetHP() <= 0)
+			change_state(new GameOverState); else;
+	else if (Player::getInstance()->GetHP() <= 0)
+		change_state(new GameOverState);
 }
 
 void PlayState::handle_events()
 {
 	if (GetAsyncKeyState(VK_ESCAPE)) {
-		PostQuitMessage(0);
-		return;
+		change_state(new SelectState);
 	}
 	else if (GetAsyncKeyState('X') & 1) {
 		lookRange = !lookRange;

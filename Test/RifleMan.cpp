@@ -60,7 +60,7 @@ void RifleMan::init() {
 }
 
 void RifleMan::release() {
-	for (int i = 0; i < 3; i++) {
+	for (int i = 0; i < 4; i++) {
 		for (int j = 0; j < 6; j++)
 			animation[i][j].resource.Destroy();
 	}

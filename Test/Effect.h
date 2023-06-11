@@ -33,6 +33,7 @@ public:
 	Effect(const CEffect& type, Vector2D<float> pos) : type(type), pos(pos), time(0) {}
 	~Effect() {  }
 	static void init();
+	static void destroy();
 	void Draw(HDC mDC);
 	void update();
 	bool TimeOver() const {
