@@ -176,6 +176,7 @@ void Bullet::handle_collision(int otherLayer, int damage)
 			EffectManager::getInstance()->set_effect(new Effect(CEffect::RIFLEBULLET, col->pos));
 			break;
 		case BSHOTGUN:
+		case BROCKET:
 			EffectManager::getInstance()->set_effect(new Effect(CEffect::SHOTGUNBULLET, col->pos));
 			break;
 		case BOSSBULLET1:
