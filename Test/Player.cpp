@@ -17,7 +17,7 @@ Vector2D<float> spawnpoint[4]{
 	Vector2D<float>(960,1000)
 };
 
-int selectedPlayer;
+int selectedPlayer = knight;
 
 Player* Player::getInstance() {
 	if (instance == nullptr) {

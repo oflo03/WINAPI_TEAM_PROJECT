@@ -1,11 +1,10 @@
 #pragma once
 #include "game_framework.h"
 class SelectState :
-    public GameState
+	public GameState
 {
 private:
-	CImage background;
-	double logoTime;
+	CImage background, cursor, image1, image2;
 public:
 	SelectState();
 	~SelectState();

@@ -190,7 +190,7 @@ void Bullet::handle_collision(int otherLayer, int damage)
 	case playerMelee: {
 		if (type == BOSSBULLET1 || type == BOSSBULLET3)
 			return;
-		if (Player::getInstance()->getCurChar() == knight) {
+		if (selectedPlayer != knight) {
 			switch (type)
 			{
 			case BPISTOL:

@@ -28,7 +28,6 @@ private:
 protected:
 	Player(float x, float y) : pos(x, y), dir(0, 0), frame(0), damageCnt(0), angle(90), direction(FRONT), state(nullptr), selectedWeapon(SWORD), velocity(200), hp(6), curstate(STATE_IDLE) {}
 	Player() : pos(960, 1000), dir(0, 0), frame(0), damageCnt(0), angle(90), direction(FRONT), state(nullptr), selectedWeapon(SWORD), velocity(200), hp(6), curstate(STATE_IDLE) {}
-	int currentCharacter;
 	CImage hand;
 	CImage shadow[2];
 	float frame;
@@ -75,5 +74,4 @@ public:
 	void SetWeaponUp() { do selectedWeapon += 4, selectedWeapon %= 5; while (myWeapons[selectedWeapon]->IsRunOut()); }
 	void SetWeaponDown() { do selectedWeapon += 1, selectedWeapon %= 5; while (myWeapons[selectedWeapon]->IsRunOut()); }
 	void SetCurState(int state) { curstate = state; }
-	int getCurChar() { return currentCharacter; }
 };

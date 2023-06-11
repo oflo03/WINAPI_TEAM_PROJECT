@@ -56,13 +56,12 @@ Marin::Marin(float x, float y) : Player(x, y)
 	col->pos = pos;
 	col->damage = 5;
 	COLL.emplace_back(col);
-	hp = 8;
+	hp = 10;
 	myWeapons.emplace_back(new Sword);
 	myWeapons.emplace_back(new Pistol);
 	myWeapons.emplace_back(new Rifle);
 	myWeapons.emplace_back(new Shotgun);
 	myWeapons.emplace_back(new Rocket);
-	currentCharacter = marin;
 }
 
 Marin::~Marin()
