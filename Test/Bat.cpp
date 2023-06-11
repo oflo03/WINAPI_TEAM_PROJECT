@@ -12,11 +12,11 @@ extern double frame_time;
 
 void Bat::init()
 {
-	animation[IDLE].resource.Load(L"bat.png");
+	animation[IDLE].resource.Load(L"resources/bat.png");
 	animation[IDLE].frame = 6;
 	animation[IDLE].size = { 0,0,animation[IDLE].resource.GetWidth() / animation[IDLE].frame,animation[IDLE].resource.GetHeight() };
 	animation[IDLE].velocity = 2;
-	animation[DEAD].resource.Load(L"bat_damaged.png");
+	animation[DEAD].resource.Load(L"resources/bat_damaged.png");
 	animation[DEAD].frame = 4;
 	animation[DEAD].size = { 0,0,animation[DEAD].resource.GetWidth() / animation[DEAD].frame,animation[DEAD].resource.GetHeight() };
 	animation[DEAD].velocity = 2;
@@ -31,7 +31,7 @@ void Bat::release()
 
 Bat::Bat(double x, double y, Player* target) : Enemy(x, y)
 {
-	shadow.Load(L"shadow.png");
+	shadow.Load(L"resources/shadow.png");
 	velocity = 200;
 	state = IDLE;
 	attackRange = 600;

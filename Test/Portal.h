@@ -10,11 +10,11 @@ protected:
 	float pframe, eframe;
 	Vector2D<float> pos;
 	Portal(float x, float y) :pos(x, y), pframe(0), eframe(0) {
-		portal.resource.Load(L"Portal.png");
+		portal.resource.Load(L"resources/Portal.png");
 		portal.frame = 4;
 		portal.velocity = 1;
 		portal.size = { 0,0,portal.resource.GetWidth() / portal.frame, portal.resource.GetHeight() };
-		E.resource.Load(L"Portal_E-Key.png");
+		E.resource.Load(L"resources/Portal_E-Key.png");
 		E.frame = 2;
 		E.velocity = 1;
 		E.size = { 0,0,E.resource.GetWidth() / E.frame, E.resource.GetHeight() };

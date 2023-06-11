@@ -32,7 +32,7 @@ void EnemyManager::init()
 	ShotgunMan::init();
 	Bat::init();
 	Bombshe::init();
-	spawnAnim.resource.Load(L"Enemy_Spawn.png");
+	spawnAnim.resource.Load(L"resources/Enemy_Spawn.png");
 	spawnAnim.frame = 17;
 	spawnAnim.size = RECT(0, 0, 40, 40);
 	spawnAnim.velocity = 0.5;

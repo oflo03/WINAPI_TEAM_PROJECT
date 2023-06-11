@@ -5,26 +5,26 @@ SoundManager* SoundManager::instance;
 SoundManager::SoundManager()
 {
 	Sound::init();
-	sounds.emplace_back(new Sound("BGM_TitleState.WAV", true));
-	sounds.emplace_back(new Sound("BGM_PlayState.WAV", true));
-	sounds.emplace_back(new Sound("menu_characterselect.WAV", false));
-	sounds.emplace_back(new Sound("dodge_roll.WAV", false));
-	sounds.emplace_back(new Sound("dodge_leap.WAV", false));
-	sounds.emplace_back(new Sound("empty.WAV", false));
-	sounds.emplace_back(new Sound("enemy_death.WAV", false));
-	sounds.emplace_back(new Sound("enemy_hurt.WAV", false));
-	sounds.emplace_back(new Sound("menu_confirm.WAV", false));
-	sounds.emplace_back(new Sound("Pistol_reload.WAV", false));
-	sounds.emplace_back(new Sound("Pistol_shot.WAV", false));
-	sounds.emplace_back(new Sound("Rifle_reload.WAV", false));
-	sounds.emplace_back(new Sound("Rifle_shot.WAV", false));
-	sounds.emplace_back(new Sound("Shotgun_reload.WAV", false));
-	sounds.emplace_back(new Sound("Shotgun_shot.WAV", false));
-	sounds.emplace_back(new Sound("Rocketx_reload.WAV", false));
-	sounds.emplace_back(new Sound("Rocketx_shot.WAV", false));
-	sounds.emplace_back(new Sound("player_death.WAV", false));
-	sounds.emplace_back(new Sound("player_hurt.WAV", false));
-	sounds.emplace_back(new Sound("Sword_attack.WAV", false));
+	sounds.emplace_back(new Sound("resources/BGM_TitleState.WAV", true));
+	sounds.emplace_back(new Sound("resources/BGM_PlayState.WAV", true));
+	sounds.emplace_back(new Sound("resources/menu_characterselect.WAV", false));
+	sounds.emplace_back(new Sound("resources/dodge_roll.WAV", false));
+	sounds.emplace_back(new Sound("resources/dodge_leap.WAV", false));
+	sounds.emplace_back(new Sound("resources/empty.WAV", false));
+	sounds.emplace_back(new Sound("resources/enemy_death.WAV", false));
+	sounds.emplace_back(new Sound("resources/enemy_hurt.WAV", false));
+	sounds.emplace_back(new Sound("resources/menu_confirm.WAV", false));
+	sounds.emplace_back(new Sound("resources/Pistol_reload.WAV", false));
+	sounds.emplace_back(new Sound("resources/Pistol_shot.WAV", false));
+	sounds.emplace_back(new Sound("resources/Rifle_reload.WAV", false));
+	sounds.emplace_back(new Sound("resources/Rifle_shot.WAV", false));
+	sounds.emplace_back(new Sound("resources/Shotgun_reload.WAV", false));
+	sounds.emplace_back(new Sound("resources/Shotgun_shot.WAV", false));
+	sounds.emplace_back(new Sound("resources/Rocketx_reload.WAV", false));
+	sounds.emplace_back(new Sound("resources/Rocketx_shot.WAV", false));
+	sounds.emplace_back(new Sound("resources/player_death.WAV", false));
+	sounds.emplace_back(new Sound("resources/player_hurt.WAV", false));
+	sounds.emplace_back(new Sound("resources/Sword_attack.WAV", false));
 }
 
 SoundManager::~SoundManager()

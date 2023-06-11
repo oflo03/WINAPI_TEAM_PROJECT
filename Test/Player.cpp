@@ -1,18 +1,15 @@
 #include"Marin.h"
-#include"Pilot.h"
 #include"Knight.h"
 #include"Player.h"
 
 void Player::init()
 {
 	Marin::init();
-	Pilot::init();
 	Knight::init();
 }
 
 void Player::Destroy() {
 	Marin::destroy();
-	Pilot::destroy();
 	Knight::destroy();
 	instance->myWeapons.clear();
 	delete instance;
@@ -35,7 +32,6 @@ Player* Player::getInstance() {
 			instance = new Marin(spawnpoint[0].x, spawnpoint[0].y);
 			break;
 		case pilot:
-			instance = new Pilot(spawnpoint[0].x, spawnpoint[0].y);
 			break;
 		case knight:
 			instance = new Knight(spawnpoint[0].x, spawnpoint[0].y);

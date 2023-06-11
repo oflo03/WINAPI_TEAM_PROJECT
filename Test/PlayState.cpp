@@ -64,6 +64,7 @@ PlayState::~PlayState()
 
 void PlayState::update()
 {
+	SoundManager::getInstance()->update(MainState);
 	LevelManager::getInstance()->update();
 	for (auto& d : drops)
 		d->update();

@@ -5,8 +5,8 @@ MapManager* MapManager::instance = nullptr;
 MapManager::MapManager()
 {
 	currentStage = 1;
-	grassImage.Load(L"Tiles_Grass.png");
-	wallImage.Load(L"Tiles_Wall.png");
+	grassImage.Load(L"resources/Tiles_Grass.png");
+	wallImage.Load(L"resources/Tiles_Wall.png");
 }
 
 
@@ -37,16 +37,16 @@ void MapManager::LoadTileMap(int stage)
 	switch (currentStage)
 	{
 	case 1:
-		mapFile = std::ifstream{ "map1.txt" };
+		mapFile = std::ifstream{ "resources/map1.txt" };
 		break;
 	case 2:
-		mapFile = std::ifstream{ "map2.txt" };
+		mapFile = std::ifstream{ "resources/map2.txt" };
 		break;
 	case 3:
-		mapFile = std::ifstream{ "map3.txt" };
+		mapFile = std::ifstream{ "resources/map3.txt" };
 		break;
 	case 4:
-		mapFile = std::ifstream{ "map4.txt" };
+		mapFile = std::ifstream{ "resources/map4.txt" };
 		break;
 	default:
 		return;

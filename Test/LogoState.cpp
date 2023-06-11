@@ -9,8 +9,8 @@ bool entering;
 
 LogoState::LogoState() :GameState()
 {
-	tuk.Load(L"main_tuk.png");
-	logo.Load(L"main_logo.png");
+	tuk.Load(L"resources/main_tuk.png");
+	logo.Load(L"resources/main_logo.png");
 	logoTime = 0;
 }
 

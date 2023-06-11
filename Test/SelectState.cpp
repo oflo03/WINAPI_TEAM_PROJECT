@@ -1,4 +1,5 @@
 #include "SelectState.h"
+#include"MenuState.h"
 #include "PlayState.h"
 #include "Player.h"
 #include"SoundManager.h"
@@ -14,10 +15,10 @@ TCHAR CT2[] = L"SWORD REFLETS BULLET";
 
 SelectState::SelectState()
 {
-	background.Load(L"main_selchar_back.png");
-	cursor.Load(L"UI_Image_Cursor.png");
-	image1.Load(L"marin_front.png");
-	image2.Load(L"knight_front.png");
+	background.Load(L"resources/main_selchar_back.png");
+	cursor.Load(L"resources/UI_Image_Cursor.png");
+	image1.Load(L"resources/marin_front.png");
+	image2.Load(L"resources/knight_front.png");
 	BT1 = RECT(screen.right / 4 - image1.GetWidth() * imagesize, screen.bottom / 2 - image1.GetHeight() * imagesize,
 		screen.right / 4 + image1.GetWidth() * imagesize, screen.bottom / 2 + image1.GetHeight() * imagesize);
 	BT2 = RECT(screen.right / 4 * 3 - image2.GetWidth() * imagesize, screen.bottom / 2 - image2.GetHeight() * imagesize,
@@ -31,12 +32,10 @@ SelectState::SelectState()
 		OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
 		DEFAULT_PITCH | FF_DONTCARE, L"Romulus");
 	mouseOn[0] = mouseOn[1] = false;
-	SoundManager::getInstance()->play(TitleState);
 }
 
 SelectState::~SelectState()
 {
-	SoundManager::getInstance()->pause(TitleState);
 	background.Destroy();
 	cursor.Destroy();
 	image1.Destroy();
@@ -71,7 +70,7 @@ void SelectState::handle_events()
 		mouseOn[1] = false;
 	}
 	if (GetAsyncKeyState(VK_ESCAPE) & 1) {
-		PostQuitMessage(0);
+		change_state(new MenuState());
 		return;
 	}
 	else if (GetAsyncKeyState(VK_LBUTTON)) {

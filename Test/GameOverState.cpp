@@ -6,7 +6,7 @@ extern RECT screen;
 
 GameOverState::GameOverState()
 {
-	back.Load(L"GameOver.png");
+	back.Load(L"resources/GameOver.png");
 }
 
 GameOverState::~GameOverState()

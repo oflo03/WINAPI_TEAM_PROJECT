@@ -19,7 +19,7 @@ Animation Bombshe::animation[4][3];
 
 Bombshe::Bombshe(double x, double y, Player* target) : Enemy(x, y), isAttack(false)
 {
-	shadow.Load(L"shadow.png");
+	shadow.Load(L"resources/shadow.png");
 	attackSize = 0;
 	velocity = 100;
 	moveTime = 200;
@@ -40,33 +40,33 @@ Bombshe::~Bombshe()
 
 void Bombshe::init()
 {
-	animation[BIDLE][FRONT].resource.Load(L"Bombshe_front.png");
-	animation[BIDLE][FRONT_RIGHT].resource.Load(L"Bombshe_right.png");
-	animation[BIDLE][FRONT_LEFT].resource.Load(L"Bombshe_left.png");
+	animation[BIDLE][FRONT].resource.Load(L"resources/Bombshe_front.png");
+	animation[BIDLE][FRONT_RIGHT].resource.Load(L"resources/Bombshe_right.png");
+	animation[BIDLE][FRONT_LEFT].resource.Load(L"resources/Bombshe_left.png");
 	for (int i = 0; i < 3; i++) {
 		animation[BIDLE][i].frame = 4;
 		animation[BIDLE][i].size = { 0,0,animation[BIDLE][i].resource.GetWidth() / animation[BIDLE][i].frame,animation[BIDLE][i].resource.GetHeight() };
 		animation[BIDLE][i].velocity = 2;
 	}
-	animation[BATTACK][FRONT].resource.Load(L"Bombshe_attack.png");
-	animation[BATTACK][FRONT_RIGHT].resource.Load(L"Bombshe_attack.png");
-	animation[BATTACK][FRONT_LEFT].resource.Load(L"Bombshe_attack.png");
+	animation[BATTACK][FRONT].resource.Load(L"resources/Bombshe_attack.png");
+	animation[BATTACK][FRONT_RIGHT].resource.Load(L"resources/Bombshe_attack.png");
+	animation[BATTACK][FRONT_LEFT].resource.Load(L"resources/Bombshe_attack.png");
 	for (int i = 0; i < 3; i++) {
 		animation[BATTACK][i].frame = 5;
 		animation[BATTACK][i].size = { 0,0,animation[BATTACK][i].resource.GetWidth() / animation[BATTACK][i].frame,animation[BATTACK][i].resource.GetHeight() };
 		animation[BATTACK][i].velocity = 2;
 	}
-	animation[BDAMAGED][FRONT].resource.Load(L"Bombshe_damaged.png");
-	animation[BDAMAGED][FRONT_RIGHT].resource.Load(L"Bombshe_damaged.png");
-	animation[BDAMAGED][FRONT_LEFT].resource.Load(L"Bombshe_damaged.png");
+	animation[BDAMAGED][FRONT].resource.Load(L"resources/Bombshe_damaged.png");
+	animation[BDAMAGED][FRONT_RIGHT].resource.Load(L"resources/Bombshe_damaged.png");
+	animation[BDAMAGED][FRONT_LEFT].resource.Load(L"resources/Bombshe_damaged.png");
 	for (int i = 0; i < 3; i++) {
 		animation[BDAMAGED][i].frame = 1;
 		animation[BDAMAGED][i].size = { 0,0,animation[BDAMAGED][i].resource.GetWidth() / animation[BDAMAGED][i].frame,animation[BDAMAGED][i].resource.GetHeight() };
 		animation[BDAMAGED][i].velocity = 8;
 	}
-	animation[BDEAD][FRONT].resource.Load(L"Bombshe_dead.png");
-	animation[BDEAD][FRONT_RIGHT].resource.Load(L"Bombshe_dead.png");
-	animation[BDEAD][FRONT_LEFT].resource.Load(L"Bombshe_dead.png");
+	animation[BDEAD][FRONT].resource.Load(L"resources/Bombshe_dead.png");
+	animation[BDEAD][FRONT_RIGHT].resource.Load(L"resources/Bombshe_dead.png");
+	animation[BDEAD][FRONT_LEFT].resource.Load(L"resources/Bombshe_dead.png");
 	for (int i = 0; i < 3; i++) {
 		animation[BDEAD][i].frame = 2;
 		animation[BDEAD][i].size = { 0,0,animation[BDEAD][i].resource.GetWidth() / animation[BDEAD][i].frame,animation[BDEAD][i].resource.GetHeight() };
@@ -253,8 +253,12 @@ void Bombshe::handle_collision(int otherLayer, int damage)
 			this->col = nullptr;
 			if (wave)
 				wave->time = wave->effect[wave->type].frame;
+			SoundManager::getInstance()->play(ENEMYDEATH);
 		}
-		else state = BDAMAGED;
+		else {
+			state = BDAMAGED;
+			SoundManager::getInstance()->play(ENEMYHURT);
+		}
 		frame = 0;
 		break;
 	case playerBullet:
@@ -271,8 +275,12 @@ void Bombshe::handle_collision(int otherLayer, int damage)
 			this->col = nullptr;
 			if (wave)
 				wave->time = wave->effect[wave->type].frame;
+			SoundManager::getInstance()->play(ENEMYDEATH);
 		}
-		else state = BDAMAGED;
+		else {
+			state = BDAMAGED;
+			SoundManager::getInstance()->play(ENEMYHURT);
+		}
 		frame = 0;
 		break;
 	default:

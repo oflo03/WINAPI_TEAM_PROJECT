@@ -6,7 +6,7 @@ extern RECT screen;
 
 EndingState::EndingState()
 {
-	back.Load(L"Ending.png");
+	back.Load(L"resources/Ending.png");
 }
 
 EndingState::~EndingState()

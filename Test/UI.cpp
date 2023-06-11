@@ -12,12 +12,12 @@ TCHAR ammoText[8];
 
 void UI::init()
 {
-	heart.Load(L"UI_Image_Heart.png");
-	weapons.Load(L"UI_Image_Weapons.png");
-	cursor.Load(L"UI_Image_Cursor.png");
-	bossHp.Load(L"boss_hp.png");
-	bossHpFrame.Load(L"boss_hp_frame.png");
-	bossHpFrame2.Load(L"boss_hp_frame2.png");
+	heart.Load(L"resources/UI_Image_Heart.png");
+	weapons.Load(L"resources/UI_Image_Weapons.png");
+	cursor.Load(L"resources/UI_Image_Cursor.png");
+	bossHp.Load(L"resources/boss_hp.png");
+	bossHpFrame.Load(L"resources/boss_hp_frame.png");
+	bossHpFrame2.Load(L"resources/boss_hp_frame2.png");
 	pp = Player::getInstance();
 	ammoTextBox = RECT(monitorSize.x - 250, 170, monitorSize.x - 10, 200);
 	romulus = CreateFont(48, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET,

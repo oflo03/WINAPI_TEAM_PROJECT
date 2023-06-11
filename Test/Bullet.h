@@ -4,7 +4,7 @@
 #include"Master.h"
 #include"Item.h"
 
-const int BulletDamage[]{ 10,7,5,5,3,30,10,10,10,100,10,10,10 };
+const int BulletDamage[]{ 10,7,5,5,3,80,10,10,10,100,10,10,10 };
 
 enum bullet_table {
 	BPISTOL,

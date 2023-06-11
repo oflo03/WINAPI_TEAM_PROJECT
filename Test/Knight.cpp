@@ -2,6 +2,7 @@
 #include"RollState.h"
 #include "Knight.h"
 #include"EffectManager.h"
+#include"SoundManager.h"
 
 extern double frame_time;
 extern bool beatable;
@@ -9,34 +10,34 @@ extern bool beatable;
 Animation Knight::animation[5][6];
 
 void Knight::init() {
-	animation[STATE_IDLE][FRONT].resource.Load(L"knight_idle_front.png");
-	animation[STATE_IDLE][FRONT_RIGHT].resource.Load(L"knight_idle_front_right.png");
-	animation[STATE_IDLE][FRONT_LEFT].resource.Load(L"knight_idle_front_left.png");
-	animation[STATE_IDLE][BACK].resource.Load(L"knight_idle_back.png");
-	animation[STATE_IDLE][BACK_RIGHT].resource.Load(L"knight_idle_back_right.png");
-	animation[STATE_IDLE][BACK_LEFT].resource.Load(L"knight_idle_back_left.png");
+	animation[STATE_IDLE][FRONT].resource.Load(L"resources/knight_idle_front.png");
+	animation[STATE_IDLE][FRONT_RIGHT].resource.Load(L"resources/knight_idle_front_right.png");
+	animation[STATE_IDLE][FRONT_LEFT].resource.Load(L"resources/knight_idle_front_left.png");
+	animation[STATE_IDLE][BACK].resource.Load(L"resources/knight_idle_back.png");
+	animation[STATE_IDLE][BACK_RIGHT].resource.Load(L"resources/knight_idle_back_right.png");
+	animation[STATE_IDLE][BACK_LEFT].resource.Load(L"resources/knight_idle_back_left.png");
 	for (int i = 0; i < 6; i++) {
 		animation[STATE_IDLE][i].frame = 4;
 		animation[STATE_IDLE][i].size = { 0,0,animation[STATE_IDLE][i].resource.GetWidth() / animation[STATE_IDLE][i].frame,animation[STATE_IDLE][i].resource.GetHeight() };
 		animation[STATE_IDLE][i].velocity = 1.5;
 	}
-	animation[STATE_RUN][FRONT].resource.Load(L"knight_run_front.png");
-	animation[STATE_RUN][FRONT_RIGHT].resource.Load(L"knight_run_front_right.png");
-	animation[STATE_RUN][FRONT_LEFT].resource.Load(L"knight_run_front_left.png");
-	animation[STATE_RUN][BACK].resource.Load(L"knight_run_back.png");
-	animation[STATE_RUN][BACK_RIGHT].resource.Load(L"knight_run_back_right.png");
-	animation[STATE_RUN][BACK_LEFT].resource.Load(L"knight_run_back_left.png");
+	animation[STATE_RUN][FRONT].resource.Load(L"resources/knight_run_front.png");
+	animation[STATE_RUN][FRONT_RIGHT].resource.Load(L"resources/knight_run_front_right.png");
+	animation[STATE_RUN][FRONT_LEFT].resource.Load(L"resources/knight_run_front_left.png");
+	animation[STATE_RUN][BACK].resource.Load(L"resources/knight_run_back.png");
+	animation[STATE_RUN][BACK_RIGHT].resource.Load(L"resources/knight_run_back_right.png");
+	animation[STATE_RUN][BACK_LEFT].resource.Load(L"resources/knight_run_back_left.png");
 	for (int i = 0; i < 6; i++) {
 		animation[STATE_RUN][i].frame = 6;
 		animation[STATE_RUN][i].size = { 0,0,animation[STATE_RUN][i].resource.GetWidth() / animation[STATE_RUN][i].frame,animation[STATE_RUN][i].resource.GetHeight() };
 		animation[STATE_RUN][i].velocity = 1.5;
 	}
-	animation[STATE_ROLL][FRONT].resource.Load(L"knight_roll_front.png");
-	animation[STATE_ROLL][FRONT_RIGHT].resource.Load(L"knight_roll_front_right.png");
-	animation[STATE_ROLL][FRONT_LEFT].resource.Load(L"knight_roll_front_left.png");
-	animation[STATE_ROLL][BACK].resource.Load(L"knight_roll_back.png");
-	animation[STATE_ROLL][BACK_RIGHT].resource.Load(L"knight_roll_back_right.png");
-	animation[STATE_ROLL][BACK_LEFT].resource.Load(L"knight_roll_back_left.png");
+	animation[STATE_ROLL][FRONT].resource.Load(L"resources/knight_roll_front.png");
+	animation[STATE_ROLL][FRONT_RIGHT].resource.Load(L"resources/knight_roll_front_right.png");
+	animation[STATE_ROLL][FRONT_LEFT].resource.Load(L"resources/knight_roll_front_left.png");
+	animation[STATE_ROLL][BACK].resource.Load(L"resources/knight_roll_back.png");
+	animation[STATE_ROLL][BACK_RIGHT].resource.Load(L"resources/knight_roll_back_right.png");
+	animation[STATE_ROLL][BACK_LEFT].resource.Load(L"resources/knight_roll_back_left.png");
 	for (int i = 0; i < 6; i++) {
 		animation[STATE_ROLL][i].frame = 9;
 		animation[STATE_ROLL][i].size = { 0,0,animation[STATE_ROLL][i].resource.GetWidth() / animation[STATE_ROLL][i].frame,animation[STATE_ROLL][i].resource.GetHeight() };
@@ -53,9 +54,9 @@ void Knight::destroy() {
 Knight::Knight(float x, float y) : Player(x, y)
 {
 	state = new IdleState;
-	hand.Load(L"knight_hand.png");
-	shadow[0].Load(L"shadow.png");
-	shadow[1].Load(L"shadow2.png");
+	hand.Load(L"resources/knight_hand.png");
+	shadow[0].Load(L"resources/shadow.png");
+	shadow[1].Load(L"resources/shadow2.png");
 	col = new Collider(Vector2D<float>(animation[STATE_IDLE][FRONT].size.right, animation[STATE_IDLE][FRONT].size.bottom));
 	col->owner = this;
 	col->layer = player;
@@ -225,6 +226,9 @@ void Knight::handle_collision(int otherLayer, int damage)
 			--hp;
 			col->layer = damaged_player;
 			damageCnt = 10.0;
+			if(hp>0)
+				SoundManager::getInstance()->play(PLAYER_HURT);
+			else SoundManager::getInstance()->play(PLAYER_DEATH);
 		}
 		break;
 	default:

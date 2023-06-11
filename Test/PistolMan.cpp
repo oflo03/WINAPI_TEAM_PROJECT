@@ -14,45 +14,45 @@ Animation PistolMan::animation[4][6];
 
 void PistolMan::init()
 {
-	animation[STATE_IDLE][FRONT].resource.Load(L"enemy_pistol_right.png");
-	animation[STATE_IDLE][FRONT_RIGHT].resource.Load(L"enemy_pistol_right.png");
-	animation[STATE_IDLE][FRONT_LEFT].resource.Load(L"enemy_pistol_left.png");
-	animation[STATE_IDLE][BACK].resource.Load(L"enemy_pistol_back.png");
-	animation[STATE_IDLE][BACK_RIGHT].resource.Load(L"enemy_pistol_back.png");
-	animation[STATE_IDLE][BACK_LEFT].resource.Load(L"enemy_pistol_back.png");
+	animation[STATE_IDLE][FRONT].resource.Load(L"resources/enemy_pistol_right.png");
+	animation[STATE_IDLE][FRONT_RIGHT].resource.Load(L"resources/enemy_pistol_right.png");
+	animation[STATE_IDLE][FRONT_LEFT].resource.Load(L"resources/enemy_pistol_left.png");
+	animation[STATE_IDLE][BACK].resource.Load(L"resources/enemy_pistol_back.png");
+	animation[STATE_IDLE][BACK_RIGHT].resource.Load(L"resources/enemy_pistol_back.png");
+	animation[STATE_IDLE][BACK_LEFT].resource.Load(L"resources/enemy_pistol_back.png");
 	for (int i = 0; i < 6; i++) {
 		animation[STATE_IDLE][i].frame = 2;
 		animation[STATE_IDLE][i].size = { 0,0,animation[STATE_IDLE][i].resource.GetWidth() / animation[STATE_IDLE][i].frame,animation[STATE_IDLE][i].resource.GetHeight() };
 		animation[STATE_IDLE][i].velocity = 2;
 	}
-	animation[STATE_RUN][FRONT].resource.Load(L"enemy_pistol_run_front.png");
-	animation[STATE_RUN][FRONT_RIGHT].resource.Load(L"enemy_pistol_run_right.png");
-	animation[STATE_RUN][FRONT_LEFT].resource.Load(L"enemy_pistol_run_left.png");
-	animation[STATE_RUN][BACK].resource.Load(L"enemy_pistol_run_back.png");
-	animation[STATE_RUN][BACK_RIGHT].resource.Load(L"enemy_pistol_run_back.png");
-	animation[STATE_RUN][BACK_LEFT].resource.Load(L"enemy_pistol_run_back.png");
+	animation[STATE_RUN][FRONT].resource.Load(L"resources/enemy_pistol_run_front.png");
+	animation[STATE_RUN][FRONT_RIGHT].resource.Load(L"resources/enemy_pistol_run_right.png");
+	animation[STATE_RUN][FRONT_LEFT].resource.Load(L"resources/enemy_pistol_run_left.png");
+	animation[STATE_RUN][BACK].resource.Load(L"resources/enemy_pistol_run_back.png");
+	animation[STATE_RUN][BACK_RIGHT].resource.Load(L"resources/enemy_pistol_run_back.png");
+	animation[STATE_RUN][BACK_LEFT].resource.Load(L"resources/enemy_pistol_run_back.png");
 	for (int i = 0; i < 6; i++) {
 		animation[STATE_RUN][i].frame = 6;
 		animation[STATE_RUN][i].size = { 0,0,animation[STATE_RUN][i].resource.GetWidth() / animation[STATE_RUN][i].frame,animation[STATE_RUN][i].resource.GetHeight() };
 		animation[STATE_RUN][i].velocity = 2;
 	}
-	animation[STATE_DAMAGED][FRONT].resource.Load(L"enemy_pistol_damaged_front.png");
-	animation[STATE_DAMAGED][FRONT_RIGHT].resource.Load(L"enemy_pistol_damaged_right.png");
-	animation[STATE_DAMAGED][FRONT_LEFT].resource.Load(L"enemy_pistol_damaged_left.png");
-	animation[STATE_DAMAGED][BACK].resource.Load(L"enemy_pistol_damaged_front.png");
-	animation[STATE_DAMAGED][BACK_RIGHT].resource.Load(L"enemy_pistol_damaged_right.png");
-	animation[STATE_DAMAGED][BACK_LEFT].resource.Load(L"enemy_pistol_damaged_left.png");
+	animation[STATE_DAMAGED][FRONT].resource.Load(L"resources/enemy_pistol_damaged_front.png");
+	animation[STATE_DAMAGED][FRONT_RIGHT].resource.Load(L"resources/enemy_pistol_damaged_right.png");
+	animation[STATE_DAMAGED][FRONT_LEFT].resource.Load(L"resources/enemy_pistol_damaged_left.png");
+	animation[STATE_DAMAGED][BACK].resource.Load(L"resources/enemy_pistol_damaged_front.png");
+	animation[STATE_DAMAGED][BACK_RIGHT].resource.Load(L"resources/enemy_pistol_damaged_right.png");
+	animation[STATE_DAMAGED][BACK_LEFT].resource.Load(L"resources/enemy_pistol_damaged_left.png");
 	for (int i = 0; i < 6; i++) {
 		animation[STATE_DAMAGED][i].frame = 2;
 		animation[STATE_DAMAGED][i].size = { 0,0,animation[STATE_DAMAGED][i].resource.GetWidth() / animation[STATE_DAMAGED][i].frame,animation[STATE_DAMAGED][i].resource.GetHeight() };
 		animation[STATE_DAMAGED][i].velocity = 2;
 	}
-	animation[STATE_DEAD][FRONT].resource.Load(L"enemy_pistol_dead_front.png");
-	animation[STATE_DEAD][FRONT_RIGHT].resource.Load(L"enemy_pistol_dead_front.png");
-	animation[STATE_DEAD][FRONT_LEFT].resource.Load(L"enemy_pistol_dead_front.png");
-	animation[STATE_DEAD][BACK].resource.Load(L"enemy_pistol_dead_back.png");
-	animation[STATE_DEAD][BACK_RIGHT].resource.Load(L"enemy_pistol_dead_back.png");
-	animation[STATE_DEAD][BACK_LEFT].resource.Load(L"enemy_pistol_dead_back.png");
+	animation[STATE_DEAD][FRONT].resource.Load(L"resources/enemy_pistol_dead_front.png");
+	animation[STATE_DEAD][FRONT_RIGHT].resource.Load(L"resources/enemy_pistol_dead_front.png");
+	animation[STATE_DEAD][FRONT_LEFT].resource.Load(L"resources/enemy_pistol_dead_front.png");
+	animation[STATE_DEAD][BACK].resource.Load(L"resources/enemy_pistol_dead_back.png");
+	animation[STATE_DEAD][BACK_RIGHT].resource.Load(L"resources/enemy_pistol_dead_back.png");
+	animation[STATE_DEAD][BACK_LEFT].resource.Load(L"resources/enemy_pistol_dead_back.png");
 	for (int i = 0; i < 6; i++) {
 		animation[STATE_DEAD][i].frame = 5;
 		animation[STATE_DEAD][i].size = { 0,0,animation[STATE_DEAD][i].resource.GetWidth() / animation[STATE_DEAD][i].frame,animation[STATE_DEAD][i].resource.GetHeight() };
@@ -71,8 +71,8 @@ void PistolMan::release()
 PistolMan::PistolMan(double x, double y, Player* target) : Enemy(x, y)
 {
 	col = nullptr;
-	hand.Load(L"enemy_pistol_hand.png");
-	shadow.Load(L"shadow.png");
+	hand.Load(L"resources/enemy_pistol_hand.png");
+	shadow.Load(L"resources/shadow.png");
 	velocity = 100;
 	moveTime = 200;
 	HP = 50;
@@ -287,8 +287,12 @@ void PistolMan::handle_collision(int otherLayer, int damage)
 				}
 			delete this->col;
 			this->col = nullptr;
+			SoundManager::getInstance()->play(ENEMYDEATH);
 		}
-		else state = STATE_DAMAGED;
+		else {
+			state = STATE_DAMAGED;
+			SoundManager::getInstance()->play(ENEMYHURT);
+		}
 		frame = 0;
 		break;
 	case playerBullet:
@@ -314,8 +318,12 @@ void PistolMan::handle_collision(int otherLayer, int damage)
 				}
 			delete this->col;
 			this->col = nullptr;
+			SoundManager::getInstance()->play(ENEMYDEATH);
 		}
-		else state = STATE_DAMAGED;
+		else {
+			state = STATE_DAMAGED;
+			SoundManager::getInstance()->play(ENEMYHURT);
+		}
 		frame = 0;
 		break;
 	default:

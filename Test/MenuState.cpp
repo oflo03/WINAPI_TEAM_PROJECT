@@ -7,12 +7,13 @@ extern RECT screen;
 
 MenuState::MenuState()
 {
-	title.Load(L"main_title.png");
+	title.Load(L"resources/main_title.png");
 	SoundManager::getInstance()->play(TitleState);
 }
 MenuState::~MenuState()
 {
 	title.Destroy();
+	SoundManager::getInstance()->stop(TitleState);
 }
 
 void MenuState::update()

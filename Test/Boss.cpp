@@ -5,16 +5,16 @@
 Boss* Boss::instance = nullptr;
 
 Boss::Boss() {
-	body.resource.Load(L"boss_body.png");
+	body.resource.Load(L"resources/boss_body.png");
 	body.frame = 4;
 	body.size = { 0,0,body.resource.GetWidth() / body.frame ,body.resource.GetHeight() };
-	hand[LEFT].resource.Load(L"boss_lefthand.png");
+	hand[LEFT].resource.Load(L"resources/boss_lefthand.png");
 	hand[LEFT].frame = 4;
 	hand[LEFT].size= { 0,0,hand[0].resource.GetWidth() / hand[0].frame ,hand[0].resource.GetHeight() };
-	hand[RIGHT].resource.Load(L"boss_righthand.png");
+	hand[RIGHT].resource.Load(L"resources/boss_righthand.png");
 	hand[RIGHT].frame = 4;
 	hand[RIGHT].size = { 0,0,hand[1].resource.GetWidth() / hand[1].frame ,hand[1].resource.GetHeight() };
-	shadow.Load(L"shadow.png");
+	shadow.Load(L"resources/shadow.png");
 	state = new BossIdle();
 	pattern.push_back(3);
 	pattern.push_back(2);

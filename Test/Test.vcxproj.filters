@@ -92,9 +92,6 @@
     <ClCompile Include="Knight.cpp">
       <Filter>Player</Filter>
     </ClCompile>
-    <ClCompile Include="Pilot.cpp">
-      <Filter>Player</Filter>
-    </ClCompile>
     <ClCompile Include="Portal.cpp">
       <Filter>Map</Filter>
     </ClCompile>
@@ -230,9 +227,6 @@
       <Filter>Enemy\Boss</Filter>
     </ClInclude>
     <ClInclude Include="Knight.h">
-      <Filter>Player</Filter>
-    </ClInclude>
-    <ClInclude Include="Pilot.h">
       <Filter>Player</Filter>
     </ClInclude>
     <ClInclude Include="Portal.h">
