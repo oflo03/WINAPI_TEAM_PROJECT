@@ -32,6 +32,7 @@ public:
 	void ReLoad() { curAmmo = maxAmmo; };
 	void Enemy() { maxAmmo /= 3, ReLoad(); };
 	void SetCurTime(int t) { curTime = t; }
+	void SetCurAmmo(int t) { curAmmo = t; }
 	int GetCurTime() { return curTime; }
 	int GetShotTime() { return shotTime; }
 	int GetCurAmmo() { return curAmmo; }

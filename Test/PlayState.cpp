@@ -31,7 +31,7 @@ bool lookRange;
 bool beatable = true;
 bool enemyclear;
 
-PlayState::PlayState() : GameState()	
+PlayState::PlayState() : GameState()
 {
 	Player::init();
 	EnemyManager::init();
@@ -40,6 +40,8 @@ PlayState::PlayState() : GameState()
 	DropItem::init();
 	UI::init();
 	LevelManager::init();
+	for (int i = 1; i < 5; ++i)
+		Player::getInstance()->SetCurAmmoZero(i);
 	//PlaySound(L"BGM_PlayState.wav", NULL, SND_ASYNC | SND_LOOP);
 }
 
