@@ -1,6 +1,7 @@
 #include "RunState.h"
 #include"IdleState.h"
 #include"RollState.h"
+#include"SoundManager.h"
 
 extern double frame_time;
 
@@ -53,16 +54,25 @@ PlayerState* RunState::handle_event(Player& player)
 		player.SetDir(Vector2D<float>(0, 0));
 		return new RollState(dirX, dirY);
 	}
-	if (GetAsyncKeyState('1') & 0x8000 && player.GetWeapon() != SWORD)
+	if (GetAsyncKeyState('1') & 0x8000 && player.GetWeapon() != SWORD) {
 		player.SetWeapon(SWORD);
-	if (GetAsyncKeyState('2') & 0x8000 && player.GetWeapon() != PISTOL)
+	}
+	if (GetAsyncKeyState('2') & 0x8000 && player.GetWeapon() != PISTOL) {
 		player.SetWeapon(PISTOL);
-	if (GetAsyncKeyState('3') & 0x8000 && player.GetWeapon() != RIFLE)
+		SoundManager::getInstance()->play(PISTOL_RELOAD);
+	}
+	if (GetAsyncKeyState('3') & 0x8000 && player.GetWeapon() != RIFLE) {
 		player.SetWeapon(RIFLE);
-	if (GetAsyncKeyState('4') & 0x8000 && player.GetWeapon() != SHOTGUN)
+		SoundManager::getInstance()->play(RIFLE_RELOAD);
+	}
+	if (GetAsyncKeyState('4') & 0x8000 && player.GetWeapon() != SHOTGUN) {
 		player.SetWeapon(SHOTGUN);
-	if (GetAsyncKeyState('5') & 0x8000 && player.GetWeapon() != ROCKET)
+		SoundManager::getInstance()->play(SHOTGUN_RELOAD);
+	}
+	if (GetAsyncKeyState('5') & 0x8000 && player.GetWeapon() != ROCKET) {
 		player.SetWeapon(ROCKET);
+		SoundManager::getInstance()->play(ROCKET_RELOAD);
+	}
 	if (GetAsyncKeyState(VK_CONTROL) & 1)
 		player.SetWeaponUp();
 	if (GetAsyncKeyState(VK_TAB) & 1)
@@ -73,6 +83,8 @@ PlayerState* RunState::handle_event(Player& player)
 		player.SetWeaponDown();
 	if (isMove) {
 		player.SetDir(Vector2D<float>(dirX, dirY));
+		if(!SoundManager::getInstance()->isPlaying(WALK))
+			SoundManager::getInstance()->play(WALK);
 		return nullptr;
 	}
 	return new IdleState();

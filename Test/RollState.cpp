@@ -1,6 +1,7 @@
 #include "RollState.h"
 #include"IdleState.h"
 #include"RunState.h"
+#include"SoundManager.h"
 
 extern double frame_time;
 
@@ -35,6 +36,7 @@ void RollState::update(Player& player)
 void RollState::enter(Player& player)
 {
 	player.SetCurState(STATE_ROLL);
+	SoundManager::getInstance()->play(ROLLING);
 }
 
 

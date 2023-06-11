@@ -5,7 +5,7 @@
 
 enum SOUND {
 	TitleState,
-	PlayState,
+	MainState,
 	BUTTONCLICK,
 	WALK,
 	ROLLING,
@@ -21,7 +21,8 @@ enum SOUND {
 	SHOTGUN_SHOT,
 	ROCKET_RELOAD,
 	ROCKET_SHOT,
-
+	PLAYER_DEATH,
+	PLAYER_HURT
 };
 
 class SoundManager
@@ -33,6 +34,7 @@ private:
 	~SoundManager();
 public:
 	static SoundManager* getInstance();
+	static void release();
 	void play(int type);
 	void pause(int type);
 	void resume(int type);
@@ -40,5 +42,6 @@ public:
 	void volumeUp(int type);
 	void volumeDown(int type);
 	void update(int type);
+	bool isPlaying(int type);
 };
 

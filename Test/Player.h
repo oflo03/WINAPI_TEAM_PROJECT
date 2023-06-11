@@ -6,6 +6,7 @@
 #include"Bullet.h"
 #include"Weapon.h"
 #include"Master.h"
+#include"SoundManager.h"
 
 class PlayerState;
 class Marin;
@@ -53,7 +54,32 @@ public:
 	virtual void handle_event() = 0;
 	virtual void update() = 0;
 	virtual void SetDirection() = 0;
-	virtual void attack() { myWeapons[selectedWeapon]->attack(handPos, mPos, playerBullet); }
+	virtual void attack() { 
+		myWeapons[selectedWeapon]->attack(handPos, mPos, playerBullet);
+		switch (selectedWeapon)
+		{
+		case SWORD:
+			break;
+		case PISTOL:
+			if(SoundManager::getInstance()->isPlaying(PISTOL_SHOT))
+				SoundManager::getInstance()->play(PISTOL_SHOT);
+			break;
+		case RIFLE:
+			if (SoundManager::getInstance()->isPlaying(RIFLE_SHOT))
+			SoundManager::getInstance()->play(RIFLE_SHOT);
+			break;
+		case SHOTGUN:
+			if (SoundManager::getInstance()->isPlaying(SHOTGUN_SHOT))
+			SoundManager::getInstance()->play(SHOTGUN_SHOT);
+			break;
+		case ROCKET:
+			if (SoundManager::getInstance()->isPlaying(ROCKET_SHOT))
+			SoundManager::getInstance()->play(ROCKET_SHOT);
+			break;
+		default:
+			break;
+		}
+	}
 	void SetPos(Vector2D<float> temp) { pos = temp; }
 	Vector2D<float> GetPos() { return pos; }
 	float GetAngle() { return angle; }

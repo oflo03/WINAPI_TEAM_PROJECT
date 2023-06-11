@@ -8,6 +8,7 @@
 #include"Portal.h"
 #include"MapManager.h"
 #include"LevelManager.h"
+#include"SoundManager.h"
 
 extern HDC mDC;
 std::random_device rd;
@@ -42,7 +43,7 @@ PlayState::PlayState() : GameState()
 	LevelManager::init();
 	for (int i = 1; i < 5; ++i)
 		Player::getInstance()->SetCurAmmoZero(i);
-	//PlaySound(L"BGM_PlayState.wav", NULL, SND_ASYNC | SND_LOOP);
+	SoundManager::getInstance()->play(MainState);
 }
 
 PlayState::~PlayState()
@@ -50,6 +51,7 @@ PlayState::~PlayState()
 	LevelManager::destroy();
 	Player::Destroy();
 	EnemyManager::destroy();
+	SoundManager::getInstance()->stop(MainState);
 }
 
 void PlayState::update()

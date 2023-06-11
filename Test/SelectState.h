@@ -6,6 +6,7 @@ class SelectState :
 {
 private:
 	CImage background, cursor, image1, image2;
+	bool mouseOn[2];
 public:
 	SelectState();
 	~SelectState();

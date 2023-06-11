@@ -21,5 +21,6 @@ public:
 	void volumeUp();
 	void volumeDown();
 	void update();
+	bool isPlaying();
 };
 

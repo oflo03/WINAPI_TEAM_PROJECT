@@ -1,6 +1,7 @@
 #include "game_framework.h"
 #include"LogoState.h"
 #include"Vector2D.h"
+#include"SoundManager.h"
 #include <crtdbg.h>
 
 double frame_time;
@@ -120,6 +121,7 @@ LRESULT WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 		break;
 	case WM_DESTROY:
 		end_game();
+		SoundManager::release();
 		PostQuitMessage(0);
 		break;
 	default:

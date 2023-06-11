@@ -22,6 +22,8 @@ SoundManager::SoundManager()
 	sounds.emplace_back(new Sound("Shotgun_shot.WAV", false));
 	sounds.emplace_back(new Sound("Rocketx_reload.WAV", false));
 	sounds.emplace_back(new Sound("Rocketx_shot.WAV", false));
+	sounds.emplace_back(new Sound("player_death.WAV", false));
+	sounds.emplace_back(new Sound("player_hurt.WAV", false));
 }
 
 SoundManager::~SoundManager()
@@ -35,6 +37,12 @@ SoundManager* SoundManager::getInstance()
 	if (instance == nullptr)
 		instance = new SoundManager;
 	return instance;
+}
+
+void SoundManager::release()
+{
+	if (instance != nullptr)
+		delete instance;
 }
 
 void SoundManager::play(int type)
@@ -70,4 +78,9 @@ void SoundManager::volumeDown(int type)
 void SoundManager::update(int type)
 {
 	sounds[type]->update();
+}
+
+bool SoundManager::isPlaying(int type)
+{
+	return sounds[type]->isPlaying();
 }

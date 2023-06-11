@@ -1,16 +1,18 @@
 #pragma once
 #include "game_framework.h"
+#include"SoundManager.h"
 
-class LogoState :
-	public GameState
+class MenuState :
+    public GameState
 {
 private:
-	CImage tuk, logo;
-	double logoTime;
+	CImage title;
+	SoundManager* sound;
 public:
-	LogoState();
-	~LogoState();
+	MenuState();
+	~MenuState();
 	virtual void update();
 	virtual void handle_events();
 	virtual void draw();
 };
+

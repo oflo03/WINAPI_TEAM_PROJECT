@@ -67,3 +67,10 @@ void Sound::update()
 	if (isPlaying)
 		system->update();
 }
+
+bool Sound::isPlaying()
+{
+	bool isPlaying;
+	channel->isPlaying(&isPlaying);
+	return isPlaying;
+}

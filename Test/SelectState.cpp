@@ -1,6 +1,7 @@
 #include "SelectState.h"
 #include "PlayState.h"
 #include "Player.h"
+#include"SoundManager.h"
 
 #define imagesize 2
 extern HDC mDC;
@@ -29,6 +30,7 @@ SelectState::SelectState()
 	rom = CreateFont(48, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET,
 		OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
 		DEFAULT_PITCH | FF_DONTCARE, L"Romulus");
+	mouseOn[0] = mouseOn[1] = false;
 }
 
 SelectState::~SelectState()
@@ -38,6 +40,7 @@ SelectState::~SelectState()
 	image1.Destroy();
 	image2.Destroy();
 	DeleteObject(rom);
+	SoundManager::getInstance()->stop(TitleState);
 }
 
 void SelectState::update()
@@ -46,19 +49,39 @@ void SelectState::update()
 
 void SelectState::handle_events()
 {
+	POINT mPoint;
+	GetCursorPos(&mPoint);
+	if ( PtInRect(&BT1, mPoint)) {
+		if (mouseOn[0] == false) {
+			SoundManager::getInstance()->play(CURSORON);
+			mouseOn[0] = true;
+		}
+	}
+	else if(!PtInRect(&BT1, mPoint)){
+		mouseOn[0] = false;
+	}
+	if (PtInRect(&BT2, mPoint)) {
+		if (mouseOn[1] == false) {
+			SoundManager::getInstance()->play(CURSORON);
+			mouseOn[1] = true;
+		}
+	}
+	else if (!PtInRect(&BT2, mPoint)) {
+		mouseOn[1] = false;
+	}
 	if (GetAsyncKeyState(VK_ESCAPE)) {
 		PostQuitMessage(0);
 		return;
 	}
 	else if (GetAsyncKeyState(VK_LBUTTON)) {
-		POINT mPoint;
-		GetCursorPos(&mPoint);
 		if (mPoint.x >= BT1.left && mPoint.x <= BT1.right && mPoint.y >= BT1.top && mPoint.y <= BT1.bottom) {
 			selectedPlayer = marin;
+			SoundManager::getInstance()->play(BUTTONCLICK);
 			change_state(new PlayState());
 		}
 		else if (mPoint.x >= BT2.left && mPoint.x <= BT2.right && mPoint.y >= BT2.top && mPoint.y <= BT2.bottom) {
 			selectedPlayer = knight;
+			SoundManager::getInstance()->play(BUTTONCLICK);
 			change_state(new PlayState());
 		}
 	}

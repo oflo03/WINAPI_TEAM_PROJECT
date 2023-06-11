@@ -191,32 +191,6 @@ void Bullet::handle_collision(int otherLayer, int damage)
 		if (type == BOSSBULLET1 || type == BOSSBULLET3)
 			return;
 		if (selectedPlayer != knight) {
-			switch (type)
-			{
-			case BPISTOL:
-				EffectManager::getInstance()->set_effect(new Effect(CEffect::PISTOLBULLET, col->pos));
-				break;
-			case BRIFLE:
-				EffectManager::getInstance()->set_effect(new Effect(CEffect::RIFLEBULLET, col->pos));
-				break;
-			case BSHOTGUN:
-				EffectManager::getInstance()->set_effect(new Effect(CEffect::SHOTGUNBULLET, col->pos));
-				break;
-			case BOSSBULLET1:
-			case BOSSBULLET3:
-				EffectManager::getInstance()->set_effect(new Effect(CEffect::PATTERNA, col->pos));
-				break;
-			case BOSSBULLET2:
-			case BENEMY:
-				EffectManager::getInstance()->set_effect(new Effect(CEffect::ENEMYBULLET, col->pos));
-				break;
-			case BBOUNCE:
-			case BOUNCEDBOSSBULLET2:
-				EffectManager::getInstance()->set_effect(new Effect(CEffect::BOUNCEBULLET, col->pos));
-				break;
-			default:
-				break;
-			}
 			for (auto i = COLL.begin(); i != COLL.end(); ++i)
 				if (COLL[i - COLL.begin()] == this->col)
 				{
