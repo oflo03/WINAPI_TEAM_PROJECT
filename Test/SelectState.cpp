@@ -73,7 +73,7 @@ void SelectState::handle_events()
 		change_state(new MenuState());
 		return;
 	}
-	else if (GetAsyncKeyState(VK_LBUTTON)) {
+	else if (GetAsyncKeyState(VK_LBUTTON) & 1) {
 		if (mPoint.x >= BT1.left && mPoint.x <= BT1.right && mPoint.y >= BT1.top && mPoint.y <= BT1.bottom) {
 			selectedPlayer = marin;
 			SoundManager::getInstance()->play(BUTTONCLICK);
