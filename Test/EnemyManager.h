@@ -14,6 +14,7 @@ public:
 	static EnemyManager* getInstance();
 	static void init();
 	static void destroy();
+	void Clear();
 	void SetEnemy(int stage);
 	void spawn(int type, float x, float y);
 	void delete_enemy(Enemy* e);

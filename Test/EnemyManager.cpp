@@ -51,6 +51,11 @@ void EnemyManager::destroy()
 	instance = nullptr;
 }
 
+void EnemyManager::Clear()
+{
+	enemy.clear();
+}
+
 void EnemyManager::SetEnemy(int stage)
 {
 	switch (stage)

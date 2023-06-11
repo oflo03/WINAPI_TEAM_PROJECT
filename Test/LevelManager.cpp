@@ -61,6 +61,7 @@ void LevelManager::loadNextStage()
 	phase = 1;
 	Collider::Clear();
 	DropItem::Clear();
+	EnemyManager::getInstance()->Clear();
 	COLL.emplace_back(Player::getInstance()->col);
 	MapManager::getInstance()->LoadTileMap(stage);
 	EnemyManager::getInstance()->SetEnemy((stage - 1) * 3 + phase);
