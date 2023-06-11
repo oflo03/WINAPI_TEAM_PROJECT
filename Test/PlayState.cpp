@@ -59,6 +59,7 @@ PlayState::~PlayState()
 	UI::Destroy();
 	LevelManager::destroy();
 	Collider::Clear();
+	SoundManager::getInstance()->stop(MainState);
 }
 
 void PlayState::update()

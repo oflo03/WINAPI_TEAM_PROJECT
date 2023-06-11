@@ -1,5 +1,6 @@
 #include "MenuState.h"
 #include "SelectState.h"
+#include"SoundManager.h"
 
 extern HDC mDC;
 extern RECT screen;
@@ -7,10 +8,8 @@ extern RECT screen;
 MenuState::MenuState()
 {
 	title.Load(L"main_title.png");
-	sound = SoundManager::getInstance();
-	sound->play(SOUND::TitleState);
+	SoundManager::getInstance()->play(TitleState);
 }
-
 MenuState::~MenuState()
 {
 	title.Destroy();
@@ -23,7 +22,7 @@ void MenuState::update()
 
 void MenuState::handle_events()
 {
-	if (GetAsyncKeyState(VK_ESCAPE)) {
+	if (GetAsyncKeyState(VK_ESCAPE)&1) {
 		PostQuitMessage(0);
 		return;
 	}

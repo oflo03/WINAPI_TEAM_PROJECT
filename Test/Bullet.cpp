@@ -1,6 +1,7 @@
 #include"Bullet.h"
 #include"EffectManager.h"
 #include"Player.h"
+#include"SoundManager.h"
 
 extern double frame_time;
 extern std::vector<Bullet*> Bullets;
@@ -72,6 +73,23 @@ Bullet::Bullet(int type, int side, Vector2D<float> pos, Vector2D<float> dir) :
 		}
 	}
 	else {
+		switch (this->type)
+		{
+		case BPISTOL:
+			SoundManager::getInstance()->play(PISTOL_SHOT);
+			break;
+		case BRIFLE:
+			SoundManager::getInstance()->play(RIFLE_SHOT);
+			break;
+		case BSHOTGUN:
+			SoundManager::getInstance()->play(SHOTGUN_SHOT);
+			break;
+		case BROCKET:
+			SoundManager::getInstance()->play(ROCKET_SHOT);
+			break;
+		default:
+			break;
+		}
 		velocity = 2;
 	}
 	col->layer = side;

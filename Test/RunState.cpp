@@ -59,19 +59,23 @@ PlayerState* RunState::handle_event(Player& player)
 	}
 	if (GetAsyncKeyState('2') & 0x8000 && player.GetWeapon() != PISTOL) {
 		player.SetWeapon(PISTOL);
-		SoundManager::getInstance()->play(PISTOL_RELOAD);
+		if(SoundManager::getInstance()->isPlaying(PISTOL_RELOAD))
+				SoundManager::getInstance()->play(PISTOL_RELOAD);
 	}
 	if (GetAsyncKeyState('3') & 0x8000 && player.GetWeapon() != RIFLE) {
 		player.SetWeapon(RIFLE);
-		SoundManager::getInstance()->play(RIFLE_RELOAD);
+		if (SoundManager::getInstance()->isPlaying(RIFLE_RELOAD))
+				SoundManager::getInstance()->play(RIFLE_RELOAD);
 	}
 	if (GetAsyncKeyState('4') & 0x8000 && player.GetWeapon() != SHOTGUN) {
 		player.SetWeapon(SHOTGUN);
-		SoundManager::getInstance()->play(SHOTGUN_RELOAD);
+			if (SoundManager::getInstance()->isPlaying(SHOTGUN_RELOAD))
+				SoundManager::getInstance()->play(SHOTGUN_RELOAD);
 	}
 	if (GetAsyncKeyState('5') & 0x8000 && player.GetWeapon() != ROCKET) {
 		player.SetWeapon(ROCKET);
-		SoundManager::getInstance()->play(ROCKET_RELOAD);
+			if (SoundManager::getInstance()->isPlaying(ROCKET_RELOAD))
+				SoundManager::getInstance()->play(ROCKET_RELOAD);
 	}
 	if (GetAsyncKeyState(VK_CONTROL) & 1)
 		player.SetWeaponUp();

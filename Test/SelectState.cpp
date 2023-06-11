@@ -31,16 +31,17 @@ SelectState::SelectState()
 		OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
 		DEFAULT_PITCH | FF_DONTCARE, L"Romulus");
 	mouseOn[0] = mouseOn[1] = false;
+	SoundManager::getInstance()->play(TitleState);
 }
 
 SelectState::~SelectState()
 {
+	SoundManager::getInstance()->pause(TitleState);
 	background.Destroy();
 	cursor.Destroy();
 	image1.Destroy();
 	image2.Destroy();
 	DeleteObject(rom);
-	SoundManager::getInstance()->stop(TitleState);
 }
 
 void SelectState::update()
@@ -69,7 +70,7 @@ void SelectState::handle_events()
 	else if (!PtInRect(&BT2, mPoint)) {
 		mouseOn[1] = false;
 	}
-	if (GetAsyncKeyState(VK_ESCAPE)) {
+	if (GetAsyncKeyState(VK_ESCAPE)&1) {
 		PostQuitMessage(0);
 		return;
 	}

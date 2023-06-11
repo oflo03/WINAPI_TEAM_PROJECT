@@ -3,7 +3,6 @@
 
 extern HDC mDC;
 extern RECT screen;
-bool IsAnyKeyPressed();
 
 EndingState::EndingState()
 {
@@ -23,10 +22,6 @@ void EndingState::handle_events()
 {
 
 	if (GetAsyncKeyState(VK_ESCAPE)) {
-		PostQuitMessage(0);
-		return;
-	}
-	else if (IsAnyKeyPressed()) {
 		change_state(new SelectState);
 	}
 }
