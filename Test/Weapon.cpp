@@ -19,6 +19,7 @@ void Sword::update()
 		Vector2D<float> mPos(cos(-angle * M_PI / 180) * attackRange, sin(-angle * M_PI / 180) * attackRange);
 		mPos += centerPos;
 		for (auto& other : COLL) {
+			if ((void*)other->owner == (void*)0xdddddddddddddddd)continue;
 			Vector2D<float> dot[4] = { Vector2D<float>(other->pos.x - other->size.x, other->pos.y - other->size.y),
 			Vector2D<float>(other->pos.x + other->size.x, other->pos.y - other->size.y),
 			Vector2D<float>(other->pos.x + other->size.x, other->pos.y + other->size.y),

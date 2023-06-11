@@ -97,6 +97,9 @@ void PlayState::handle_events()
 	else if (GetAsyncKeyState('Z') & 1) {
 		beatable = !beatable;
 	}
+	else if (GetAsyncKeyState('N') & 1) {
+		LevelManager::getInstance()->loadNextStage();
+	}
 	if (enemyclear)
 		Portal::getInstance()->handle_event();
 	EnemyManager::getInstance()->handle_event();
