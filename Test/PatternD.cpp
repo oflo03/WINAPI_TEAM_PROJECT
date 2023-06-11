@@ -16,10 +16,10 @@ void PatternD::enter(Boss& boss)
 
 BossState* PatternD::handle_event(Boss& boss)
 {
-	if ((int)time == 1000) {
+	if ((int)time == 600) {
 		return new BossIdle();
 	}
-	else if ((int)time >= 50 && (int)time < 950) {
+	else if ((int)time >= 50 && (int)time < 550) {
 		if ((int)attackCoolTime==0&&!isAttack) {
 			warning=new Effect(CEffect::PATTERND, Vector2D<float>(boss.target->GetPos().x, boss.target->GetPos().y+22 - Effect::effect[CEffect::PATTERND].size.bottom));
 			EffectManager::getInstance()->set_effect(warning);
@@ -52,7 +52,7 @@ void PatternD::update(Boss& boss)
 		boss.handPos[0].x += 1;
 		boss.handPos[1].x -= 1;
 	}
-	else if ((int)time >= 50 && (int)time < 950) {
+	else if ((int)time >= 50 && (int)time < 550) {
 		if ((int)attackCoolTime >= 0&&(int)attackCoolTime < 4) {
 			warning->pos= Vector2D<float>(boss.target->GetPos().x, boss.target->GetPos().y+22 - Effect::effect[CEffect::PATTERND].size.bottom);
 			attackCoolTime = (attackCoolTime + frame_time * 2 * 6);
@@ -63,7 +63,7 @@ void PatternD::update(Boss& boss)
 		else if ((int)attackCoolTime <0|| (int)attackCoolTime >=4&& (int)attackCoolTime <6)
 			attackCoolTime = (attackCoolTime + frame_time * 2 * 6);
 	}
-	else if ((int)time >= 950) {
+	else if ((int)time >= 550) {
 		boss.handPos[0].x -= 1;
 		boss.handPos[1].x += 1;
 	}

@@ -25,6 +25,8 @@ SoundManager::SoundManager()
 	sounds.emplace_back(new Sound("resources/player_death.WAV", false));
 	sounds.emplace_back(new Sound("resources/player_hurt.WAV", false));
 	sounds.emplace_back(new Sound("resources/Sword_attack.WAV", false));
+	sounds.emplace_back(new Sound("resources/main_gameover.WAV", false));
+	sounds.emplace_back(new Sound("resources/boss_intro.WAV", false));
 }
 
 SoundManager::~SoundManager()

@@ -15,10 +15,10 @@ void PatternC::enter(Boss& boss)
 
 BossState* PatternC::handle_event(Boss& boss)
 {
-	if ((int)time == 1000) {
+	if ((int)time == 600) {
 		return new BossIdle();
 	}
-	else if ((int)time >= 50 && (int)time < 950) {
+	else if ((int)time >= 50 && (int)time < 550) {
 		if ((int)attackCoolTime == 0) {
 			EffectManager::getInstance()->set_effect(new Effect(CEffect::PATTERNC, Vector2D<float>(boss.handPos[isLeft].x, boss.handPos[isLeft].y)));
 		}
@@ -40,13 +40,13 @@ void PatternC::update(Boss& boss)
 		boss.handPos[0]+=Vector2D<float>(-1,-2);
 		boss.handPos[1] += Vector2D<float>(+2, 1);
 	}
-	else if ((int)time >=50 && (int)time < 950) {
+	else if ((int)time >=50 && (int)time < 550) {
 		if ((int)attackCoolTime < 9)
 			attackCoolTime = (attackCoolTime + frame_time * 2 * 9);
 		else
 			attackCoolTime = -10;
 	}
-	else if ((int)time >= 950) {
+	else if ((int)time >= 550) {
 		boss.handPos[0] += Vector2D<float>(1, 2);
 		boss.handPos[1] += Vector2D<float>(-2, -1);
 	}

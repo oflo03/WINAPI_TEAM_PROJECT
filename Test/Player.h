@@ -72,6 +72,7 @@ public:
 	bool GetIfWeaponFull(int type) { return myWeapons[type]->IsFull(); }
 	int GetWeapon() { return selectedWeapon; }
 	int GetHP() { return hp; }
+	bool isGameOver() { return (hp <= 0 && (int)frame == 15); }
 	void SetWeaponTime(int t) { myWeapons[selectedWeapon]->SetCurTime(t); }
 	void SetWeapon(int type) { if (!myWeapons[type]->IsRunOut()) selectedWeapon = type, myWeapons[selectedWeapon]->SetCurTime(cooltime[type] - 3); }
 	void SetWeaponUp() { do selectedWeapon += 4, selectedWeapon %= 5; while (myWeapons[selectedWeapon]->IsRunOut()); }

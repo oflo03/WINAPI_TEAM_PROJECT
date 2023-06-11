@@ -51,9 +51,9 @@ PlayState::PlayState() : GameState()
 
 PlayState::~PlayState()
 {
-	Player::Destroy();
 	EnemyManager::destroy();
 	EffectManager::Destroy();
+	Bullets.clear();
 	Bullet::destroy();
 	DropItem::destroy();
 	UI::Destroy();
@@ -79,13 +79,6 @@ void PlayState::update()
 	EffectManager::getInstance()->update();
 	ColliderUpdate();
 	EffectManager::getInstance()->delete_effect();
-	if (LevelManager::getInstance()->GetStage() == 4)
-		if (Boss::getInstance()->getHP() <= 0)
-			change_state(new EndingState);
-		else if (Player::getInstance()->GetHP() <= 0)
-			change_state(new GameOverState); else;
-	else if (Player::getInstance()->GetHP() <= 0)
-		change_state(new GameOverState);
 }
 
 void PlayState::handle_events()
@@ -103,6 +96,12 @@ void PlayState::handle_events()
 		if(LevelManager::getInstance()->GetStage()<4)
 			LevelManager::getInstance()->loadNextStage();
 	}
+	else if (GetAsyncKeyState('R') & 1) {
+		for(int i=0;i<4;i++)
+			Player::getInstance()->WeaponReload(i+1);
+	}
+	else if (Player::getInstance()->GetHP() <= 0)
+		change_state(new GameOverState);
 	if (enemyclear)
 		Portal::getInstance()->handle_event();
 	EnemyManager::getInstance()->handle_event();
