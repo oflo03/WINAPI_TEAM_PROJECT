@@ -1,5 +1,6 @@
 #pragma once
 #include "game_framework.h"
+
 class SelectState :
 	public GameState
 {

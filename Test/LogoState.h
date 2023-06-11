@@ -6,6 +6,7 @@ class LogoState :
 private:
 	CImage tuk, logo, title;
 	double logoTime;
+	SoundManager* sound;
 public:
 	LogoState();
 	~LogoState();

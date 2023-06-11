@@ -21,6 +21,7 @@ LogoState::LogoState() :GameState()
 	tuk.Load(L"main_tuk.png");
 	logo.Load(L"main_logo.png");
 	title.Load(L"main_title.png");
+	sound = SoundManager::getInstance();
 	logoTime = 0;
 }
 
@@ -49,6 +50,7 @@ void LogoState::handle_events()
 	{
 		entering = true;
 		enterTime = logoTime + 0.5;
+		sound->play(TitleState);
 	}
 	else if (GetAsyncKeyState('E') & 1)
 	{

@@ -6,7 +6,6 @@
 class PlayState :
     public GameState
 {
-private:
 public:
 	PlayState();
 	~PlayState();

@@ -107,12 +107,14 @@
     <ClCompile Include="LevelManager.cpp">
       <Filter>Level</Filter>
     </ClCompile>
-    <ClCompile Include="SelectState.cpp" />
     <ClCompile Include="SoundManager.cpp">
       <Filter>SoundManager</Filter>
     </ClCompile>
     <ClCompile Include="Sound.cpp">
       <Filter>SoundManager</Filter>
+    </ClCompile>
+    <ClCompile Include="SelectState.cpp">
+      <Filter>Game Framework</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -239,12 +241,14 @@
     <ClInclude Include="LevelManager.h">
       <Filter>Level</Filter>
     </ClInclude>
-    <ClInclude Include="SelectState.h" />
     <ClInclude Include="SoundManager.h">
       <Filter>SoundManager</Filter>
     </ClInclude>
     <ClInclude Include="Sound.h">
       <Filter>SoundManager</Filter>
+    </ClInclude>
+    <ClInclude Include="SelectState.h">
+      <Filter>Game Framework</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

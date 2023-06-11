@@ -3,12 +3,13 @@
 #include<vector>
 #include<Windows.h>
 #include<atlImage.h>
+#include"SoundManager.h"
 
 
 class GameState {
 private:
 public:
-	GameState() {  };
+	GameState() { };
 	virtual ~GameState() = default;
 	virtual void update() = 0;
 	virtual void handle_events() = 0;
