@@ -107,8 +107,12 @@
     <ClCompile Include="LevelManager.cpp">
       <Filter>Level</Filter>
     </ClCompile>
-    <ClCompile Include="SelectState.cpp">
-      <Filter>Game Framework</Filter>
+    <ClCompile Include="SelectState.cpp" />
+    <ClCompile Include="SoundManager.cpp">
+      <Filter>SoundManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound.cpp">
+      <Filter>SoundManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -235,8 +239,12 @@
     <ClInclude Include="LevelManager.h">
       <Filter>Level</Filter>
     </ClInclude>
-    <ClInclude Include="SelectState.h">
-      <Filter>Game Framework</Filter>
+    <ClInclude Include="SelectState.h" />
+    <ClInclude Include="SoundManager.h">
+      <Filter>SoundManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound.h">
+      <Filter>SoundManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -275,6 +283,9 @@
     </Filter>
     <Filter Include="Level">
       <UniqueIdentifier>{f15293f7-f80a-4514-b6eb-2907e4b459c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SoundManager">
+      <UniqueIdentifier>{4a8163ae-8ba2-45cf-85c7-3b624670005f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
