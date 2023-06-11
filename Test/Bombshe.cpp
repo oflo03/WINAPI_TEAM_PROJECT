@@ -239,6 +239,7 @@ void Bombshe::handle_collision(int otherLayer, int damage)
 
 	case rolled_player:
 	case playerMelee:
+		if (col == nullptr)return;
 		EffectManager::getInstance()->set_effect(new Effect(CEffect::SWORDATTACK, col->pos));
 		HP -= damage;
 		if (HP <= 0) {
@@ -262,6 +263,7 @@ void Bombshe::handle_collision(int otherLayer, int damage)
 		frame = 0;
 		break;
 	case playerBullet:
+		if (col == nullptr)return;
 		HP -= damage;
 		if (HP <= 0) {
 			state = BDEAD;

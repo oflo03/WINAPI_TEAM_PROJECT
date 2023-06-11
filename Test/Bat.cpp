@@ -159,6 +159,7 @@ void Bat::handle_collision(int otherLayer, int damage)
 	case player:
 	case playerMelee:
 	case playerBullet:
+		if (col == nullptr)return;
 		state = DEAD;
 		for (auto i = COLL.begin(); i != COLL.end(); ++i)
 			if (COLL[i - COLL.begin()] == this->col)

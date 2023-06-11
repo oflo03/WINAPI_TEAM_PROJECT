@@ -261,6 +261,7 @@ void RifleMan::handle_collision(int otherLayer, int damage)
 		break;
 	case rolled_player:
 	case playerMelee:
+		if (col == nullptr)return;
 		EffectManager::getInstance()->set_effect(new Effect(CEffect::SWORDATTACK, col->pos));
 		moveTime = 2;
 		pos -= (target->GetPos() - pos).Normalize() * 10;
@@ -292,6 +293,7 @@ void RifleMan::handle_collision(int otherLayer, int damage)
 		frame = 0;
 		break;
 	case playerBullet:
+		if (col == nullptr)return;
 		moveTime = 2;
 		pos -= (target->GetPos() - pos).Normalize() * 2;
 		if (!isWallCollision(Vector2D<float>(pos.x, lastPos.y), col->size))

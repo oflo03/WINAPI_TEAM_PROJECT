@@ -266,6 +266,7 @@ void ShotgunMan::handle_collision(int otherLayer, int damage)
 		break;
 	case rolled_player:
 	case playerMelee:
+		if (col == nullptr)return;
 		EffectManager::getInstance()->set_effect(new Effect(CEffect::SWORDATTACK, col->pos));
 		moveTime = 2;
 		lastPos = pos;
@@ -298,6 +299,7 @@ void ShotgunMan::handle_collision(int otherLayer, int damage)
 		frame = 0;
 		break;
 	case playerBullet:
+		if (col == nullptr)return;
 		moveTime = 2;
 		lastPos = pos;
 		pos -= (target->GetPos() - pos).Normalize() * 2;
