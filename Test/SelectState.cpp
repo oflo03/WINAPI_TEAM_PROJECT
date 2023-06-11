@@ -52,13 +52,13 @@ void SelectState::handle_events()
 {
 	POINT mPoint;
 	GetCursorPos(&mPoint);
-	if ( PtInRect(&BT1, mPoint)) {
+	if (PtInRect(&BT1, mPoint)) {
 		if (mouseOn[0] == false) {
 			SoundManager::getInstance()->play(CURSORON);
 			mouseOn[0] = true;
 		}
 	}
-	else if(!PtInRect(&BT1, mPoint)){
+	else if (!PtInRect(&BT1, mPoint)) {
 		mouseOn[0] = false;
 	}
 	if (PtInRect(&BT2, mPoint)) {
@@ -70,7 +70,7 @@ void SelectState::handle_events()
 	else if (!PtInRect(&BT2, mPoint)) {
 		mouseOn[1] = false;
 	}
-	if (GetAsyncKeyState(VK_ESCAPE)&1) {
+	if (GetAsyncKeyState(VK_ESCAPE) & 1) {
 		PostQuitMessage(0);
 		return;
 	}

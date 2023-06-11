@@ -24,6 +24,7 @@ SoundManager::SoundManager()
 	sounds.emplace_back(new Sound("Rocketx_shot.WAV", false));
 	sounds.emplace_back(new Sound("player_death.WAV", false));
 	sounds.emplace_back(new Sound("player_hurt.WAV", false));
+	sounds.emplace_back(new Sound("Sword_attack.WAV", false));
 }
 
 SoundManager::~SoundManager()

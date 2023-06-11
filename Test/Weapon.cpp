@@ -1,5 +1,6 @@
 #include"Weapon.h"
 #include"Player.h"
+#include "SoundManager.h"
 
 extern double frame_time;
 extern bool lookRange;
@@ -19,6 +20,7 @@ void Sword::update()
 		Vector2D<float> mPos(cos(-angle * M_PI / 180) * attackRange, sin(-angle * M_PI / 180) * attackRange);
 		mPos += centerPos;
 		for (auto& other : COLL) {
+			if ((void*)other->owner == (void*)0xdddddddddddddddd)continue;
 			Vector2D<float> dot[4] = { Vector2D<float>(other->pos.x - other->size.x, other->pos.y - other->size.y),
 			Vector2D<float>(other->pos.x + other->size.x, other->pos.y - other->size.y),
 			Vector2D<float>(other->pos.x + other->size.x, other->pos.y + other->size.y),
@@ -37,6 +39,7 @@ void Sword::update()
 void Sword::attack(const Vector2D<float>& center, const Vector2D<float>& mPos, int side)
 {
 	if (!curTime) {
+		SoundManager::getInstance()->play(SWORD_ATK);
 		curTime = coolTime;
 		frame = 0.1;
 	}
@@ -125,6 +128,7 @@ void Pistol::attack(const Vector2D<float>& hand, const Vector2D<float>& mPos, in
 {
 	if (!curTime && curAmmo > 0)
 	{
+		SoundManager::getInstance()->play(PISTOL_SHOT);
 		Vector2D<float> t = Vector2D<float>(mPos.x - hand.x, mPos.y - hand.y);
 		t.Normalize();
 		t.Rotate(uid(dre) % 11 - 5);
@@ -148,6 +152,7 @@ void Rifle::attack(const Vector2D<float>& hand, const Vector2D<float>& mPos, int
 {
 	if (!curTime && curAmmo > 0)
 	{
+		SoundManager::getInstance()->play(RIFLE_SHOT);
 		Vector2D<float> t = Vector2D<float>(mPos.x - hand.x, mPos.y - hand.y);
 		t /= t.GetLenth();
 		t.Rotate(uid(dre) % 15 - 7);
@@ -169,6 +174,7 @@ void Shotgun::attack(const Vector2D<float>& hand, const Vector2D<float>& mPos, i
 {
 	if (!curTime && curAmmo > 0)
 	{
+		SoundManager::getInstance()->play(SHOTGUN_SHOT);
 		Vector2D<float> t = Vector2D<float>(mPos.x - hand.x, mPos.y - hand.y);
 		t /= t.GetLenth();
 		t.Rotate(-10);
@@ -194,6 +200,7 @@ void Rocket::attack(const Vector2D<float>& hand, const Vector2D<float>& mPos, in
 {
 	if (!curTime && curAmmo > 0)
 	{
+		SoundManager::getInstance()->play(ROCKET_SHOT);
 		Vector2D<float> t = Vector2D<float>(mPos.x - hand.x, mPos.y - hand.y);
 		t /= t.GetLenth();
 		Bullets.emplace_back(new Bullet(BROCKET, side, hand + Vector2D<float>(t.x * 30, t.y * 30 - 10), t * 5));

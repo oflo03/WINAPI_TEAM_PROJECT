@@ -44,6 +44,7 @@ void DropItem::handle_collision(int otherLayer, int damage)
 		if (!Player::getInstance()->GetIfWeaponFull(type + 1)) {
 			Player::getInstance()->WeaponReload(type + 1);
 			Player::getInstance()->SetWeapon(type + 1);
+			SoundManager::getInstance()->play(type * 2 + 9);
 			for (auto i = COLL.begin(); i != COLL.end(); ++i)
 				if (COLL[i - COLL.begin()] == this->col)
 				{
