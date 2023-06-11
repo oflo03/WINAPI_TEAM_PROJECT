@@ -48,7 +48,7 @@ protected:
 public:
 	static Player* getInstance();
 	static void init();
-	static void Destroy() { delete instance; }
+	static void Destroy();
 	virtual void draw_character(HDC mDC) = 0;
 	virtual void handle_event() = 0;
 	virtual void update() = 0;

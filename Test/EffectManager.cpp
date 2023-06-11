@@ -16,6 +16,8 @@ void EffectManager::Destroy()
 {
    if(instance!=nullptr)
         delete instance;
+   instance = nullptr;
+   Effect::destroy();
 }
 
 void EffectManager::Draw(HDC mDC)

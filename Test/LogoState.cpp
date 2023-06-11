@@ -51,6 +51,7 @@ void LogoState::handle_events()
 		entering = true;
 		enterTime = logoTime + 0.5;
 		sound->play(TitleState);
+		sound->play(CURSORON);
 	}
 	else if (GetAsyncKeyState('E') & 1)
 	{

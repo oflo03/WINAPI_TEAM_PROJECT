@@ -28,6 +28,7 @@ public:
 	}
 	~DropItem() { }
 	static void init();
+	static void destroy();
 	static void Clear();
 	void update();
 	void Draw(HDC mDC);

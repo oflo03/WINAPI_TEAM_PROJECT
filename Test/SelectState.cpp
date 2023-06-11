@@ -46,7 +46,7 @@ void SelectState::update()
 
 void SelectState::handle_events()
 {
-	if (GetAsyncKeyState(VK_ESCAPE)) {
+	if (GetAsyncKeyState(VK_ESCAPE) & 1) {
 		PostQuitMessage(0);
 		return;
 	}

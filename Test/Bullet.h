@@ -4,7 +4,7 @@
 #include"Master.h"
 #include"Item.h"
 
-const int BulletDamage[]{ 10,7,5,5,3,30,10,10,10,10,10,10,10 };
+const int BulletDamage[]{ 10,7,5,5,3,30,10,10,10,100,10,10,10 };
 
 enum bullet_table {
 	BPISTOL,
@@ -35,6 +35,7 @@ public:
 	Bullet(int type, int side, Vector2D<float> pos, Vector2D<float> dir);
 	~Bullet();
 	static void init();
+	static void destroy();
 	void draw_bullet(HDC mDC);
 	void update();
 	virtual void handle_collision(int otherLayer, int damage);

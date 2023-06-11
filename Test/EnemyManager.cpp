@@ -38,6 +38,19 @@ void EnemyManager::init()
 	spawnAnim.velocity = 0.5;
 }
 
+void EnemyManager::destroy()
+{
+	spawnAnim.resource.Destroy();
+	if (instance != nullptr)
+		delete instance;
+	PistolMan::release();
+	RifleMan::release();
+	ShotgunMan::release();
+	Bat::release();
+	Bombshe::release();
+	instance = nullptr;
+}
+
 void EnemyManager::SetEnemy(int stage)
 {
 	switch (stage)
@@ -119,11 +132,6 @@ void EnemyManager::SetEnemy(int stage)
 	}
 }
 
-void EnemyManager::destroy()
-{
-	if (instance != nullptr)
-		delete instance;
-}
 
 void EnemyManager::spawn(int type, float x, float y)
 {

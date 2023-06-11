@@ -28,6 +28,8 @@ void LevelManager::destroy()
 {
 	if (instance != nullptr)
 		delete instance;
+	instance = nullptr;
+	MapManager::release();
 }
 
 LevelManager* LevelManager::getInstance()

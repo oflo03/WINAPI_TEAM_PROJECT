@@ -56,6 +56,11 @@ void Effect::init()
 		effect[i].size = { 0,0,effect[i].resource.GetWidth() / effect[i].frame, effect[i].resource.GetHeight() };
 	}
 }
+void Effect::destroy()
+{
+	for (int i = 0; i < 16; i++)
+		effect[i].resource.Destroy();
+}
 
 void Effect::Draw(HDC mDC) {
 	effect[type].resource.Draw(mDC, pos.x - effect[type].size.right, pos.y - effect[type].size.bottom, effect[type].size.right * 2, effect[type].size.bottom * 2,
