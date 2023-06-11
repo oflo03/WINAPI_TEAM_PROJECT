@@ -74,4 +74,5 @@ public:
 	void SetWeaponUp() { do selectedWeapon += 4, selectedWeapon %= 5; while (myWeapons[selectedWeapon]->IsRunOut()); }
 	void SetWeaponDown() { do selectedWeapon += 1, selectedWeapon %= 5; while (myWeapons[selectedWeapon]->IsRunOut()); }
 	void SetCurState(int state) { curstate = state; }
+	void SetCurAmmoZero(int type) { myWeapons[type]->SetCurAmmo(0); }
 };
