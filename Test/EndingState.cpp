@@ -1,5 +1,6 @@
 #include "EndingState.h"
 #include "SelectState.h"
+#include"SoundManager.h"
 
 extern HDC mDC;
 extern RECT screen;
@@ -7,6 +8,7 @@ extern RECT screen;
 EndingState::EndingState()
 {
 	back.Load(L"resources/Ending.png");
+	SoundManager::getInstance()->play(END);
 }
 
 EndingState::~EndingState()

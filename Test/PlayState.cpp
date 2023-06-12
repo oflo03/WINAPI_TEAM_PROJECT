@@ -60,6 +60,7 @@ PlayState::~PlayState()
 	LevelManager::destroy();
 	Collider::Clear();
 	SoundManager::getInstance()->stop(MainState);
+	SoundManager::getInstance()->stop(BOSS);
 }
 
 void PlayState::update()

@@ -13,9 +13,10 @@ BossScene::BossScene()
 {
 	scene.Load(L"resources/cutScene.png");
 	time = 0;
-	rect = { screen.right,100,screen.right*2+20,800 };
+	rect = { screen.right,100,screen.right * 2 + 20,800 };
 	camPos = Player::getInstance()->GetPos();
 	SoundManager::getInstance()->stop(MainState);
+	SoundManager::getInstance()->play(BOSS);
 }
 
 BossScene::~BossScene()
@@ -40,8 +41,10 @@ void BossScene::handle_events()
 {
 	if (time == 70)
 		pop_state();
-	if(time==1)
+	if (time == 1)
+	{
 		SoundManager::getInstance()->play(BOSSSCENE);
+	}
 }
 
 void BossScene::draw()

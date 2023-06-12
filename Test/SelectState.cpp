@@ -33,6 +33,7 @@ SelectState::SelectState()
 		OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
 		DEFAULT_PITCH | FF_DONTCARE, L"Romulus");
 	mouseOn[0] = mouseOn[1] = false;
+	SoundManager::getInstance()->play(SELECTSTATE);
 }
 
 SelectState::~SelectState()
@@ -42,6 +43,7 @@ SelectState::~SelectState()
 	image1.Destroy();
 	image2.Destroy();
 	DeleteObject(rom);
+	SoundManager::getInstance()->stop(SELECTSTATE);
 }
 
 void SelectState::update()
