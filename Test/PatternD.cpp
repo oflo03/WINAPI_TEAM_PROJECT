@@ -24,6 +24,7 @@ BossState* PatternD::handle_event(Boss& boss)
 		if ((int)attackCoolTime==0&&!isAttack) {
 			warning=new Effect(CEffect::PATTERND, Vector2D<float>(boss.target->GetPos().x, boss.target->GetPos().y+22 - Effect::effect[CEffect::PATTERND].size.bottom));
 			EffectManager::getInstance()->set_effect(warning);
+			SoundManager::getInstance()->play(BOSSCHARGING);
 			isAttack = true;
 		}
 		else if ((int)attackCoolTime == 6) {

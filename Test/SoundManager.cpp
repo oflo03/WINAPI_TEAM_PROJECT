@@ -30,6 +30,7 @@ SoundManager::SoundManager()
 	sounds.emplace_back(new Sound("resources/boss_lazor.WAV", false));
 	sounds.emplace_back(new Sound("resources/boss_locking.WAV", false));
 	sounds.emplace_back(new Sound("resources/boss_lightning.WAV", false));
+	sounds.emplace_back(new Sound("resources/boss_charging.WAV", false));
 }
 
 SoundManager::~SoundManager()
