@@ -62,10 +62,7 @@ void Sound::volumeDown()
 
 void Sound::update()
 {
-	bool isPlaying;
-	channel->isPlaying(&isPlaying);
-	if (isPlaying)
-		system->update();
+	system->update();
 }
 
 bool Sound::isPlaying()

@@ -51,9 +51,9 @@ PlayState::PlayState() : GameState()
 
 PlayState::~PlayState()
 {
-	Player::Destroy();
 	EnemyManager::destroy();
 	EffectManager::Destroy();
+	Bullets.clear();
 	Bullet::destroy();
 	DropItem::destroy();
 	UI::Destroy();
@@ -64,13 +64,13 @@ PlayState::~PlayState()
 
 void PlayState::update()
 {
-	SoundManager::getInstance()->update(MainState);
+	SoundManager::getInstance()->update();
 	LevelManager::getInstance()->update();
 	for (auto& d : drops)
 		d->update();
 	Player::getInstance()->update();
 	EnemyManager::getInstance()->update();
-	if (LevelManager::getInstance()->GetStage() == 4)
+	if (LevelManager::getInstance()->GetStage() == 4&& Boss::getInstance()->getHP()>0)
 		Boss::getInstance()->update();
 	if (enemyclear)
 		Portal::getInstance()->update();
@@ -79,13 +79,6 @@ void PlayState::update()
 	EffectManager::getInstance()->update();
 	ColliderUpdate();
 	EffectManager::getInstance()->delete_effect();
-	if (LevelManager::getInstance()->GetStage() == 4)
-		if (Boss::getInstance()->getHP() <= 0)
-			change_state(new EndingState);
-		else if (Player::getInstance()->GetHP() <= 0)
-			change_state(new GameOverState); else;
-	else if (Player::getInstance()->GetHP() <= 0)
-		change_state(new GameOverState);
 }
 
 void PlayState::handle_events()
@@ -100,13 +93,20 @@ void PlayState::handle_events()
 		beatable = !beatable;
 	}
 	else if (GetAsyncKeyState('N') & 1) {
-		LevelManager::getInstance()->loadNextStage();
+		if(LevelManager::getInstance()->GetStage()<4)
+			LevelManager::getInstance()->loadNextStage();
 	}
+	else if (GetAsyncKeyState('R') & 1) {
+		for(int i=0;i<4;i++)
+			Player::getInstance()->WeaponReload(i+1);
+	}
+	else if (Player::getInstance()->GetHP() <= 0)
+		change_state(new GameOverState);
 	if (enemyclear)
 		Portal::getInstance()->handle_event();
 	EnemyManager::getInstance()->handle_event();
 	Player::getInstance()->handle_event();
-	if (LevelManager::getInstance()->GetStage() == 4)
+	if (LevelManager::getInstance()->GetStage() == 4 && Boss::getInstance()->getHP() > 0)
 		Boss::getInstance()->handle_event();
 }
 
@@ -132,7 +132,7 @@ void PlayState::draw()
 		}
 	else
 		Player::getInstance()->draw_character(mapDC);
-	if (LevelManager::getInstance()->GetStage() == 4)
+	if (LevelManager::getInstance()->GetStage() == 4 && Boss::getInstance()->getHP() > 0)
 		Boss::getInstance()->draw(mapDC);
 	for (auto& B : Bullets)
 		B->draw_bullet(mapDC);

@@ -7,7 +7,7 @@ class Marin :
     public Player
 {
 private:
-	static Animation animation[5][6];
+	static Animation animation[6][6];
 public:
 	Marin(float x, float y);
 	virtual ~Marin();

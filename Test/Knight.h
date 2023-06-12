@@ -7,7 +7,7 @@ class Knight :
 	public Player
 {
 private:
-	static Animation animation[5][6];
+	static Animation animation[6][6];
 public:
 	Knight(float x, float y);
 	virtual ~Knight();

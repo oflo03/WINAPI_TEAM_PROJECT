@@ -1,13 +1,14 @@
 #include "IdleState.h"
 #include"RollState.h"
 #include "Knight.h"
+#include"DeadState.h"
 #include"EffectManager.h"
 #include"SoundManager.h"
 
 extern double frame_time;
 extern bool beatable;
 
-Animation Knight::animation[5][6];
+Animation Knight::animation[6][6];
 
 void Knight::init() {
 	animation[STATE_IDLE][FRONT].resource.Load(L"resources/knight_idle_front.png");
@@ -43,10 +44,21 @@ void Knight::init() {
 		animation[STATE_ROLL][i].size = { 0,0,animation[STATE_ROLL][i].resource.GetWidth() / animation[STATE_ROLL][i].frame,animation[STATE_ROLL][i].resource.GetHeight() };
 		animation[STATE_ROLL][i].velocity = 2;
 	}
+	animation[STATE_DEAD][FRONT].resource.Load(L"resources/knight_dead.png");
+	animation[STATE_DEAD][FRONT_RIGHT].resource.Load(L"resources/knight_dead.png");
+	animation[STATE_DEAD][FRONT_LEFT].resource.Load(L"resources/knight_dead.png");
+	animation[STATE_DEAD][BACK].resource.Load(L"resources/knight_dead.png");
+	animation[STATE_DEAD][BACK_RIGHT].resource.Load(L"resources/knight_dead.png");
+	animation[STATE_DEAD][BACK_LEFT].resource.Load(L"resources/knight_dead.png");
+	for (int i = 0; i < 6; i++) {
+		animation[STATE_DEAD][i].frame = 12;
+		animation[STATE_DEAD][i].size = { 0,0,animation[STATE_DEAD][i].resource.GetWidth() / animation[STATE_DEAD][i].frame,animation[STATE_DEAD][i].resource.GetHeight() };
+		animation[STATE_DEAD][i].velocity = 0.5;
+	}
 }
 
 void Knight::destroy() {
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < 6; i++)
 		for (int j = 0; j < 6; ++j)
 			animation[i][j].resource.Destroy();
 }
@@ -96,13 +108,14 @@ void Knight::draw_character(HDC mDC)
 	}
 	bool isRolling = col->layer == rolled_player;
 	float yDest = pos.y - (animation[curstate][direction].size.bottom - 20) * 2;
-	shadow[isRolling].Draw(mDC, pos.x - shadow[isRolling].GetWidth(), pos.y + col->size.y - 2 - shadow[isRolling].GetHeight(), shadow[isRolling].GetWidth() * 2, shadow[isRolling].GetHeight() * 2);
+	if (curstate != STATE_DEAD)
+		shadow[isRolling].Draw(mDC, pos.x - shadow[isRolling].GetWidth(), pos.y + col->size.y - 2 - shadow[isRolling].GetHeight(), shadow[isRolling].GetWidth() * 2, shadow[isRolling].GetHeight() * 2);
 	if (direction == FRONT || direction == FRONT_RIGHT || direction == FRONT_LEFT) {
 		if (col->layer != damaged_player || (int)(damageCnt / 0.5) % 2)
 			animation[curstate][direction].resource.Draw(mDC, pos.x - animation[curstate][direction].size.right, yDest - 20, animation[curstate][direction].size.right * 2, animation[curstate][direction].size.bottom * 2,
 				(int)frame * animation[curstate][direction].size.right, 0, animation[curstate][direction].size.right, animation[curstate][direction].size.bottom
 			);
-		if (!isRolling) {
+		if (!isRolling && curstate != STATE_DEAD) {
 			myWeapons[selectedWeapon]->draw_weapon(mDC, handPos, mPos);
 			hand.Draw(mDC, handPos.x - hand.GetWidth(), handPos.y - hand.GetHeight(), hand.GetWidth() * 2, hand.GetHeight() * 2);
 		}
@@ -111,7 +124,7 @@ void Knight::draw_character(HDC mDC)
 		}
 	}
 	else {
-		if (!isRolling) {
+		if (!isRolling && curstate != STATE_DEAD) {
 			myWeapons[selectedWeapon]->draw_weapon(mDC, handPos, mPos);
 			hand.Draw(mDC, handPos.x - hand.GetWidth(), handPos.y - hand.GetHeight(), hand.GetWidth() * 2, hand.GetHeight() * 2);
 		}
@@ -147,14 +160,16 @@ void Knight::update()
 	lastPos = pos;
 	state->update(*this);
 	frame = (frame + frame_time * animation[curstate][direction].velocity * animation[curstate][direction].frame);
-	if (frame >= animation[curstate][direction].frame) frame = 0;
+	if (frame >= animation[curstate][direction].frame && curstate != STATE_DEAD) frame = 0;
+	else if (frame >= animation[curstate][direction].frame && curstate == STATE_DEAD) frame = 12;
 	if (damageCnt > 0)damageCnt -= 0.1;
 	if (col->layer == damaged_player && (int)damageCnt == 0) col->layer = player;
 	myWeapons[selectedWeapon]->update();
 	if (myWeapons[selectedWeapon]->GetShotTime() == 0 && myWeapons[selectedWeapon]->IsRunOut())
 		SetWeapon(SWORD);
 	col->pos = pos;
-	camPos = pos + (mPos - pos) / 4;
+	if (curstate != STATE_DEAD)
+		camPos = pos + (mPos - pos) / 4;
 	if (myWeapons[selectedWeapon]->IsReBound()) {
 		Vector2D<float> t = mPos - pos;
 		t.Normalize();
@@ -209,10 +224,20 @@ void Knight::handle_collision(int otherLayer, int damage)
 	case enemy:
 		if (col->layer == player && beatable)
 		{
-			pos -= dir;
 			--hp;
-			col->layer = damaged_player;
-			damageCnt = 10.0;
+			if (hp > 0) {
+				SoundManager::getInstance()->play(PLAYER_HURT);
+				pos -= dir;
+				col->layer = damaged_player;
+				damageCnt = 10.0;
+			}
+			else {
+				SoundManager::getInstance()->play(PLAYER_DEATH);
+				delete this->state;
+				this->state = new DeadState();
+				this->state->enter(*this);
+				frame = 0;
+			}
 		}
 		else
 			pos = lastPos;
@@ -224,11 +249,19 @@ void Knight::handle_collision(int otherLayer, int damage)
 		if (col->layer == player && beatable)
 		{
 			--hp;
-			col->layer = damaged_player;
-			damageCnt = 10.0;
-			if(hp>0)
+			if (hp > 0) {
 				SoundManager::getInstance()->play(PLAYER_HURT);
-			else SoundManager::getInstance()->play(PLAYER_DEATH);
+				pos -= dir;
+				col->layer = damaged_player;
+				damageCnt = 10.0;
+			}
+			else {
+				SoundManager::getInstance()->play(PLAYER_DEATH);
+				delete this->state;
+				this->state = new DeadState();
+				this->state->enter(*this);
+				frame = 0;
+			}
 		}
 		break;
 	default:

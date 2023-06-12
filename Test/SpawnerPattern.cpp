@@ -14,7 +14,7 @@ void SpawnerPattern::enter(Boss& boss)
 
 BossState* SpawnerPattern::handle_event(Boss& boss)
 {
-	if (time == 1000) {
+	if (time == 600) {
 		boss.pattern.push_back(3);
 		boss.pattern.push_back(2);
 		boss.pattern.push_back(1);

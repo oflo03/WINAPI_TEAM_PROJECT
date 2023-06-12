@@ -25,6 +25,12 @@ SoundManager::SoundManager()
 	sounds.emplace_back(new Sound("resources/player_death.WAV", false));
 	sounds.emplace_back(new Sound("resources/player_hurt.WAV", false));
 	sounds.emplace_back(new Sound("resources/Sword_attack.WAV", false));
+	sounds.emplace_back(new Sound("resources/main_gameover.WAV", false));
+	sounds.emplace_back(new Sound("resources/boss_intro.WAV", false));
+	sounds.emplace_back(new Sound("resources/boss_lazor.WAV", false));
+	sounds.emplace_back(new Sound("resources/boss_locking.WAV", false));
+	sounds.emplace_back(new Sound("resources/boss_lightning.WAV", false));
+	sounds.emplace_back(new Sound("resources/boss_charging.WAV", false));
 }
 
 SoundManager::~SoundManager()
@@ -76,9 +82,9 @@ void SoundManager::volumeDown(int type)
 	sounds[type]->volumeDown();
 }
 
-void SoundManager::update(int type)
+void SoundManager::update()
 {
-	sounds[type]->update();
+	Sound::update();
 }
 
 bool SoundManager::isPlaying(int type)

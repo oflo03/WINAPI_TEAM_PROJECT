@@ -15,6 +15,7 @@ TCHAR CT2[] = L"SWORD REFLETS BULLET";
 
 SelectState::SelectState()
 {
+	Player::Destroy();
 	background.Load(L"resources/main_selchar_back.png");
 	cursor.Load(L"resources/UI_Image_Cursor.png");
 	image1.Load(L"resources/marin_front.png");
@@ -73,7 +74,7 @@ void SelectState::handle_events()
 		change_state(new MenuState());
 		return;
 	}
-	else if (GetAsyncKeyState(VK_LBUTTON)) {
+	else if (GetAsyncKeyState(VK_LBUTTON) & 1) {
 		if (mPoint.x >= BT1.left && mPoint.x <= BT1.right && mPoint.y >= BT1.top && mPoint.y <= BT1.bottom) {
 			selectedPlayer = marin;
 			SoundManager::getInstance()->play(BUTTONCLICK);

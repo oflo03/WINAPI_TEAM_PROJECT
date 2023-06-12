@@ -238,6 +238,8 @@ void Bombshe::handle_collision(int otherLayer, int damage)
 		break;
 
 	case rolled_player:
+		pos -= (target->GetPos() - pos).Normalize() * 5;
+		break;
 	case playerMelee:
 		if (col == nullptr)return;
 		EffectManager::getInstance()->set_effect(new Effect(CEffect::SWORDATTACK, col->pos));

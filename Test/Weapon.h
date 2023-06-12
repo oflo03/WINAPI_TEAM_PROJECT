@@ -30,7 +30,7 @@ public:
 	virtual void update() = 0;
 	virtual void attack(const Vector2D<float>& center, const Vector2D<float>& mPos, int side) = 0;
 	void ReLoad() { curAmmo = maxAmmo; };
-	void Enemy() { maxAmmo /= 3, ReLoad(); };
+	void Enemy() { maxAmmo /= 3,coolTime*=2, ReLoad(); };
 	void SetCurTime(int t) { curTime = t; }
 	void SetCurAmmo(int t) { curAmmo = t; }
 	int GetCurTime() { return curTime; }

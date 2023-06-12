@@ -9,10 +9,12 @@ void Player::init()
 }
 
 void Player::Destroy() {
+	if (instance == nullptr)
+		return;
+	delete instance;
 	Marin::destroy();
 	Knight::destroy();
 	instance->myWeapons.clear();
-	delete instance;
 	instance = nullptr;
 }
 

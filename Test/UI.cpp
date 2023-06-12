@@ -59,10 +59,10 @@ void UI::draw(HDC mDC)
 			float decreased = 1.0f - (float)Boss::getInstance()->getHP() / BOSSHP;
 			int srclenth = (decreased * (bossHp.GetWidth() - 2)) / 2;
 			int destlenth = (decreased * (monitorSize.x - 600)) / 2;
-			bossHp.Draw(mDC, 300 + destlenth, monitorSize.y - 100, monitorSize.x - 600 - destlenth * 2, 90, srclenth, 0, bossHp.GetWidth() - srclenth * 2, bossHp.GetHeight());
+			bossHp.Draw(mDC, 300 + destlenth, monitorSize.y - 150, monitorSize.x - 600 - destlenth * 2, 140, srclenth, 0, bossHp.GetWidth() - srclenth * 2, bossHp.GetHeight());
 		}
-		bossHpFrame.Draw(mDC, 300, monitorSize.y - 100, monitorSize.x - 600, 90, 0, 0, bossHpFrame.GetWidth(), bossHp.GetHeight());
-		bossHpFrame2.Draw(mDC, 300, monitorSize.y - 100, monitorSize.x - 600, 90, 0, 0, bossHpFrame.GetWidth(), bossHp.GetHeight());
+		bossHpFrame.Draw(mDC, 300, monitorSize.y - 150, monitorSize.x - 600, 140, 0, 0, bossHpFrame.GetWidth(), bossHp.GetHeight());
+		bossHpFrame2.Draw(mDC, 300, monitorSize.y - 150, monitorSize.x - 600, 140, 0, 0, bossHpFrame.GetWidth(), bossHp.GetHeight());
 	}
 	POINT mPos;
 	GetCursorPos(&mPos);

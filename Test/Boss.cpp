@@ -58,6 +58,8 @@ Boss* Boss::getInstance()
 
 void Boss::release()
 {
+	if (instance != nullptr)
+		delete instance;
 }
 
 void Boss::draw(HDC mDC)

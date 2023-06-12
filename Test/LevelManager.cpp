@@ -8,6 +8,8 @@
 #include"UI.h"
 #include"Portal.h"
 #include"MapManager.h"
+#include"BossScene.h"
+#include"EndingState.h"
 
 extern bool enemyclear;
 
@@ -51,6 +53,10 @@ void LevelManager::update()
 			++phase;
 			EnemyManager::getInstance()->SetEnemy((stage - 1) * 3 + phase);
 		}
+		else if (Boss::getInstance()->getHP() <= 0) {
+			Portal::getInstance()->SetPos(portalpoint[stage - 1]);
+			enemyclear = true;
+		}
 	}
 	else enemyclear = false;
 }
@@ -62,11 +68,18 @@ void LevelManager::loadNextStage()
 	Collider::Clear();
 	DropItem::Clear();
 	EnemyManager::getInstance()->Clear();
+	Bullets.clear();
+	Player::getInstance()->SetPos(spawnpoint[stage - 1]);
+	if (stage == 4)
+		push_state(new BossScene);
+	else if (stage == 5) {
+		change_state(new EndingState);
+		return;
+	}
 	COLL.emplace_back(Player::getInstance()->col);
 	MapManager::getInstance()->LoadTileMap(stage);
 	EnemyManager::getInstance()->SetEnemy((stage - 1) * 3 + phase);
 	enemyclear = false;
-	Player::getInstance()->SetPos(spawnpoint[stage - 1]);
 }
 
 LevelManager* LevelManager::instance = nullptr;

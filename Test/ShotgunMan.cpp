@@ -79,7 +79,7 @@ ShotgunMan::ShotgunMan(double x, double y, Player* target) : Enemy(x, y)
 	state = STATE_IDLE;
 	weapon = new Shotgun();
 	weapon->Enemy();
-	attackRange = 300;
+	attackRange = 400;
 	attackCoolTime = 0;
 	lastPos = pos;
 }
@@ -265,6 +265,8 @@ void ShotgunMan::handle_collision(int otherLayer, int damage)
 		col->pos = pos;
 		break;
 	case rolled_player:
+		pos -= (target->GetPos() - pos).Normalize() * 5;
+		break;
 	case playerMelee:
 		if (col == nullptr)return;
 		EffectManager::getInstance()->set_effect(new Effect(CEffect::SWORDATTACK, col->pos));

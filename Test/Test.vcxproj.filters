@@ -122,6 +122,12 @@
     <ClCompile Include="MenuState.cpp">
       <Filter>Game Framework</Filter>
     </ClCompile>
+    <ClCompile Include="DeadState.cpp">
+      <Filter>Player</Filter>
+    </ClCompile>
+    <ClCompile Include="BossScene.cpp">
+      <Filter>Game Framework</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IdleState.h">
@@ -260,6 +266,12 @@
       <Filter>Game Framework</Filter>
     </ClInclude>
     <ClInclude Include="MenuState.h">
+      <Filter>Game Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="DeadState.h">
+      <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="BossScene.h">
       <Filter>Game Framework</Filter>
     </ClInclude>
   </ItemGroup>

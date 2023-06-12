@@ -14,13 +14,13 @@ public:
 	~Sound();
 	static void init();
 	static void release();
+	static void update();
 	void play();
 	void pause();
 	void resume();
 	void stop();
 	void volumeUp();
 	void volumeDown();
-	void update();
 	bool isPlaying();
 };
 
