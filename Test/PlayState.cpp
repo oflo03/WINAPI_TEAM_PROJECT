@@ -64,13 +64,13 @@ PlayState::~PlayState()
 
 void PlayState::update()
 {
-	SoundManager::getInstance()->update(MainState);
+	SoundManager::getInstance()->update();
 	LevelManager::getInstance()->update();
 	for (auto& d : drops)
 		d->update();
 	Player::getInstance()->update();
 	EnemyManager::getInstance()->update();
-	if (LevelManager::getInstance()->GetStage() == 4)
+	if (LevelManager::getInstance()->GetStage() == 4&& Boss::getInstance()->getHP()>0)
 		Boss::getInstance()->update();
 	if (enemyclear)
 		Portal::getInstance()->update();
@@ -106,7 +106,7 @@ void PlayState::handle_events()
 		Portal::getInstance()->handle_event();
 	EnemyManager::getInstance()->handle_event();
 	Player::getInstance()->handle_event();
-	if (LevelManager::getInstance()->GetStage() == 4)
+	if (LevelManager::getInstance()->GetStage() == 4 && Boss::getInstance()->getHP() > 0)
 		Boss::getInstance()->handle_event();
 }
 
@@ -132,7 +132,7 @@ void PlayState::draw()
 		}
 	else
 		Player::getInstance()->draw_character(mapDC);
-	if (LevelManager::getInstance()->GetStage() == 4)
+	if (LevelManager::getInstance()->GetStage() == 4 && Boss::getInstance()->getHP() > 0)
 		Boss::getInstance()->draw(mapDC);
 	for (auto& B : Bullets)
 		B->draw_bullet(mapDC);

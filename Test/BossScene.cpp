@@ -33,12 +33,15 @@ void BossScene::update()
 		else
 			time++;
 	}
+	SoundManager::getInstance()->update();
 }
 
 void BossScene::handle_events()
 {
 	if (time == 70)
 		pop_state();
+	if(time==1)
+		SoundManager::getInstance()->play(BOSSSCENE);
 }
 
 void BossScene::draw()

@@ -25,7 +25,10 @@ enum SOUND {
 	PLAYER_HURT,
 	SWORD_ATK,
 	GAME_OVER,
-	BOSSSCENE
+	BOSSSCENE,
+	BOSSLAZOR,
+	BOSSLOCKON,
+	BOSSLIGHTNING
 };
 
 class SoundManager
@@ -44,7 +47,7 @@ public:
 	void stop(int type);
 	void volumeUp(int type);
 	void volumeDown(int type);
-	void update(int type);
+	void update();
 	bool isPlaying(int type);
 };
 

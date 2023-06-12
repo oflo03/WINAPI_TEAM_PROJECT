@@ -3,6 +3,7 @@
 #include"BossIdle.h"
 #include"Bullet.h"
 #include"EffectManager.h"
+#include"SoundManager.h"
 
 extern HDC mDC;
 extern double frame_time;
@@ -19,7 +20,7 @@ BossState* PatternD::handle_event(Boss& boss)
 	if ((int)time == 600) {
 		return new BossIdle();
 	}
-	else if ((int)time >= 50 && (int)time < 550) {
+	else if ((int)time >= 25 && (int)time < 575) {
 		if ((int)attackCoolTime==0&&!isAttack) {
 			warning=new Effect(CEffect::PATTERND, Vector2D<float>(boss.target->GetPos().x, boss.target->GetPos().y+22 - Effect::effect[CEffect::PATTERND].size.bottom));
 			EffectManager::getInstance()->set_effect(warning);
@@ -28,6 +29,7 @@ BossState* PatternD::handle_event(Boss& boss)
 		else if ((int)attackCoolTime == 6) {
 			EffectManager::getInstance()->set_effect(new Effect(CEffect::PATTERNB, Vector2D<float>(boss.target->GetPos().x, boss.target->GetPos().y+22- Effect::effect[CEffect::PATTERNB].size.bottom)));
 			isAttack = false;
+			SoundManager::getInstance()->play(BOSSLIGHTNING);
 			RECT t;
 			RECT r = { pos.x - Effect::effect[CEffect::PATTERNB].size.right,pos.y-5,pos.x + Effect::effect[CEffect::PATTERNB].size.right,pos.y + 20 };
 			for (auto& other : COLL) {
@@ -48,11 +50,11 @@ BossState* PatternD::handle_event(Boss& boss)
 
 void PatternD::update(Boss& boss)
 {
-	if ((int)time < 50) {
+	if ((int)time < 25) {
 		boss.handPos[0].x += 1;
 		boss.handPos[1].x -= 1;
 	}
-	else if ((int)time >= 50 && (int)time < 550) {
+	else if ((int)time >= 25 && (int)time < 575) {
 		if ((int)attackCoolTime >= 0&&(int)attackCoolTime < 4) {
 			warning->pos= Vector2D<float>(boss.target->GetPos().x, boss.target->GetPos().y+22 - Effect::effect[CEffect::PATTERND].size.bottom);
 			attackCoolTime = (attackCoolTime + frame_time * 2 * 6);
@@ -63,7 +65,7 @@ void PatternD::update(Boss& boss)
 		else if ((int)attackCoolTime <0|| (int)attackCoolTime >=4&& (int)attackCoolTime <6)
 			attackCoolTime = (attackCoolTime + frame_time * 2 * 6);
 	}
-	else if ((int)time >= 550) {
+	else if ((int)time >= 575) {
 		boss.handPos[0].x -= 1;
 		boss.handPos[1].x += 1;
 	}
