@@ -11,6 +11,8 @@ private:
 	static MapManager* instance;
 	CImage grassImage;
 	CImage wallImage;
+	CImage Poke_grassImage;
+	CImage Poke_waterImage;
 	Tile Maps[MapHeight][MapWidth];
 	int currentStage;
 	MapManager();

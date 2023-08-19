@@ -213,6 +213,7 @@ void Marin::handle_collision(int otherLayer, int damage)
 	switch (otherLayer)
 	{
 	case wall:
+	case water:
 		if (!isWallCollision(Vector2D<float>(pos.x, lastPos.y), col->size))
 			pos.y = lastPos.y;
 		else if (!isWallCollision(Vector2D<float>(lastPos.x, pos.y), col->size))

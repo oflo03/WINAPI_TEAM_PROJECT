@@ -247,6 +247,7 @@ void PistolMan::handle_collision(int otherLayer, int damage)
 	switch (otherLayer)
 	{
 	case wall:
+	case water:
 		if (!isWallCollision(Vector2D<float>(pos.x + velocity * frame_time / 2 * (pos.x > lastPos.x ? 1 : -1), lastPos.y), col->size))
 		{
 			pos.x += velocity * frame_time / 2 * (pos.x > lastPos.x ? 1 : -1);

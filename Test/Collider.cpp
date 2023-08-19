@@ -1,18 +1,19 @@
 #include"Collider.h"
 #include"Master.h"
 
-//	wall, player, rolled_player, enemy, playerBullet, enemyBullet, playerMelee, damaged_player,dropitem
-bool collisionable[9][9]
+//	wall, player, rolled_player, enemy, playerBullet, enemyBullet, playerMelee, damaged_player, dropitem, water
+bool collisionable[10][10]
 {
-	0,0,0,0,0,0,0,0,0,
-	1,0,0,1,0,1,0,0,1,
-	1,0,0,1,0,0,0,0,1,
-	1,1,1,1,1,0,1,1,0,
-	1,0,0,1,0,0,0,0,0,
-	1,1,0,0,0,0,1,0,0,
-	0,0,0,0,0,0,0,0,0,
-	1,0,0,1,0,0,0,0,0,
-	0,1,1,0,0,0,0,0,0
+	0,0,0,0,0,0,0,0,0,0,
+	1,0,0,1,0,1,0,0,1,1,
+	1,0,0,1,0,0,0,0,1,1,
+	1,1,1,1,1,0,1,1,0,1,
+	1,0,0,1,0,0,0,0,0,0,
+	1,1,0,0,0,0,1,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,
+	1,0,0,1,0,0,0,0,0,1,
+	0,1,1,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0
 };
 
 std::queue<CollisionMessage> collisionMsg;
@@ -90,7 +91,7 @@ void ColliderUpdate()
 bool isWallCollision(Vector2D<float> pos, Vector2D<float> size)
 {
 	for (auto& other : COLL) {
-		if (other->layer != wall) continue;
+		if (other->layer != wall && other->layer != water) continue;
 		if (pos - other->pos <= size + other->size)
 			return true;
 	}

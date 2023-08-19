@@ -13,7 +13,7 @@ enum shapetype
 
 enum layertype
 {
-	wall, player, rolled_player, enemy, playerBullet, enemyBullet, playerMelee, damaged_player,dropitem
+	wall, player, rolled_player, enemy, playerBullet, enemyBullet, playerMelee, damaged_player, dropitem, water
 };
 
 class Master;
@@ -26,9 +26,9 @@ struct Collider
 	int layer;
 	int damage;
 	Master* owner;
-	Collider() : size(0, 0), shape(point){ }
-	Collider(float rad) : size(rad, rad), shape(circle){ }
-	Collider(Vector2D<float> size) : size(size), shape(rect){ }
+	Collider() : size(0, 0), shape(point) { }
+	Collider(float rad) : size(rad, rad), shape(circle) { }
+	Collider(Vector2D<float> size) : size(size), shape(rect) { }
 	void detection();
 	void draw_range(HDC mDC);
 	static void Clear();
