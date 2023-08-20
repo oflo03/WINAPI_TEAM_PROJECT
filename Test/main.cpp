@@ -2,7 +2,7 @@
 #include"LogoState.h"
 #include"Vector2D.h"
 #include"SoundManager.h"
-#include <crtdbg.h>
+#include"frame_time.h"
 
 double frame_time;
 extern std::vector<GameState*> stateStack;
@@ -60,28 +60,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevinstance, LPSTR lpszCmdPa
 		DispatchMessage(&Message);
 	}
 	return Message.wParam;
-}
-
-double GetFrameTime()
-{
-	static LARGE_INTEGER frequency;
-	static bool initialized = false;
-	static LARGE_INTEGER prevTime;
-
-	if (!initialized)
-	{
-		QueryPerformanceFrequency(&frequency);
-		QueryPerformanceCounter(&prevTime);
-		initialized = TRUE;
-	}
-
-	LARGE_INTEGER currentTime;
-	QueryPerformanceCounter(&currentTime);
-
-	double frameTime = static_cast<double>(currentTime.QuadPart - prevTime.QuadPart) / frequency.QuadPart;
-	prevTime = currentTime;
-
-	return frameTime;
 }
 
 LRESULT WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)

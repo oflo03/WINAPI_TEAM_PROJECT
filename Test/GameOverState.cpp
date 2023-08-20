@@ -36,8 +36,7 @@ void GameOverState::draw()
 	Player::getInstance()->draw_character(mapDC);
 	StretchBlt(mDC, 0, 0, screen.right, screen.bottom,
 		mapDC, camPos.x - camSize.x, camPos.y - camSize.y, camSize.x * 2, camSize.y * 2, SRCCOPY);
-	back.Draw(mDC, 370, 120);
+	back.Draw(mDC, 470, 120);
 	DeleteObject(mapbitmap);
 	DeleteDC(mapDC);
-	//back.Draw(mDC, 0, 0, screen.right, screen.bottom);
 }

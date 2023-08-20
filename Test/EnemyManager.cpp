@@ -86,7 +86,7 @@ void EnemyManager::SetEnemy(int stage)
 		spawn(PISTOLMAN, 1500, 200);
 		spawn(RIFLEMAN, 300, 600);
 		spawn(RIFLEMAN, 1800, 600);
-		spawn(SHOTGUNMAN, 960, 980);
+		spawn(SHOTGUNMAN, 760, 980);
 		break;
 	case 5:
 		spawn(BAT, 300, 200);

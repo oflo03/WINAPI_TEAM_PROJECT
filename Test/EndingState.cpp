@@ -14,6 +14,7 @@ EndingState::EndingState()
 EndingState::~EndingState()
 {
 	back.Destroy();
+	SoundManager::getInstance()->stop(END);
 }
 
 void EndingState::update()

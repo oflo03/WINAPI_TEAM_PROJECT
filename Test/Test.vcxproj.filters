@@ -3,19 +3,19 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="IdleState.cpp">
-      <Filter>Player</Filter>
+      <Filter>Object\Player</Filter>
     </ClCompile>
     <ClCompile Include="Marin.cpp">
-      <Filter>Player</Filter>
+      <Filter>Object\Player</Filter>
     </ClCompile>
     <ClCompile Include="RollState.cpp">
-      <Filter>Player</Filter>
+      <Filter>Object\Player</Filter>
     </ClCompile>
     <ClCompile Include="RunState.cpp">
-      <Filter>Player</Filter>
+      <Filter>Object\Player</Filter>
     </ClCompile>
     <ClCompile Include="Bullet.cpp">
-      <Filter>Weapon</Filter>
+      <Filter>Object\Weapon</Filter>
     </ClCompile>
     <ClCompile Include="game_framework.cpp">
       <Filter>Game Framework</Filter>
@@ -27,88 +27,88 @@
       <Filter>Game Framework</Filter>
     </ClCompile>
     <ClCompile Include="Weapon.cpp">
-      <Filter>Weapon</Filter>
+      <Filter>Object\Weapon</Filter>
     </ClCompile>
     <ClCompile Include="PistolMan.cpp">
-      <Filter>Enemy</Filter>
+      <Filter>Object\Enemy</Filter>
     </ClCompile>
     <ClCompile Include="Tilemap.cpp">
-      <Filter>Map</Filter>
+      <Filter>Object\Map</Filter>
     </ClCompile>
     <ClCompile Include="Collider.cpp">
       <Filter>Colider</Filter>
     </ClCompile>
     <ClCompile Include="RifleMan.cpp">
-      <Filter>Enemy</Filter>
+      <Filter>Object\Enemy</Filter>
     </ClCompile>
     <ClCompile Include="ShotgunMan.cpp">
-      <Filter>Enemy</Filter>
+      <Filter>Object\Enemy</Filter>
     </ClCompile>
     <ClCompile Include="Bat.cpp">
-      <Filter>Enemy</Filter>
+      <Filter>Object\Enemy</Filter>
     </ClCompile>
     <ClCompile Include="EnemyManager.cpp">
-      <Filter>Enemy</Filter>
+      <Filter>Object\Enemy</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
-      <Filter>Player</Filter>
+      <Filter>Object\Player</Filter>
     </ClCompile>
     <ClCompile Include="EffectManager.cpp">
-      <Filter>Effect</Filter>
+      <Filter>Object\Effect</Filter>
     </ClCompile>
     <ClCompile Include="Bombshe.cpp">
-      <Filter>Enemy</Filter>
+      <Filter>Object\Enemy</Filter>
     </ClCompile>
     <ClCompile Include="Effect.cpp">
-      <Filter>Effect</Filter>
+      <Filter>Object\Effect</Filter>
     </ClCompile>
     <ClCompile Include="DropItem.cpp">
-      <Filter>DropItem</Filter>
+      <Filter>Object\DropItem</Filter>
     </ClCompile>
     <ClCompile Include="Boss.cpp">
-      <Filter>Enemy\Boss</Filter>
+      <Filter>Object\Enemy\Boss</Filter>
     </ClCompile>
     <ClCompile Include="BossState.cpp">
-      <Filter>Enemy\Boss</Filter>
+      <Filter>Object\Enemy\Boss</Filter>
     </ClCompile>
     <ClCompile Include="BossIdle.cpp">
-      <Filter>Enemy\Boss</Filter>
+      <Filter>Object\Enemy\Boss</Filter>
     </ClCompile>
     <ClCompile Include="PatternA.cpp">
-      <Filter>Enemy\Boss</Filter>
+      <Filter>Object\Enemy\Boss</Filter>
     </ClCompile>
     <ClCompile Include="UI.cpp">
       <Filter>UI</Filter>
     </ClCompile>
     <ClCompile Include="PatternB.cpp">
-      <Filter>Enemy\Boss</Filter>
+      <Filter>Object\Enemy\Boss</Filter>
     </ClCompile>
     <ClCompile Include="PatternC.cpp">
-      <Filter>Enemy\Boss</Filter>
+      <Filter>Object\Enemy\Boss</Filter>
     </ClCompile>
     <ClCompile Include="PatternD.cpp">
-      <Filter>Enemy\Boss</Filter>
+      <Filter>Object\Enemy\Boss</Filter>
     </ClCompile>
     <ClCompile Include="Knight.cpp">
-      <Filter>Player</Filter>
+      <Filter>Object\Player</Filter>
     </ClCompile>
     <ClCompile Include="Portal.cpp">
-      <Filter>Map</Filter>
+      <Filter>Object\Map</Filter>
     </ClCompile>
     <ClCompile Include="SpawnerPattern.cpp">
-      <Filter>Enemy\Boss</Filter>
+      <Filter>Object\Enemy\Boss</Filter>
     </ClCompile>
     <ClCompile Include="MapManager.cpp">
-      <Filter>Map</Filter>
+      <Filter>Object\Map</Filter>
     </ClCompile>
     <ClCompile Include="LevelManager.cpp">
       <Filter>Level</Filter>
     </ClCompile>
     <ClCompile Include="SoundManager.cpp">
-      <Filter>SoundManager</Filter>
+      <Filter>Object\Enemy\Manager\SoundManager</Filter>
     </ClCompile>
     <ClCompile Include="Sound.cpp">
-      <Filter>SoundManager</Filter>
+      <Filter>Object\Enemy\Manager\SoundManager</Filter>
     </ClCompile>
     <ClCompile Include="SelectState.cpp">
       <Filter>Game Framework</Filter>
@@ -123,7 +123,7 @@
       <Filter>Game Framework</Filter>
     </ClCompile>
     <ClCompile Include="DeadState.cpp">
-      <Filter>Player</Filter>
+      <Filter>Object\Player</Filter>
     </ClCompile>
     <ClCompile Include="BossScene.cpp">
       <Filter>Game Framework</Filter>
@@ -131,25 +131,25 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IdleState.h">
-      <Filter>Player</Filter>
+      <Filter>Object\Player</Filter>
     </ClInclude>
     <ClInclude Include="Marin.h">
-      <Filter>Player</Filter>
+      <Filter>Object\Player</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
-      <Filter>Player</Filter>
+      <Filter>Object\Player</Filter>
     </ClInclude>
     <ClInclude Include="RollState.h">
-      <Filter>Player</Filter>
+      <Filter>Object\Player</Filter>
     </ClInclude>
     <ClInclude Include="RunState.h">
-      <Filter>Player</Filter>
+      <Filter>Object\Player</Filter>
     </ClInclude>
     <ClInclude Include="Bullet.h">
-      <Filter>Weapon</Filter>
+      <Filter>Object\Weapon</Filter>
     </ClInclude>
     <ClInclude Include="Item.h">
-      <Filter>Weapon</Filter>
+      <Filter>Object\Weapon</Filter>
     </ClInclude>
     <ClInclude Include="game_framework.h">
       <Filter>Game Framework</Filter>
@@ -161,16 +161,16 @@
       <Filter>Game Framework</Filter>
     </ClInclude>
     <ClInclude Include="Weapon.h">
-      <Filter>Weapon</Filter>
+      <Filter>Object\Weapon</Filter>
     </ClInclude>
     <ClInclude Include="Enemy.h">
-      <Filter>Enemy</Filter>
+      <Filter>Object\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="State.h">
-      <Filter>Player</Filter>
+      <Filter>Object\Player</Filter>
     </ClInclude>
     <ClInclude Include="PistolMan.h">
-      <Filter>Enemy</Filter>
+      <Filter>Object\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="Collider.h">
       <Filter>Colider</Filter>
@@ -185,76 +185,76 @@
       <Filter>Else</Filter>
     </ClInclude>
     <ClInclude Include="RifleMan.h">
-      <Filter>Enemy</Filter>
+      <Filter>Object\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="ShotgunMan.h">
-      <Filter>Enemy</Filter>
+      <Filter>Object\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="Bat.h">
-      <Filter>Enemy</Filter>
+      <Filter>Object\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="Effect.h">
-      <Filter>Effect</Filter>
+      <Filter>Object\Effect</Filter>
     </ClInclude>
     <ClInclude Include="EnemyManager.h">
-      <Filter>Enemy</Filter>
+      <Filter>Object\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="EffectManager.h">
-      <Filter>Effect</Filter>
+      <Filter>Object\Effect</Filter>
     </ClInclude>
     <ClInclude Include="Bombshe.h">
-      <Filter>Enemy</Filter>
+      <Filter>Object\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="DropItem.h">
-      <Filter>DropItem</Filter>
+      <Filter>Object\DropItem</Filter>
     </ClInclude>
     <ClInclude Include="Boss.h">
-      <Filter>Enemy\Boss</Filter>
+      <Filter>Object\Enemy\Boss</Filter>
     </ClInclude>
     <ClInclude Include="BossState.h">
-      <Filter>Enemy\Boss</Filter>
+      <Filter>Object\Enemy\Boss</Filter>
     </ClInclude>
     <ClInclude Include="BossIdle.h">
-      <Filter>Enemy\Boss</Filter>
+      <Filter>Object\Enemy\Boss</Filter>
     </ClInclude>
     <ClInclude Include="PatternA.h">
-      <Filter>Enemy\Boss</Filter>
+      <Filter>Object\Enemy\Boss</Filter>
     </ClInclude>
     <ClInclude Include="UI.h">
       <Filter>UI</Filter>
     </ClInclude>
     <ClInclude Include="PatternB.h">
-      <Filter>Enemy\Boss</Filter>
+      <Filter>Object\Enemy\Boss</Filter>
     </ClInclude>
     <ClInclude Include="PatternC.h">
-      <Filter>Enemy\Boss</Filter>
+      <Filter>Object\Enemy\Boss</Filter>
     </ClInclude>
     <ClInclude Include="PatternD.h">
-      <Filter>Enemy\Boss</Filter>
+      <Filter>Object\Enemy\Boss</Filter>
     </ClInclude>
     <ClInclude Include="Knight.h">
-      <Filter>Player</Filter>
+      <Filter>Object\Player</Filter>
     </ClInclude>
     <ClInclude Include="Portal.h">
-      <Filter>Map</Filter>
+      <Filter>Object\Map</Filter>
     </ClInclude>
     <ClInclude Include="SpawnerPattern.h">
-      <Filter>Enemy\Boss</Filter>
+      <Filter>Object\Enemy\Boss</Filter>
     </ClInclude>
     <ClInclude Include="Tilemap.h">
-      <Filter>Map</Filter>
+      <Filter>Object\Map</Filter>
     </ClInclude>
     <ClInclude Include="MapManager.h">
-      <Filter>Map</Filter>
+      <Filter>Object\Map</Filter>
     </ClInclude>
     <ClInclude Include="LevelManager.h">
       <Filter>Level</Filter>
     </ClInclude>
     <ClInclude Include="SoundManager.h">
-      <Filter>SoundManager</Filter>
+      <Filter>Object\Enemy\Manager\SoundManager</Filter>
     </ClInclude>
     <ClInclude Include="Sound.h">
-      <Filter>SoundManager</Filter>
+      <Filter>Object\Enemy\Manager\SoundManager</Filter>
     </ClInclude>
     <ClInclude Include="SelectState.h">
       <Filter>Game Framework</Filter>
@@ -269,27 +269,15 @@
       <Filter>Game Framework</Filter>
     </ClInclude>
     <ClInclude Include="DeadState.h">
-      <Filter>Player</Filter>
+      <Filter>Object\Player</Filter>
     </ClInclude>
     <ClInclude Include="BossScene.h">
       <Filter>Game Framework</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="Player">
-      <UniqueIdentifier>{160d79aa-d9b0-448e-aa36-ae90c5f127fc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Weapon">
-      <UniqueIdentifier>{3a0eb8dc-9583-4554-8019-5a488d1f631e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Enemy">
-      <UniqueIdentifier>{853410b3-5585-4ddd-af16-ba95101f5360}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Game Framework">
       <UniqueIdentifier>{24e5ab0a-3fd0-42f6-80ec-e9ff5617d445}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Map">
-      <UniqueIdentifier>{a6bf3bd6-d0d0-4102-87e4-3c1e63c270eb}</UniqueIdentifier>
     </Filter>
     <Filter Include="Colider">
       <UniqueIdentifier>{5e10a98c-de83-45fd-aea6-71f6c918ffbf}</UniqueIdentifier>
@@ -297,22 +285,40 @@
     <Filter Include="Else">
       <UniqueIdentifier>{33c173a7-87da-4e35-b8b5-a5e71ba141b8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Effect">
-      <UniqueIdentifier>{976a18a5-e0fc-4f6b-a401-a5ff759a4550}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="DropItem">
-      <UniqueIdentifier>{271ce2b6-2b58-4b83-a08d-6a35b2a40227}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Enemy\Boss">
-      <UniqueIdentifier>{d1b4f441-90c4-4280-9018-f880bba6ab05}</UniqueIdentifier>
-    </Filter>
     <Filter Include="UI">
       <UniqueIdentifier>{0fae3807-f7bc-4d12-852a-31659b10434e}</UniqueIdentifier>
     </Filter>
     <Filter Include="Level">
       <UniqueIdentifier>{f15293f7-f80a-4514-b6eb-2907e4b459c0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="SoundManager">
+    <Filter Include="Object">
+      <UniqueIdentifier>{379fc045-2c86-4250-ae68-5966d037a4c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Weapon">
+      <UniqueIdentifier>{3a0eb8dc-9583-4554-8019-5a488d1f631e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Player">
+      <UniqueIdentifier>{160d79aa-d9b0-448e-aa36-ae90c5f127fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Map">
+      <UniqueIdentifier>{a6bf3bd6-d0d0-4102-87e4-3c1e63c270eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Enemy">
+      <UniqueIdentifier>{853410b3-5585-4ddd-af16-ba95101f5360}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Enemy\Boss">
+      <UniqueIdentifier>{d1b4f441-90c4-4280-9018-f880bba6ab05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\DropItem">
+      <UniqueIdentifier>{271ce2b6-2b58-4b83-a08d-6a35b2a40227}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Effect">
+      <UniqueIdentifier>{976a18a5-e0fc-4f6b-a401-a5ff759a4550}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Enemy\Manager">
+      <UniqueIdentifier>{01462309-118a-4f55-9765-74923d670a5a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Enemy\Manager\SoundManager">
       <UniqueIdentifier>{4a8163ae-8ba2-45cf-85c7-3b624670005f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
