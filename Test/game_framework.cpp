@@ -31,5 +31,8 @@ void start_game(GameState* state)
 
 void end_game()
 {
-	for (auto& s : stateStack) delete s;
+	while (!stateStack.empty()) {
+		delete stateStack.back();
+		stateStack.pop_back();
+	}
 }

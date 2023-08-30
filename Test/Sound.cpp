@@ -1,5 +1,7 @@
 #include "Sound.h"
 
+extern double volume;
+
 FMOD::System* Sound::system = nullptr;
 
 Sound::Sound(const std::string& path, bool loop)
@@ -9,7 +11,6 @@ Sound::Sound(const std::string& path, bool loop)
 	else
 		system->createSound(path.c_str(), FMOD_LOOP_OFF, 0, &sound);
 	channel = nullptr;
-	volume = 1;
 }
 
 Sound::~Sound()
@@ -31,7 +32,9 @@ void Sound::release()
 
 void Sound::play()
 {
-	system->playSound(sound, nullptr, false, &channel);
+	system->playSound(sound, nullptr, true, &channel);
+	volumeSet(volume);
+	resume();
 }
 
 void Sound::pause()
@@ -49,16 +52,11 @@ void Sound::stop()
 	channel->stop();
 }
 
-void Sound::volumeUp()
+void Sound::volumeSet(double n)
 {
-	channel->setVolume(volume+=0.5);
+	channel->setVolume(n);
 }
 
-void Sound::volumeDown()
-{
-	if(volume-0.5>=0)
-	channel->setVolume(volume -= 0.5);
-}
 
 void Sound::update()
 {

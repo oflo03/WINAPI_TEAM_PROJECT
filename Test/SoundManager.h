@@ -49,8 +49,7 @@ public:
 	void pause(int type);
 	void resume(int type);
 	void stop(int type);
-	void volumeUp(int type);
-	void volumeDown(int type);
+	void volumeSet(double n);
 	void update();
 	bool isPlaying(int type);
 };

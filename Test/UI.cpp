@@ -3,9 +3,11 @@
 #include"Boss.h"
 #define HeartSize 90
 
-CImage heart, weapons, cursor, bossHp, bossHpFrame, bossHpFrame2;
-Player* pp;
+extern CImage cursor;
+extern POINT mPoint;
 
+CImage heart, weapons, bossHp, bossHpFrame, bossHpFrame2;
+Player* pp;
 RECT ammoTextBox;
 HFONT romulus;
 TCHAR ammoText[8];
@@ -14,7 +16,6 @@ void UI::init()
 {
 	heart.Load(L"resources/UI_Image_Heart.png");
 	weapons.Load(L"resources/UI_Image_Weapons.png");
-	cursor.Load(L"resources/UI_Image_Cursor.png");
 	bossHp.Load(L"resources/boss_hp.png");
 	bossHpFrame.Load(L"resources/boss_hp_frame.png");
 	bossHpFrame2.Load(L"resources/boss_hp_frame2.png");
@@ -29,7 +30,6 @@ void UI::Destroy()
 {
 	heart.Destroy();
 	weapons.Destroy();
-	cursor.Destroy();
 	bossHp.Destroy();
 	bossHpFrame.Destroy();
 	bossHpFrame2.Destroy();
@@ -64,7 +64,5 @@ void UI::draw(HDC mDC)
 		bossHpFrame.Draw(mDC, 300, monitorSize.y - 150, monitorSize.x - 600, 140, 0, 0, bossHpFrame.GetWidth(), bossHp.GetHeight());
 		bossHpFrame2.Draw(mDC, 300, monitorSize.y - 150, monitorSize.x - 600, 140, 0, 0, bossHpFrame.GetWidth(), bossHp.GetHeight());
 	}
-	POINT mPos;
-	GetCursorPos(&mPos);
-	cursor.Draw(mDC, mPos.x - 20, mPos.y - 30, 40, 40);
+	cursor.Draw(mDC, mPoint.x - 20, mPoint.y - 30, 40, 40);
 }

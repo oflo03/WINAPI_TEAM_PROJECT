@@ -8,7 +8,6 @@ private:
 	static FMOD::System* system;
 	FMOD::Sound* sound;
 	FMOD::Channel* channel;
-	float volume;
 public:
 	Sound(const std::string& path,bool loop);
 	~Sound();
@@ -19,8 +18,7 @@ public:
 	void pause();
 	void resume();
 	void stop();
-	void volumeUp();
-	void volumeDown();
+	void volumeSet(double n);
 	bool isPlaying();
 };
 

@@ -166,12 +166,14 @@
     <ClCompile Include="Effect.cpp" />
     <ClCompile Include="EffectManager.cpp" />
     <ClCompile Include="EndingState.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyManager.cpp" />
     <ClCompile Include="GameOverState.cpp" />
     <ClCompile Include="Knight.cpp" />
     <ClCompile Include="LevelManager.cpp" />
     <ClCompile Include="MapManager.cpp" />
     <ClCompile Include="MenuState.cpp" />
+    <ClCompile Include="OptionState.cpp" />
     <ClCompile Include="PatternA.cpp" />
     <ClCompile Include="game_framework.cpp" />
     <ClCompile Include="IdleState.cpp" />
@@ -225,6 +227,7 @@
     <ClInclude Include="LevelManager.h" />
     <ClInclude Include="MapManager.h" />
     <ClInclude Include="MenuState.h" />
+    <ClInclude Include="OptionState.h" />
     <ClInclude Include="PatternA.h" />
     <ClInclude Include="game_framework.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>

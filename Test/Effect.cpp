@@ -1,6 +1,6 @@
 #include"EffectManager.h"
 
-Animation Effect::effect[16];
+Animation Effect::effect[AMOUNT];
 
 void Effect::init()
 {
@@ -52,13 +52,16 @@ void Effect::init()
 	effect[CEffect::PATTERND].resource.Load(L"resources/boss_patternD.png");
 	effect[CEffect::PATTERND].frame = 6;
 	effect[CEffect::PATTERND].velocity = 2;
-	for (int i = 0; i < 16; i++) {
+	effect[CEffect::EXPLOSION].resource.Load(L"resources/rocket_explosion.png");
+	effect[CEffect::EXPLOSION].frame = 18;
+	effect[CEffect::EXPLOSION].velocity = 2;
+	for (int i = 0; i < AMOUNT; i++) {
 		effect[i].size = { 0,0,effect[i].resource.GetWidth() / effect[i].frame, effect[i].resource.GetHeight() };
 	}
 }
 void Effect::destroy()
 {
-	for (int i = 0; i < 16; i++)
+	for (int i = 0; i < AMOUNT; i++)
 		effect[i].resource.Destroy();
 }
 

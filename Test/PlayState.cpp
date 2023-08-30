@@ -4,13 +4,14 @@
 #include"Player.h"
 #include"DropItem.h"
 #include"Boss.h"
-#include"UI.h"
 #include"Portal.h"
 #include"MapManager.h"
+#include"UI.h"
 #include"LevelManager.h"
 #include"SelectState.h"
 #include"GameOverState.h"
 #include"EndingState.h"
+#include"OptionState.h"
 #include"SoundManager.h"
 
 extern HDC mDC;
@@ -21,6 +22,7 @@ std::uniform_int_distribution<int> rad(-180, 180);
 std::uniform_int_distribution<int> ranTime(20, 70);
 std::uniform_int_distribution<int> ran(0, 1);
 std::uniform_int_distribution<int> randrop(0, 1);
+extern std::queue<CollisionMessage> collisionMsg;
 
 void ColliderUpdate();
 
@@ -78,14 +80,20 @@ void PlayState::update()
 	for (auto& B : Bullets)
 		B->update();
 	EffectManager::getInstance()->update();
+	RECT screen = { -100,-100,2000,1000 };
+	for (auto& B : Bullets) {
+		if (!PtInRect(&screen, POINT(B->col->pos.x, B->col->pos.y))) {
+			collisionMsg.emplace(CollisionMessage(B->col->owner, wall, 0));
+		}
+	}
 	ColliderUpdate();
 	EffectManager::getInstance()->delete_effect();
 }
 
 void PlayState::handle_events()
 {
-	if (GetAsyncKeyState(VK_ESCAPE)) {
-		change_state(new SelectState);
+	if (GetAsyncKeyState(VK_ESCAPE) & 1) {
+		push_state(new OptionState);
 	}
 	else if (GetAsyncKeyState('X') & 1) {
 		lookRange = !lookRange;

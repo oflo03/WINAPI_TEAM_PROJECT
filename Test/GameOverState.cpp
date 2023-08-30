@@ -1,5 +1,5 @@
 #include "GameOverState.h"
-#include "SelectState.h"
+#include "MenuState.h"
 #include"Player.h"
 
 extern HDC mDC;
@@ -25,7 +25,7 @@ void GameOverState::update()
 void GameOverState::handle_events()
 {
 	if (GetAsyncKeyState(VK_ESCAPE)&1) {
-		change_state(new SelectState);
+		change_state(new MenuState);
 	}
 }
 void GameOverState::draw()

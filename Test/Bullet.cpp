@@ -176,8 +176,24 @@ void Bullet::handle_collision(int otherLayer, int damage)
 			EffectManager::getInstance()->set_effect(new Effect(CEffect::RIFLEBULLET, col->pos));
 			break;
 		case BSHOTGUN:
-		case BROCKET:
 			EffectManager::getInstance()->set_effect(new Effect(CEffect::SHOTGUNBULLET, col->pos));
+			break;
+		case BROCKET:
+			EffectManager::getInstance()->set_effect(new Effect(CEffect::EXPLOSION, col->pos));
+			for (auto& other : COLL) {
+				for (int i = 0; i < 4; i++) {
+					if (other->layer == enemy) {
+						Vector2D<float> dot[4] = { Vector2D<float>(other->pos.x - other->size.x, other->pos.y - other->size.y),
+						Vector2D<float>(other->pos.x + other->size.x, other->pos.y - other->size.y),
+						Vector2D<float>(other->pos.x + other->size.x, other->pos.y + other->size.y),
+						Vector2D<float>(other->pos.x - other->size.x, other->pos.y + other->size.y) };
+						if ((dot[i] - pos).GetLenth() <= 100) {
+							other->owner->handle_collision(playerBullet, 20);
+							break;
+						}
+					}
+				}
+			}
 			break;
 		case BOSSBULLET1:
 		case BOSSBULLET3:

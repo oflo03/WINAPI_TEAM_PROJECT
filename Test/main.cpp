@@ -5,10 +5,13 @@
 #include"frame_time.h"
 
 double frame_time;
+double volume=1.0;
 extern std::vector<GameState*> stateStack;
 HDC mDC;
 Vector2D<float> monitorSize;
 Vector2D<float> camSize;
+CImage cursor;
+POINT mPoint;
 
 HINSTANCE g_hinst;
 LPCTSTR IpszClass = L"Window Class Name";
@@ -72,7 +75,8 @@ LRESULT WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 		GetClientRect(hWnd, &screen);
 		start_game(new LogoState());
 		SetTimer(hWnd, 1, 10, NULL);
-		SetCursor(NULL);
+		ShowCursor(false);
+		cursor.Load(L"resources/UI_Image_Cursor.png");
 		break;
 	case WM_PAINT:
 	{
@@ -89,6 +93,7 @@ LRESULT WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 	}
 	case WM_TIMER:
 		if (wParam == 1) {
+			GetCursorPos(&mPoint);
 			frame_time = GetFrameTime();
 			stateStack.back()->handle_events();
 			stateStack.back()->update();

@@ -136,26 +136,25 @@ void ShotgunMan::draw_character(HDC mDC)
 void ShotgunMan::handle_event()
 {
 	if (col) {
-		if (!attackable()) {
+		if (!attackable() && state != STATE_DAMAGED) {
 			state = STATE_RUN;
 			dir = (target->GetPos() - pos).Normalize();
 		}
 		else {
 			attack();
+			if (state == STATE_DAMAGED && (int)frame == 2) {
+				state = STATE_IDLE;
+				dir.x = dir.y = 0;
+				moveTime = 0;
+				frame = 0;
+			}
 			if ((int)moveTime == 0) {
-				if (state == STATE_DAMAGED) {
-					state = STATE_IDLE;
+				moveTime = ranTime(dre);
+				state = ran(dre);
+				if (state == STATE_IDLE)
 					dir.x = dir.y = 0;
-					moveTime = 50;
-				}
-				else {
-					moveTime = ranTime(dre);
-					state = ran(dre);
-					if (state == STATE_IDLE)
-						dir.x = dir.y = 0;
-					else if (state == STATE_RUN)
-						dir = Vector2D<float>(1, 0).Rotate(rad(dre));
-				}
+				else if (state == STATE_RUN)
+					dir = Vector2D<float>(1, 0).Rotate(rad(dre));
 				frame = 0;
 			}
 		}
@@ -185,13 +184,10 @@ void ShotgunMan::update()
 		}
 		else {
 			frame = (frame + frame_time * animation[state][direction].velocity * animation[state][direction].frame);
-			if (state == STATE_DAMAGED) {
-				if (moveTime >= 0) moveTime -= frame_time * 3;
-			}
-			else {
+			if (state != STATE_DAMAGED) {
 				pos = pos + dir * velocity * frame_time;
 				if ((int)moveTime)moveTime--;
-				if ((int)(frame) == animation[state][direction].frame) frame = 0;
+				if ((int)frame == animation[state][direction].frame) frame = 0;
 			}
 			SetDirection();
 			weapon->update();
@@ -336,6 +332,10 @@ void ShotgunMan::handle_collision(int otherLayer, int damage)
 	default:
 		break;
 	}
+}
+
+void ShotgunMan::CalWeight()
+{
 }
 
 

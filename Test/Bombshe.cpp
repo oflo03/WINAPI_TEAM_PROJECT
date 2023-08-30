@@ -293,3 +293,7 @@ void Bombshe::handle_collision(int otherLayer, int damage)
 	}
 }
 
+void Bombshe::CalWeight()
+{
+}
+

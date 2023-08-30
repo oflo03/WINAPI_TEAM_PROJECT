@@ -20,12 +20,6 @@
     <ClCompile Include="game_framework.cpp">
       <Filter>Game Framework</Filter>
     </ClCompile>
-    <ClCompile Include="LogoState.cpp">
-      <Filter>Game Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayState.cpp">
-      <Filter>Game Framework</Filter>
-    </ClCompile>
     <ClCompile Include="Weapon.cpp">
       <Filter>Object\Weapon</Filter>
     </ClCompile>
@@ -52,9 +46,6 @@
     </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>Object\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="EffectManager.cpp">
-      <Filter>Object\Effect</Filter>
     </ClCompile>
     <ClCompile Include="Bombshe.cpp">
       <Filter>Object\Enemy</Filter>
@@ -105,28 +96,43 @@
       <Filter>Level</Filter>
     </ClCompile>
     <ClCompile Include="SoundManager.cpp">
-      <Filter>Object\Enemy\Manager\SoundManager</Filter>
+      <Filter>Manager\SoundManager</Filter>
     </ClCompile>
     <ClCompile Include="Sound.cpp">
-      <Filter>Object\Enemy\Manager\SoundManager</Filter>
-    </ClCompile>
-    <ClCompile Include="SelectState.cpp">
-      <Filter>Game Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="EndingState.cpp">
-      <Filter>Game Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="GameOverState.cpp">
-      <Filter>Game Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="MenuState.cpp">
-      <Filter>Game Framework</Filter>
+      <Filter>Manager\SoundManager</Filter>
     </ClCompile>
     <ClCompile Include="DeadState.cpp">
       <Filter>Object\Player</Filter>
     </ClCompile>
     <ClCompile Include="BossScene.cpp">
-      <Filter>Game Framework</Filter>
+      <Filter>GameScene</Filter>
+    </ClCompile>
+    <ClCompile Include="EndingState.cpp">
+      <Filter>GameScene</Filter>
+    </ClCompile>
+    <ClCompile Include="GameOverState.cpp">
+      <Filter>GameScene</Filter>
+    </ClCompile>
+    <ClCompile Include="LogoState.cpp">
+      <Filter>GameScene</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuState.cpp">
+      <Filter>GameScene</Filter>
+    </ClCompile>
+    <ClCompile Include="OptionState.cpp">
+      <Filter>GameScene</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayState.cpp">
+      <Filter>GameScene</Filter>
+    </ClCompile>
+    <ClCompile Include="SelectState.cpp">
+      <Filter>GameScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="EffectManager.cpp">
+      <Filter>Manager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -152,12 +158,6 @@
       <Filter>Object\Weapon</Filter>
     </ClInclude>
     <ClInclude Include="game_framework.h">
-      <Filter>Game Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="LogoState.h">
-      <Filter>Game Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayState.h">
       <Filter>Game Framework</Filter>
     </ClInclude>
     <ClInclude Include="Weapon.h">
@@ -198,9 +198,6 @@
     </ClInclude>
     <ClInclude Include="EnemyManager.h">
       <Filter>Object\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="EffectManager.h">
-      <Filter>Object\Effect</Filter>
     </ClInclude>
     <ClInclude Include="Bombshe.h">
       <Filter>Object\Enemy</Filter>
@@ -251,28 +248,40 @@
       <Filter>Level</Filter>
     </ClInclude>
     <ClInclude Include="SoundManager.h">
-      <Filter>Object\Enemy\Manager\SoundManager</Filter>
+      <Filter>Manager\SoundManager</Filter>
     </ClInclude>
     <ClInclude Include="Sound.h">
-      <Filter>Object\Enemy\Manager\SoundManager</Filter>
-    </ClInclude>
-    <ClInclude Include="SelectState.h">
-      <Filter>Game Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="EndingState.h">
-      <Filter>Game Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="GameOverState.h">
-      <Filter>Game Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="MenuState.h">
-      <Filter>Game Framework</Filter>
+      <Filter>Manager\SoundManager</Filter>
     </ClInclude>
     <ClInclude Include="DeadState.h">
       <Filter>Object\Player</Filter>
     </ClInclude>
     <ClInclude Include="BossScene.h">
-      <Filter>Game Framework</Filter>
+      <Filter>GameScene</Filter>
+    </ClInclude>
+    <ClInclude Include="EndingState.h">
+      <Filter>GameScene</Filter>
+    </ClInclude>
+    <ClInclude Include="GameOverState.h">
+      <Filter>GameScene</Filter>
+    </ClInclude>
+    <ClInclude Include="LogoState.h">
+      <Filter>GameScene</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuState.h">
+      <Filter>GameScene</Filter>
+    </ClInclude>
+    <ClInclude Include="OptionState.h">
+      <Filter>GameScene</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayState.h">
+      <Filter>GameScene</Filter>
+    </ClInclude>
+    <ClInclude Include="SelectState.h">
+      <Filter>GameScene</Filter>
+    </ClInclude>
+    <ClInclude Include="EffectManager.h">
+      <Filter>Manager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -315,11 +324,17 @@
     <Filter Include="Object\Effect">
       <UniqueIdentifier>{976a18a5-e0fc-4f6b-a401-a5ff759a4550}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Object\Enemy\Manager">
+    <Filter Include="Manager">
       <UniqueIdentifier>{01462309-118a-4f55-9765-74923d670a5a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Object\Enemy\Manager\SoundManager">
+    <Filter Include="Manager\SoundManager">
       <UniqueIdentifier>{4a8163ae-8ba2-45cf-85c7-3b624670005f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameScene">
+      <UniqueIdentifier>{df434f54-a862-4ad3-bfe5-7688a16e9614}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Enemy\EnemyControl">
+      <UniqueIdentifier>{b2221187-98be-44e9-a926-e7f3d9290dbf}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

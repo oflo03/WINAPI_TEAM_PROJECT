@@ -7,6 +7,9 @@
 #define imagesize 2
 extern HDC mDC;
 extern RECT screen;
+extern CImage cursor;
+extern POINT mPoint;
+
 RECT BT1, BT2;
 RECT TB1, TB2, TB3, TB4;
 HFONT rom;
@@ -17,7 +20,6 @@ SelectState::SelectState()
 {
 	Player::Destroy();
 	background.Load(L"resources/main_selchar_back.png");
-	cursor.Load(L"resources/UI_Image_Cursor.png");
 	image1.Load(L"resources/marin_front.png");
 	image2.Load(L"resources/knight_front.png");
 	BT1 = RECT(screen.right / 4 - image1.GetWidth() * imagesize, screen.bottom / 2 - image1.GetHeight() * imagesize,
@@ -39,7 +41,6 @@ SelectState::SelectState()
 SelectState::~SelectState()
 {
 	background.Destroy();
-	cursor.Destroy();
 	image1.Destroy();
 	image2.Destroy();
 	DeleteObject(rom);
@@ -48,12 +49,11 @@ SelectState::~SelectState()
 
 void SelectState::update()
 {
+	SoundManager::getInstance()->update();
 }
 
 void SelectState::handle_events()
 {
-	POINT mPoint;
-	GetCursorPos(&mPoint);
 	if (PtInRect(&BT1, mPoint)) {
 		if (mouseOn[0] == false) {
 			SoundManager::getInstance()->play(CURSORON);
@@ -92,8 +92,6 @@ void SelectState::handle_events()
 
 void SelectState::draw()
 {
-	POINT mPoint;
-	GetCursorPos(&mPoint);
 	background.AlphaBlend(mDC, 0, 0, screen.right, screen.bottom, 0, 0, 1920, 1080, RGB(30, 30, 30));
 
 	SelectObject(mDC, rom);
@@ -116,5 +114,5 @@ void SelectState::draw()
 	}
 	else image2.AlphaBlend(mDC, BT2.left, BT2.top, BT2.right - BT2.left, BT2.bottom - BT2.top,
 		0, 0, image2.GetWidth(), image2.GetHeight(), RGB(200, 200, 200));
-	cursor.Draw(mDC, mPoint.x - 40, mPoint.y - 40, 80, 80);
+	cursor.Draw(mDC, mPoint.x - 20, mPoint.y - 30, 40, 40);
 }

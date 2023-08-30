@@ -21,7 +21,7 @@ SoundManager::SoundManager()
 	sounds.emplace_back(new Sound("resources/Shotgun_reload.WAV", false));
 	sounds.emplace_back(new Sound("resources/Shotgun_shot.WAV", false));
 	sounds.emplace_back(new Sound("resources/Rocketx_reload.WAV", false));
-	sounds.emplace_back(new Sound("resources/Rocketx_shot.WAV", false));
+	sounds.emplace_back(new Sound("resources/Rocket_Shot.WAV", false));
 	sounds.emplace_back(new Sound("resources/player_death.WAV", false));
 	sounds.emplace_back(new Sound("resources/player_hurt.WAV", false));
 	sounds.emplace_back(new Sound("resources/Sword_attack.WAV", false));
@@ -75,14 +75,11 @@ void SoundManager::stop(int type)
 	sounds[type]->stop();
 }
 
-void SoundManager::volumeUp(int type)
+void SoundManager::volumeSet(double n)
 {
-	sounds[type]->volumeUp();
-}
-
-void SoundManager::volumeDown(int type)
-{
-	sounds[type]->volumeDown();
+	for(auto &s : sounds){
+		s->volumeSet(n);
+	}
 }
 
 void SoundManager::update()

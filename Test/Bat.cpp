@@ -33,8 +33,9 @@ Bat::Bat(double x, double y, Player* target) : Enemy(x, y)
 {
 	shadow.Load(L"resources/shadow.png");
 	velocity = 200;
+	HP = 10;
 	state = IDLE;
-	attackRange = 600;
+	attackRange = 50;
 	lastPos = pos;
 }
 
@@ -62,12 +63,14 @@ void Bat::draw_character(HDC mDC)
 void Bat::handle_event()
 {
 	if (col) {
-		if (attackable())
+		if (target != nullptr && (target->GetPos() - pos).GetLenth() <= 600)
 			targetLocked = true;
 		if (targetLocked)
 			dir = (target->GetPos() - pos).Normalize();
 		else
 			dir.x = dir.y = 0;
+		if (attackable())
+			attack();
 	}
 }
 
@@ -80,6 +83,7 @@ void Bat::update()
 			pos = pos + dir * velocity * frame_time;
 			if (frame >= animation[state].frame) frame = 0;
 			col->pos = pos;
+
 		}
 		else {
 			if ((int)frame == animation[state].frame) {
@@ -93,18 +97,8 @@ void Bat::update()
 							Vector2D<float>(other->pos.x + other->size.x, other->pos.y - other->size.y),
 							Vector2D<float>(other->pos.x + other->size.x, other->pos.y + other->size.y),
 							Vector2D<float>(other->pos.x - other->size.x, other->pos.y + other->size.y) };
-							if ((dot[i] - pos).GetLenth() <= 60) {
-								other->owner->handle_collision(enemyBullet, 2);
-								break;
-							}
-						}
-						else if (other->layer == enemy) {
-							Vector2D<float> dot[4] = { Vector2D<float>(other->pos.x - other->size.x, other->pos.y - other->size.y),
-							Vector2D<float>(other->pos.x + other->size.x, other->pos.y - other->size.y),
-							Vector2D<float>(other->pos.x + other->size.x, other->pos.y + other->size.y),
-							Vector2D<float>(other->pos.x - other->size.x, other->pos.y + other->size.y) };
-							if ((dot[i] - pos).GetLenth() <= 60) {
-								other->owner->handle_collision(playerBullet, 10);
+							if ((dot[i] - pos).GetLenth() <= 100) {
+								other->owner->handle_collision(enemyBullet, 1);
 								break;
 							}
 						}
@@ -133,7 +127,16 @@ void Bat::SetDirection()
 
 void Bat::attack()
 {
-
+	state = DEAD;
+	for (auto i = COLL.begin(); i != COLL.end(); ++i)
+		if (COLL[i - COLL.begin()] == this->col)
+		{
+			COLL.erase(i);
+			break;
+		}
+	delete this->col;
+	this->col = nullptr;
+	frame = 0;
 }
 
 void Bat::handle_collision(int otherLayer, int damage)
@@ -141,7 +144,6 @@ void Bat::handle_collision(int otherLayer, int damage)
 	switch (otherLayer)
 	{
 	case wall:
-	case water:
 		if (!isWallCollision(Vector2D<float>(pos.x + velocity * frame_time / 2 * (pos.x > lastPos.x ? 1 : -1), lastPos.y), col->size))
 		{
 			pos.x += velocity * frame_time / 2 * (pos.x > lastPos.x ? 1 : -1);
@@ -157,22 +159,68 @@ void Bat::handle_collision(int otherLayer, int damage)
 		lastPos = pos;
 		col->pos = pos;
 		break;
-	case player:
 	case playerMelee:
+		if (col == nullptr)return;
+		EffectManager::getInstance()->set_effect(new Effect(CEffect::SWORDATTACK, col->pos));
+		HP -= damage;
+		if (HP <= 0) {
+			state = DEAD;
+			for (auto i = COLL.begin(); i != COLL.end(); ++i)
+				if (COLL[i - COLL.begin()] == this->col)
+				{
+					COLL.erase(i);
+					break;
+				}
+			delete this->col;
+			this->col = nullptr;
+		}
+		else {
+			lastPos = pos;
+			pos -= (target->GetPos() - pos).Normalize() * 10;
+			if (!isWallCollision(Vector2D<float>(pos.x, lastPos.y), col->size))
+				pos.y = lastPos.y;
+			else if (!isWallCollision(Vector2D<float>(lastPos.x, pos.y), col->size))
+				pos.x = lastPos.x;
+			else
+				pos = lastPos;
+			lastPos = pos;
+			col->pos = pos;
+		}
+		frame = 0;
+		break;
 	case playerBullet:
 		if (col == nullptr)return;
-		state = DEAD;
-		for (auto i = COLL.begin(); i != COLL.end(); ++i)
-			if (COLL[i - COLL.begin()] == this->col)
-			{
-				COLL.erase(i);
-				break;
-			}
-		delete this->col;
-		this->col = nullptr;
+		HP -= damage;
+		if (HP <= 0) {
+			state = DEAD;
+			for (auto i = COLL.begin(); i != COLL.end(); ++i)
+				if (COLL[i - COLL.begin()] == this->col)
+				{
+					COLL.erase(i);
+					break;
+				}
+			delete this->col;
+			this->col = nullptr;
+		}
+		else {
+			lastPos = pos;
+			pos -= (target->GetPos() - pos).Normalize() * 10;
+			if (!isWallCollision(Vector2D<float>(pos.x, lastPos.y), col->size))
+				pos.y = lastPos.y;
+			else if (!isWallCollision(Vector2D<float>(lastPos.x, pos.y), col->size))
+				pos.x = lastPos.x;
+			else
+				pos = lastPos;
+			lastPos = pos;
+			col->pos = pos;
+		}
 		frame = 0;
 		break;
 	default:
 		break;
 	}
+}
+
+void Bat::CalWeight()
+{
 }

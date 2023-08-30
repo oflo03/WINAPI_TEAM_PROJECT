@@ -44,7 +44,7 @@ void RifleMan::init() {
 	for (int i = 0; i < 6; i++) {
 		animation[STATE_DAMAGED][i].frame = 2;
 		animation[STATE_DAMAGED][i].size = { 0,0,animation[STATE_DAMAGED][i].resource.GetWidth() / animation[STATE_DAMAGED][i].frame,animation[STATE_DAMAGED][i].resource.GetHeight() };
-		animation[STATE_DAMAGED][i].velocity = 2;
+		animation[STATE_DAMAGED][i].velocity = 3;
 	}
 	animation[STATE_DEAD][FRONT].resource.Load(L"resources/enemy_rifle_dead_front.png");
 	animation[STATE_DEAD][FRONT_RIGHT].resource.Load(L"resources/enemy_rifle_dead_front.png");
@@ -134,26 +134,25 @@ void RifleMan::draw_character(HDC mDC)
 void RifleMan::handle_event()
 {
 	if (col) {
-		if (!attackable()) {
+		if (!attackable() && state != STATE_DAMAGED) {
 			state = STATE_RUN;
 			dir = (target->GetPos() - pos).Normalize();
 		}
 		else {
 			attack();
+			if (state == STATE_DAMAGED && (int)frame == 2) {
+				state = STATE_IDLE;
+				dir.x = dir.y = 0;
+				moveTime = 0;
+				frame = 0;
+			}
 			if ((int)moveTime == 0) {
-				if (state == STATE_DAMAGED) {
-					state = STATE_IDLE;
+				moveTime = ranTime(dre);
+				state = ran(dre);
+				if (state == STATE_IDLE)
 					dir.x = dir.y = 0;
-					moveTime = 50;
-				}
-				else {
-					moveTime = ranTime(dre);
-					state = ran(dre);
-					if (state == STATE_IDLE)
-						dir.x = dir.y = 0;
-					else if (state == STATE_RUN)
-						dir = Vector2D<float>(1, 0).Rotate(rad(dre));
-				}
+				else if (state == STATE_RUN)
+					dir = Vector2D<float>(1, 0).Rotate(rad(dre));
 				frame = 0;
 			}
 		}
@@ -180,10 +179,7 @@ void RifleMan::update()
 			}
 		}
 		else {
-			if (state == STATE_DAMAGED) {
-				if ((int)moveTime) moveTime -= frame_time * animation[state][direction].frame;
-			}
-			else {
+			if (state != STATE_DAMAGED)  {
 				pos = pos + dir * velocity * frame_time;
 				if ((int)moveTime)moveTime--;
 				if ((int)frame == animation[state][direction].frame) frame = 0;
@@ -266,7 +262,6 @@ void RifleMan::handle_collision(int otherLayer, int damage)
 	case playerMelee:
 		if (col == nullptr)return;
 		EffectManager::getInstance()->set_effect(new Effect(CEffect::SWORDATTACK, col->pos));
-		moveTime = 2;
 		pos -= (target->GetPos() - pos).Normalize() * 10;
 		if (!isWallCollision(Vector2D<float>(pos.x, lastPos.y), col->size))
 			pos.y = lastPos.y;
@@ -297,7 +292,6 @@ void RifleMan::handle_collision(int otherLayer, int damage)
 		break;
 	case playerBullet:
 		if (col == nullptr)return;
-		moveTime = 2;
 		pos -= (target->GetPos() - pos).Normalize() * 2;
 		if (!isWallCollision(Vector2D<float>(pos.x, lastPos.y), col->size))
 			pos.y = lastPos.y;
@@ -329,5 +323,9 @@ void RifleMan::handle_collision(int otherLayer, int damage)
 	default:
 		break;
 	}
+}
+
+void RifleMan::CalWeight()
+{
 }
 

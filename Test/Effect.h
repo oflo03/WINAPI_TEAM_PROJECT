@@ -2,6 +2,7 @@
 #include"Animation.h"
 #include"Vector2D.h"
 #include<string>
+#define AMOUNT 17
 
 extern double frame_time;
 
@@ -21,12 +22,13 @@ enum CEffect {
 	PATTERNA,
 	PATTERNB,
 	PATTERNC,
-	PATTERND
+	PATTERND,
+	EXPLOSION
 };
 
 class Effect {
 public:
-	static Animation effect[16];
+	static Animation effect[AMOUNT];
 	int type;
 	float time;
 	Vector2D<float> pos;

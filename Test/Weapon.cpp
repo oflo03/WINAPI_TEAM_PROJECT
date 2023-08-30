@@ -20,13 +20,13 @@ void Sword::update()
 		Vector2D<float> mPos(cos(-angle * M_PI / 180) * attackRange, sin(-angle * M_PI / 180) * attackRange);
 		mPos += centerPos;
 		for (auto& other : COLL) {
-			if ((void*)other->owner == (void*)0xdddddddddddddddd)continue;
+			if (other->layer != enemy&&other->layer != enemyBullet)continue;
 			Vector2D<float> dot[4] = { Vector2D<float>(other->pos.x - other->size.x, other->pos.y - other->size.y),
 			Vector2D<float>(other->pos.x + other->size.x, other->pos.y - other->size.y),
 			Vector2D<float>(other->pos.x + other->size.x, other->pos.y + other->size.y),
 			Vector2D<float>(other->pos.x - other->size.x, other->pos.y + other->size.y) };
 			for (int i = 0; i < 4; i++) {
-				if ((other->layer == enemy || other->layer == enemyBullet) && (dot[i] - centerPos).GetLenth() <= attackRange) {
+				if ((dot[i] - centerPos).GetLenth() <= attackRange) {
 					if ((mPos - centerPos).GetRadian(dot[i] - centerPos) <= 60) {
 						other->owner->handle_collision(playerMelee, 10);
 						break;

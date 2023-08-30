@@ -20,5 +20,6 @@ public:
     virtual void attack();
     virtual void update();
     virtual void handle_collision(int otherLayer, int damage);
+    virtual void CalWeight();
 };
 
