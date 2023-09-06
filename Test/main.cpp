@@ -85,7 +85,7 @@ LRESULT WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 		mDC = CreateCompatibleDC(hDC);
 		SelectObject(mDC, hBitmap);
 		stateStack.back()->draw();
-		BitBlt(hDC, 0, 0, monitorSize.x, monitorSize.y, mDC, 0, 0, SRCCOPY);
+		BitBlt(hDC, 0, 0, 1920, 1080, mDC, 0, 0, SRCCOPY);
 		DeleteObject(hBitmap);
 		DeleteDC(mDC);
 		EndPaint(hWnd, &ps);

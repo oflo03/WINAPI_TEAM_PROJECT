@@ -23,7 +23,7 @@ OptionState::OptionState() : string1(L"*menu"),string2(L"*control"),string3(L"*c
 	black.Load(L"resources/black.png");
 	background.Load(L"resources/OPTION.png");
 	control.Load(L"resources/control.png");
-	font = CreateFont(70, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET,
+	font = CreateFont(screen.right/25, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET,
 		OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
 		DEFAULT_PITCH | FF_DONTCARE, L"Romulus");
 	rect[0] = {320,570,520,620};
