@@ -23,8 +23,8 @@ bool lookRange;
 bool beatable = true;
 bool enemyclear;
 
-PlayState::PlayState() : GameState(), player(Player::getInstance()), enemyManager(EnemyManager::getInstance()), ui(UI::getInstance()),effectManager(EffectManager::getInstance())
-,soundManager(SoundManager::getInstance()), mapManager(MapManager::getInstance()),portal(Portal::getInstance()),boss(nullptr),levelManager(LevelManager::getInstance())
+PlayState::PlayState() : GameState(), player(Player::getInstance()), enemyManager(EnemyManager::getInstance()), ui(UI::getInstance()), effectManager(EffectManager::getInstance())
+, soundManager(SoundManager::getInstance()), mapManager(MapManager::getInstance()), portal(Portal::getInstance()), boss(nullptr), levelManager(LevelManager::getInstance())
 {
 	Bullet::init();
 	DropItem::init();
@@ -53,7 +53,7 @@ void PlayState::update()
 {
 	soundManager->update();
 	levelManager->update();
-	if (levelManager->GetStage() == 4&&boss==nullptr)
+	if (levelManager->GetStage() == 4 && boss == nullptr)
 		boss = Boss::getInstance();
 	if (boss != nullptr && boss->getHP() == 0)
 		boss = nullptr;
@@ -62,7 +62,7 @@ void PlayState::update()
 		d->update();
 	player->update();
 	enemyManager->update();
-	if (boss!=nullptr)
+	if (boss != nullptr)
 		boss->update();
 	if (enemyclear)
 		portal->update();
@@ -92,12 +92,23 @@ void PlayState::handle_events()
 		beatable = !beatable;
 	}
 	else if (GetAsyncKeyState('N') & 1) {
-		if(levelManager->GetStage()<4)
+		if (levelManager->GetStage() < 4)
 			levelManager->loadNextStage();
 	}
 	else if (GetAsyncKeyState('R') & 1) {
-		for(int i=0;i<4;i++)
-			player->WeaponReload(i+1);
+		for (int i = 0; i < 4; i++)
+			player->WeaponReload(i + 1);
+	}
+	else if (GetAsyncKeyState('K') & 1) {
+		for (int i = 0; i < COLL.size();)
+			if (COLL[i]->layer == enemy)
+			{
+				delete COLL[i];
+				COLL.erase(COLL.begin() + i);
+			}
+			else
+				++i;
+		EnemyManager::getInstance()->Clear();
 	}
 	else if (player->GetHP() <= 0) {
 		change_state(new GameOverState);
