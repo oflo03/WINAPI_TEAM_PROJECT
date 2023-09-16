@@ -68,6 +68,9 @@ public:
 	bool operator>(const Vector2D<T>& other) {
 		return (abs(x) > abs(other.x) && abs(y) > abs(other.y));
 	}
+	bool operator<(const Vector2D<T>& other) {
+		return (abs(x) < abs(other.x) && abs(y) < abs(other.y));
+	}
 	T Dot(const Vector2D<T>& other) const {
 		T result = (x * other.x) + (y * other.y);
 		return result;

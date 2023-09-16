@@ -6,7 +6,7 @@ class Portal
 {
 protected:
 	static Portal* instance;
-	Animation portal, E;
+	Animation portal, E, P;
 	float pframe, eframe;
 	Vector2D<float> pos;
 	Portal(float x, float y) :pos(x, y), pframe(0), eframe(0) {
@@ -18,10 +18,15 @@ protected:
 		E.frame = 2;
 		E.velocity = 1;
 		E.size = { 0,0,E.resource.GetWidth() / E.frame, E.resource.GetHeight() };
+		P.resource.Load(L"resources/Portal_P-Key.png");
+		P.frame = 2;
+		P.velocity = 1;
+		P.size = { 0,0,P.resource.GetWidth() / P.frame, P.resource.GetHeight() };
 	}
 	~Portal() {
 		portal.resource.Destroy();
 		E.resource.Destroy();
+		P.resource.Destroy();
 	}
 public:
 	Vector2D<float> GetPos() { return pos; };
