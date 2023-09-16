@@ -104,7 +104,6 @@ LRESULT WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 		break;
 	case WM_DESTROY:
 		end_game();
-		SoundManager::release();
 		PostQuitMessage(0);
 		break;
 	default:

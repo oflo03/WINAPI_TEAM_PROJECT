@@ -7,13 +7,11 @@ class EnemyManager {
 private:
 	static EnemyManager* instance;
 	std::vector<Enemy*> enemy;
-	EnemyManager() {}
+	EnemyManager();
 	EnemyManager(const EnemyManager& other) {}
 	~EnemyManager();
 public:
 	static EnemyManager* getInstance();
-	static void init();
-	static void destroy();
 	void Clear();
 	void SetEnemy(int stage);
 	void spawn(int type, float x, float y);

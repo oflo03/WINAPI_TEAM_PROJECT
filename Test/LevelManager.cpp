@@ -20,18 +20,14 @@ Vector2D<float> portalpoint[4]{
 	Vector2D<float>(960,540)
 };
 
-void LevelManager::init()
+LevelManager::LevelManager() :stage(1), phase(1)
 {
 	MapManager::getInstance()->LoadTileMap(1);
 	EnemyManager::getInstance()->SetEnemy(1);
 }
 
-void LevelManager::destroy()
+LevelManager::~LevelManager()
 {
-	if (instance != nullptr)
-		delete instance;
-	instance = nullptr;
-	MapManager::release();
 }
 
 LevelManager* LevelManager::getInstance()
@@ -39,6 +35,13 @@ LevelManager* LevelManager::getInstance()
 	if (instance == nullptr)
 		instance = new LevelManager();
 	return instance;
+}
+
+void LevelManager::release()
+{
+	if (instance != nullptr)
+		delete instance;
+	instance = nullptr;
 }
 
 void LevelManager::update()

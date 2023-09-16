@@ -41,9 +41,6 @@
     <ClCompile Include="Bat.cpp">
       <Filter>Object\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyManager.cpp">
-      <Filter>Object\Enemy</Filter>
-    </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>Object\Player</Filter>
     </ClCompile>
@@ -89,12 +86,6 @@
     <ClCompile Include="SpawnerPattern.cpp">
       <Filter>Object\Enemy\Boss</Filter>
     </ClCompile>
-    <ClCompile Include="MapManager.cpp">
-      <Filter>Object\Map</Filter>
-    </ClCompile>
-    <ClCompile Include="LevelManager.cpp">
-      <Filter>Level</Filter>
-    </ClCompile>
     <ClCompile Include="SoundManager.cpp">
       <Filter>Manager\SoundManager</Filter>
     </ClCompile>
@@ -132,6 +123,15 @@
       <Filter>Object\Enemy</Filter>
     </ClCompile>
     <ClCompile Include="EffectManager.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelManager.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="MapManager.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyManager.cpp">
       <Filter>Manager</Filter>
     </ClCompile>
   </ItemGroup>
@@ -196,9 +196,6 @@
     <ClInclude Include="Effect.h">
       <Filter>Object\Effect</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyManager.h">
-      <Filter>Object\Enemy</Filter>
-    </ClInclude>
     <ClInclude Include="Bombshe.h">
       <Filter>Object\Enemy</Filter>
     </ClInclude>
@@ -241,12 +238,6 @@
     <ClInclude Include="Tilemap.h">
       <Filter>Object\Map</Filter>
     </ClInclude>
-    <ClInclude Include="MapManager.h">
-      <Filter>Object\Map</Filter>
-    </ClInclude>
-    <ClInclude Include="LevelManager.h">
-      <Filter>Level</Filter>
-    </ClInclude>
     <ClInclude Include="SoundManager.h">
       <Filter>Manager\SoundManager</Filter>
     </ClInclude>
@@ -281,6 +272,15 @@
       <Filter>GameScene</Filter>
     </ClInclude>
     <ClInclude Include="EffectManager.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelManager.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="MapManager.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyManager.h">
       <Filter>Manager</Filter>
     </ClInclude>
   </ItemGroup>

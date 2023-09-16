@@ -25,7 +25,8 @@ void GameOverState::update()
 void GameOverState::handle_events()
 {
 	if (GetAsyncKeyState(VK_ESCAPE)&1) {
-		change_state(new MenuState);
+		end_game();
+		push_state(new MenuState);
 	}
 }
 void GameOverState::draw()

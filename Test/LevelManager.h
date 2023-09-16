@@ -6,10 +6,10 @@ protected:
 	int stage, phase;
 	static LevelManager* instance;
 public:
-	LevelManager() :stage(1), phase(1) {}
-	static void init();
-	static void destroy();
+	LevelManager();
+	~LevelManager();
 	static LevelManager* getInstance();
+	static void release();
 	void update();
 	void loadNextStage();
 	int GetStage() { return stage; }

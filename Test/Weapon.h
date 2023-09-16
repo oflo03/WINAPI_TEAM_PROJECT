@@ -78,8 +78,9 @@ private:
 	float frame;
 	float attackRange;
 	Vector2D<float> centerPos;
+	bool slashed;
 public:
-	Sword() :Weapon() {
+	Sword() :Weapon(), slashed(false){
 		coolTime = cooltime[SWORD];
 		curAmmo = maxAmmo = 1;
 		frame = 0;

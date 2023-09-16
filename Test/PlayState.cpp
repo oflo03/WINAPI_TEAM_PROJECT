@@ -1,18 +1,4 @@
 #include"PlayState.h"
-#include"EnemyManager.h"
-#include"EffectManager.h"
-#include"Player.h"
-#include"DropItem.h"
-#include"Boss.h"
-#include"Portal.h"
-#include"MapManager.h"
-#include"UI.h"
-#include"LevelManager.h"
-#include"SelectState.h"
-#include"GameOverState.h"
-#include"EndingState.h"
-#include"OptionState.h"
-#include"SoundManager.h"
 
 extern HDC mDC;
 std::random_device rd;
@@ -37,49 +23,52 @@ bool lookRange;
 bool beatable = true;
 bool enemyclear;
 
-PlayState::PlayState() : GameState()
+PlayState::PlayState() : GameState(), player(Player::getInstance()), enemyManager(EnemyManager::getInstance()), ui(UI::getInstance()),effectManager(EffectManager::getInstance())
+,soundManager(SoundManager::getInstance()), mapManager(MapManager::getInstance()),portal(Portal::getInstance()),boss(nullptr),levelManager(LevelManager::getInstance())
 {
-	Player::init();
-	EnemyManager::init();
-	EffectManager::init();
 	Bullet::init();
 	DropItem::init();
-	UI::init();
-	LevelManager::init();
 	for (int i = 1; i < 5; ++i)
-		Player::getInstance()->SetCurAmmoZero(i);
-	SoundManager::getInstance()->play(MainState);
+		player->SetCurAmmoZero(i);
+	soundManager->play(MainState);
 }
 
 PlayState::~PlayState()
 {
-	EnemyManager::destroy();
-	EffectManager::Destroy();
+	enemyManager->Clear();
 	Bullets.clear();
 	Bullet::destroy();
 	DropItem::destroy();
-	UI::Destroy();
-	LevelManager::destroy();
+	Boss::release();
 	Collider::Clear();
-	SoundManager::getInstance()->stop(MainState);
-	SoundManager::getInstance()->stop(BOSS);
+	LevelManager::release();
+	UI::release();
+	Portal::release();
+	effectManager->clear();
+	soundManager->stop(MainState);
+	soundManager->stop(BOSS);
 }
 
 void PlayState::update()
 {
-	SoundManager::getInstance()->update();
-	LevelManager::getInstance()->update();
+	soundManager->update();
+	levelManager->update();
+	if (levelManager->GetStage() == 4&&boss==nullptr)
+		boss = Boss::getInstance();
+	if (boss != nullptr && boss->getHP() == 0)
+		boss = nullptr;
+
 	for (auto& d : drops)
 		d->update();
-	Player::getInstance()->update();
-	EnemyManager::getInstance()->update();
-	if (LevelManager::getInstance()->GetStage() == 4&& Boss::getInstance()->getHP()>0)
-		Boss::getInstance()->update();
+	player->update();
+	enemyManager->update();
+	if (boss!=nullptr)
+		boss->update();
 	if (enemyclear)
-		Portal::getInstance()->update();
+		portal->update();
 	for (auto& B : Bullets)
 		B->update();
-	EffectManager::getInstance()->update();
+	effectManager->update();
 	RECT screen = { -100,-100,2000,1000 };
 	for (auto& B : Bullets) {
 		if (!PtInRect(&screen, POINT(B->col->pos.x, B->col->pos.y))) {
@@ -87,13 +76,14 @@ void PlayState::update()
 		}
 	}
 	ColliderUpdate();
-	EffectManager::getInstance()->delete_effect();
+	effectManager->delete_effect();
 }
 
 void PlayState::handle_events()
 {
 	if (GetAsyncKeyState(VK_ESCAPE) & 1) {
 		push_state(new OptionState);
+		return;
 	}
 	else if (GetAsyncKeyState('X') & 1) {
 		lookRange = !lookRange;
@@ -102,21 +92,23 @@ void PlayState::handle_events()
 		beatable = !beatable;
 	}
 	else if (GetAsyncKeyState('N') & 1) {
-		if(LevelManager::getInstance()->GetStage()<4)
-			LevelManager::getInstance()->loadNextStage();
+		if(levelManager->GetStage()<4)
+			levelManager->loadNextStage();
 	}
 	else if (GetAsyncKeyState('R') & 1) {
 		for(int i=0;i<4;i++)
-			Player::getInstance()->WeaponReload(i+1);
+			player->WeaponReload(i+1);
 	}
-	else if (Player::getInstance()->GetHP() <= 0)
+	else if (player->GetHP() <= 0) {
 		change_state(new GameOverState);
+		return;
+	}
 	if (enemyclear)
-		Portal::getInstance()->handle_event();
-	EnemyManager::getInstance()->handle_event();
-	Player::getInstance()->handle_event();
-	if (LevelManager::getInstance()->GetStage() == 4 && Boss::getInstance()->getHP() > 0)
-		Boss::getInstance()->handle_event();
+		portal->handle_event();
+	enemyManager->handle_event();
+	player->handle_event();
+	if (boss != nullptr)
+		boss->handle_event();
 }
 
 
@@ -126,32 +118,32 @@ void PlayState::draw()
 	HDC mapDC = CreateCompatibleDC(mDC);
 	HBITMAP mapbitmap = CreateCompatibleBitmap(mDC, 1920, 1080);
 	SelectObject(mapDC, mapbitmap);
-	MapManager::getInstance()->PrintMap(mapDC);
+	mapManager->PrintMap(mapDC);
 	for (auto& d : drops)
 		d->Draw(mapDC);
-	EnemyManager::getInstance()->draw(mapDC);
+	enemyManager->draw(mapDC);
 	if (enemyclear)
-		if (Player::getInstance()->GetPos().y - Portal::getInstance()->GetPos().y > 0) {
-			Portal::getInstance()->Draw(mapDC);
-			Player::getInstance()->draw_character(mapDC);
+		if (player->GetPos().y - portal->GetPos().y > 0) {
+			portal->Draw(mapDC);
+			player->draw_character(mapDC);
 		}
 		else {
-			Player::getInstance()->draw_character(mapDC);
-			Portal::getInstance()->Draw(mapDC);
+			player->draw_character(mapDC);
+			portal->Draw(mapDC);
 		}
 	else
-		Player::getInstance()->draw_character(mapDC);
-	if (LevelManager::getInstance()->GetStage() == 4 && Boss::getInstance()->getHP() > 0)
-		Boss::getInstance()->draw(mapDC);
+		player->draw_character(mapDC);
+	if (boss != nullptr)
+		boss->draw(mapDC);
 	for (auto& B : Bullets)
 		B->draw_bullet(mapDC);
 	if (lookRange)
 		for (auto& c : COLL)
 			c->draw_range(mapDC);
-	EffectManager::getInstance()->Draw(mapDC);
+	effectManager->Draw(mapDC);
 	StretchBlt(mDC, 0, 0, screen.right, screen.bottom,
 		mapDC, camPos.x - camSize.x, camPos.y - camSize.y, camSize.x * 2, camSize.y * 2, SRCCOPY);
 	DeleteObject(mapbitmap);
 	DeleteDC(mapDC);
-	UI::draw(mDC);
+	ui->draw(mDC);
 }

@@ -2,22 +2,6 @@
 #include"Knight.h"
 #include"Player.h"
 
-void Player::init()
-{
-	Marin::init();
-	Knight::init();
-}
-
-void Player::Destroy() {
-	if (instance == nullptr)
-		return;
-	delete instance;
-	Marin::destroy();
-	Knight::destroy();
-	instance->myWeapons.clear();
-	instance = nullptr;
-}
-
 Vector2D<float> spawnpoint[4]{
 	Vector2D<float>(224,256),
 	Vector2D<float>(960,256),
@@ -26,6 +10,12 @@ Vector2D<float> spawnpoint[4]{
 };
 
 int selectedPlayer;
+
+Player::~Player()
+{
+	instance->myWeapons.clear();
+	instance = nullptr;
+}
 
 Player* Player::getInstance() {
 	if (instance == nullptr) {
@@ -43,6 +33,13 @@ Player* Player::getInstance() {
 		}
 	}
 	return instance;
+}
+
+void Player::release()
+{
+	if (instance != nullptr)
+		delete instance;
+	instance = nullptr;
 }
 
 

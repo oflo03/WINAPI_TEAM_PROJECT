@@ -7,19 +7,6 @@ EffectManager* EffectManager::getInstance()
     return instance;
 }
 
-void EffectManager::init()
-{
-    Effect::init();
-}
-
-void EffectManager::Destroy()
-{
-   if(instance!=nullptr)
-        delete instance;
-   instance = nullptr;
-   Effect::destroy();
-}
-
 void EffectManager::Draw(HDC mDC)
 {
     for (auto& e : effect)
@@ -40,6 +27,11 @@ void EffectManager::set_effect(Effect* e)
 void EffectManager::delete_effect()
 {
     effect.erase(std::remove_if(effect.begin(), effect.end(), [](const std::unique_ptr<Effect>& effect) {return effect->TimeOver(); }), effect.end());
+}
+
+void EffectManager::clear()
+{
+    effect.clear();
 }
 
 EffectManager* EffectManager::instance = nullptr;

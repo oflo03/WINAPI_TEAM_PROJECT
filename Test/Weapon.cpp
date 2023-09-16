@@ -6,6 +6,7 @@ extern double frame_time;
 extern bool lookRange;
 extern bool collisionable[9][9];
 extern HPEN GREENP;
+extern std::queue<CollisionMessage> collisionMsg;
 
 void Sword::update()
 {
@@ -13,27 +14,33 @@ void Sword::update()
 		--curTime;
 	if (frame > 0) {
 		frame = (frame + frame_time * 4 * slash.frame);
-		if (frame >= slash.frame) frame = 0;
+		if (frame >= slash.frame) {
+			frame = 0;
+			slashed = false;
+		}
 	}
-	if (frame > 4 && frame < 5)
+	if ((int)frame >= 4&& (int)frame <=6&&!slashed)
 	{
 		Vector2D<float> mPos(cos(-angle * M_PI / 180) * attackRange, sin(-angle * M_PI / 180) * attackRange);
 		mPos += centerPos;
 		for (auto& other : COLL) {
 			if (other->layer != enemy&&other->layer != enemyBullet)continue;
-			Vector2D<float> dot[4] = { Vector2D<float>(other->pos.x - other->size.x, other->pos.y - other->size.y),
-			Vector2D<float>(other->pos.x + other->size.x, other->pos.y - other->size.y),
-			Vector2D<float>(other->pos.x + other->size.x, other->pos.y + other->size.y),
-			Vector2D<float>(other->pos.x - other->size.x, other->pos.y + other->size.y) };
+			Vector2D<float> dot[4] = { 
+				Vector2D<float>(other->pos.x - other->size.x, other->pos.y - other->size.y),
+				Vector2D<float>(other->pos.x + other->size.x, other->pos.y - other->size.y),
+				Vector2D<float>(other->pos.x + other->size.x, other->pos.y + other->size.y),
+				Vector2D<float>(other->pos.x - other->size.x, other->pos.y + other->size.y) 
+			};
 			for (int i = 0; i < 4; i++) {
 				if ((dot[i] - centerPos).GetLenth() <= attackRange) {
 					if ((mPos - centerPos).GetRadian(dot[i] - centerPos) <= 60) {
-						other->owner->handle_collision(playerMelee, 10);
+						collisionMsg.emplace(CollisionMessage(other->owner, playerMelee, 10));
 						break;
 					}
 				}
 			}
 		}
+		slashed = true;
 	}
 }
 void Sword::attack(const Vector2D<float>& center, const Vector2D<float>& mPos, int side)

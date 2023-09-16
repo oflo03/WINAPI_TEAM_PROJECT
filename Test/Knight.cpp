@@ -8,9 +8,8 @@
 extern double frame_time;
 extern bool beatable;
 
-Animation Knight::animation[6][6];
-
-void Knight::init() {
+Knight::Knight(float x, float y) : Player(x, y)
+{
 	animation[STATE_IDLE][FRONT].resource.Load(L"resources/knight_idle_front.png");
 	animation[STATE_IDLE][FRONT_RIGHT].resource.Load(L"resources/knight_idle_front_right.png");
 	animation[STATE_IDLE][FRONT_LEFT].resource.Load(L"resources/knight_idle_front_left.png");
@@ -55,16 +54,6 @@ void Knight::init() {
 		animation[STATE_DEAD][i].size = { 0,0,animation[STATE_DEAD][i].resource.GetWidth() / animation[STATE_DEAD][i].frame,animation[STATE_DEAD][i].resource.GetHeight() };
 		animation[STATE_DEAD][i].velocity = 0.5;
 	}
-}
-
-void Knight::destroy() {
-	for (int i = 0; i < 6; i++)
-		for (int j = 0; j < 6; ++j)
-			animation[i][j].resource.Destroy();
-}
-
-Knight::Knight(float x, float y) : Player(x, y)
-{
 	state = new IdleState;
 	hand.Load(L"resources/knight_hand.png");
 	shadow[0].Load(L"resources/shadow.png");
@@ -84,6 +73,9 @@ Knight::Knight(float x, float y) : Player(x, y)
 
 Knight::~Knight()
 {
+	for (int i = 0; i < 6; i++)
+		for (int j = 0; j < 6; ++j)
+			animation[i][j].resource.Destroy();
 	for (int i = 0; i < myWeapons.size(); i++)
 		delete myWeapons[i];
 	shadow[0].Destroy();

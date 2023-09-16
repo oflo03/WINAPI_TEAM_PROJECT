@@ -11,6 +11,13 @@ Portal* Portal::getInstance()
 	return instance;
 }
 
+void Portal::release()
+{
+	if (instance != nullptr)
+		delete instance;
+	instance = nullptr;
+}
+
 void Portal::update()
 {
 	pframe = pframe + frame_time * portal.velocity * portal.frame;

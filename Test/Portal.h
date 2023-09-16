@@ -26,6 +26,7 @@ protected:
 public:
 	Vector2D<float> GetPos() { return pos; };
 	static Portal* getInstance();
+	static void release();
 	void SetPos(Vector2D<float> point) { pos = point; }
 	void update();
 	void handle_event();

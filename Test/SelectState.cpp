@@ -18,7 +18,7 @@ TCHAR CT2[] = L"SWORD REFLETS BULLET";
 
 SelectState::SelectState()
 {
-	Player::Destroy();
+	Player::release();
 	background.Load(L"resources/main_selchar_back.png");
 	image1.Load(L"resources/marin_front.png");
 	image2.Load(L"resources/knight_front.png");

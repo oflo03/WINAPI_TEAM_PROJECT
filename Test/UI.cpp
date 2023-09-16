@@ -6,13 +6,9 @@
 extern CImage cursor;
 extern POINT mPoint;
 
-CImage heart, weapons, bossHp, bossHpFrame, bossHpFrame2;
-Player* pp;
-RECT ammoTextBox;
-HFONT romulus;
-TCHAR ammoText[8];
+UI* UI::instance = nullptr;
 
-void UI::init()
+UI::UI()
 {
 	heart.Load(L"resources/UI_Image_Heart.png");
 	weapons.Load(L"resources/UI_Image_Weapons.png");
@@ -26,7 +22,7 @@ void UI::init()
 		DEFAULT_PITCH | FF_DONTCARE, L"Romulus");
 }
 
-void UI::Destroy()
+UI::~UI()
 {
 	heart.Destroy();
 	weapons.Destroy();
@@ -34,6 +30,21 @@ void UI::Destroy()
 	bossHpFrame.Destroy();
 	bossHpFrame2.Destroy();
 	DeleteObject(romulus);
+}
+
+
+UI* UI::getInstance()
+{
+	if (instance == nullptr)
+		instance = new UI;
+	return instance;
+}
+
+void UI::release()
+{
+	if (instance != nullptr)
+		delete instance;
+	instance = nullptr;
 }
 
 void UI::draw(HDC mDC)

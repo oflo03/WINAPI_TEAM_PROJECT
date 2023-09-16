@@ -9,17 +9,18 @@ class EffectManager {
 private:
 	std::vector<std::unique_ptr<Effect>> effect;
 	static EffectManager* instance;
-	EffectManager() {}
+	EffectManager() { Effect::init(); }
 	~EffectManager() {
 		effect.clear();
+		instance = nullptr;
+		Effect::destroy();
 	}
 public:
 	static EffectManager* getInstance();
-	static void init();
-	static void Destroy();
 	void Draw(HDC mDC);
 	void update();
 	void set_effect(Effect* e);
 	void delete_effect();
+	void clear();
 };
 

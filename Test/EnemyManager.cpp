@@ -7,25 +7,7 @@
 
 Animation spawnAnim;
 
-EnemyManager::~EnemyManager()
-{
-	enemy.clear();
-	PistolMan::release();
-	RifleMan::release();
-	ShotgunMan::release();
-	Bat::release();
-	Bombshe::release();
-	spawnAnim.resource.Destroy();
-}
-
-EnemyManager* EnemyManager::getInstance()
-{
-	if (instance == nullptr)
-		instance = new EnemyManager();
-	return instance;
-}
-
-void EnemyManager::init()
+EnemyManager::EnemyManager()
 {
 	PistolMan::init();
 	RifleMan::init();
@@ -38,17 +20,28 @@ void EnemyManager::init()
 	spawnAnim.velocity = 0.5;
 }
 
-void EnemyManager::destroy()
+EnemyManager::~EnemyManager()
 {
-	spawnAnim.resource.Destroy();
-	if (instance != nullptr)
-		delete instance;
+	enemy.clear();
 	PistolMan::release();
 	RifleMan::release();
 	ShotgunMan::release();
 	Bat::release();
 	Bombshe::release();
-	instance = nullptr;
+	spawnAnim.resource.Destroy();
+	spawnAnim.resource.Destroy();
+	PistolMan::release();
+	RifleMan::release();
+	ShotgunMan::release();
+	Bat::release();
+	Bombshe::release();
+}
+
+EnemyManager* EnemyManager::getInstance()
+{
+	if (instance == nullptr)
+		instance = new EnemyManager();
+	return instance;
 }
 
 void EnemyManager::Clear()
@@ -179,9 +172,9 @@ bool EnemyManager::isclear()
 
 void EnemyManager::handle_event()
 {
-	for (auto& E : enemy) {
-		if (!E->isDead())
-			E->handle_event();
+	for (int i = 0; i < enemy.size();i++) {
+		if (!(enemy[i]->isDead()))
+			enemy[i]->handle_event();
 	}
 }
 

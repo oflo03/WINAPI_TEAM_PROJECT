@@ -8,9 +8,8 @@
 extern double frame_time;
 extern bool beatable;
 
-Animation Marin::animation[6][6];
-
-void Marin::init() {
+Marin::Marin(float x, float y) : Player(x, y)
+{
 	animation[STATE_IDLE][FRONT].resource.Load(L"resources/Marin_idle_front.png");
 	animation[STATE_IDLE][FRONT_RIGHT].resource.Load(L"resources/Marin_idle_front_right.png");
 	animation[STATE_IDLE][FRONT_LEFT].resource.Load(L"resources/Marin_idle_front_left.png");
@@ -51,20 +50,10 @@ void Marin::init() {
 	animation[STATE_DEAD][BACK_RIGHT].resource.Load(L"resources/marin_dead.png");
 	animation[STATE_DEAD][BACK_LEFT].resource.Load(L"resources/marin_dead_left.png");
 	for (int i = 0; i < 6; i++) {
-		animation[STATE_DEAD][i].frame =15;
+		animation[STATE_DEAD][i].frame = 15;
 		animation[STATE_DEAD][i].size = { 0,0,animation[STATE_DEAD][i].resource.GetWidth() / animation[STATE_DEAD][i].frame,animation[STATE_DEAD][i].resource.GetHeight() };
 		animation[STATE_DEAD][i].velocity = 0.5;
 	}
-}
-
-void Marin::destroy() {
-	for (int i = 0; i < 6; i++)
-		for (int j = 0; j < 6; ++j)
-			animation[i][j].resource.Destroy();
-}
-
-Marin::Marin(float x, float y) : Player(x, y)
-{
 	state = new IdleState;
 	hand.Load(L"resources/Marin_hand.png");
 	shadow[0].Load(L"resources/shadow.png");
@@ -85,6 +74,9 @@ Marin::Marin(float x, float y) : Player(x, y)
 
 Marin::~Marin()
 {
+	for (int i = 0; i < 6; i++)
+		for (int j = 0; j < 6; ++j)
+			animation[i][j].resource.Destroy();
 	for (int i = 0; i < myWeapons.size(); i++)
 		delete myWeapons[i];
 	shadow[0].Destroy();

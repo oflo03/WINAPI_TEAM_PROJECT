@@ -19,7 +19,6 @@ private:
 	~MapManager();
 public:
 	static MapManager* getInstance();
-	static void release();
 	void LoadTileMap(int stage);
 	void PrintMap(HDC mDC);
 	int	getCurStage() { return currentStage; }

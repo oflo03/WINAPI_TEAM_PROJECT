@@ -44,7 +44,6 @@ private:
 	~SoundManager();
 public:
 	static SoundManager* getInstance();
-	static void release();
 	void play(int type);
 	void pause(int type);
 	void resume(int type);

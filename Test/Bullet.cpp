@@ -256,7 +256,7 @@ void Bullet::handle_collision(int otherLayer, int damage)
 				type = BBOUNCE;
 		}
 	}
-					break;
+		break;
 	default:
 		break;
 	}

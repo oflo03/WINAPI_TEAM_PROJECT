@@ -13,7 +13,8 @@ PlayerState* RollState::handle_event(Player& player)
 {
 	if ((int)rollingTime == 9)
 	{
-		player.col->layer = 1;
+		if (player.col->layer != damaged_player)
+			player.col->layer = layertype::player;
 		return new IdleState;
 	}
 	return nullptr;
@@ -21,7 +22,8 @@ PlayerState* RollState::handle_event(Player& player)
 
 void RollState::update(Player& player)
 {
-	player.col->layer = rolled_player;
+	if (player.col->layer != damaged_player)
+		player.col->layer = rolled_player;
 	rollingTime = (rollingTime + frame_time * 2 * 9);
 	if ((int)rollingTime >= 6) return;
 	if(dir.GetLenth()==1){

@@ -49,11 +49,6 @@ SoundManager* SoundManager::getInstance()
 	return instance;
 }
 
-void SoundManager::release()
-{
-	if (instance != nullptr)
-		delete instance;
-}
 
 void SoundManager::play(int type)
 {

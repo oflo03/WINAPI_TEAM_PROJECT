@@ -27,13 +27,6 @@ MapManager* MapManager::getInstance()
 	return instance;
 }
 
-void MapManager::release()
-{
-	if (instance != nullptr)
-		delete instance;
-	instance = nullptr;
-}
-
 void MapManager::LoadTileMap(int stage)
 {
 	currentStage = stage;

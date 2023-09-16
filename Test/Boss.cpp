@@ -60,6 +60,7 @@ void Boss::release()
 {
 	if (instance != nullptr)
 		delete instance;
+	instance = nullptr;
 }
 
 void Boss::draw(HDC mDC)
@@ -91,7 +92,6 @@ void Boss::handle_collision(int otherLayer, int damage)
 {
 	switch (otherLayer)
 	{
-	case rolled_player:
 	case playerMelee:
 		EffectManager::getInstance()->set_effect(new Effect(CEffect::SWORDATTACK, col->pos));
 		HP -= damage;
