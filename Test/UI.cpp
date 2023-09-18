@@ -56,7 +56,13 @@ void UI::draw(HDC mDC)
 		heart.Draw(mDC, 10 + hp / 2 * HeartSize, 10, HeartSize, HeartSize, 15, 0, 15, 15);
 	weapons.AlphaBlend(mDC, monitorSize.x - 250, 10, 240, 160, 0, 0, 48, 32, RGB(200, 200, 200));
 	weapons.Draw(mDC, monitorSize.x - 250, 10, 240, 160, 48 + pp->GetWeapon() * 48, 0, 48, 32);
-
+	std::vector<Weapon*>& w = pp->getWeapons();
+	for (int i = 0,h=0; i < w.size();i++) {
+		if (w[i]->GetCurAmmo() != 0 && i != pp->GetWeapon()) {
+			weapons.AlphaBlend(mDC, monitorSize.x - 160, 220+h*70, 140, 90, 48 + i * 48, 0, 48, 32, RGB(200, 200, 200));
+			h++;
+		}
+	}
 	SelectObject(mDC, romulus);
 	SetBkMode(mDC, TRANSPARENT);
 	SetTextColor(mDC, RGB(255, 255, 255));
