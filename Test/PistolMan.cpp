@@ -137,13 +137,13 @@ void PistolMan::draw_character(HDC mDC)
 void PistolMan::handle_event()
 {
 	if (col) {
-		if (!attackable()&& state != STATE_DAMAGED) {
+		if (!attackable() && state != STATE_DAMAGED) {
 			state = STATE_RUN;
 			dir = (target->GetPos() - pos).Normalize();
 		}
 		else {
 			attack();
-			if (state == STATE_DAMAGED&&(int)frame==2) {
+			if (state == STATE_DAMAGED && (int)frame == 2) {
 				state = STATE_IDLE;
 				dir.x = dir.y = 0;
 				moveTime = 0;
@@ -262,6 +262,11 @@ void PistolMan::handle_collision(int otherLayer, int damage)
 	case rolled_player:
 		pos -= (target->GetPos() - pos).Normalize() * 5;
 		break;
+	case player:
+	case damaged_player:
+		if (!isWallCollision(Vector2D<float>(lastPos.x, lastPos.y), col->size))
+			pos = lastPos;
+		break;
 	case playerMelee:
 		if (col == nullptr)return;
 		EffectManager::getInstance()->set_effect(new Effect(CEffect::SWORDATTACK, col->pos));
@@ -336,7 +341,7 @@ void PistolMan::CalWeight()
 {
 	Vector2D<float> temp = (target->GetPos() - pos).Normalize();
 	for (int i = 0; i < 12; i++) {
-		if(!attackable())
+		if (!attackable())
 			weight[i] = 1 + temp.Dot(direct[i]);
 		else
 			weight[i] = 1 - temp.Dot(direct[i]);

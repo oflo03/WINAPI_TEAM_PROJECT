@@ -159,6 +159,11 @@ void Bat::handle_collision(int otherLayer, int damage)
 		lastPos = pos;
 		col->pos = pos;
 		break;
+	case player:
+	case damaged_player:
+		if (!isWallCollision(Vector2D<float>(lastPos.x, lastPos.y), col->size))
+			pos = lastPos;
+		break;
 	case playerMelee:
 		if (col == nullptr)return;
 		EffectManager::getInstance()->set_effect(new Effect(CEffect::SWORDATTACK, col->pos));
