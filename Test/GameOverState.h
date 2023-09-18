@@ -9,6 +9,7 @@ protected:
     HFONT rom;
     int time;
     int dir;
+    LONG alpha;
 public:
     GameOverState();
     ~GameOverState();

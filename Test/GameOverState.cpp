@@ -11,6 +11,7 @@ GameOverState::GameOverState()
 {
 	time = 0;
 	dir = 0;
+	alpha = 0;
 	back.Load(L"resources/GameOver.png");
 	black.Load(L"resources/black.png");
 	rom = CreateFont(80, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET,
@@ -55,21 +56,20 @@ void GameOverState::draw()
 	HBITMAP mapbitmap = CreateCompatibleBitmap(mDC, 1920, 1080);
 	SelectObject(mapDC, mapbitmap);
 	MapManager::getInstance()->PrintMap(mapDC);
+	if (time >= 100) {
+		if (alpha < 255) alpha += 5;
+		black.AlphaBlend(mapDC, 0, 0, 1920, 1080, 0, 0, black.GetWidth(), black.GetHeight(), alpha);
+	}
 	Player::getInstance()->draw_character(mapDC);
 	StretchBlt(mDC, 0, 0, screen.right, screen.bottom,
 		mapDC, camPos.x - camSize.x, camPos.y - camSize.y, camSize.x * 2, camSize.y * 2, SRCCOPY);
-	static LONG alpha = 0;
-	if (time > 101) {
-		if (alpha < 255) alpha += 5;
-		black.AlphaBlend(mDC, 0, 0, screen.right, screen.bottom, 0, 0, black.GetWidth(), black.GetHeight(), alpha);
-	}
 	if (alpha >= 255) {
 		SelectObject(mDC, rom);
 		SetBkMode(mDC, TRANSPARENT);
 		SetTextColor(mDC, RGB(255, 255, 255));
 		back.Draw(mDC, 470, 120);
 		TCHAR CT1[] = L"Press ESC";
-		TextOut(mDC, 400, screen.bottom - 120, CT1, 9);
+		TextOut(mDC, 600, screen.bottom - 220, CT1, 9);
 	}
 	DeleteObject(mapbitmap);
 	DeleteDC(mapDC);

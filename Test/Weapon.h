@@ -29,7 +29,14 @@ public:
 	}
 	virtual void update() = 0;
 	virtual void attack(const Vector2D<float>& center, const Vector2D<float>& mPos, int side) = 0;
-	void ReLoad() { curAmmo = maxAmmo; };
+	void ReLoad() { 
+		if (maxAmmo == 2) {
+			if (curAmmo < 2)
+				curAmmo++;
+		}
+		else
+			curAmmo = maxAmmo; 
+	};
 	void Enemy() { maxAmmo /= 3,coolTime*=2, ReLoad(); };
 	void SetCurTime(int t) { curTime = t; }
 	void SetCurAmmo(int t) { curAmmo = t; }
@@ -108,7 +115,7 @@ private:
 public:
 	Pistol() :Weapon() {
 		coolTime = cooltime[PISTOL];
-		curAmmo = maxAmmo = 15;
+		curAmmo = maxAmmo = 20;
 		resource[0].Load(L"resources/Item_Weapon_Pistol.png");
 		reverseResource[0].Load(L"resources/Item_Weapon_Pistol_Reverse.png");
 		resource[1].Load(L"resources/Item_Weapon_Pistol2.png");
@@ -123,7 +130,7 @@ class Rifle :public Weapon
 public:
 	Rifle() :Weapon() {
 		coolTime = cooltime[RIFLE];
-		curAmmo = maxAmmo = 30;
+		curAmmo = maxAmmo = 35;
 		resource[0].Load(L"resources/Item_Weapon_Rifle.png");
 		reverseResource[0].Load(L"resources/Item_Weapon_Rifle_Reverse.png");
 		resource[1].Load(L"resources/Item_Weapon_Rifle2.png");
@@ -138,7 +145,7 @@ class Shotgun :public Weapon
 public:
 	Shotgun() :Weapon() {
 		coolTime = cooltime[SHOTGUN];
-		curAmmo = maxAmmo = 8;
+		curAmmo = maxAmmo = 10;
 		resource[0].Load(L"resources/Item_Weapon_Shotgun.png");
 		reverseResource[0].Load(L"resources/Item_Weapon_Shotgun_Reverse.png");
 		resource[1].Load(L"resources/Item_Weapon_Shotgun2.png");
@@ -153,7 +160,8 @@ class Rocket :public Weapon
 public:
 	Rocket() :Weapon() {
 		coolTime = cooltime[ROCKET];
-		curAmmo = maxAmmo = 1;
+		maxAmmo = 2;
+		curAmmo = 0;
 		resource[0].Load(L"resources/Item_Weapon_Rocket.png");
 		reverseResource[0].Load(L"resources/Item_Weapon_Rocket_Reverse.png");
 		resource[1].Load(L"resources/Item_Weapon_Rocket2.png");

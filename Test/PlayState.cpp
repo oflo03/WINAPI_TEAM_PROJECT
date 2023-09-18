@@ -115,14 +115,25 @@ void PlayState::handle_events()
 		change_state(new GameOverState);
 		return;
 	}
-	else if (boss != nullptr&&boss->getHP()<=0)
+	else if (boss != nullptr && boss->getHP() <= 0) {
 		push_state(new BossDieScene);
-	if (enemyclear)
-		portal->handle_event();
+		for (int i = 0; i < COLL.size();)
+			if (COLL[i]->layer == enemy|| COLL[i]->layer == enemyBullet || COLL[i]->layer == playerBullet)
+			{
+				delete COLL[i];
+				COLL.erase(COLL.begin() + i);
+			}
+			else
+				++i;
+		EnemyManager::getInstance()->Clear();
+		Bullets.clear();
+	}
 	enemyManager->handle_event();
 	player->handle_event();
 	if (boss != nullptr)
 		boss->handle_event();
+	if (enemyclear)
+		portal->handle_event();
 }
 
 

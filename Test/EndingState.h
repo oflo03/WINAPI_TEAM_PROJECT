@@ -5,6 +5,7 @@ class EndingState :
 {
 protected:
     CImage back;
+    HFONT rom;
 public:
     EndingState();
     ~EndingState();

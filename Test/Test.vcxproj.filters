@@ -83,9 +83,6 @@
     <ClCompile Include="Portal.cpp">
       <Filter>Object\Map</Filter>
     </ClCompile>
-    <ClCompile Include="SpawnerPattern.cpp">
-      <Filter>Object\Enemy\Boss</Filter>
-    </ClCompile>
     <ClCompile Include="SoundManager.cpp">
       <Filter>Manager\SoundManager</Filter>
     </ClCompile>
@@ -138,6 +135,9 @@
       <Filter>GameScene</Filter>
     </ClCompile>
     <ClCompile Include="DieState.cpp">
+      <Filter>Object\Enemy\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="SpawnerPattern.cpp">
       <Filter>Object\Enemy\Boss</Filter>
     </ClCompile>
   </ItemGroup>

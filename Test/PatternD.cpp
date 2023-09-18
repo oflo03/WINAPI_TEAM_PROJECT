@@ -28,7 +28,7 @@ BossState* PatternD::handle_event(Boss& boss)
 			SoundManager::getInstance()->play(BOSSCHARGING);
 			isAttack = true;
 		}
-		else if ((int)attackCoolTime == 6) {
+		else if ((int)attackCoolTime == 5) {
 			EffectManager::getInstance()->set_effect(new Effect(CEffect::PATTERNB, Vector2D<float>(boss.target->GetPos().x, boss.target->GetPos().y+22- Effect::effect[CEffect::PATTERNB].size.bottom)));
 			isAttack = false;
 			SoundManager::getInstance()->play(BOSSLIGHTNING);
@@ -61,13 +61,13 @@ void PatternD::update(Boss& boss)
 	else if ((int)time >= 25 && (int)time < 575) {
 		if ((int)attackCoolTime >= 0&&(int)attackCoolTime < 4) {
 			warning->pos= Vector2D<float>(boss.target->GetPos().x, boss.target->GetPos().y+22 - Effect::effect[CEffect::PATTERND].size.bottom);
-			attackCoolTime = (attackCoolTime + frame_time * 2 * 6);
+			attackCoolTime = (attackCoolTime + frame_time * 2 * 5);
 			pos = boss.target->GetPos();
 		}
-		else if((int)attackCoolTime == 6)
+		else if((int)attackCoolTime == 5)
 			attackCoolTime = -10;
-		else if ((int)attackCoolTime <0|| (int)attackCoolTime >=4&& (int)attackCoolTime <6)
-			attackCoolTime = (attackCoolTime + frame_time * 2 * 6);
+		else if ((int)attackCoolTime <0|| (int)attackCoolTime >=4&& (int)attackCoolTime <5)
+			attackCoolTime = (attackCoolTime + frame_time * 2 * 5);
 	}
 	else if ((int)time >= 575) {
 		boss.handPos[0].x -= 1;

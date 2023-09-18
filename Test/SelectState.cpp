@@ -104,7 +104,7 @@ void SelectState::draw()
 		DrawText(mDC, CT1, 11, &TB3, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
 	}
 	else image1.AlphaBlend(mDC, BT1.left, BT1.top, BT1.right - BT1.left, BT1.bottom - BT1.top,
-		0, 0, image1.GetWidth(), image1.GetHeight(), RGB(200, 200, 200));
+		0, 0, image1.GetWidth(), image1.GetHeight(), RGB(150, 150, 150));
 
 	DrawText(mDC, L"KNIGHT", 6, &TB2, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
 	if (mPoint.x >= BT2.left && mPoint.x <= BT2.right && mPoint.y >= BT2.top && mPoint.y <= BT2.bottom) {
@@ -113,6 +113,6 @@ void SelectState::draw()
 		DrawText(mDC, CT2, 20, &TB4, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
 	}
 	else image2.AlphaBlend(mDC, BT2.left, BT2.top, BT2.right - BT2.left, BT2.bottom - BT2.top,
-		0, 0, image2.GetWidth(), image2.GetHeight(), RGB(200, 200, 200));
+		0, 0, image2.GetWidth(), image2.GetHeight(), RGB(150, 150, 150));
 	cursor.Draw(mDC, mPoint.x - 20, mPoint.y - 30, 40, 40);
 }

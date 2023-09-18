@@ -55,9 +55,9 @@ void BossDieScene::update()
 
 void BossDieScene::handle_events()
 {
+	boss->handle_event();
 	if(time==420)
 		pop_state();
-	boss->handle_event();
 }
 
 void BossDieScene::draw()

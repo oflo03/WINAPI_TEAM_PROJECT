@@ -64,8 +64,8 @@ void OptionState::handle_events()
 			pop_state();
 	}
 	else if (GetAsyncKeyState(VK_LBUTTON)&&!controlOn) {
-		RECT temp = { 700, 378, 1100,392 };
-		RECT temp2 = { (700 + 200 * volume) - 6, 368, (700 + 200 * volume) + 6, 402 };
+		RECT temp = { 690, 378, 1110,420 };
+		RECT temp2 = { (700 + 200 * volume) - 6, 368, (700 + 200 * volume) + 6, 420 };
 		if (isOn[0]) {
 			SoundManager::getInstance()->play(BUTTONCLICK);
 			end_game();
@@ -82,7 +82,7 @@ void OptionState::handle_events()
 			SoundManager::getInstance()->play(BUTTONCLICK);
 			pop_state();
 		}
-		else if (PtInRect(&temp, mPoint)|| PtInRect(&temp2, mPoint)) {
+		else if ((PtInRect(&temp, mPoint) || PtInRect(&temp2, mPoint))&& mPoint.x>= temp.left) {
 			volume = (mPoint.x - temp.left) / 200.0;
 			SoundManager::getInstance()->volumeSet(volume);
 		}
