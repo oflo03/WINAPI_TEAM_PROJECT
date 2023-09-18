@@ -2,7 +2,7 @@
 #include"Master.h"
 #include"Player.h"
 #include"BossState.h"
-#define BOSSHP 1000
+#define BOSSHP 10
 
 extern RECT screen;
 

@@ -17,6 +17,7 @@ BossScene::BossScene()
 	camPos = Player::getInstance()->GetPos();
 	SoundManager::getInstance()->stop(MainState);
 	SoundManager::getInstance()->play(BOSS);
+
 }
 
 BossScene::~BossScene()

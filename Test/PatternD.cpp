@@ -4,6 +4,7 @@
 #include"Bullet.h"
 #include"EffectManager.h"
 #include"SoundManager.h"
+#include"DieState.h"
 
 extern HDC mDC;
 extern double frame_time;
@@ -46,6 +47,8 @@ BossState* PatternD::handle_event(Boss& boss)
 			}
 		}
 	}
+	if (boss.getHP() <= 0)
+		return new DieState;
 	return nullptr;
 }
 

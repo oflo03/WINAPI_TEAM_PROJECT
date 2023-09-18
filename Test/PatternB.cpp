@@ -2,6 +2,7 @@
 #include"BossIdle.h"
 #include"Bullet.h"
 #include"EffectManager.h"
+#include"DieState.h"
 
 extern double frame_time;
 
@@ -27,6 +28,8 @@ BossState* PatternB::handle_event(Boss& boss)
 	else if ((int)time == 130) {
 		return new BossIdle();
 	}
+	if (boss.getHP() <= 0)
+		return new DieState;
 	return nullptr;
 }
 

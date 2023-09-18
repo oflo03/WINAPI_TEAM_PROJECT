@@ -14,6 +14,7 @@
 #include"EndingState.h"
 #include"OptionState.h"
 #include"SoundManager.h"
+#include"BossDieScene.h"
 #include<random>
 
 

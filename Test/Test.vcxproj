@@ -154,12 +154,14 @@
     <ClCompile Include="Bat.cpp" />
     <ClCompile Include="Bombshe.cpp" />
     <ClCompile Include="Boss.cpp" />
+    <ClCompile Include="BossDieScene.cpp" />
     <ClCompile Include="BossIdle.cpp" />
     <ClCompile Include="BossScene.cpp" />
     <ClCompile Include="BossState.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="DeadState.cpp" />
+    <ClCompile Include="DieState.cpp" />
     <ClCompile Include="DropItem.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
@@ -208,12 +210,14 @@
     <ClInclude Include="Bat.h" />
     <ClInclude Include="Bombshe.h" />
     <ClInclude Include="Boss.h" />
+    <ClInclude Include="BossDieScene.h" />
     <ClInclude Include="BossIdle.h" />
     <ClInclude Include="BossScene.h" />
     <ClInclude Include="BossState.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="DeadState.h" />
+    <ClInclude Include="DieState.h" />
     <ClInclude Include="DropItem.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClInclude>

@@ -6,13 +6,13 @@ Boss* Boss::instance = nullptr;
 
 Boss::Boss() {
 	body.resource.Load(L"resources/boss_body.png");
-	body.frame = 4;
+	body.frame = 5;
 	body.size = { 0,0,body.resource.GetWidth() / body.frame ,body.resource.GetHeight() };
 	hand[LEFT].resource.Load(L"resources/boss_lefthand.png");
-	hand[LEFT].frame = 4;
+	hand[LEFT].frame = 5;
 	hand[LEFT].size= { 0,0,hand[0].resource.GetWidth() / hand[0].frame ,hand[0].resource.GetHeight() };
 	hand[RIGHT].resource.Load(L"resources/boss_righthand.png");
-	hand[RIGHT].frame = 4;
+	hand[RIGHT].frame = 5;
 	hand[RIGHT].size = { 0,0,hand[1].resource.GetWidth() / hand[1].frame ,hand[1].resource.GetHeight() };
 	shadow.Load(L"resources/shadow.png");
 	state = new BossIdle();

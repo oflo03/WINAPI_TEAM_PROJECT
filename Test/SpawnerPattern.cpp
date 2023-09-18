@@ -1,6 +1,7 @@
 #include "SpawnerPattern.h"
 #include "BossIdle.h"
 #include"EnemyManager.h"
+#include"DieState.h"
 
 extern double frame_time;
 extern std::random_device rd;
@@ -30,6 +31,8 @@ BossState* SpawnerPattern::handle_event(Boss& boss)
 		spawner->spawn(BOMBSHE, 950, 880);
 		spawner->spawn(BAT, 1400, 780);
 	}
+	if (boss.getHP() <= 0)
+		return new DieState;
 	return nullptr;
 }
 

@@ -39,11 +39,12 @@ PlayState::~PlayState()
 	Bullets.clear();
 	Bullet::destroy();
 	DropItem::destroy();
-	Boss::release();
 	Collider::Clear();
+	DropItem::Clear();
 	LevelManager::release();
 	UI::release();
 	Portal::release();
+	Boss::release();
 	effectManager->clear();
 	soundManager->stop(MainState);
 	soundManager->stop(BOSS);
@@ -55,9 +56,9 @@ void PlayState::update()
 	levelManager->update();
 	if (levelManager->GetStage() == 4&&boss==nullptr)
 		boss = Boss::getInstance();
-	if (boss != nullptr && boss->getHP() == 0)
+	if (boss != nullptr && boss->getHP() <= 0) {
 		boss = nullptr;
-
+	}
 	for (auto& d : drops)
 		d->update();
 	player->update();
@@ -92,17 +93,19 @@ void PlayState::handle_events()
 		beatable = !beatable;
 	}
 	else if (GetAsyncKeyState('N') & 1) {
-		if(levelManager->GetStage()<4)
+		if (levelManager->GetStage() < 4)
 			levelManager->loadNextStage();
 	}
 	else if (GetAsyncKeyState('R') & 1) {
-		for(int i=0;i<4;i++)
-			player->WeaponReload(i+1);
+		for (int i = 0; i < 4; i++)
+			player->WeaponReload(i + 1);
 	}
 	else if (player->GetHP() <= 0) {
 		change_state(new GameOverState);
 		return;
 	}
+	else if (boss != nullptr&&boss->getHP()<=0)
+		push_state(new BossDieScene);
 	if (enemyclear)
 		portal->handle_event();
 	enemyManager->handle_event();

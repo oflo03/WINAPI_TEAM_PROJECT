@@ -5,6 +5,10 @@ class GameOverState :
 {
 protected:
     CImage back;
+    CImage black;
+    HFONT rom;
+    int time;
+    int dir;
 public:
     GameOverState();
     ~GameOverState();

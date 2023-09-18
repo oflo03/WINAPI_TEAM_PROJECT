@@ -4,6 +4,7 @@
 #include "PatternC.h"
 #include"PatternD.h"
 #include"SpawnerPattern.h"
+#include"DieState.h"
 
 extern double frame_time;
 extern std::uniform_int_distribution<int> ranP;
@@ -31,6 +32,8 @@ BossState* BossIdle::handle_event(Boss& boss)
 		else if (num == 3)
 			return new PatternD();
 	}
+	if (boss.getHP() <= 0)
+		return new DieState;
 	return nullptr;
 }
 

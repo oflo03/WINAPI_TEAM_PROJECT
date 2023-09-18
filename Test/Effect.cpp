@@ -55,6 +55,12 @@ void Effect::init()
 	effect[CEffect::EXPLOSION].resource.Load(L"resources/rocket_explosion.png");
 	effect[CEffect::EXPLOSION].frame = 18;
 	effect[CEffect::EXPLOSION].velocity = 2;
+	effect[CEffect::BOSSHIT].resource.Load(L"resources/boss_hit.png");
+	effect[CEffect::BOSSHIT].frame = 8;
+	effect[CEffect::BOSSHIT].velocity = 1;
+	effect[CEffect::TELEPORT].resource.Load(L"resources/teleport.png");
+	effect[CEffect::TELEPORT].frame = 17;
+	effect[CEffect::TELEPORT].velocity = 4;
 	for (int i = 0; i < AMOUNT; i++) {
 		effect[i].size = { 0,0,effect[i].resource.GetWidth() / effect[i].frame, effect[i].resource.GetHeight() };
 	}

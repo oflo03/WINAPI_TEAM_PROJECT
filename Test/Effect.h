@@ -2,7 +2,7 @@
 #include"Animation.h"
 #include"Vector2D.h"
 #include<string>
-#define AMOUNT 17
+#define AMOUNT 19
 
 extern double frame_time;
 
@@ -23,7 +23,9 @@ enum CEffect {
 	PATTERNB,
 	PATTERNC,
 	PATTERND,
-	EXPLOSION
+	EXPLOSION,
+	BOSSHIT,
+	TELEPORT
 };
 
 class Effect {

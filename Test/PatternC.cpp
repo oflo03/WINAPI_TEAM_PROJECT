@@ -3,6 +3,7 @@
 #include"BossIdle.h"
 #include"Bullet.h"
 #include"EffectManager.h"
+#include"DieState.h"
 
 extern double frame_time;
 
@@ -31,6 +32,8 @@ BossState* PatternC::handle_event(Boss& boss)
 			isLeft = !isLeft;
 		}
 	}
+	if (boss.getHP() <= 0)
+		return new DieState;
 	return nullptr;
 }
 

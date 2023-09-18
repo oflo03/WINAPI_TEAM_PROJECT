@@ -3,6 +3,7 @@
 #include"Bullet.h"
 #include"EffectManager.h"
 #include"SoundManager.h"
+#include"DieState.h"
 
 extern double frame_time;
 
@@ -29,6 +30,8 @@ BossState* PatternA::handle_event(Boss& boss)
 			SoundManager::getInstance()->play(BOSSLAZOR);
 		}
 	}
+	if (boss.getHP() <= 0)
+		return new DieState;
 	return nullptr;
 }
 

@@ -2,6 +2,7 @@
 #include"EffectManager.h"
 #include"Player.h"
 #include"SoundManager.h"
+#include"Boss.h"
 
 extern double frame_time;
 extern std::vector<Bullet*> Bullets;
@@ -150,7 +151,7 @@ void Bullet::update()
 	else {
 		pos = (pos - dir).Rotate(2) + dir;
 		angle += 2;
-		if (angle >= 600)
+		if (angle >= 600||Boss::getInstance()->getHP()<=0)
 			collisionMsg.emplace(CollisionMessage(this, enemy, 0));
 	}
 	frame = (frame + frame_time * animation[type].velocity * animation[type].frame);
